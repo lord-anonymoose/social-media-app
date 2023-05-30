@@ -18,14 +18,47 @@ class FeedViewController: UIViewController, UIScrollViewDelegate {
         return labels
     }()
     
+    private lazy var post: UIButton = {
+        var post = UIButton(type: .system)
+        post.translatesAutoresizingMaskIntoConstraints = false
+        post.setTitleColor(.label, for: .normal)
+        post.sizeToFit()
+        post.titleLabel?.numberOfLines = 0
+        post.titleLabel?.lineBreakMode = .byWordWrapping
+        
+        // Setting post title
+        post.tag = 0
+        let title = "\(posts[post.tag].user.name)\n\(posts[post.tag].text)"
+        let attributedTitle = NSMutableAttributedString(string: title)
+        let range = (title as NSString).range(of: posts[post.tag].user.name)
+        attributedTitle.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 17), range: range)
+        post.setAttributedTitle(attributedTitle, for: .normal)
+        
+        // Adding target function
+        post.addTarget(self, action: #selector(tapFunction), for: .touchUpInside)
+        return post
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        newSetupUI()
     }
     
+    func newSetupUI() {
+        view.backgroundColor = UIColor(named: "BackgroundColor")
+        
+        view.addSubview(post)
+        NSLayoutConstraint.activate([
+            post.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            post.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            post.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20)
+        ])
+    }
+    
+    // Following function is legacy code
     func setupUI() {
         view.backgroundColor = UIColor(named: "BackgroundColor")
-
+        
         for label in labels {
             view.addSubview(label)
             NSLayoutConstraint.activate([
@@ -49,6 +82,7 @@ class FeedViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    // Following function is legacy code
     private func makePost(with arrayNum: Int) -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -72,17 +106,19 @@ class FeedViewController: UIViewController, UIScrollViewDelegate {
         
         return label
     }
-    
-    @IBAction func tapFunction(sender: UITapGestureRecognizer) {
+         
+    @IBAction func tapFunction(sender: UIButton) {
+        // Legacy code
+        /*
         guard let label = sender.view as? UILabel else {
             let errorViewController = ErrorViewController()
             errorViewController.title = "Error"
             let navigationController = UINavigationController(rootViewController: errorViewController)
             present(navigationController, animated: true)
             return
-        }
-        let postViewController = PostViewController(post: posts[label.tag])
-        postViewController.title = "@\(posts[label.tag].user.login)"
+        }*/
+        let postViewController = PostViewController(post: posts[sender.tag])
+        postViewController.title = "@\(posts[sender.tag].user.login)"
         let navigationController = UINavigationController(rootViewController: postViewController)
         present(navigationController, animated: true)
     }
