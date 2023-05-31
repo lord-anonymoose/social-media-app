@@ -51,7 +51,9 @@ class FeedViewController: UIViewController {
     @objc func tapFunction(sender: UIButton) {
         let postViewController = PostViewController(post: posts[sender.tag])
         postViewController.title = "@\(posts[sender.tag].user.login)"
-        let navigationController = UINavigationController(rootViewController: postViewController)
+        let errorViewController = ErrorViewController()
+        let navigationController = UINavigationController(rootViewController: errorViewController)
+        navigationController.pushViewController(postViewController, animated: true)
         present(navigationController, animated: true)
     }
 }
