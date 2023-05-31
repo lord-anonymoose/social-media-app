@@ -78,6 +78,7 @@
 		8E4C155F2A269BD900AA511B /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				8EC8A3E42A2778D2008CC17C /* Profile */,
 				8E4C15602A269C0200AA511B /* ErrorViewController.swift */,
 				8E4C15622A269C1E00AA511B /* FeedViewController.swift */,
 				8E4C15642A269C4400AA511B /* InfoViewController.swift */,
@@ -85,6 +86,13 @@
 				8E4C15682A269C7A00AA511B /* ProfileViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		8EC8A3E42A2778D2008CC17C /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
