@@ -8,28 +8,51 @@
 import UIKit
 
 class FeedViewController: UIViewController {
-
     
-    private lazy var post: UIButton = {
-        var post = UIButton(type: .system)
-        post.translatesAutoresizingMaskIntoConstraints = false
-        post.setTitleColor(.label, for: .normal)
-        post.sizeToFit()
-        post.titleLabel?.numberOfLines = 0
-        post.titleLabel?.lineBreakMode = .byWordWrapping
-        post.backgroundColor = .systemOrange
-        post.layer.borderColor = UIColor.black.cgColor
-        post.layer.borderWidth = 1
-        post.layer.cornerRadius = 10
+    private lazy var postButtons: [UIButton] = {
+        var postButtons = [UIButton]()
+        var count = 0
         
-        // Setting post title
-        post.tag = 0
-        let title = "\(posts[post.tag].user.name)'s post"
-        post.setTitle(title, for: .normal)
+        for post in posts {
+            var post = UIButton(type: .system)
+            post.setTitleColor(.label, for: .normal)
+            post.sizeToFit()
+            post.titleLabel?.numberOfLines = 0
+            post.titleLabel?.lineBreakMode = .byWordWrapping
+
+            post.layer.borderColor = UIColor.black.cgColor
+            post.layer.borderWidth = 1
+            post.layer.cornerRadius = 20
+            
+            post.tag = count
+            count += 1
+            
+            let title = "\(posts[post.tag].user.name)'s post"
+            post.setTitle(title, for: .normal)
+            
+            post.addTarget(self, action: #selector(tapFunction), for: .touchUpInside)
+
+            postButtons.append(post)
+        }
+        return postButtons
+    }()
+
+    private lazy var stackView: UIStackView = { [unowned self] in
+        let stackView = UIStackView()
         
-        // Adding target function
-        post.addTarget(self, action: #selector(tapFunction), for: .touchUpInside)
-        return post
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.clipsToBounds = true
+        
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.alignment = .fill
+        stackView.spacing = 10.0
+            
+        for button in postButtons {
+            stackView.addArrangedSubview(button)
+        }
+        
+        return stackView
     }()
     
     override func viewDidLoad() {
@@ -40,11 +63,25 @@ class FeedViewController: UIViewController {
     func newSetupUI() {
         view.backgroundColor = UIColor(named: "BackgroundColor")
         
-        view.addSubview(post)
+        view.addSubview(stackView)
+        
         NSLayoutConstraint.activate([
-            post.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            post.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            post.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20)
+            stackView.leadingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+                constant: 20.0
+            ),
+            stackView.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                constant: -20.0
+            ),
+            stackView.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor,
+                constant: 16.0
+            ),
+            stackView.bottomAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                constant: -16.0
+            ),
         ])
     }
          
