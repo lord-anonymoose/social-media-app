@@ -50,14 +50,13 @@ class ProfileHeaderView: UIView {
         button.setTitle("Set status", for: .normal)
         button.setTitleColor(.white, for: .normal)
         
-        /*
         button.layer.cornerRadius = 10
         
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOffset = CGSize(width: 4, height: 4)
         button.layer.shadowOpacity = 0.7
         button.layer.shadowRadius = 4
-        */
+    
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         
         return button
@@ -101,20 +100,7 @@ class ProfileHeaderView: UIView {
         addSubview(statusLabel)
         addSubview(setStatusButton)
         addSubview(statusTextField)
-        
-        setStatusButton.layer.cornerRadius = 10
-        
-        setStatusButton.layer.shadowColor = UIColor.black.cgColor
-        setStatusButton.layer.shadowOffset = CGSize(width: 4, height: 4)
-        setStatusButton.layer.shadowOpacity = 0.7
-        setStatusButton.layer.shadowRadius = 4
-        
-    }
-    
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
+         
         NSLayoutConstraint.activate([
             avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
@@ -126,9 +112,10 @@ class ProfileHeaderView: UIView {
             
             setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 16),
-            setStatusButton.widthAnchor.constraint(equalToConstant: bounds.maxX - 16 - bounds.minY - 16),
+            setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            setStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             setStatusButton.heightAnchor.constraint(equalToConstant: 50),
-        
+            
             statusLabel.topAnchor.constraint(equalTo: fullNameLabel.topAnchor, constant: 40),
             statusLabel.leadingAnchor.constraint(equalTo: fullNameLabel.leadingAnchor),
             
@@ -137,6 +124,7 @@ class ProfileHeaderView: UIView {
             statusTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -56),
             statusTextField.heightAnchor.constraint(equalToConstant: 40)
         ])
+        
     }
     
     @objc func buttonPressed(_ sender: UIButton) {

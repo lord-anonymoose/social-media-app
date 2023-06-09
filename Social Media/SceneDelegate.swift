@@ -35,10 +35,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
          
         tabBarController.selectedIndex = 0
-        
-        //tabBarController.tabBar.tintColor = .systemBlue
-        //tabBarController.tabBar.unselectedItemTintColor = .lightGray
-        
+                
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
                  
