@@ -14,7 +14,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
                                              
-        let feedViewController = FeedViewController()
+        //let feedViewController = FeedViewController()
+        let feedViewController = LogInViewController()
         feedViewController.title = "Feed"
         let feedImage = UIImage(systemName: "house.circle")
          
@@ -35,9 +36,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
          
         tabBarController.selectedIndex = 0
-        
-        //tabBarController.tabBar.tintColor = .systemBlue
-        //tabBarController.tabBar.unselectedItemTintColor = .lightGray
         
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()

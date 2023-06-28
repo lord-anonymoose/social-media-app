@@ -34,10 +34,10 @@ class FeedViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        newSetupUI()
+        setupUI()
     }
     
-    func newSetupUI() {
+    func setupUI() {
         view.backgroundColor = UIColor(named: "BackgroundColor")
         
         view.addSubview(post)
