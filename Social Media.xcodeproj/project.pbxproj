@@ -53,6 +53,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8E3FC4B52A4D8D040064F250 /* LogIn */ = {
+			isa = PBXGroup;
+			children = (
+				8EC3113D2A4CB631006C8FA2 /* LogInViewController.swift */,
+			);
+			path = LogIn;
+			sourceTree = "<group>";
+		};
+		8E3FC4B62A4D8D690064F250 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				8E4C15602A269C0200AA511B /* ErrorViewController.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		8E3FC4B72A4D8D760064F250 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				8E4C15622A269C1E00AA511B /* FeedViewController.swift */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		8E3FC4B82A4D8D850064F250 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				8E4C15642A269C4400AA511B /* InfoViewController.swift */,
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
+		8E3FC4B92A4D8D930064F250 /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				8E4C15662A269C5600AA511B /* PostViewController.swift */,
+			);
+			path = Post;
+			sourceTree = "<group>";
+		};
 		8E4C153D2A2699D800AA511B = {
 			isa = PBXGroup;
 			children = (
@@ -73,7 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				8EC311392A4C3017006C8FA2 /* Delegates */,
-				8E4C155F2A269BD900AA511B /* ViewControllers */,
+				8E4C155F2A269BD900AA511B /* Modules */,
 				8E4C15522A2699D900AA511B /* Assets.xcassets */,
 				8E4C155D2A269B9200AA511B /* Constant.swift */,
 				8EC3113B2A4C3540006C8FA2 /* Extensions.swift */,
@@ -83,17 +123,17 @@
 			path = "Social Media";
 			sourceTree = "<group>";
 		};
-		8E4C155F2A269BD900AA511B /* ViewControllers */ = {
+		8E4C155F2A269BD900AA511B /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				8EC3113D2A4CB631006C8FA2 /* LogInViewController.swift */,
-				8E4C15602A269C0200AA511B /* ErrorViewController.swift */,
-				8E4C15622A269C1E00AA511B /* FeedViewController.swift */,
-				8E4C15642A269C4400AA511B /* InfoViewController.swift */,
-				8E4C15662A269C5600AA511B /* PostViewController.swift */,
+				8E3FC4B92A4D8D930064F250 /* Post */,
+				8E3FC4B82A4D8D850064F250 /* Info */,
+				8E3FC4B72A4D8D760064F250 /* Feed */,
+				8E3FC4B62A4D8D690064F250 /* Error */,
+				8E3FC4B52A4D8D040064F250 /* LogIn */,
 				8EC8A3E42A2778D2008CC17C /* Profile */,
 			);
-			path = ViewControllers;
+			path = Modules;
 			sourceTree = "<group>";
 		};
 		8EC311392A4C3017006C8FA2 /* Delegates */ = {
