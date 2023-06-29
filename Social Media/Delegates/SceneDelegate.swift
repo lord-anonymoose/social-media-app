@@ -14,23 +14,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
                                              
-        //let feedViewController = FeedViewController()
-        let feedViewController = LogInViewController()
+        let feedViewController = FeedViewController()
         feedViewController.title = "Feed"
         let feedImage = UIImage(systemName: "house.circle")
          
-        let profileViewController = ProfileViewController()
-        profileViewController.title = "Profile"
-        let profileImage = UIImage(systemName: "person.circle")
-                     
+        let logInViewController = LogInViewController()
+        logInViewController.title = "Log In"
+        let logInImage = UIImage(systemName: "person.crop.circle.badge.exclamationmark")
+
         let window = UIWindow(windowScene: scene)
 
         let tabBarController = UITabBarController()
                          
         feedViewController.tabBarItem = UITabBarItem(title: nil, image: feedImage, tag: 0)
-        profileViewController.tabBarItem = UITabBarItem(title: nil, image: profileImage, tag: 0)
+        logInViewController.tabBarItem = UITabBarItem(title: nil, image: logInImage, tag: 1)
                          
-        let controllers = [feedViewController, profileViewController]
+        let controllers = [feedViewController, logInViewController]
         tabBarController.viewControllers = controllers.map {
             UINavigationController(rootViewController: $0)
         }

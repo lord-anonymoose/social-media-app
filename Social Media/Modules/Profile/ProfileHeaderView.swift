@@ -108,10 +108,6 @@ class ProfileHeaderView: UIView {
             height: 120
         )
         
-        // Making image round (legacy solution)
-        //userImage.layer.cornerRadius = userImage.frame.size.width / 2
-        //userImage.clipsToBounds = true
-        
         userImage.layer.borderColor = UIColor.white.cgColor
         userImage.layer.borderWidth = 3
         

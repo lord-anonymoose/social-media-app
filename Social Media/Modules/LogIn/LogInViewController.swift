@@ -16,6 +16,34 @@ class LogInViewController: UIViewController {
         return imageView
     }()
     
+    private lazy var logInInputContainer: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .systemGray6
+        view.layer.borderWidth = 0.5
+        view.layer.borderColor = UIColor.lightGray.cgColor
+        view.layer.cornerRadius = 10.0
+        view.layer.masksToBounds = true
+        return view
+    }()
+    
+    private lazy var logInButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Log In", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        let backgroundImage = UIImage(named: "bluePixel")
+        let backgroundImageTinted = backgroundImage?.image(alpha: 0.8)
+        button.setBackgroundImage(backgroundImage, for: .normal)
+        button.setBackgroundImage(backgroundImageTinted, for: .selected)
+        button.setBackgroundImage(backgroundImageTinted, for: .highlighted)
+        button.setBackgroundImage(backgroundImageTinted, for: .disabled)
+        button.layer.cornerRadius = 10
+        button.layer.masksToBounds = true
+        button.addTarget(self, action: #selector(loggedIn), for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var loginInput: UITextFieldWithPadding = {
         let textField = UITextFieldWithPadding()
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -38,80 +66,70 @@ class LogInViewController: UIViewController {
         textField.autocapitalizationType = .none
         return textField
     }()
-    
-    private lazy var inputContainerView: UIView = {
-        let containerView = UIView()
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.backgroundColor = .systemGray6
-        containerView.layer.borderWidth = 0.5
-        containerView.layer.borderColor = UIColor.lightGray.cgColor
-        containerView.layer.cornerRadius = 10.0
-        containerView.layer.masksToBounds = true
-        return containerView
-    }()
-    
-    private lazy var logInButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
 
-        button.setTitle("Log In", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        
-        let backgroundImage = UIImage(named: "bluePixel")
-        let backgroundImageTinted = backgroundImage?.image(alpha: 0.8)
-        
-        button.setBackgroundImage(backgroundImage, for: .normal)
-        button.setBackgroundImage(backgroundImageTinted, for: .selected)
-        button.setBackgroundImage(backgroundImageTinted, for: .highlighted)
-        button.setBackgroundImage(backgroundImageTinted, for: .disabled)
-        
-        button.layer.cornerRadius = 10
-        button.layer.masksToBounds = true
-        
-        //button.addTarget(self, action: #selector(rateButtonPressed), for: .touchUpInside)
-        return button
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        addSubviews()
+        setupConstraints()
     }
     
-    func setupUI() {
+    private func setupUI() {
+        self.navigationController?.isNavigationBarHidden = true
         view.backgroundColor = .white
-        
+    }
+    
+    private func addSubviews() {
+        view.backgroundColor = .white
         view.addSubview(vkLogo)
         view.addSubview(logInButton)
-        view.addSubview(inputContainerView)
-        
-        inputContainerView.addSubview(loginInput)
-        inputContainerView.addSubview(passwordInput)
-        
+        logInInputContainer.addSubview(loginInput)
+        logInInputContainer.addSubview(passwordInput)
+        view.addSubview(logInInputContainer)
+    }
+    
+    private func setupConstraints() {
+        let safeAreaLayoutGuide = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
-            vkLogo.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 120),
-            vkLogo.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: 0),
+            vkLogo.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 120),
+            vkLogo.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
             vkLogo.heightAnchor.constraint(equalToConstant: 100),
             vkLogo.widthAnchor.constraint(equalToConstant: 100),
             
-            inputContainerView.topAnchor.constraint(equalTo: vkLogo.bottomAnchor, constant: 120),
-            inputContainerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            inputContainerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            inputContainerView.heightAnchor.constraint(equalToConstant: 100),
+            logInInputContainer.topAnchor.constraint(equalTo: vkLogo.bottomAnchor, constant: 120),
+            logInInputContainer.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            logInInputContainer.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            logInInputContainer.heightAnchor.constraint(equalToConstant: 100),
             
-            loginInput.topAnchor.constraint(equalTo: inputContainerView.topAnchor, constant: 0),
-            loginInput.leadingAnchor.constraint(equalTo: inputContainerView.leadingAnchor, constant: 0),
-            loginInput.trailingAnchor.constraint(equalTo: inputContainerView.trailingAnchor, constant: 0),
+            loginInput.topAnchor.constraint(equalTo: logInInputContainer.topAnchor, constant: 0),
             loginInput.heightAnchor.constraint(equalToConstant: 50),
+            loginInput.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            loginInput.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
             passwordInput.topAnchor.constraint(equalTo: loginInput.bottomAnchor, constant: 0),
-            passwordInput.bottomAnchor.constraint(equalTo: inputContainerView.bottomAnchor, constant: 0),
-            passwordInput.leadingAnchor.constraint(equalTo: inputContainerView.leadingAnchor, constant: 0),
-            passwordInput.trailingAnchor.constraint(equalTo: inputContainerView.trailingAnchor, constant: 0),
+            passwordInput.heightAnchor.constraint(equalToConstant: 50),
+            passwordInput.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            passwordInput.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
-            logInButton.topAnchor.constraint(equalTo: inputContainerView.bottomAnchor, constant: 16),
-            logInButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            logInButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            logInButton.topAnchor.constraint(equalTo: logInInputContainer.bottomAnchor, constant: 16),
+            logInButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            logInButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             logInButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+    }
+    
+    @objc func loggedIn(_ sender: UIButton) {
+        let profileViewController = ProfileViewController()
+
+        if let navigationController = navigationController {
+            navigationController.setViewControllers([profileViewController], animated: true)
+        }
+        
+        if let tabBarController = self.tabBarController {
+            tabBarController.tabBar.items?[1].image = UIImage(systemName: "person.crop.circle")
+            tabBarController.tabBar.items?[1].title = nil
+        }
+        
     }
 }
