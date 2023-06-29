@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E3FC4BB2A4D91030064F250 /* LogInInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3FC4BA2A4D91030064F250 /* LogInInputViewController.swift */; };
 		8E4C154A2A2699D800AA511B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15492A2699D800AA511B /* AppDelegate.swift */; };
 		8E4C154C2A2699D800AA511B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C154B2A2699D800AA511B /* SceneDelegate.swift */; };
 		8E4C15532A2699D900AA511B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E4C15522A2699D900AA511B /* Assets.xcassets */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8E3FC4BA2A4D91030064F250 /* LogInInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInInputViewController.swift; sourceTree = "<group>"; };
 		8E4C15462A2699D800AA511B /* Social Media.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Social Media.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4C15492A2699D800AA511B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8E4C154B2A2699D800AA511B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				8EC3113D2A4CB631006C8FA2 /* LogInViewController.swift */,
+				8E3FC4BA2A4D91030064F250 /* LogInInputViewController.swift */,
 			);
 			path = LogIn;
 			sourceTree = "<group>";
@@ -236,6 +239,7 @@
 				8E4C15652A269C4400AA511B /* InfoViewController.swift in Sources */,
 				8E4C15692A269C7A00AA511B /* ProfileViewController.swift in Sources */,
 				8EC3113C2A4C3540006C8FA2 /* Extensions.swift in Sources */,
+				8E3FC4BB2A4D91030064F250 /* LogInInputViewController.swift in Sources */,
 				8E4C155E2A269B9200AA511B /* Constant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

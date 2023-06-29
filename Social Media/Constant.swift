@@ -51,4 +51,4 @@ public var posts = [
     Post(user: katyPerry, text: "Congratulations @edsheeran on your new album release, can't wait to listen to all the amazing songs!"),
 ]
 
-let corporateColor = UIColor(hex: "#4885CC")
+let accentColor = UIColor(hex: "#4885CC")

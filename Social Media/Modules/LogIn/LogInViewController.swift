@@ -16,6 +16,40 @@ class LogInViewController: UIViewController {
         return imageView
     }()
     
+    private lazy var loginInput: UITextFieldWithPadding = {
+        let textField = UITextFieldWithPadding()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "Username"
+        textField.textColor = .black
+        textField.font = .systemFont(ofSize: 16)
+        textField.tintColor = accentColor
+        textField.autocapitalizationType = .none
+        return textField
+    }()
+    
+    private lazy var passwordInput: UITextFieldWithPadding = {
+        let textField = UITextFieldWithPadding()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "Password"
+        textField.isSecureTextEntry = true
+        textField.textColor = .black
+        textField.font = .systemFont(ofSize: 16)
+        textField.tintColor = accentColor
+        textField.autocapitalizationType = .none
+        return textField
+    }()
+    
+    private lazy var inputContainerView: UIView = {
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.backgroundColor = .systemGray6
+        containerView.layer.borderWidth = 0.5
+        containerView.layer.borderColor = UIColor.lightGray.cgColor
+        containerView.layer.cornerRadius = 10.0
+        containerView.layer.masksToBounds = true
+        return containerView
+    }()
+    
     private lazy var logInButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -44,8 +78,14 @@ class LogInViewController: UIViewController {
     }
     
     func setupUI() {
+        view.backgroundColor = .white
+        
         view.addSubview(vkLogo)
         view.addSubview(logInButton)
+        view.addSubview(inputContainerView)
+        
+        inputContainerView.addSubview(loginInput)
+        inputContainerView.addSubview(passwordInput)
         
         NSLayoutConstraint.activate([
             vkLogo.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 120),
@@ -53,11 +93,25 @@ class LogInViewController: UIViewController {
             vkLogo.heightAnchor.constraint(equalToConstant: 100),
             vkLogo.widthAnchor.constraint(equalToConstant: 100),
             
-            logInButton.topAnchor.constraint(equalTo: vkLogo.bottomAnchor, constant: 16),
-            logInButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            logInButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            inputContainerView.topAnchor.constraint(equalTo: vkLogo.bottomAnchor, constant: 120),
+            inputContainerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            inputContainerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            inputContainerView.heightAnchor.constraint(equalToConstant: 100),
+            
+            loginInput.topAnchor.constraint(equalTo: inputContainerView.topAnchor, constant: 0),
+            loginInput.leadingAnchor.constraint(equalTo: inputContainerView.leadingAnchor, constant: 0),
+            loginInput.trailingAnchor.constraint(equalTo: inputContainerView.trailingAnchor, constant: 0),
+            loginInput.heightAnchor.constraint(equalToConstant: 50),
+            
+            passwordInput.topAnchor.constraint(equalTo: loginInput.bottomAnchor, constant: 0),
+            passwordInput.bottomAnchor.constraint(equalTo: inputContainerView.bottomAnchor, constant: 0),
+            passwordInput.leadingAnchor.constraint(equalTo: inputContainerView.leadingAnchor, constant: 0),
+            passwordInput.trailingAnchor.constraint(equalTo: inputContainerView.trailingAnchor, constant: 0),
+            
+            logInButton.topAnchor.constraint(equalTo: inputContainerView.bottomAnchor, constant: 16),
+            logInButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            logInButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             logInButton.heightAnchor.constraint(equalToConstant: 50)
         ])
-        
     }
 }
