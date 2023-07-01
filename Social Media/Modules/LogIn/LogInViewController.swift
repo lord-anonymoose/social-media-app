@@ -27,7 +27,7 @@ class LogInViewController: UIViewController {
         let contentView = UIView()
         
         contentView.translatesAutoresizingMaskIntoConstraints = false
-        contentView.backgroundColor = .yellow
+        
         contentView.isUserInteractionEnabled = true
         
         return contentView
@@ -47,6 +47,7 @@ class LogInViewController: UIViewController {
         
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .systemGray6
+        
         view.layer.borderWidth = 0.5
         view.layer.borderColor = UIColor.lightGray.cgColor
         view.layer.cornerRadius = 10.0
@@ -70,11 +71,10 @@ class LogInViewController: UIViewController {
         button.setBackgroundImage(backgroundImageTinted, for: .highlighted)
         button.setBackgroundImage(backgroundImageTinted, for: .disabled)
         
-        button.layer.cornerRadius = 10
+        button.layer.cornerRadius = 10.0
         button.layer.masksToBounds = true
         
         button.isUserInteractionEnabled = true
-
 
         button.addTarget(self, action: #selector(loggedIn), for: .touchUpInside)
 
@@ -91,7 +91,6 @@ class LogInViewController: UIViewController {
         textField.tintColor = accentColor
         textField.layer.borderWidth = 0.5
         textField.layer.borderColor = UIColor.lightGray.cgColor
-        textField.layer.cornerRadius = 10.0
         textField.layer.masksToBounds = true
         
         return textField
@@ -106,9 +105,6 @@ class LogInViewController: UIViewController {
         textField.textColor = .black
         textField.font = .systemFont(ofSize: 16)
         textField.tintColor = accentColor
-        textField.layer.borderWidth = 0.5
-        textField.layer.borderColor = UIColor.lightGray.cgColor
-        textField.layer.cornerRadius = 10.0
         textField.layer.masksToBounds = true
         
         return textField
@@ -199,7 +195,6 @@ class LogInViewController: UIViewController {
             passwordInput.leadingAnchor.constraint(equalTo: logInInputContainer.leadingAnchor, constant: 0),
             passwordInput.trailingAnchor.constraint(equalTo: logInInputContainer.trailingAnchor, constant: 0)
         ])
-        
         
         NSLayoutConstraint.activate([
             logInButton.topAnchor.constraint(equalTo: logInInputContainer.bottomAnchor, constant: 16),
