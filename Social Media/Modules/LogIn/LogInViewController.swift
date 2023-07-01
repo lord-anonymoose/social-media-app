@@ -9,7 +9,9 @@ import UIKit
 import Foundation
 
 class LogInViewController: UIViewController {
-    
+
+    // MARK: - Subviews
+
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         
@@ -109,6 +111,8 @@ class LogInViewController: UIViewController {
         
         return textField
     }()
+    
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,6 +123,20 @@ class LogInViewController: UIViewController {
         setupContentOfScrollView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setupKeyboardObservers()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        removeKeyboardObservers()
+    }
+    
+    // MARK: - Actions
+
     @objc func loggedIn(_ sender: UIButton) {
         let profileViewController = ProfileViewController()
         
@@ -131,6 +149,18 @@ class LogInViewController: UIViewController {
             tabBarController.tabBar.items?[1].title = nil
         }
     }
+    
+    @objc func willShowKeyboard(_ notification: NSNotification) {
+        let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height
+        scrollView.contentInset.bottom = 0.0
+        scrollView.contentInset.bottom += keyboardHeight ?? 0.0
+    }
+    
+    @objc func willHideKeyboard(_ notification: NSNotification) {
+        scrollView.contentInset.bottom = 0.0
+    }
+    
+    // MARK: - Private
     
     private func setupUI() {
         self.navigationController?.isNavigationBarHidden = true
@@ -204,4 +234,27 @@ class LogInViewController: UIViewController {
             logInButton.heightAnchor.constraint(equalToConstant: 50),
         ])
     }
+    
+    private func setupKeyboardObservers() {
+            let notificationCenter = NotificationCenter.default
+            
+            notificationCenter.addObserver(
+                self,
+                selector: #selector(self.willShowKeyboard(_:)),
+                name: UIResponder.keyboardWillShowNotification,
+                object: nil
+            )
+            
+            notificationCenter.addObserver(
+                self,
+                selector: #selector(self.willHideKeyboard(_:)),
+                name: UIResponder.keyboardWillHideNotification,
+                object: nil
+            )
+        }
+        
+        private func removeKeyboardObservers() {
+            let notificationCenter = NotificationCenter.default
+            notificationCenter.removeObserver(self)
+        }
 }
