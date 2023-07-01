@@ -89,6 +89,10 @@ class LogInViewController: UIViewController {
         textField.textColor = .black
         textField.font = .systemFont(ofSize: 16)
         textField.tintColor = accentColor
+        textField.layer.borderWidth = 0.5
+        textField.layer.borderColor = UIColor.lightGray.cgColor
+        textField.layer.cornerRadius = 10.0
+        textField.layer.masksToBounds = true
         
         return textField
     }()
@@ -102,6 +106,10 @@ class LogInViewController: UIViewController {
         textField.textColor = .black
         textField.font = .systemFont(ofSize: 16)
         textField.tintColor = accentColor
+        textField.layer.borderWidth = 0.5
+        textField.layer.borderColor = UIColor.lightGray.cgColor
+        textField.layer.cornerRadius = 10.0
+        textField.layer.masksToBounds = true
         
         return textField
     }()
@@ -140,8 +148,8 @@ class LogInViewController: UIViewController {
         contentView.addSubview(vkLogo)
         
         contentView.addSubview(logInInputContainer)
-        //logInInputContainer.addSubview(loginInput)
-        //logInInputContainer.addSubview(passwordInput)
+        logInInputContainer.addSubview(loginInput)
+        logInInputContainer.addSubview(passwordInput)
         
         contentView.addSubview(logInButton)
     }
@@ -174,7 +182,27 @@ class LogInViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            logInButton.topAnchor.constraint(equalTo: vkLogo.bottomAnchor, constant: 16),
+            logInInputContainer.topAnchor.constraint(equalTo: vkLogo.bottomAnchor, constant: 120),
+            logInInputContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            logInInputContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            logInInputContainer.heightAnchor.constraint(equalToConstant: 100)
+        ])
+        
+        NSLayoutConstraint.activate([
+            loginInput.topAnchor.constraint(equalTo: logInInputContainer.topAnchor, constant: 0),
+            loginInput.bottomAnchor.constraint(equalTo: logInInputContainer.bottomAnchor, constant: -50),
+            loginInput.leadingAnchor.constraint(equalTo: logInInputContainer.leadingAnchor, constant: 0),
+            loginInput.trailingAnchor.constraint(equalTo: logInInputContainer.trailingAnchor, constant: 0),
+    
+            passwordInput.topAnchor.constraint(equalTo: loginInput.bottomAnchor, constant: 0),
+            passwordInput.bottomAnchor.constraint(equalTo: logInInputContainer.bottomAnchor, constant: 0),
+            passwordInput.leadingAnchor.constraint(equalTo: logInInputContainer.leadingAnchor, constant: 0),
+            passwordInput.trailingAnchor.constraint(equalTo: logInInputContainer.trailingAnchor, constant: 0)
+        ])
+        
+        
+        NSLayoutConstraint.activate([
+            logInButton.topAnchor.constraint(equalTo: logInInputContainer.bottomAnchor, constant: 16),
             logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             logInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             logInButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
