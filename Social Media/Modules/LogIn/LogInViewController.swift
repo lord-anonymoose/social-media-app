@@ -57,6 +57,41 @@ class LogInViewController: UIViewController {
         
         return view
     }()
+
+    private lazy var loginInput: UITextFieldWithPadding = {
+        let textField = UITextFieldWithPadding()
+        
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "Username"
+        textField.textColor = .black
+        textField.font = .systemFont(ofSize: 16)
+        textField.tintColor = accentColor
+        textField.layer.borderWidth = 0.5
+        textField.layer.borderColor = UIColor.lightGray.cgColor
+        textField.layer.masksToBounds = true
+        
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
+        
+        return textField
+    }()
+    
+    private lazy var passwordInput: UITextFieldWithPadding = {
+        let textField = UITextFieldWithPadding()
+        
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "Password"
+        textField.isSecureTextEntry = true
+        textField.textColor = .black
+        textField.font = .systemFont(ofSize: 16)
+        textField.tintColor = accentColor
+        textField.layer.masksToBounds = true
+        
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
+        
+        return textField
+    }()
     
     private lazy var logInButton: UIButton = {
         let button = UIButton(type: .system)
@@ -82,35 +117,7 @@ class LogInViewController: UIViewController {
 
         return button
     }()
-    
-    private lazy var loginInput: UITextFieldWithPadding = {
-        let textField = UITextFieldWithPadding()
-        
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Username"
-        textField.textColor = .black
-        textField.font = .systemFont(ofSize: 16)
-        textField.tintColor = accentColor
-        textField.layer.borderWidth = 0.5
-        textField.layer.borderColor = UIColor.lightGray.cgColor
-        textField.layer.masksToBounds = true
-        
-        return textField
-    }()
-    
-    private lazy var passwordInput: UITextFieldWithPadding = {
-        let textField = UITextFieldWithPadding()
-        
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Password"
-        textField.isSecureTextEntry = true
-        textField.textColor = .black
-        textField.font = .systemFont(ofSize: 16)
-        textField.tintColor = accentColor
-        textField.layer.masksToBounds = true
-        
-        return textField
-    }()
+
     
     // MARK: - Lifecycle
 

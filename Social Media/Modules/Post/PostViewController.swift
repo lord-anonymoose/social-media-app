@@ -9,7 +9,7 @@ import UIKit
 
 class PostViewController: UIViewController {
     
-    private var post: Post
+    private var post: oldPost
     
     private lazy var postUserImage: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: post.user.login))
@@ -33,7 +33,7 @@ class PostViewController: UIViewController {
         return label
     }()
     
-    init(post: Post) {
+    init(post: oldPost) {
         self.post = post
         super.init(nibName: nil, bundle: nil)
     }

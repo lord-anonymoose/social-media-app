@@ -12,7 +12,7 @@ class ProfileHeaderView: UIView {
     private var statusText: String = ""
     
     private lazy var userImage: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "hipsterCat"))
+        let imageView = UIImageView(image: UIImage(named: me.login))
         imageView.contentMode = .scaleAspectFit
         
         // Making UIImageView round manually
@@ -24,7 +24,7 @@ class ProfileHeaderView: UIView {
     
     private lazy var userName: UILabel = {
         let userName = UILabel()
-        userName.text = "Hipster Cat"
+        userName.text = me.login
         userName.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         userName.textColor = .black
         userName.sizeToFit()
