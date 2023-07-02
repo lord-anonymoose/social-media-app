@@ -260,8 +260,8 @@ class LogInViewController: UIViewController {
             )
         }
         
-        private func removeKeyboardObservers() {
+    private func removeKeyboardObservers() {
             let notificationCenter = NotificationCenter.default
             notificationCenter.removeObserver(self)
-        }
+    }
 }

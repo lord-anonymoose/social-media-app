@@ -8,18 +8,24 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-    
+
+    // MARK: - Subviews
+
     private lazy var profileView: ProfileHeaderView = {
         let profileView = ProfileHeaderView()
         profileView.translatesAutoresizingMaskIntoConstraints = false
         return profileView
     }()
 
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
     
+    // MARK: - Private
+
     private func setupUI() {
         view.backgroundColor = UIColor(named: "BackgroundColor")
         view.addSubview(profileView)

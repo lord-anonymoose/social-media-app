@@ -9,6 +9,8 @@ import UIKit
 
 class ErrorViewController: UIViewController {
 
+    // MARK: - Subviews
+
     private let imageView: UIImageView = {
         let imageName = "exclamationmark.circle"
         let imageView = UIImageView(image: UIImage(systemName: imageName))
@@ -32,11 +34,15 @@ class ErrorViewController: UIViewController {
         return label
     }()
     
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
     
+    // MARK: - Private
+
     func setupUI() {
         view.backgroundColor = UIColor(named: "BackgroundColor")
 

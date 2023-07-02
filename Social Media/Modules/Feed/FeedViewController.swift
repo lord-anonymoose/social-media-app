@@ -9,7 +9,8 @@ import UIKit
 
 class FeedViewController: UIViewController {
 
-    
+    // MARK: - Subviews
+
     private lazy var post: UIButton = {
         var post = UIButton(type: .system)
         post.translatesAutoresizingMaskIntoConstraints = false
@@ -32,10 +33,25 @@ class FeedViewController: UIViewController {
         return post
     }()
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
+    
+    // MARK: - Actions
+         
+    @objc func tapFunction(sender: UIButton) {
+        let postViewController = PostViewController(post: posts[sender.tag])
+        postViewController.title = "@\(posts[sender.tag].user.login)"
+        let errorViewController = ErrorViewController()
+        let navigationController = UINavigationController(rootViewController: errorViewController)
+        navigationController.pushViewController(postViewController, animated: true)
+        present(navigationController, animated: true)
+    }
+    
+    // MARK: - Private
     
     func setupUI() {
         view.backgroundColor = UIColor(named: "BackgroundColor")
@@ -46,14 +62,5 @@ class FeedViewController: UIViewController {
             post.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             post.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20)
         ])
-    }
-         
-    @objc func tapFunction(sender: UIButton) {
-        let postViewController = PostViewController(post: posts[sender.tag])
-        postViewController.title = "@\(posts[sender.tag].user.login)"
-        let errorViewController = ErrorViewController()
-        let navigationController = UINavigationController(rootViewController: errorViewController)
-        navigationController.pushViewController(postViewController, animated: true)
-        present(navigationController, animated: true)
     }
 }

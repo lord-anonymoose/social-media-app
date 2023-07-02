@@ -9,6 +9,8 @@ import UIKit
 
 class ProfileHeaderView: UIView {
     
+    // MARK: - Subviews
+    
     private var statusText: String = ""
     
     private lazy var userImage: UIImageView = {
@@ -81,28 +83,12 @@ class ProfileHeaderView: UIView {
         return textField
     }()
     
+    // MARK: - Lifecycle
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
         addSuviews()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupUI()
-        addSuviews()
-    }
-    
-    private func setupUI() {
-        backgroundColor = .lightGray
-    }
-    
-    private func addSuviews() {
-        addSubview(userImage)
-        addSubview(userName)
-        addSubview(userStatus)
-        addSubview(showStatusButton)
-        addSubview(textField)
     }
     
     override func layoutSubviews() {
@@ -146,6 +132,8 @@ class ProfileHeaderView: UIView {
         )
     }
     
+    // MARK: - Actions
+    
     @objc func buttonPressed(_ sender: UIButton) {
         userStatus.text = statusText
     }
@@ -154,5 +142,25 @@ class ProfileHeaderView: UIView {
         if let text = textField.text {
             statusText = text
         }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setupUI()
+        addSuviews()
+    }
+    
+    // MARK: - Private
+
+    private func setupUI() {
+        backgroundColor = .lightGray
+    }
+    
+    private func addSuviews() {
+        addSubview(userImage)
+        addSubview(userName)
+        addSubview(userStatus)
+        addSubview(showStatusButton)
+        addSubview(textField)
     }
 }
