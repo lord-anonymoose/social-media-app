@@ -13,10 +13,8 @@ class ProfileHeaderView: UIView {
     
     private lazy var userImage: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: me.login))
-        imageView.contentMode = .scaleAspectFit
-        
-        // Making UIImageView round manually
-        imageView.layer.cornerRadius = 60
+                
+        imageView.layer.cornerRadius = 48
         imageView.clipsToBounds = true
         
         return imageView
@@ -24,26 +22,31 @@ class ProfileHeaderView: UIView {
     
     private lazy var userName: UILabel = {
         let userName = UILabel()
+        
         userName.text = me.login
         userName.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         userName.textColor = .black
         userName.sizeToFit()
+        
         return userName
     }()
     
     private lazy var userStatus: UILabel = {
         let userStatus = UILabel()
+                
         userStatus.text = "Waiting for something..."
         userStatus.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         userStatus.textColor = .gray
         userStatus.sizeToFit()
+        
         return userStatus
     }()
     
     private lazy var showStatusButton: UIButton = {
         let button = UIButton(type: .system)
-        button.backgroundColor = .blue
         
+        button.backgroundColor = .blue
+                
         button.setTitle("Set status", for: .normal)
         button.setTitleColor(.white, for: .normal)
         
@@ -61,7 +64,7 @@ class ProfileHeaderView: UIView {
     
     private lazy var textField: UITextFieldWithPadding = {
         let textField = UITextFieldWithPadding()
-        
+                
         textField.placeholder = "Hello, world"
         textField.backgroundColor = .white
         
@@ -81,16 +84,20 @@ class ProfileHeaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
+        addSuviews()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupUI()
+        addSuviews()
     }
     
     private func setupUI() {
         backgroundColor = .lightGray
-        
+    }
+    
+    private func addSuviews() {
         addSubview(userImage)
         addSubview(userName)
         addSubview(userStatus)
@@ -102,10 +109,10 @@ class ProfileHeaderView: UIView {
         super.layoutSubviews()
         
         userImage.frame = CGRect(
-            x: bounds.minX + 16,
+            x: bounds.minX + 10,
             y: bounds.minY + 16,
-            width: 120,
-            height: 120
+            width: userImage.layer.cornerRadius * 2,
+            height: userImage.layer.cornerRadius * 2
         )
         
         userImage.layer.borderColor = UIColor.white.cgColor
@@ -113,9 +120,22 @@ class ProfileHeaderView: UIView {
         
         userName.frame = CGRect(
             x: bounds.midX - userName.frame.width/2,
-            y: bounds.minY + 27,
+            y: bounds.minY + 16,
             width: userName.frame.width,
             height: userName.frame.height
+        )
+        userStatus.frame = CGRect(
+            x: userName.frame.origin.x,
+            y: userName.frame.maxY + 8,
+            width: userStatus.frame.width,
+            height: userStatus.frame.height
+        )
+        
+        textField.frame = CGRect(
+            x: userStatus.frame.origin.x,
+            y: userStatus.frame.maxY + 8,
+            width: bounds.maxX - 16 - userStatus.frame.origin.x,
+            height: 40
         )
         
         showStatusButton.frame = CGRect(
@@ -124,25 +144,10 @@ class ProfileHeaderView: UIView {
             width: bounds.maxX - 16 - bounds.minY - 16,
             height: 50
         )
-
-        userStatus.frame = CGRect(
-            x: userName.frame.origin.x,
-            y: textField.frame.origin.y - 16 - userStatus.frame.height / 2,
-            width: userStatus.frame.width,
-            height: userStatus.frame.height
-        )
-        
-        textField.frame = CGRect(
-            x: userStatus.frame.origin.x,
-            y: showStatusButton.frame.origin.y - 56,
-            width: bounds.maxX - 16 - userStatus.frame.origin.x,
-            height: 40
-        )
     }
     
     @objc func buttonPressed(_ sender: UIButton) {
         userStatus.text = statusText
-        print(userStatus.text ?? "No User Status")
     }
     
     @objc func statusTextChanged(_ textField: UITextField) {
