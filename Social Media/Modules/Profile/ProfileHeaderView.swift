@@ -84,7 +84,7 @@ class ProfileHeaderView: UIView {
     }()
     
     // MARK: - Lifecycle
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
