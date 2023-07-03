@@ -23,6 +23,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         let tableView = UITableView()
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.allowsSelection = false
         
         return tableView
     }()
@@ -46,6 +47,36 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         cell.authorLabel.text = post.author
         cell.imgView.image = UIImage(named: post.image)
+        cell.descriptionLabel.text = post.description
+        
+        // Adding Likes Label with SF Symbol
+        let heartImage = UIImage(systemName: "heart")
+        let attributedLikes = NSMutableAttributedString()
+
+        let likesAttachment = NSTextAttachment()
+        likesAttachment.image = heartImage
+        let likesString = NSAttributedString(attachment: likesAttachment)
+        attributedLikes.append(likesString)
+
+        let likesCountString = NSAttributedString(string: "\(post.likes)")
+        attributedLikes.append(likesCountString)
+
+        cell.likesLabel.attributedText = attributedLikes
+        
+        // Adding Views Label with SF Symbol
+        let viewImage = UIImage(systemName: "eye")
+        let attributedViews = NSMutableAttributedString()
+
+        let viewsAttachment = NSTextAttachment()
+        viewsAttachment.image = viewImage
+        let viewsString = NSAttributedString(attachment: viewsAttachment)
+        attributedViews.append(viewsString)
+        
+        let viewsCountString = NSAttributedString(string: "\(post.views)")
+        attributedViews.append(viewsCountString)
+
+        cell.viewsLabel.attributedText = attributedViews
+
         return cell
     }
     // MARK: - Private
@@ -55,7 +86,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     private func addSubviews() {
-        //view.addSubview(profileView)
         view.addSubview(feedView)
     }
 
@@ -64,13 +94,6 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         feedView.delegate = self
         feedView.dataSource = self
         feedView.register(PostViewCell.self, forCellReuseIdentifier: "cell")
-        /*
-        NSLayoutConstraint.activate([
-            profileView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            profileView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
-            profileView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            profileView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
-        ])
-         */
+        feedView.tableHeaderView = profileView
     }
 }
