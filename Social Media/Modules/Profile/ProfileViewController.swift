@@ -43,11 +43,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! PostViewCell
         let post = myPosts[indexPath.row]
-        cell.postAuthor = post.author
-        cell.postImage = post.image
-        cell.postDescription = post.description
-        cell.postLikes = post.likes
-        cell.postViews = post.views
+        
+        cell.authorLabel.text = post.author
+        cell.imgView.image = UIImage(named: post.image)
         return cell
     }
     // MARK: - Private
@@ -57,12 +55,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     private func addSubviews() {
-        view.addSubview(profileView)
+        //view.addSubview(profileView)
         view.addSubview(feedView)
     }
 
     private func setupConstraints() {
         feedView.frame = view.bounds
+        feedView.delegate = self
         feedView.dataSource = self
         feedView.register(PostViewCell.self, forCellReuseIdentifier: "cell")
         /*
