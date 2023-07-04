@@ -1,6 +1,6 @@
 //
 //  PostViewCell.swift
-//  iOS_UI_HW3
+//  Social Media
 //
 //  Created by Philipp Lazarev on 02.07.2023.
 //

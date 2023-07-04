@@ -1,6 +1,6 @@
 //
 //  ProfileViewController.swift
-//  iOS_UI_HW3
+//  Social Media
 //
 //  Created by Philipp Lazarev on 25.05.2023.
 //
@@ -13,8 +13,6 @@ class ProfileViewController: UIViewController {
 
     private lazy var profileView: ProfileHeaderView = {
         let profileView = ProfileHeaderView()
-        
-        profileView.translatesAutoresizingMaskIntoConstraints = false
         
         return profileView
     }()
@@ -45,14 +43,17 @@ class ProfileViewController: UIViewController {
     
     private func addSubviews() {
         view.addSubview(feedView)
+        view.addSubview(profileView)
     }
 
     private func setupConstraints() {
         feedView.frame = view.bounds
+        
         feedView.delegate = self
         feedView.dataSource = self
         feedView.register(PostViewCell.self, forCellReuseIdentifier: "cell")
-        feedView.tableHeaderView = profileView
+        feedView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
+        //feedView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "profileView")
     }
 }
 

@@ -1,13 +1,13 @@
 //
 //  ProfileHeaderView.swift
-//  iOS_UI_HW3
+//  Social Media
 //
 //  Created by Philipp Lazarev on 25.05.2023.
 //
 
 import UIKit
 
-class ProfileHeaderView: UIView {
+class ProfileHeaderView: UITableViewHeaderFooterView {
     
     // MARK: - Subviews
     
@@ -18,6 +18,8 @@ class ProfileHeaderView: UIView {
                 
         imageView.layer.cornerRadius = 48
         imageView.clipsToBounds = true
+                
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
     }()
@@ -30,6 +32,8 @@ class ProfileHeaderView: UIView {
         userName.textColor = .black
         userName.sizeToFit()
         
+        userName.translatesAutoresizingMaskIntoConstraints = false
+        
         return userName
     }()
     
@@ -40,6 +44,8 @@ class ProfileHeaderView: UIView {
         userStatus.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         userStatus.textColor = .gray
         userStatus.sizeToFit()
+        
+        userStatus.translatesAutoresizingMaskIntoConstraints = false
         
         return userStatus
     }()
@@ -58,6 +64,8 @@ class ProfileHeaderView: UIView {
         button.layer.shadowOffset = CGSize(width: 4, height: 4)
         button.layer.shadowOpacity = 0.7
         button.layer.shadowRadius = 4
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
         
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         
@@ -78,6 +86,8 @@ class ProfileHeaderView: UIView {
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.black.cgColor
         
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        
         textField.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)
         
         return textField
@@ -85,53 +95,13 @@ class ProfileHeaderView: UIView {
     
     // MARK: - Lifecycle
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         setupUI()
         addSuviews()
+        setupConstraints()
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        userImage.frame = CGRect(
-            x: bounds.minX + 10,
-            y: bounds.minY + 16,
-            width: userImage.layer.cornerRadius * 2,
-            height: userImage.layer.cornerRadius * 2
-        )
-        
-        userImage.layer.borderColor = UIColor.white.cgColor
-        userImage.layer.borderWidth = 3
-        
-        userName.frame = CGRect(
-            x: bounds.midX - userName.frame.width/2,
-            y: bounds.minY + 16,
-            width: userName.frame.width,
-            height: userName.frame.height
-        )
-        userStatus.frame = CGRect(
-            x: userName.frame.origin.x,
-            y: userName.frame.maxY + 8,
-            width: userStatus.frame.width,
-            height: userStatus.frame.height
-        )
-        
-        textField.frame = CGRect(
-            x: userStatus.frame.origin.x,
-            y: userStatus.frame.maxY + 8,
-            width: bounds.maxX - 16 - userStatus.frame.origin.x,
-            height: 40
-        )
-        
-        showStatusButton.frame = CGRect(
-            x: bounds.minX + 16,
-            y: userImage.frame.maxY + 16,
-            width: bounds.maxX - 16 - bounds.minY - 16,
-            height: 50
-        )
-    }
-    
+     
     // MARK: - Actions
     
     @objc func buttonPressed(_ sender: UIButton) {
@@ -148,19 +118,27 @@ class ProfileHeaderView: UIView {
         super.init(coder: aDecoder)
         setupUI()
         addSuviews()
+        setupConstraints()
     }
     
     // MARK: - Private
 
     private func setupUI() {
-        backgroundColor = .lightGray
+        //backgroundColor = .lightGray
     }
     
     private func addSuviews() {
-        addSubview(userImage)
-        addSubview(userName)
-        addSubview(userStatus)
-        addSubview(showStatusButton)
-        addSubview(textField)
+        contentView.addSubview(userImage)
+    }
+    
+    private func setupConstraints() {
+        let layoutMarginGuide = contentView.layoutMarginsGuide
+            
+        NSLayoutConstraint.activate([
+            userImage.leadingAnchor.constraint(equalTo: layoutMarginGuide.leadingAnchor, constant: 10),
+            userImage.centerYAnchor.constraint(equalTo: layoutMarginGuide.centerYAnchor),
+            userImage.widthAnchor.constraint(equalToConstant: 90),
+            userImage.heightAnchor.constraint(equalToConstant: 90),
+        ])
     }
 }
