@@ -17,6 +17,8 @@
 		8E4C15652A269C4400AA511B /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15642A269C4400AA511B /* InfoViewController.swift */; };
 		8E4C15672A269C5600AA511B /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15662A269C5600AA511B /* PostViewController.swift */; };
 		8E4C15692A269C7A00AA511B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15682A269C7A00AA511B /* ProfileViewController.swift */; };
+		8EC3113C2A4C3540006C8FA2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC3113B2A4C3540006C8FA2 /* Extensions.swift */; };
+		8EC3113E2A4CB631006C8FA2 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC3113D2A4CB631006C8FA2 /* LogInViewController.swift */; };
 		8EF48DA52A27797F0099166A /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF48DA42A27797F0099166A /* ProfileHeaderView.swift */; };
 		8EF48DA72A2779AE0099166A /* UITextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF48DA62A2779AE0099166A /* UITextFieldWithPadding.swift */; };
 /* End PBXBuildFile section */
@@ -34,6 +36,8 @@
 		8E4C15642A269C4400AA511B /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		8E4C15662A269C5600AA511B /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		8E4C15682A269C7A00AA511B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		8EC3113B2A4C3540006C8FA2 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		8EC3113D2A4CB631006C8FA2 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		8EF48DA42A27797F0099166A /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		8EF48DA62A2779AE0099166A /* UITextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldWithPadding.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -49,6 +53,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8E3FC4B52A4D8D040064F250 /* LogIn */ = {
+			isa = PBXGroup;
+			children = (
+				8EC3113D2A4CB631006C8FA2 /* LogInViewController.swift */,
+			);
+			path = LogIn;
+			sourceTree = "<group>";
+		};
+		8E3FC4B62A4D8D690064F250 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				8E4C15602A269C0200AA511B /* ErrorViewController.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		8E3FC4B72A4D8D760064F250 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				8E4C15622A269C1E00AA511B /* FeedViewController.swift */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		8E3FC4B82A4D8D850064F250 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				8E4C15642A269C4400AA511B /* InfoViewController.swift */,
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
+		8E3FC4B92A4D8D930064F250 /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				8E4C15662A269C5600AA511B /* PostViewController.swift */,
+			);
+			path = Post;
+			sourceTree = "<group>";
+		};
 		8E4C153D2A2699D800AA511B = {
 			isa = PBXGroup;
 			children = (
@@ -68,27 +112,37 @@
 		8E4C15482A2699D800AA511B /* Social Media */ = {
 			isa = PBXGroup;
 			children = (
-				8E4C15492A2699D800AA511B /* AppDelegate.swift */,
-				8E4C154B2A2699D800AA511B /* SceneDelegate.swift */,
-				8E4C155F2A269BD900AA511B /* ViewControllers */,
-				8E4C155D2A269B9200AA511B /* Constant.swift */,
+				8EC311392A4C3017006C8FA2 /* Delegates */,
+				8E4C155F2A269BD900AA511B /* Modules */,
 				8E4C15522A2699D900AA511B /* Assets.xcassets */,
+				8E4C155D2A269B9200AA511B /* Constant.swift */,
+				8EC3113B2A4C3540006C8FA2 /* Extensions.swift */,
 				8E4C15542A2699D900AA511B /* LaunchScreen.storyboard */,
 				8E4C15572A2699D900AA511B /* Info.plist */,
 			);
 			path = "Social Media";
 			sourceTree = "<group>";
 		};
-		8E4C155F2A269BD900AA511B /* ViewControllers */ = {
+		8E4C155F2A269BD900AA511B /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				8E4C15602A269C0200AA511B /* ErrorViewController.swift */,
-				8E4C15622A269C1E00AA511B /* FeedViewController.swift */,
-				8E4C15642A269C4400AA511B /* InfoViewController.swift */,
-				8E4C15662A269C5600AA511B /* PostViewController.swift */,
+				8E3FC4B72A4D8D760064F250 /* Feed */,
+				8E3FC4B52A4D8D040064F250 /* LogIn */,
 				8EC8A3E42A2778D2008CC17C /* Profile */,
+				8E3FC4B92A4D8D930064F250 /* Post */,
+				8E3FC4B82A4D8D850064F250 /* Info */,
+				8E3FC4B62A4D8D690064F250 /* Error */,
 			);
-			path = ViewControllers;
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		8EC311392A4C3017006C8FA2 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				8E4C15492A2699D800AA511B /* AppDelegate.swift */,
+				8E4C154B2A2699D800AA511B /* SceneDelegate.swift */,
+			);
+			path = Delegates;
 			sourceTree = "<group>";
 		};
 		8EC8A3E42A2778D2008CC17C /* Profile */ = {
@@ -175,11 +229,13 @@
 				8EF48DA72A2779AE0099166A /* UITextFieldWithPadding.swift in Sources */,
 				8E4C15612A269C0200AA511B /* ErrorViewController.swift in Sources */,
 				8E4C15672A269C5600AA511B /* PostViewController.swift in Sources */,
+				8EC3113E2A4CB631006C8FA2 /* LogInViewController.swift in Sources */,
 				8E4C154C2A2699D800AA511B /* SceneDelegate.swift in Sources */,
 				8EF48DA52A27797F0099166A /* ProfileHeaderView.swift in Sources */,
 				8E4C15632A269C1E00AA511B /* FeedViewController.swift in Sources */,
 				8E4C15652A269C4400AA511B /* InfoViewController.swift in Sources */,
 				8E4C15692A269C7A00AA511B /* ProfileViewController.swift in Sources */,
+				8EC3113C2A4C3540006C8FA2 /* Extensions.swift in Sources */,
 				8E4C155E2A269B9200AA511B /* Constant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

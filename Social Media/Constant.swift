@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 public struct User {
     let id = UUID()
@@ -49,3 +50,5 @@ public var posts = [
     Post(user: joeBiden, text: "Addressing inflation is a top priority for my administration to ensure that hardworking Americans can afford the essentials they need to thrive."),
     Post(user: katyPerry, text: "Congratulations @edsheeran on your new album release, can't wait to listen to all the amazing songs!"),
 ]
+
+let accentColor = UIColor(hex: "#4885CC")
