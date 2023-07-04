@@ -18,10 +18,11 @@ class ProfileViewController: UIViewController {
     }()
     
     private lazy var feedView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .grouped)
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.allowsSelection = false
+        tableView.sectionHeaderTopPadding = 0
         
         return tableView
     }()
@@ -43,17 +44,22 @@ class ProfileViewController: UIViewController {
     
     private func addSubviews() {
         view.addSubview(feedView)
-        view.addSubview(profileView)
     }
 
     private func setupConstraints() {
-        feedView.frame = view.bounds
-        
+        //feedView.frame = view.bounds
+        NSLayoutConstraint.activate([
+            feedView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            feedView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
+            feedView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            feedView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0)
+        ])
+
         feedView.delegate = self
         feedView.dataSource = self
         feedView.register(PostViewCell.self, forCellReuseIdentifier: "cell")
         feedView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
-        //feedView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "profileView")
+
     }
 }
 
@@ -99,6 +105,19 @@ extension ProfileViewController: UITableViewDataSource {
         cell.viewsLabel.attributedText = attributedViews
 
         return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 {
+            let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView")
+            return view
+        }
+        // return some other header view for subsequent sections?
+        return nil
     }
 }
 

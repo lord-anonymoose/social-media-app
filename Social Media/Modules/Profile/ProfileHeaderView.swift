@@ -124,21 +124,26 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     }
     
     // MARK: - Private
-
     private func setupUI() {
-        //backgroundColor = .lightGray
+        contentView.backgroundColor = .lightGray
     }
-    
+        
     private func addSuviews() {
         contentView.addSubview(userImage)
     }
-    
+        
     private func setupConstraints() {
-        let layoutMarginGuide = contentView.layoutMarginsGuide
+        let g = contentView.layoutMarginsGuide
+            
+            // this will avoid auto-layout complaints
+        let bottomC = userImage.bottomAnchor.constraint(equalTo: g.bottomAnchor, constant: -0.0)
+        bottomC.priority = .required - 1
             
         NSLayoutConstraint.activate([
-            userImage.leadingAnchor.constraint(equalTo: layoutMarginGuide.leadingAnchor, constant: 10),
-            userImage.centerYAnchor.constraint(equalTo: layoutMarginGuide.centerYAnchor),
+            userImage.leadingAnchor.constraint(equalTo: g.leadingAnchor, constant: 10),
+            userImage.topAnchor.constraint(equalTo: g.topAnchor, constant: 0),
+            bottomC,
+                
             userImage.widthAnchor.constraint(equalToConstant: 90),
             userImage.heightAnchor.constraint(equalToConstant: 90),
         ])
