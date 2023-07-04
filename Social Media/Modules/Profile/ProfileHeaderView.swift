@@ -1,49 +1,60 @@
 //
 //  ProfileHeaderView.swift
-//  iOS_UI_HW3
+//  Social Media
 //
 //  Created by Philipp Lazarev on 25.05.2023.
 //
 
 import UIKit
 
-class ProfileHeaderView: UIView {
+class ProfileHeaderView: UITableViewHeaderFooterView {
+    
+    // MARK: - Subviews
     
     private var statusText: String = ""
     
     private lazy var userImage: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "hipsterCat"))
-        imageView.contentMode = .scaleAspectFit
-        
-        // Making UIImageView round manually
-        imageView.layer.cornerRadius = 60
+        let imageView = UIImageView(image: UIImage(named: me.login))
+                
+        imageView.layer.cornerRadius = 48
         imageView.clipsToBounds = true
+                
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
     }()
     
     private lazy var userName: UILabel = {
         let userName = UILabel()
-        userName.text = "Hipster Cat"
+        
+        userName.text = me.login
         userName.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         userName.textColor = .black
         userName.sizeToFit()
+        
+        userName.translatesAutoresizingMaskIntoConstraints = false
+        
         return userName
     }()
     
     private lazy var userStatus: UILabel = {
         let userStatus = UILabel()
+                
         userStatus.text = "Waiting for something..."
         userStatus.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         userStatus.textColor = .gray
         userStatus.sizeToFit()
+        
+        userStatus.translatesAutoresizingMaskIntoConstraints = false
+        
         return userStatus
     }()
     
     private lazy var showStatusButton: UIButton = {
         let button = UIButton(type: .system)
-        button.backgroundColor = .blue
         
+        button.backgroundColor = .blue
+                
         button.setTitle("Set status", for: .normal)
         button.setTitleColor(.white, for: .normal)
         
@@ -54,6 +65,8 @@ class ProfileHeaderView: UIView {
         button.layer.shadowOpacity = 0.7
         button.layer.shadowRadius = 4
         
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         
         return button
@@ -61,7 +74,7 @@ class ProfileHeaderView: UIView {
     
     private lazy var textField: UITextFieldWithPadding = {
         let textField = UITextFieldWithPadding()
-        
+                
         textField.placeholder = "Hello, world"
         textField.backgroundColor = .white
         
@@ -73,81 +86,59 @@ class ProfileHeaderView: UIView {
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.black.cgColor
         
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        
         textField.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)
         
         return textField
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    // MARK: - Lifecycle
+    
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         setupUI()
+        addSuviews()
+        setupConstraints()
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupUI()
-    }
-    
-    private func setupUI() {
-        backgroundColor = .lightGray
-        
-        addSubview(userImage)
-        addSubview(userName)
-        addSubview(userStatus)
-        addSubview(showStatusButton)
-        addSubview(textField)
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        userImage.frame = CGRect(
-            x: bounds.minX + 16,
-            y: bounds.minY + 16,
-            width: 120,
-            height: 120
-        )
-        
-        userImage.layer.borderColor = UIColor.white.cgColor
-        userImage.layer.borderWidth = 3
-        
-        userName.frame = CGRect(
-            x: bounds.midX - userName.frame.width/2,
-            y: bounds.minY + 27,
-            width: userName.frame.width,
-            height: userName.frame.height
-        )
-        
-        showStatusButton.frame = CGRect(
-            x: bounds.minX + 16,
-            y: userImage.frame.maxY + 16,
-            width: bounds.maxX - 16 - bounds.minY - 16,
-            height: 50
-        )
-
-        userStatus.frame = CGRect(
-            x: userName.frame.origin.x,
-            y: textField.frame.origin.y - 16 - userStatus.frame.height / 2,
-            width: userStatus.frame.width,
-            height: userStatus.frame.height
-        )
-        
-        textField.frame = CGRect(
-            x: userStatus.frame.origin.x,
-            y: showStatusButton.frame.origin.y - 56,
-            width: bounds.maxX - 16 - userStatus.frame.origin.x,
-            height: 40
-        )
-    }
+     
+    // MARK: - Actions
     
     @objc func buttonPressed(_ sender: UIButton) {
         userStatus.text = statusText
-        print(userStatus.text ?? "No User Status")
     }
     
     @objc func statusTextChanged(_ textField: UITextField) {
         if let text = textField.text {
             statusText = text
         }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setupUI()
+        addSuviews()
+        setupConstraints()
+    }
+    
+    // MARK: - Private
+
+    private func setupUI() {
+        //backgroundColor = .lightGray
+    }
+    
+    private func addSuviews() {
+        contentView.addSubview(userImage)
+    }
+    
+    private func setupConstraints() {
+        let layoutMarginGuide = contentView.layoutMarginsGuide
+            
+        NSLayoutConstraint.activate([
+            userImage.leadingAnchor.constraint(equalTo: layoutMarginGuide.leadingAnchor, constant: 10),
+            userImage.centerYAnchor.constraint(equalTo: layoutMarginGuide.centerYAnchor),
+            userImage.widthAnchor.constraint(equalToConstant: 90),
+            userImage.heightAnchor.constraint(equalToConstant: 90),
+        ])
     }
 }

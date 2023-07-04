@@ -9,7 +9,9 @@ import UIKit
 
 class PostViewController: UIViewController {
     
-    private var post: Post
+    // MARK: - Subviews
+    
+    private var post: oldPost
     
     private lazy var postUserImage: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: post.user.login))
@@ -33,7 +35,9 @@ class PostViewController: UIViewController {
         return label
     }()
     
-    init(post: Post) {
+    // MARK: - Lifecycle
+
+    init(post: oldPost) {
         self.post = post
         super.init(nibName: nil, bundle: nil)
     }
@@ -47,6 +51,19 @@ class PostViewController: UIViewController {
         setupUI()
     }
     
+    // MARK: - Actions
+    
+    @objc func infoButtonPressed(_ sender: UIButton) {
+        let infoViewController = InfoViewController()
+        infoViewController.title = "Information"
+        
+        let navigationController = UINavigationController(rootViewController: infoViewController)
+        
+        present(navigationController, animated: true)
+    }
+    
+    // MARK: - Private
+
     func setupUI() {
         view.backgroundColor = UIColor(named: "BackgroundColor")
         
@@ -77,14 +94,5 @@ class PostViewController: UIViewController {
         infoButton.addTarget(self, action: #selector(infoButtonPressed(_:)), for: .touchUpInside)
         let barButtonItem = UIBarButtonItem(customView: infoButton)
         navigationItem.rightBarButtonItem = barButtonItem
-    }
-    
-    @objc func infoButtonPressed(_ sender: UIButton) {
-        let infoViewController = InfoViewController()
-        infoViewController.title = "Information"
-        
-        let navigationController = UINavigationController(rootViewController: infoViewController)
-        
-        present(navigationController, animated: true)
     }
 }

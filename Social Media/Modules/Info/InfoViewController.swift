@@ -9,6 +9,8 @@ import UIKit
 
 class InfoViewController: UIViewController {
     
+    // MARK: - Subviews
+    
     private lazy var rateButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -21,19 +23,14 @@ class InfoViewController: UIViewController {
         return button
     }()
     
+    // MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
     
-    func setupUI() {
-        view.backgroundColor = UIColor(named: "BackgroundColor")
-        view.addSubview(rateButton)
-        NSLayoutConstraint.activate([
-            rateButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            rateButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        ])
-    }
+    // MARK: - Actions
     
     @objc func rateButtonPressed(_ sender: UIButton) {
         let alertController = UIAlertController(title: "Rate my App", message: "Let me know how you like my app!", preferredStyle: .alert)
@@ -48,5 +45,16 @@ class InfoViewController: UIViewController {
         alertController.addAction(goodAction)
         alertController.addAction(badAction)
         present(alertController, animated: true, completion: nil)
+    }
+    
+    // MARK: - Private
+
+    func setupUI() {
+        view.backgroundColor = UIColor(named: "BackgroundColor")
+        view.addSubview(rateButton)
+        NSLayoutConstraint.activate([
+            rateButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            rateButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+        ])
     }
 }
