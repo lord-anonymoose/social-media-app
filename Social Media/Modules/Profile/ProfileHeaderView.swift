@@ -18,7 +18,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     private lazy var userImage: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: me.login))
                 
-        imageView.layer.cornerRadius = 48
+        imageView.layer.cornerRadius = 45
         imageView.clipsToBounds = true
                 
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -55,12 +55,12 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     private lazy var showStatusButton: UIButton = {
         let button = UIButton(type: .system)
         
-        button.backgroundColor = .blue
+        button.backgroundColor = accentColor
                 
         button.setTitle("Set status", for: .normal)
         button.setTitleColor(.white, for: .normal)
         
-        button.layer.cornerRadius = 4
+        button.layer.cornerRadius = 12
         
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOffset = CGSize(width: 4, height: 4)
@@ -125,27 +125,65 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     // MARK: - Private
     private func setupUI() {
-        contentView.backgroundColor = .lightGray
+        contentView.backgroundColor = secondaryColor
     }
         
     private func addSuviews() {
         contentView.addSubview(userImage)
+        contentView.addSubview(userName)
+        contentView.addSubview(userStatus)
+        contentView.addSubview(textField)
+        contentView.addSubview(showStatusButton)
     }
         
     private func setupConstraints() {
-        let g = contentView.layoutMarginsGuide
+
+        let safeAreaLayoutGuide = contentView.safeAreaLayoutGuide
             
             // this will avoid auto-layout complaints
-        let bottomC = userImage.bottomAnchor.constraint(equalTo: g.bottomAnchor, constant: -0.0)
-        bottomC.priority = .required - 1
+        let bottomAnchor = showStatusButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
+        bottomAnchor.priority = .required - 1
             
         NSLayoutConstraint.activate([
-            userImage.leadingAnchor.constraint(equalTo: g.leadingAnchor, constant: 10),
-            userImage.topAnchor.constraint(equalTo: g.topAnchor, constant: 0),
-            bottomC,
-                
-            userImage.widthAnchor.constraint(equalToConstant: 90),
-            userImage.heightAnchor.constraint(equalToConstant: 90),
+            userImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
+            userImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor
+                                               , constant: 16),
+            userImage.widthAnchor.constraint(equalToConstant: userImage.layer.cornerRadius * 2),
+            userImage.heightAnchor.constraint(equalToConstant: userImage.layer.cornerRadius * 2)
         ])
+        
+        NSLayoutConstraint.activate([
+            userName.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
+            userName.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),
+            userName.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16)
+        ])
+        
+        NSLayoutConstraint.activate([
+            userStatus.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: 16),
+            userStatus.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),
+            userStatus.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16)
+        ])
+        
+        NSLayoutConstraint.activate([
+            textField.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: 48),
+            textField.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),
+            textField.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            textField.heightAnchor.constraint(equalToConstant: 32)
+        ])
+        
+        NSLayoutConstraint.activate([
+            showStatusButton.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 16),
+            showStatusButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            showStatusButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+        ])
+        
+        NSLayoutConstraint.activate([
+            bottomAnchor
+        ])
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.endEditing(true)
+        return false
     }
 }

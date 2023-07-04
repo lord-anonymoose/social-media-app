@@ -36,6 +36,30 @@ class ProfileViewController: UIViewController {
         setupConstraints()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setupKeyboardObservers()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        removeKeyboardObservers()
+    }
+    
+    // MARK: - Actions
+
+    @objc func willShowKeyboard(_ notification: NSNotification) {
+        let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height
+        feedView.contentInset.bottom = 0.0
+        feedView.contentInset.bottom += keyboardHeight ?? 0.0
+    }
+    
+    @objc func willHideKeyboard(_ notification: NSNotification) {
+        feedView.contentInset.bottom = 0.0
+    }
+    
     // MARK: - Private
 
     private func setupUI() {
@@ -59,7 +83,29 @@ class ProfileViewController: UIViewController {
         feedView.dataSource = self
         feedView.register(PostViewCell.self, forCellReuseIdentifier: "cell")
         feedView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
-
+    }
+    
+    private func setupKeyboardObservers() {
+            let notificationCenter = NotificationCenter.default
+            
+            notificationCenter.addObserver(
+                self,
+                selector: #selector(self.willShowKeyboard(_:)),
+                name: UIResponder.keyboardWillShowNotification,
+                object: nil
+            )
+            
+            notificationCenter.addObserver(
+                self,
+                selector: #selector(self.willHideKeyboard(_:)),
+                name: UIResponder.keyboardWillHideNotification,
+                object: nil
+            )
+        }
+        
+    private func removeKeyboardObservers() {
+            let notificationCenter = NotificationCenter.default
+            notificationCenter.removeObserver(self)
     }
 }
 
@@ -77,29 +123,30 @@ extension ProfileViewController: UITableViewDataSource {
         cell.descriptionLabel.text = post.description
         
         // Adding Likes Label with SF Symbol
-        let heartImage = UIImage(systemName: "heart")
+        let heartImage = UIImage(systemName: "heart")?.withTintColor(UIColor.textColor)
         let attributedLikes = NSMutableAttributedString()
 
         let likesAttachment = NSTextAttachment()
         likesAttachment.image = heartImage
         let likesString = NSAttributedString(attachment: likesAttachment)
         attributedLikes.append(likesString)
-
-        let likesCountString = NSAttributedString(string: "\(post.likes)")
+                                                                    
+        let likesCountString = NSAttributedString(string: post.likes.formattedString())
         attributedLikes.append(likesCountString)
 
         cell.likesLabel.attributedText = attributedLikes
         
         // Adding Views Label with SF Symbol
-        let viewImage = UIImage(systemName: "eye")
+        let viewImage = UIImage(systemName: "eye")?.withTintColor(UIColor.textColor)
         let attributedViews = NSMutableAttributedString()
 
         let viewsAttachment = NSTextAttachment()
         viewsAttachment.image = viewImage
+        
         let viewsString = NSAttributedString(attachment: viewsAttachment)
         attributedViews.append(viewsString)
         
-        let viewsCountString = NSAttributedString(string: "\(post.views)")
+        let viewsCountString = NSAttributedString(string: post.views.formattedString())
         attributedViews.append(viewsCountString)
 
         cell.viewsLabel.attributedText = attributedViews
@@ -116,7 +163,6 @@ extension ProfileViewController: UITableViewDataSource {
             let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView")
             return view
         }
-        // return some other header view for subsequent sections?
         return nil
     }
 }

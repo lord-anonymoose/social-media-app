@@ -13,7 +13,7 @@ class PostViewCell: UITableViewCell {
 
     let authorLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = UIColor.textColor
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -26,7 +26,7 @@ class PostViewCell: UITableViewCell {
         view.contentMode = .scaleAspectFit
         return view
     }()
-    
+        
     let descriptionLabel: UILabel = {
         let label = UILabel()
         label.textColor = .gray
@@ -36,14 +36,14 @@ class PostViewCell: UITableViewCell {
     
     let likesLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = UIColor.textColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     let viewsLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = UIColor.textColor
         label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -94,9 +94,12 @@ class PostViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             imgView.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 16),
-            imgView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            imgView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            imgView.heightAnchor.constraint(equalTo: imgView.widthAnchor),
+            imgView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            imgView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            imgView.heightAnchor.constraint(equalTo: imgView.widthAnchor, constant: 0),
+
+            // Как самому захотелось
+            // imgView.heightAnchor.constraint(equalTo: imgView.widthAnchor, multiplier: (imgView.image?.size.height ?? 1) / (imgView.image?.size.width ?? 1)),
             imgView.bottomAnchor.constraint(equalTo: descriptionLabel.topAnchor, constant: -16)
         ])
         

@@ -8,59 +8,97 @@
 import UIKit
 
 class FeedViewController: UIViewController {
-
+    
     // MARK: - Subviews
 
-    private lazy var post: UIButton = {
-        var post = UIButton(type: .system)
-        post.translatesAutoresizingMaskIntoConstraints = false
-        post.setTitleColor(.label, for: .normal)
-        post.sizeToFit()
-        post.titleLabel?.numberOfLines = 0
-        post.titleLabel?.lineBreakMode = .byWordWrapping
-        post.backgroundColor = .systemOrange
-        post.layer.borderColor = UIColor.black.cgColor
-        post.layer.borderWidth = 1
-        post.layer.cornerRadius = 10
+    private lazy var feedView: UITableView = {
+        let tableView = UITableView()
         
-        // Setting post title
-        post.tag = 0
-        let title = "\(posts[post.tag].user.name)'s post"
-        post.setTitle(title, for: .normal)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.allowsSelection = false
+        tableView.sectionHeaderTopPadding = 0
         
-        // Adding target function
-        post.addTarget(self, action: #selector(tapFunction), for: .touchUpInside)
-        return post
+        return tableView
     }()
     
     // MARK: - Lifecycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-    }
-    
-    // MARK: - Actions
-         
-    @objc func tapFunction(sender: UIButton) {
-        let postViewController = PostViewController(post: posts[sender.tag])
-        postViewController.title = "@\(posts[sender.tag].user.login)"
-        let errorViewController = ErrorViewController()
-        let navigationController = UINavigationController(rootViewController: errorViewController)
-        navigationController.pushViewController(postViewController, animated: true)
-        present(navigationController, animated: true)
+        addSubviews()
+        setupConstraints()
     }
     
     // MARK: - Private
-    
-    func setupUI() {
+
+    private func setupUI() {
         view.backgroundColor = UIColor(named: "BackgroundColor")
-        
-        view.addSubview(post)
-        NSLayoutConstraint.activate([
-            post.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            post.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            post.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20)
-        ])
     }
+    
+    private func addSubviews() {
+        view.addSubview(feedView)
+    }
+
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            feedView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            feedView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
+            feedView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            feedView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0)
+        ])
+
+        feedView.delegate = self
+        feedView.dataSource = self
+        feedView.register(PostViewCell.self, forCellReuseIdentifier: "cell")
+    }
+}
+
+extension FeedViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        posts.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! PostViewCell
+        let post = posts[indexPath.row]
+        
+        cell.authorLabel.text = post.author
+        cell.imgView.image = UIImage(named: post.image)
+        cell.descriptionLabel.text = post.description
+        
+        // Adding Likes Label with SF Symbol
+        let heartImage = UIImage(systemName: "heart")?.withTintColor(UIColor.textColor)
+        let attributedLikes = NSMutableAttributedString()
+
+        let likesAttachment = NSTextAttachment()
+        likesAttachment.image = heartImage
+        let likesString = NSAttributedString(attachment: likesAttachment)
+        attributedLikes.append(likesString)
+
+        let likesCountString = NSAttributedString(string: post.likes.formattedString())
+        attributedLikes.append(likesCountString)
+
+        cell.likesLabel.attributedText = attributedLikes
+        
+        // Adding Views Label with SF Symbol
+        let viewImage = UIImage(systemName: "eye")?.withTintColor(UIColor.textColor)
+        let attributedViews = NSMutableAttributedString()
+
+        let viewsAttachment = NSTextAttachment()
+        viewsAttachment.image = viewImage
+        let viewsString = NSAttributedString(attachment: viewsAttachment)
+        attributedViews.append(viewsString)
+        
+        let viewsCountString = NSAttributedString(string: post.views.formattedString())
+        attributedViews.append(viewsCountString)
+
+        cell.viewsLabel.attributedText = attributedViews
+
+        return cell
+    }
+}
+
+extension FeedViewController: UITableViewDelegate {
+    
 }
