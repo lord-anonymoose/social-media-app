@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ProfileViewController: UIViewController {
 
     // MARK: - Subviews
 
@@ -37,6 +37,26 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         setupConstraints()
     }
     
+    // MARK: - Private
+
+    private func setupUI() {
+        view.backgroundColor = UIColor(named: "BackgroundColor")
+    }
+    
+    private func addSubviews() {
+        view.addSubview(feedView)
+    }
+
+    private func setupConstraints() {
+        feedView.frame = view.bounds
+        feedView.delegate = self
+        feedView.dataSource = self
+        feedView.register(PostViewCell.self, forCellReuseIdentifier: "cell")
+        feedView.tableHeaderView = profileView
+    }
+}
+
+extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         myPosts.count
     }
@@ -79,21 +99,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
 
         return cell
     }
-    // MARK: - Private
+}
 
-    private func setupUI() {
-        view.backgroundColor = UIColor(named: "BackgroundColor")
-    }
+extension ProfileViewController: UITableViewDelegate {
     
-    private func addSubviews() {
-        view.addSubview(feedView)
-    }
-
-    private func setupConstraints() {
-        feedView.frame = view.bounds
-        feedView.delegate = self
-        feedView.dataSource = self
-        feedView.register(PostViewCell.self, forCellReuseIdentifier: "cell")
-        feedView.tableHeaderView = profileView
-    }
 }

@@ -1,3 +1,10 @@
+//
+//  PostViewCell.swift
+//  iOS_UI_HW3
+//
+//  Created by Philipp Lazarev on 02.07.2023.
+//
+
 import UIKit
 
 class PostViewCell: UITableViewCell {
