@@ -16,7 +16,15 @@ class PostViewCell: UITableViewCell {
         label.textColor = UIColor.textColor
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize:20, weight: .bold)
         return label
+    }()
+    
+    let authorProfilePicture: UIImageView = {
+        let view = UIImageView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.contentMode = .scaleAspectFit
+        return view
     }()
     
     let imgView: UIImageView = {
@@ -53,42 +61,52 @@ class PostViewCell: UITableViewCell {
 
     init(style: UITableViewCell.CellStyle, reuseIdentifier: String?, author: String, image: String, description: String, likes: Int, views: Int) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubviews(author: author, image: image, description: description, likes: NSMutableAttributedString(string: "0"), views: NSMutableAttributedString(string: "0"))
+        addSubviews(author: author, image: image, description: description, likes: likes, views: views)
         setupConstraints()
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubviews(author: "Unknown", image: "notFound", description: "Unknown", likes: NSMutableAttributedString(string: "0"), views: NSMutableAttributedString(string: "0"))
+        addSubviews(author: "Unknown", image: "notFound", description: "Unknown", likes: 0, views: 0)
         setupConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        addSubviews(author: "Unknown", image: "notFound", description: "Unknown", likes: NSMutableAttributedString(string: "0"), views: NSMutableAttributedString(string: "0"))
+        addSubviews(author: "Unknown", image: "notFound", description: "Unknown", likes: 0, views: 0)
         setupConstraints()
     }
     
     // MARK: - Private
 
-    private func addSubviews(author: String, image: String, description: String, likes: NSMutableAttributedString, views: NSMutableAttributedString) {
+    private func addSubviews(author: String, image: String, description: String, likes: Int, views: Int) {
         contentView.addSubview(authorLabel)
+        contentView.addSubview(authorProfilePicture)
         contentView.addSubview(imgView)
         contentView.addSubview(descriptionLabel)
         contentView.addSubview(likesLabel)
         contentView.addSubview(viewsLabel)
         
         authorLabel.text = author
+        authorProfilePicture.image = UIImage(named: author)
         imgView.image = UIImage(named: image)
         descriptionLabel.text = description
-        likesLabel.attributedText = likes
-        viewsLabel.attributedText = views
+        likesLabel.attributedText = likes.formattedString().embedSymbol(symbol: "heart")
+        viewsLabel.attributedText = views.formattedString().embedSymbol(symbol: "eye")
     }
     
     private func setupConstraints() {
+
         NSLayoutConstraint.activate([
-            authorLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            authorLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            authorProfilePicture.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            authorProfilePicture.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            authorProfilePicture.heightAnchor.constraint(equalToConstant: 30),
+            authorProfilePicture.widthAnchor.constraint(equalToConstant: 30)
+        ])
+
+        NSLayoutConstraint.activate([
+            authorLabel.centerYAnchor.constraint(equalTo: authorProfilePicture.centerYAnchor),
+            authorLabel.leadingAnchor.constraint(equalTo: authorProfilePicture.trailingAnchor, constant: 8),
             authorLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
         ])
         
@@ -96,8 +114,7 @@ class PostViewCell: UITableViewCell {
             imgView.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 16),
             imgView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             imgView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            imgView.heightAnchor.constraint(equalTo: imgView.widthAnchor, constant: 0),
-
+            imgView.heightAnchor.constraint(equalTo: imgView.widthAnchor),
             // Как самому захотелось
             // imgView.heightAnchor.constraint(equalTo: imgView.widthAnchor, multiplier: (imgView.image?.size.height ?? 1) / (imgView.image?.size.width ?? 1)),
             imgView.bottomAnchor.constraint(equalTo: descriptionLabel.topAnchor, constant: -16)

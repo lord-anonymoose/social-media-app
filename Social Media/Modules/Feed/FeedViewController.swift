@@ -12,13 +12,8 @@ class FeedViewController: UIViewController {
     // MARK: - Subviews
 
     private lazy var feedView: UITableView = {
-        let tableView = UITableView()
-        
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.allowsSelection = false
-        tableView.sectionHeaderTopPadding = 0
-        
-        return tableView
+        let feedView = UITableView().feedView()
+        return feedView
     }()
     
     // MARK: - Lifecycle
@@ -60,41 +55,9 @@ extension FeedViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! PostViewCell
         let post = posts[indexPath.row]
+        let cell = PostViewCell(style: .default, reuseIdentifier: "cell", author: post.author, image: post.image, description: post.description, likes: post.likes, views: post.views)
         
-        cell.authorLabel.text = post.author
-        cell.imgView.image = UIImage(named: post.image)
-        cell.descriptionLabel.text = post.description
-        
-        // Adding Likes Label with SF Symbol
-        let heartImage = UIImage(systemName: "heart")?.withTintColor(UIColor.textColor)
-        let attributedLikes = NSMutableAttributedString()
-
-        let likesAttachment = NSTextAttachment()
-        likesAttachment.image = heartImage
-        let likesString = NSAttributedString(attachment: likesAttachment)
-        attributedLikes.append(likesString)
-
-        let likesCountString = NSAttributedString(string: post.likes.formattedString())
-        attributedLikes.append(likesCountString)
-
-        cell.likesLabel.attributedText = attributedLikes
-        
-        // Adding Views Label with SF Symbol
-        let viewImage = UIImage(systemName: "eye")?.withTintColor(UIColor.textColor)
-        let attributedViews = NSMutableAttributedString()
-
-        let viewsAttachment = NSTextAttachment()
-        viewsAttachment.image = viewImage
-        let viewsString = NSAttributedString(attachment: viewsAttachment)
-        attributedViews.append(viewsString)
-        
-        let viewsCountString = NSAttributedString(string: post.views.formattedString())
-        attributedViews.append(viewsCountString)
-
-        cell.viewsLabel.attributedText = attributedViews
-
         return cell
     }
 }

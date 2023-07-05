@@ -13,9 +13,9 @@ public var myPosts = [
 ]
 
 public var posts = [
-    Post(author: "katyPerry", description: "hi it's hunger games but also #AmericanIdol (but actually it's duets) 🤺", image: "katyperry_post1", likes: 268_559, views: 300_232),
-    Post(author: "katyPerry", description: "You guys! A STAND out collection from moi and @aboutyou is coming Nov 2 🎉", image: "katyperry_post2", likes: 648_560, views: 722_212),
-    Post(author: "katyPerry", description: "Happy 15th anniversary to my first musical child, One of the Boys! (I know omg the passing of time is WILD). She may be a young teen but has always had a bit of an attitude. Thank you to all the KCs who have stuck around since the Warped and Hello Katy days... tbh I still think of myself as One of the Boys & #OOTBCoveralts", image: "katyperry_post3", likes: 1_066_070, views: 1_223_543),
+    Post(author: "katyperry", description: "hi it's hunger games but also #AmericanIdol (but actually it's duets) 🤺", image: "katyperry_post1", likes: 268_559, views: 300_232),
+    Post(author: "katyperry", description: "You guys! A STAND out collection from moi and @aboutyou is coming Nov 2 🎉", image: "katyperry_post2", likes: 648_560, views: 722_212),
+    Post(author: "katyperry", description: "Happy 15th anniversary to my first musical child, One of the Boys! (I know omg the passing of time is WILD). She may be a young teen but has always had a bit of an attitude. Thank you to all the KCs who have stuck around since the Warped and Hello Katy days... tbh I still think of myself as One of the Boys & #OOTBCoveralts", image: "katyperry_post3", likes: 1_066_070, views: 1_223_543),
     
     Post(author: "teddyphotos", description: "E I E I O, up the football league we go! @ipswichtown", image: "teddyphotos_post1", likes: 133_425, views: 331_123),
     Post(author: "teddyphotos", description: "My most in-depth interview in the last 6 years for the worldwide cover of @rollingstone, this one got deep and very emotional. Link in stories × @lizcollinsphotographer", image: "teddyphotos_post2", likes: 355_207, views: 400_143),
@@ -32,15 +32,15 @@ public var posts = [
     Post(author: "ryantedder", description: "Only took 15 years of touring to figure out how to do it right. @onerepublic 🫠🏝️🤷‍♂️🤘🏽❤️", image: "ryantedder_post1", likes: 38_936, views: 128_975),
     Post(author: "ryantedder", description: "Breaking Bad the MUSICAL fam. Secrets out. Whew. So hard keeping this one quiet 🤦‍♂️", image: "ryantedder_post2", likes: 20_816, views: 45_433),
     
-    Post(author: "billieeilish", description: "", image: "billieeilish_post1", likes: 20_816, views: 45_433),
-    Post(author: "billieeilish", description: "", image: "billieeilish_post2", likes: 20_816, views: 45_433),
-    Post(author: "billieeilish", description: "", image: "billieeilish_post3", likes: 20_816, views: 45_433),
+    Post(author: "billieeilish", description: "@_glen_luchford thank you for being the best i could ask for & bringing my rainy Eilish No. 2 world to life 🌂", image: "billieeilish_post1", likes: 4_743_788, views: 10_321_263),
+    Post(author: "billieeilish", description: "swallow me whole", image: "billieeilish_post2", likes: 6_572_923, views: 12_532_333),
+    Post(author: "billieeilish", description: "🤓", image: "billieeilish_post3", likes: 6_617_232, views: 12_532_356),
     
-    Post(author: "ijustine", description: "", image: "ijustine_post1", likes: 20_816, views: 45_433),
-    Post(author: "ijustine", description: "", image: "ijustine_post2", likes: 20_816, views: 45_433),
-    Post(author: "ijustine", description: "", image: "ijustine_post3", likes: 20_816, views: 45_433),
+    Post(author: "ijustine", description: "Some frames from my current M2 MacBook Air video! I've been loving this beautiful starlight color! Did you watch it yet?", image: "ijustine_post1", likes: 11_644, views: 42_233),
+    Post(author: "ijustine", description: "Ted Lasso merch at the Apple Visitor center! I.. hate to admit I haven't watched the show yet but I had to get a hoodie because I knew after I watched it, I'd want it. Collab is available on @nike too!", image: "ijustine_post2", likes: 13_164, views: 33_233),
+    Post(author: "ijustine", description: "Trying Final Cut for iPad! New vid on my channel 👀", image: "ijustine_post3", likes: 5_351, views: 20_102),
 
-    Post(author: "mkbhd", description: "", image: "ijustine_post1", likes: 20_816, views: 45_433),
-    Post(author: "mkbhd", description: "", image: "ijustine_post2", likes: 20_816, views: 45_433),
-    Post(author: "mkbhd", description: "", image: "ijustine_post3", likes: 20_816, views: 45_433),
+    Post(author: "mkbhd", description: "Nothing Phone 2 design revealed in the new Dope Tech video! Similar to the first phone of course, but updated with some features 👀", image: "mkbhd_post1", likes: 161_231, views: 465_193),
+    Post(author: "mkbhd", description: "RAZR beat Samsung to the punch by covering the whole outside of their flip phone with another screen... $999. cop or drop?", image: "mkbhd_post2", likes: 81_427, views: 99_223),
+    Post(author: "mkbhd", description: "I made my own shoe with Atoms! It's called 251. The length of my first YouTube video was 2:51, and this feels like a new beginning in the same way 🤓 Everything from the sole to the laces was designed by yours truly. It's been a 2 year design/build process and I'm so pumped to finally get them out in the world! They ship immediately and link is in bio!", image: "mkbhd_post3", likes: 263_359, views: 473_234),
 ].shuffled()

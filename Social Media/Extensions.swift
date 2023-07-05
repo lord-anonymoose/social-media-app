@@ -77,3 +77,43 @@ extension Int {
         }
     }
 }
+
+extension String {
+    func embedSymbol(symbol: String) -> NSAttributedString {
+        let image = UIImage(systemName: symbol)?.withTintColor(UIColor.textColor)
+        let attributedString = NSMutableAttributedString()
+
+        let stringAttachment = NSTextAttachment()
+        stringAttachment.image = image
+        let symbolString = NSAttributedString(attachment: stringAttachment)
+        attributedString.append(symbolString)
+                                                                    
+        let textString = NSAttributedString(string: self)
+        attributedString.append(textString)
+        
+        return attributedString
+    }
+}
+
+extension UITableView {
+    func hideIndicators() {
+        showsHorizontalScrollIndicator = false
+        showsVerticalScrollIndicator = false
+    }
+}
+
+extension UITableView {
+    func feedView(isHeaderHidden: Bool = false) -> UITableView {
+        var tableView = UITableView()
+        if isHeaderHidden {
+            //let tableView = UITableView(frame: .zero, style: .grouped)
+            tableView = UITableView(frame: .zero, style: .grouped)
+        }
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.allowsSelection = false
+        tableView.hideIndicators()
+        tableView.sectionHeaderTopPadding = 0
+        
+        return tableView
+    }
+}
