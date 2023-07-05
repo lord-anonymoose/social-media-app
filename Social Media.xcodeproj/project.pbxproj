@@ -18,8 +18,8 @@
 		8E4C15612A269C0200AA511B /* ErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15602A269C0200AA511B /* ErrorViewController.swift */; };
 		8E4C15632A269C1E00AA511B /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15622A269C1E00AA511B /* FeedViewController.swift */; };
 		8E4C15652A269C4400AA511B /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15642A269C4400AA511B /* InfoViewController.swift */; };
-		8E4C15672A269C5600AA511B /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15662A269C5600AA511B /* PostViewController.swift */; };
 		8E4C15692A269C7A00AA511B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15682A269C7A00AA511B /* ProfileViewController.swift */; };
+		8E9B6D0A2A55944B009AD181 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9B6D092A55944B009AD181 /* PostView.swift */; };
 		8EC3113C2A4C3540006C8FA2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC3113B2A4C3540006C8FA2 /* Extensions.swift */; };
 		8EC3113E2A4CB631006C8FA2 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC3113D2A4CB631006C8FA2 /* LogInViewController.swift */; };
 		8EF48DA52A27797F0099166A /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF48DA42A27797F0099166A /* ProfileHeaderView.swift */; };
@@ -40,8 +40,8 @@
 		8E4C15602A269C0200AA511B /* ErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewController.swift; sourceTree = "<group>"; };
 		8E4C15622A269C1E00AA511B /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		8E4C15642A269C4400AA511B /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
-		8E4C15662A269C5600AA511B /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		8E4C15682A269C7A00AA511B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		8E9B6D092A55944B009AD181 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		8EC3113B2A4C3540006C8FA2 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		8EC3113D2A4CB631006C8FA2 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		8EF48DA42A27797F0099166A /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
@@ -94,7 +94,7 @@
 		8E3FC4B92A4D8D930064F250 /* Post */ = {
 			isa = PBXGroup;
 			children = (
-				8E4C15662A269C5600AA511B /* PostViewController.swift */,
+				8E9B6D092A55944B009AD181 /* PostView.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -238,12 +238,12 @@
 				8EF48DA72A2779AE0099166A /* UITextFieldWithPadding.swift in Sources */,
 				8E2D1B322A54BE3400003EFF /* UserData.swift in Sources */,
 				8E4C15612A269C0200AA511B /* ErrorViewController.swift in Sources */,
-				8E4C15672A269C5600AA511B /* PostViewController.swift in Sources */,
 				8EC3113E2A4CB631006C8FA2 /* LogInViewController.swift in Sources */,
 				8E4C154C2A2699D800AA511B /* SceneDelegate.swift in Sources */,
 				8EF48DA52A27797F0099166A /* ProfileHeaderView.swift in Sources */,
 				8E4C15632A269C1E00AA511B /* FeedViewController.swift in Sources */,
 				8E4C15652A269C4400AA511B /* InfoViewController.swift in Sources */,
+				8E9B6D0A2A55944B009AD181 /* PostView.swift in Sources */,
 				8E2D1B342A54C32300003EFF /* UserPosts.swift in Sources */,
 				8E4C15692A269C7A00AA511B /* ProfileViewController.swift in Sources */,
 				8EC3113C2A4C3540006C8FA2 /* Extensions.swift in Sources */,

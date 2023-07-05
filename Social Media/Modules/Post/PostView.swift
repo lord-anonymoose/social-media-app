@@ -1,13 +1,13 @@
 //
-//  PostViewCell.swift
+//  PostView.swift
 //  Social Media
 //
-//  Created by Philipp Lazarev on 02.07.2023.
+//  Created by Philipp Lazarev on 05.07.2023.
 //
 
 import UIKit
 
-class PostViewCell: UITableViewCell {
+class PostView: UIView {
     
     // MARK: - Subviews
 
@@ -39,10 +39,6 @@ class PostViewCell: UITableViewCell {
         let label = UILabel()
         label.textColor = .gray
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.sizeToFit()
-        label.numberOfLines = 0
-        label.lineBreakMode = .byWordWrapping
-        label.textAlignment = .left
         return label
     }()
     
@@ -63,33 +59,26 @@ class PostViewCell: UITableViewCell {
     
     // MARK: - Lifecycle
 
-    init(style: UITableViewCell.CellStyle, reuseIdentifier: String?, author: String, image: String, description: String, likes: Int, views: Int) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    init(frame: CGRect, author: String, image: String, description: String, likes: Int, views: Int) {
+        super.init(frame: frame)
+        setupConstraints()
         addSubviews(author: author, image: image, description: description, likes: likes, views: views)
-        setupConstraints()
-    }
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubviews(author: "Unknown", image: "notFound", description: "Unknown", likes: 0, views: 0)
-        setupConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        addSubviews(author: "Unknown", image: "notFound", description: "Unknown", likes: 0, views: 0)
         setupConstraints()
     }
-    
+
     // MARK: - Private
 
     private func addSubviews(author: String, image: String, description: String, likes: Int, views: Int) {
-        contentView.addSubview(authorLabel)
-        contentView.addSubview(authorProfilePicture)
-        contentView.addSubview(imgView)
-        contentView.addSubview(descriptionLabel)
-        contentView.addSubview(likesLabel)
-        contentView.addSubview(viewsLabel)
+        addSubview(authorLabel)
+        addSubview(authorProfilePicture)
+        addSubview(imgView)
+        addSubview(descriptionLabel)
+        addSubview(likesLabel)
+        addSubview(viewsLabel)
         
         authorLabel.text = author
         authorProfilePicture.image = UIImage(named: author)
@@ -102,8 +91,8 @@ class PostViewCell: UITableViewCell {
     private func setupConstraints() {
 
         NSLayoutConstraint.activate([
-            authorProfilePicture.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-            authorProfilePicture.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            authorProfilePicture.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            authorProfilePicture.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             authorProfilePicture.heightAnchor.constraint(equalToConstant: 30),
             authorProfilePicture.widthAnchor.constraint(equalToConstant: 30)
         ])
@@ -111,13 +100,13 @@ class PostViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             authorLabel.centerYAnchor.constraint(equalTo: authorProfilePicture.centerYAnchor),
             authorLabel.leadingAnchor.constraint(equalTo: authorProfilePicture.trailingAnchor, constant: 8),
-            authorLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16)
+            authorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
         
         NSLayoutConstraint.activate([
             imgView.topAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 16),
-            imgView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            imgView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            imgView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            imgView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             imgView.heightAnchor.constraint(equalTo: imgView.widthAnchor),
             // Как самому захотелось
             // imgView.heightAnchor.constraint(equalTo: imgView.widthAnchor, multiplier: (imgView.image?.size.height ?? 1) / (imgView.image?.size.width ?? 1)),
@@ -126,23 +115,23 @@ class PostViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             descriptionLabel.topAnchor.constraint(equalTo: imgView.bottomAnchor, constant: 16),
-            descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            descriptionLabel.bottomAnchor.constraint(lessThanOrEqualTo: likesLabel.topAnchor, constant: -16)
+            descriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            descriptionLabel.bottomAnchor.constraint(greaterThanOrEqualTo: likesLabel.topAnchor, constant: -16)
         ])
         
         NSLayoutConstraint.activate([
             likesLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
-            likesLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            likesLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            likesLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16)
+            likesLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            likesLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            likesLabel.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor, constant: -16)
         ])
         
         NSLayoutConstraint.activate([
             viewsLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
-            viewsLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            viewsLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            viewsLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16)
+            viewsLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            viewsLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            viewsLabel.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor, constant: -16)
         ])
     }
 }

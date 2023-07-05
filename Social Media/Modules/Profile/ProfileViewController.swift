@@ -25,9 +25,14 @@ class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupUI()
         addSubviews()
         setupConstraints()
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+
+        view.addGestureRecognizer(tap)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,6 +57,10 @@ class ProfileViewController: UIViewController {
     
     @objc func willHideKeyboard(_ notification: NSNotification) {
         feedView.contentInset.bottom = 0.0
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     // MARK: - Private

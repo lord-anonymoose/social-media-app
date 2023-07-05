@@ -18,7 +18,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         feedViewController.title = "Feed"
         let feedImage = UIImage(systemName: "house.circle")
          
-        //let logInViewController = LogInViewController()
         let logInViewController = LogInViewController()
         logInViewController.title = "Log In"
         let logInImage = UIImage(systemName: "person.crop.circle.badge.exclamationmark")
