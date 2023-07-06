@@ -1,0 +1,46 @@
+//
+//  userPosts.swift
+//  Social Media
+//
+//  Created by Philipp Lazarev on 05.07.2023.
+//
+
+public var myPosts = [
+    Post(author: me.login, description: "Breathtaking Dublin ☘️🇮🇪", image: "my_post1", likes: 96, views: 100),
+    Post(author: me.login, description: "Wonderful Madrid 🐻🇪🇸", image: "my_post2", likes: 90, views: 99),
+    Post(author: me.login, description: "Warm Tbilisi ☀️🇬🇪", image: "my_post3", likes: 89, views: 96 ),
+    Post(author: me.login, description: "Calm Paderborn 🏰🇩🇪", image: "my_post4", likes: 88, views: 95)
+]
+
+public var posts = [
+    Post(author: "katyperry", description: "hi it's hunger games but also #AmericanIdol (but actually it's duets) 🤺", image: "katyperry_post1", likes: 268_559, views: 300_232),
+    Post(author: "katyperry", description: "You guys! A STAND out collection from moi and @aboutyou is coming Nov 2 🎉", image: "katyperry_post2", likes: 648_560, views: 722_212),
+    Post(author: "katyperry", description: "Happy 15th anniversary to my first musical child, One of the Boys! (I know omg the passing of time is WILD). She may be a young teen but has always had a bit of an attitude. Thank you to all the KCs who have stuck around since the Warped and Hello Katy days... tbh I still think of myself as One of the Boys & #OOTBCoveralts", image: "katyperry_post3", likes: 1_066_070, views: 1_223_543),
+    
+    Post(author: "teddyphotos", description: "E I E I O, up the football league we go! @ipswichtown", image: "teddyphotos_post1", likes: 133_425, views: 331_123),
+    Post(author: "teddyphotos", description: "My most in-depth interview in the last 6 years for the worldwide cover of @rollingstone, this one got deep and very emotional. Link in stories × @lizcollinsphotographer", image: "teddyphotos_post2", likes: 355_207, views: 400_143),
+    Post(author: "teddyphotos", description: "I had a very good time", image: "teddyphotos_post3", likes: 544_086, views: 700_334),
+    
+    Post(author: "joebiden", description: "I know there are millions today who feel angry because of the Court's decision. Hope was on the horizon thanks to our relief plan, and today's decision snatches it away.", image: "joebiden_post1", likes: 20_816, views: 45_433),
+    Post(author: "joebiden", description: "All Americans deserve the peace of mind that if an illness strikes or an accident occurs, you can get the care you need. My Administration is committed to expanding access to affordable health care and lowering prescription drug costs.", image: "joebiden_post2", likes: 17_115, views: 30_213),
+    Post(author: "joebiden", description: "My economic plan is a blue-collar blueprint to rebuild America", image: "joebiden_post3", likes: 11_355, views: 20_124),
+    
+    Post(author: "tim_cook", description: "What an incredible week in India! Thanks to our teams across the country. I can't wait to return! 🙏🇮🇳", image: "tim_cook_post1", likes: 52_316, views: 2_900_231),
+    Post(author: "tim_cook", description: "'The Astronaut and His Parrot' is a story of hope and connection. Today, I met one of India's best sci-fi filmmakers @AratiKadav, who created this beautiful award-winning short film using only her iPhone and MacBook Pro.", image: "tim_cook_post2", likes: 11_816, views: 645_433),
+    Post(author: "tim_cook", description: "It's great to see so many developers across India pursuing their passion and sharing their ideas with users around the world. I had the pleasure of meeting Hitwicket, India's top-rated cricket app, Prayoga, an AR-based yoga app, and LookUp, an easy to use dictionary app! 🏏🧘🏼📖", image: "tim_cook_post3", likes: 12_816, views: 899_433),
+
+    Post(author: "ryantedder", description: "Only took 15 years of touring to figure out how to do it right. @onerepublic 🫠🏝️🤷‍♂️🤘🏽❤️", image: "ryantedder_post1", likes: 38_936, views: 128_975),
+    Post(author: "ryantedder", description: "Breaking Bad the MUSICAL fam. Secrets out. Whew. So hard keeping this one quiet 🤦‍♂️", image: "ryantedder_post2", likes: 20_816, views: 45_433),
+    
+    Post(author: "billieeilish", description: "@_glen_luchford thank you for being the best i could ask for & bringing my rainy Eilish No. 2 world to life 🌂", image: "billieeilish_post1", likes: 4_743_788, views: 10_321_263),
+    Post(author: "billieeilish", description: "swallow me whole", image: "billieeilish_post2", likes: 6_572_923, views: 12_532_333),
+    Post(author: "billieeilish", description: "🤓", image: "billieeilish_post3", likes: 6_617_232, views: 12_532_356),
+    
+    Post(author: "ijustine", description: "Some frames from my current M2 MacBook Air video! I've been loving this beautiful starlight color! Did you watch it yet?", image: "ijustine_post1", likes: 11_644, views: 42_233),
+    Post(author: "ijustine", description: "Ted Lasso merch at the Apple Visitor center! I.. hate to admit I haven't watched the show yet but I had to get a hoodie because I knew after I watched it, I'd want it. Collab is available on @nike too!", image: "ijustine_post2", likes: 13_164, views: 33_233),
+    Post(author: "ijustine", description: "Trying Final Cut for iPad! New vid on my channel 👀", image: "ijustine_post3", likes: 5_351, views: 20_102),
+
+    Post(author: "mkbhd", description: "Nothing Phone 2 design revealed in the new Dope Tech video! Similar to the first phone of course, but updated with some features 👀", image: "mkbhd_post1", likes: 161_231, views: 465_193),
+    Post(author: "mkbhd", description: "RAZR beat Samsung to the punch by covering the whole outside of their flip phone with another screen... $999. cop or drop?", image: "mkbhd_post2", likes: 81_427, views: 99_223),
+    Post(author: "mkbhd", description: "I made my own shoe with Atoms! It's called 251. The length of my first YouTube video was 2:51, and this feels like a new beginning in the same way 🤓 Everything from the sole to the laces was designed by yours truly. It's been a 2 year design/build process and I'm so pumped to finally get them out in the world! They ship immediately and link is in bio!", image: "mkbhd_post3", likes: 263_359, views: 473_234),
+].shuffled()

@@ -8,59 +8,60 @@
 import UIKit
 
 class FeedViewController: UIViewController {
-
+    
     // MARK: - Subviews
 
-    private lazy var post: UIButton = {
-        var post = UIButton(type: .system)
-        post.translatesAutoresizingMaskIntoConstraints = false
-        post.setTitleColor(.label, for: .normal)
-        post.sizeToFit()
-        post.titleLabel?.numberOfLines = 0
-        post.titleLabel?.lineBreakMode = .byWordWrapping
-        post.backgroundColor = .systemOrange
-        post.layer.borderColor = UIColor.black.cgColor
-        post.layer.borderWidth = 1
-        post.layer.cornerRadius = 10
-        
-        // Setting post title
-        post.tag = 0
-        let title = "\(posts[post.tag].user.name)'s post"
-        post.setTitle(title, for: .normal)
-        
-        // Adding target function
-        post.addTarget(self, action: #selector(tapFunction), for: .touchUpInside)
-        return post
+    private lazy var feedView: UITableView = {
+        let feedView = UITableView().feedView()
+        return feedView
     }()
     
     // MARK: - Lifecycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-    }
-    
-    // MARK: - Actions
-         
-    @objc func tapFunction(sender: UIButton) {
-        let postViewController = PostViewController(post: posts[sender.tag])
-        postViewController.title = "@\(posts[sender.tag].user.login)"
-        let errorViewController = ErrorViewController()
-        let navigationController = UINavigationController(rootViewController: errorViewController)
-        navigationController.pushViewController(postViewController, animated: true)
-        present(navigationController, animated: true)
+        addSubviews()
+        setupConstraints()
     }
     
     // MARK: - Private
-    
-    func setupUI() {
+
+    private func setupUI() {
         view.backgroundColor = UIColor(named: "BackgroundColor")
-        
-        view.addSubview(post)
-        NSLayoutConstraint.activate([
-            post.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            post.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            post.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20)
-        ])
     }
+    
+    private func addSubviews() {
+        view.addSubview(feedView)
+    }
+
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            feedView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            feedView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
+            feedView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            feedView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0)
+        ])
+
+        feedView.delegate = self
+        feedView.dataSource = self
+        feedView.register(PostViewCell.self, forCellReuseIdentifier: "cell")
+    }
+}
+
+extension FeedViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        posts.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let post = posts[indexPath.row]
+        let cell = PostViewCell(style: .default, reuseIdentifier: "cell", author: post.author, image: post.image, description: post.description, likes: post.likes, views: post.views)
+        
+        return cell
+    }
+}
+
+extension FeedViewController: UITableViewDelegate {
+    
 }

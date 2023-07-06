@@ -4,7 +4,7 @@
 //
 //  Created by Philipp Lazarev on 18.05.2023.
 //
-
+/*
 import UIKit
 
 class PostViewController: UIViewController {
@@ -96,3 +96,4 @@ class PostViewController: UIViewController {
         navigationItem.rightBarButtonItem = barButtonItem
     }
 }
+*/
