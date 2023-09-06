@@ -46,7 +46,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         userStatus.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         userStatus.textColor = .gray
         userStatus.sizeToFit()
-        //userStatus.numberOfLines = 2
         userStatus.lineBreakMode = .byWordWrapping
         userStatus.textAlignment = .left
         
@@ -97,7 +96,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         
         return textField
     }()
-    
+
     // MARK: - Lifecycle
     
     override init(reuseIdentifier: String?) {
@@ -184,11 +183,4 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             bottomAnchor
         ])
     }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.endEditing(true)
-        return false
-    }
 }
-
-// 

@@ -4,6 +4,7 @@
 //
 //  Created by Philipp Lazarev on 05.07.2023.
 //
+import UIKit
 
 public var myPosts = [
     Post(author: me.login, description: "Breathtaking Dublin ☘️🇮🇪", image: "my_post1", likes: 96, views: 100),
@@ -44,3 +45,13 @@ public var posts = [
     Post(author: "mkbhd", description: "RAZR beat Samsung to the punch by covering the whole outside of their flip phone with another screen... $999. cop or drop?", image: "mkbhd_post2", likes: 81_427, views: 99_223),
     Post(author: "mkbhd", description: "I made my own shoe with Atoms! It's called 251. The length of my first YouTube video was 2:51, and this feels like a new beginning in the same way 🤓 Everything from the sole to the laces was designed by yours truly. It's been a 2 year design/build process and I'm so pumped to finally get them out in the world! They ship immediately and link is in bio!", image: "mkbhd_post3", likes: 263_359, views: 473_234),
 ].shuffled()
+
+public var myPhotos: [UIImage] = {
+    var array = [UIImage]()
+    for i in 1...20 {
+        if let newImage = UIImage(named: "my_photo\(i)") {
+            array.append(newImage)
+        }
+    }
+    return array
+}()

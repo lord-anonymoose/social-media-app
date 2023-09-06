@@ -5,6 +5,7 @@
 //  Created by Philipp Lazarev on 25.05.2023.
 //
 
+
 import UIKit
 
 class ProfileViewController: UIViewController {
@@ -74,7 +75,6 @@ class ProfileViewController: UIViewController {
     }
 
     private func setupConstraints() {
-        //feedView.frame = view.bounds
         NSLayoutConstraint.activate([
             feedView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             feedView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
@@ -86,6 +86,7 @@ class ProfileViewController: UIViewController {
         feedView.dataSource = self
         feedView.register(PostViewCell.self, forCellReuseIdentifier: "cell")
         feedView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
+        feedView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotosTableViewCell")
     }
     
     private func setupKeyboardObservers() {
@@ -114,13 +115,18 @@ class ProfileViewController: UIViewController {
 
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        myPosts.count
+        myPosts.count + 1 // + 1 for PhotosTableViewCell
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let post = myPosts[indexPath.row]
-        let cell = PostViewCell(style: .default, reuseIdentifier: "cell", author: post.author, image: post.image, description: post.description, likes: post.likes, views: post.views)
-        return cell
+        if indexPath.row == 0 {
+            let cell = PhotosTableViewCell(style: .default, reuseIdentifier: "PhotosTableViewCell")
+            return cell
+        } else {
+            let post = myPosts[indexPath.row - 1]
+            let cell = PostViewCell(style: .default, reuseIdentifier: "cell", author: post.author, image: post.image, description: post.description, likes: post.likes, views: post.views)
+            return cell
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

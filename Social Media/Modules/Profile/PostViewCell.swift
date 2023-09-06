@@ -119,8 +119,6 @@ class PostViewCell: UITableViewCell {
             imgView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             imgView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             imgView.heightAnchor.constraint(equalTo: imgView.widthAnchor),
-            // Как самому захотелось
-            // imgView.heightAnchor.constraint(equalTo: imgView.widthAnchor, multiplier: (imgView.image?.size.height ?? 1) / (imgView.image?.size.width ?? 1)),
             imgView.bottomAnchor.constraint(equalTo: descriptionLabel.topAnchor, constant: -16)
         ])
         
