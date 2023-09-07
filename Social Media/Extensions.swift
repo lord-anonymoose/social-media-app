@@ -64,6 +64,20 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return newImage
     }
+    
+    func cropSquare() -> UIImage {
+        let originalWidth = self.size.width
+        let originalHeight = self.size.height
+        let cropSize = min(originalWidth, originalHeight)
+        
+        let cropRect = CGRect(x: (originalWidth - cropSize) / 2, y: (originalHeight - cropSize) / 2, width: cropSize, height: cropSize)
+        
+        if let cgImage = self.cgImage?.cropping(to: cropRect) {
+            return UIImage(cgImage: cgImage, scale: self.scale, orientation: self.imageOrientation)
+        }
+        
+        return self
+    }
 }
 
 extension Int {

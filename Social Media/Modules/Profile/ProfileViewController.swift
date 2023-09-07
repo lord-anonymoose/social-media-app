@@ -19,6 +19,7 @@ class ProfileViewController: UIViewController {
     
     private lazy var feedView: UITableView = {
         let feedView = UITableView().feedView(isHeaderHidden: true)
+
         return feedView
     }()
 
@@ -31,9 +32,6 @@ class ProfileViewController: UIViewController {
         addSubviews()
         setupConstraints()
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
-
-        view.addGestureRecognizer(tap)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -139,6 +137,17 @@ extension ProfileViewController: UITableViewDataSource {
             return view
         }
         return nil
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0:
+            print("Hello, world!")
+            tableView.deselectRow(at: indexPath, animated: false)
+            navigationController?.pushViewController(PhotosViewController(), animated: true)
+        default:
+            assertionFailure("no registered section")
+        }
     }
 }
 

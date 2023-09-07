@@ -142,7 +142,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
 
         let safeAreaLayoutGuide = contentView.safeAreaLayoutGuide
             
-            // this will avoid auto-layout complaints
         let bottomAnchor = showStatusButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
         bottomAnchor.priority = .required - 1
             

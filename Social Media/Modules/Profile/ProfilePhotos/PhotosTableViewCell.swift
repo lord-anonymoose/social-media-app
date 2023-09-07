@@ -11,6 +11,8 @@ class PhotosTableViewCell: UITableViewCell {
     
     // MARK: - Subviews
 
+    private var tapGestureRecognizer: UITapGestureRecognizer!
+    
     var photosLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -51,25 +53,40 @@ class PhotosTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(photosLabel)
-        contentView.addSubview(arrowImage)
-        contentView.addSubview(imageStackView)
-        
+        addSubviews()
         setupPreviews()
         setupConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        contentView.addSubview(photosLabel)
-        contentView.addSubview(arrowImage)
-        contentView.addSubview(imageStackView)
-        
+        addSubviews()
         setupPreviews()
         setupConstraints()
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        let panGesture = UIPanGestureRecognizer(target: self,
+                                            action: #selector(gestureAction))
+        addGestureRecognizer(panGesture)
+    }
+    
+    // MARK: - Actions
+
+    @objc func gestureAction() {
+        print("gesture action")
+    }
+    
     // MARK: - Private
+
+    
+    private func addSubviews() {
+        contentView.addSubview(photosLabel)
+        contentView.addSubview(arrowImage)
+        contentView.addSubview(imageStackView)
+    }
 
     private func setupPreviews() {
         for ind in 0...2 {

@@ -9,7 +9,6 @@ import UIKit
 
 class PhotosViewController: UIViewController, UICollectionViewDelegate {
     
-    // MARK: - Data
     
     // MARK: - Subviews
     private let photoCollectionView: UICollectionView = {
@@ -21,6 +20,8 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
         collectionView.backgroundColor = .systemBackground
         
         collectionView.register(PhotosCollectionViewCell.self, forCellWithReuseIdentifier: "PhotoCell")
+        
+        collectionView.isUserInteractionEnabled = true
         
         return collectionView
     }()
@@ -36,6 +37,8 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
         addSubviews()
         setupConstraints()
     }
+    
+    
     
     // MARK: - Private
     
@@ -69,7 +72,7 @@ extension PhotosViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         myPhotos.count
     }
-    
+        
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotosCollectionViewCell
         
@@ -84,9 +87,19 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let countItem: CGFloat = 3
-        let accessibleWidth = collectionView.frame.width - 32
+        
+        let accessibleWidth = collectionView.frame.width - 36 // Здесь, по логике, должно быть не 36, а 32. Но почему-то с ним верства не подходит
         let widthItem = (accessibleWidth / countItem)
-        return CGSize(width: widthItem, height: widthItem * 0.56)
+        return CGSize(width: widthItem, height: widthItem)
     }
+    
+
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        let inset: CGFloat = 8.0
+        
+        return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
+    }
+
 }
 

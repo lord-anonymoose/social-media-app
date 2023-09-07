@@ -23,6 +23,8 @@ class PhotosCollectionViewCell: UICollectionViewCell {
         imageView.contentMode = .scaleToFill
         return imageView
     }()
+
+    
     
     // MARK: - Lifecycle
     
@@ -37,6 +39,8 @@ class PhotosCollectionViewCell: UICollectionViewCell {
         addSubviews()
         setupConstraints()
     }
+
+    
     
     // MARK: - Private
     
@@ -61,6 +65,6 @@ class PhotosCollectionViewCell: UICollectionViewCell {
     // MARK: - Public
     
     func setup(with photo: UIImage) {
-        imageView.image = photo
+        imageView.image = photo.cropSquare()
     }
 }
