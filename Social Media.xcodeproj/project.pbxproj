@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8E1F68042A51739C008AE130 /* PostViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F68032A51739C008AE130 /* PostViewCell.swift */; };
+		8E2D1B322A54BE3400003EFF /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D1B312A54BE3400003EFF /* UserData.swift */; };
+		8E2D1B342A54C32300003EFF /* UserPosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D1B332A54C32300003EFF /* UserPosts.swift */; };
 		8E4C154A2A2699D800AA511B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15492A2699D800AA511B /* AppDelegate.swift */; };
 		8E4C154C2A2699D800AA511B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C154B2A2699D800AA511B /* SceneDelegate.swift */; };
 		8E4C15532A2699D900AA511B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E4C15522A2699D900AA511B /* Assets.xcassets */; };
@@ -26,6 +28,8 @@
 
 /* Begin PBXFileReference section */
 		8E1F68032A51739C008AE130 /* PostViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewCell.swift; sourceTree = "<group>"; };
+		8E2D1B312A54BE3400003EFF /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		8E2D1B332A54C32300003EFF /* UserPosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPosts.swift; sourceTree = "<group>"; };
 		8E4C15462A2699D800AA511B /* Social Media.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Social Media.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4C15492A2699D800AA511B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8E4C154B2A2699D800AA511B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -118,6 +122,8 @@
 				8E4C155F2A269BD900AA511B /* Modules */,
 				8E4C15522A2699D900AA511B /* Assets.xcassets */,
 				8E4C155D2A269B9200AA511B /* Constant.swift */,
+				8E2D1B312A54BE3400003EFF /* UserData.swift */,
+				8E2D1B332A54C32300003EFF /* UserPosts.swift */,
 				8EC3113B2A4C3540006C8FA2 /* Extensions.swift */,
 				8E4C15542A2699D900AA511B /* LaunchScreen.storyboard */,
 				8E4C15572A2699D900AA511B /* Info.plist */,
@@ -230,6 +236,7 @@
 			files = (
 				8E4C154A2A2699D800AA511B /* AppDelegate.swift in Sources */,
 				8EF48DA72A2779AE0099166A /* UITextFieldWithPadding.swift in Sources */,
+				8E2D1B322A54BE3400003EFF /* UserData.swift in Sources */,
 				8E4C15612A269C0200AA511B /* ErrorViewController.swift in Sources */,
 				8E4C15672A269C5600AA511B /* PostViewController.swift in Sources */,
 				8EC3113E2A4CB631006C8FA2 /* LogInViewController.swift in Sources */,
@@ -237,6 +244,7 @@
 				8EF48DA52A27797F0099166A /* ProfileHeaderView.swift in Sources */,
 				8E4C15632A269C1E00AA511B /* FeedViewController.swift in Sources */,
 				8E4C15652A269C4400AA511B /* InfoViewController.swift in Sources */,
+				8E2D1B342A54C32300003EFF /* UserPosts.swift in Sources */,
 				8E4C15692A269C7A00AA511B /* ProfileViewController.swift in Sources */,
 				8EC3113C2A4C3540006C8FA2 /* Extensions.swift in Sources */,
 				8E1F68042A51739C008AE130 /* PostViewCell.swift in Sources */,

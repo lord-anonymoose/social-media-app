@@ -35,8 +35,8 @@ class LogInViewController: UIViewController {
         return contentView
     }()
     
-    private lazy var vkLogo: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "vkLogo"))
+    private lazy var appLogo: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "AppLogo"))
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -101,7 +101,7 @@ class LogInViewController: UIViewController {
         button.setTitle("Log In", for: .normal)
         button.setTitleColor(.white, for: .normal)
         
-        let backgroundImage = UIImage(named: "bluePixel")
+        let backgroundImage = UIImage(named: "greenPixel")
         let backgroundImageTinted = backgroundImage?.image(alpha: 0.8)
         button.setBackgroundImage(backgroundImage, for: .normal)
         button.setBackgroundImage(backgroundImageTinted, for: .selected)
@@ -178,7 +178,7 @@ class LogInViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
-        contentView.addSubview(vkLogo)
+        contentView.addSubview(appLogo)
         
         contentView.addSubview(logInInputContainer)
         logInInputContainer.addSubview(loginInput)
@@ -208,14 +208,14 @@ class LogInViewController: UIViewController {
     
     private func setupContentOfScrollView() {
         NSLayoutConstraint.activate([
-            vkLogo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 120),
-            vkLogo.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            vkLogo.heightAnchor.constraint(equalToConstant: 100),
-            vkLogo.widthAnchor.constraint(equalToConstant: 100),
+            appLogo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 120),
+            appLogo.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            appLogo.heightAnchor.constraint(equalToConstant: 100),
+            appLogo.widthAnchor.constraint(equalToConstant: 100),
         ])
         
         NSLayoutConstraint.activate([
-            logInInputContainer.topAnchor.constraint(equalTo: vkLogo.bottomAnchor, constant: 120),
+            logInInputContainer.topAnchor.constraint(equalTo: appLogo.bottomAnchor, constant: 120),
             logInInputContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             logInInputContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             logInInputContainer.heightAnchor.constraint(equalToConstant: 100)
