@@ -105,7 +105,9 @@ class AnyProfileHeaderView: UITableViewHeaderFooterView {
         
             userStatus.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: 16),
             userStatus.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),
-            userStatus.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16)
+            userStatus.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            
+            bottomAnchor
         ])
     }
 }

@@ -5,7 +5,6 @@
 //  Created by Philipp Lazarev on 25.05.2023.
 //
 
-
 import UIKit
 
 class ProfileViewController: UIViewController {
@@ -14,19 +13,14 @@ class ProfileViewController: UIViewController {
 
     private lazy var profileView: ProfileHeaderView = {
         let profileView = ProfileHeaderView()
+        profileView.translatesAutoresizingMaskIntoConstraints = false
         return profileView
     }()
     
-    /*
-    private lazy var sampleCell: UITableViewCell = {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = "Hello, world!"
-        return cell
-    }()
-    */
-    
     private lazy var feedView: UITableView = {
         let feedView = UITableView().feedView(isHeaderHidden: true)
+        feedView.isUserInteractionEnabled = true
+        feedView.allowsSelection = true
         return feedView
     }()
 
@@ -73,6 +67,7 @@ class ProfileViewController: UIViewController {
 
     private func setupUI() {
         view.backgroundColor = UIColor(named: "BackgroundColor")
+        print("hello")
     }
     
     private func addSubviews() {
@@ -82,15 +77,17 @@ class ProfileViewController: UIViewController {
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             feedView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            feedView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
-            feedView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            feedView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0)
+            feedView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            feedView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            feedView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
 
         feedView.delegate = self
         feedView.dataSource = self
+        
         feedView.register(PostViewCell.self, forCellReuseIdentifier: "cell")
-        feedView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
+        feedView.register(ProfileHeaderView
+            .self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
         feedView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotosTableViewCell")
     }
     
@@ -124,11 +121,6 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        /*
-        if indexPath.row == 1 {
-            return sampleCell
-        }
-         */
         if indexPath.row == 0 {
             let cell = PhotosTableViewCell(style: .default, reuseIdentifier: "PhotosTableViewCell")
             return cell
@@ -138,7 +130,6 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
         }
     }
-    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -152,20 +143,15 @@ extension ProfileViewController: UITableViewDataSource {
         return nil
     }
     
-    /*
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.row {
-        case 0:
-            print("Hello, world!")
-            tableView.deselectRow(at: indexPath, animated: false)
-            navigationController?.pushViewController(PhotosViewController(), animated: true)
-        default:
-            assertionFailure("no registered section")
-        }
-    }
-     */
 }
 
 extension ProfileViewController: UITableViewDelegate {
-    
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            let photosViewController = PhotosViewController()
+            self.navigationController?.pushViewController(photosViewController, animated: true)
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }

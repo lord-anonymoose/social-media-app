@@ -167,7 +167,9 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         
             showStatusButton.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 16),
             showStatusButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            showStatusButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16)
+            showStatusButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            
+            bottomAnchor
         ])
     }
 }

@@ -10,8 +10,6 @@ import UIKit
 class PhotosTableViewCell: UITableViewCell {
     
     // MARK: - Subviews
-
-    private var tapGestureRecognizer: UITapGestureRecognizer!
     
     var photosLabel: UILabel = {
         let label = UILabel()
@@ -65,11 +63,16 @@ class PhotosTableViewCell: UITableViewCell {
         setupConstraints()
     }
     
-    // MARK: - Actions
-
-    @objc func buttonTapped(_ sender: UIButton) {
-        print("gesture action")
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        if selected {
+            backgroundColor = UIColor.red // Set your desired background color here
+        } else {
+            backgroundColor = UIColor.white // Set your default background color here
+        }
     }
+
+    
     
     // MARK: - Private
 
@@ -81,8 +84,8 @@ class PhotosTableViewCell: UITableViewCell {
     }
 
     private func setupPreviews() {
-        for ind in 0...2 {
-            let image = getPreviewImage(index: ind)
+        for i in 0...2 {
+            let image = getPreviewImage(index: i)
             imageStackView.addArrangedSubview(image)
             NSLayoutConstraint.activate([
                 image.widthAnchor.constraint(greaterThanOrEqualToConstant: (contentView.frame.width - 24) / 4),

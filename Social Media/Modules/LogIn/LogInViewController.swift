@@ -179,7 +179,7 @@ class LogInViewController: UIViewController {
     // MARK: - Private
     
     private func setupUI() {
-        self.navigationController?.isNavigationBarHidden = true
+        //self.navigationController?.isNavigationBarHidden = true
         view.backgroundColor = .white
     }
     
