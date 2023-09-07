@@ -17,9 +17,16 @@ class ProfileViewController: UIViewController {
         return profileView
     }()
     
+    /*
+    private lazy var sampleCell: UITableViewCell = {
+        let cell = UITableViewCell()
+        cell.textLabel?.text = "Hello, world!"
+        return cell
+    }()
+    */
+    
     private lazy var feedView: UITableView = {
         let feedView = UITableView().feedView(isHeaderHidden: true)
-
         return feedView
     }()
 
@@ -117,6 +124,11 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        /*
+        if indexPath.row == 1 {
+            return sampleCell
+        }
+         */
         if indexPath.row == 0 {
             let cell = PhotosTableViewCell(style: .default, reuseIdentifier: "PhotosTableViewCell")
             return cell
@@ -126,6 +138,7 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
         }
     }
+    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -139,8 +152,9 @@ extension ProfileViewController: UITableViewDataSource {
         return nil
     }
     
+    /*
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.section {
+        switch indexPath.row {
         case 0:
             print("Hello, world!")
             tableView.deselectRow(at: indexPath, animated: false)
@@ -149,6 +163,7 @@ extension ProfileViewController: UITableViewDataSource {
             assertionFailure("no registered section")
         }
     }
+     */
 }
 
 extension ProfileViewController: UITableViewDelegate {

@@ -65,17 +65,9 @@ class PhotosTableViewCell: UITableViewCell {
         setupConstraints()
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
-        let panGesture = UIPanGestureRecognizer(target: self,
-                                            action: #selector(gestureAction))
-        addGestureRecognizer(panGesture)
-    }
-    
     // MARK: - Actions
 
-    @objc func gestureAction() {
+    @objc func buttonTapped(_ sender: UIButton) {
         print("gesture action")
     }
     
