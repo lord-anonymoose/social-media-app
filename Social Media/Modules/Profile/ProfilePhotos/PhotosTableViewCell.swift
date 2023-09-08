@@ -63,16 +63,6 @@ class PhotosTableViewCell: UITableViewCell {
         setupConstraints()
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        if selected {
-            backgroundColor = UIColor.red // Set your desired background color here
-        } else {
-            backgroundColor = UIColor.white // Set your default background color here
-        }
-    }
-
-    
     
     // MARK: - Private
 

@@ -101,9 +101,9 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        setupUI()
         addSuviews()
         setupConstraints()
+        changeBackgroundColor()
     }
      
     // MARK: - Actions
@@ -120,14 +120,19 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setupUI()
         addSuviews()
         setupConstraints()
+        changeBackgroundColor()
     }
     
     // MARK: - Private
-    private func setupUI() {
+    
+    func changeBackgroundColor() {
+       #if DEBUG
+        contentView.backgroundColor = accentColor
+       #else
         contentView.backgroundColor = secondaryColor
+       #endif
     }
         
     private func addSuviews() {

@@ -29,6 +29,14 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        #if DEBUG
+        print("Debug")
+            view.backgroundColor = secondaryColor
+        #else
+            print("Release")
+        view.backgroundColor = accentColor
+        #endif
+        
         setupUI()
         addSubviews()
         setupConstraints()
@@ -67,7 +75,6 @@ class ProfileViewController: UIViewController {
 
     private func setupUI() {
         view.backgroundColor = UIColor(named: "BackgroundColor")
-        print("hello")
     }
     
     private func addSubviews() {
