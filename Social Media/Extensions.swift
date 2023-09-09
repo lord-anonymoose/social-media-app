@@ -64,6 +64,20 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return newImage
     }
+    
+    func cropSquare() -> UIImage {
+        let originalWidth = self.size.width
+        let originalHeight = self.size.height
+        let cropSize = min(originalWidth, originalHeight)
+        
+        let cropRect = CGRect(x: (originalWidth - cropSize) / 2, y: (originalHeight - cropSize) / 2, width: cropSize, height: cropSize)
+        
+        if let cgImage = self.cgImage?.cropping(to: cropRect) {
+            return UIImage(cgImage: cgImage, scale: self.scale, orientation: self.imageOrientation)
+        }
+        
+        return self
+    }
 }
 
 extension Int {
@@ -115,5 +129,29 @@ extension UITableView {
         tableView.sectionHeaderTopPadding = 0
         
         return tableView
+    }
+}
+
+class UITextFieldWithPadding: UITextField {
+    
+    // MARK: - Subviews
+    
+    var textPadding = UIEdgeInsets(
+        top: 0,
+        left: 10,
+        bottom: 0,
+        right: 0
+    )
+    
+    // MARK: - Lifecycle
+    
+    override func textRect(forBounds bounds: CGRect) -> CGRect {
+        let rect = super.textRect(forBounds: bounds)
+        return rect.inset(by: textPadding)
+    }
+
+    override func editingRect(forBounds bounds: CGRect) -> CGRect {
+        let rect = super.editingRect(forBounds: bounds)
+        return rect.inset(by: textPadding)
     }
 }

@@ -5,6 +5,7 @@
 //  Created by Philipp Lazarev on 25.05.2023.
 //
 
+
 import UIKit
 
 class ProfileViewController: UIViewController {
@@ -18,6 +19,7 @@ class ProfileViewController: UIViewController {
     
     private lazy var feedView: UITableView = {
         let feedView = UITableView().feedView(isHeaderHidden: true)
+
         return feedView
     }()
 
@@ -25,9 +27,11 @@ class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupUI()
         addSubviews()
         setupConstraints()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,6 +58,10 @@ class ProfileViewController: UIViewController {
         feedView.contentInset.bottom = 0.0
     }
     
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
     // MARK: - Private
 
     private func setupUI() {
@@ -65,7 +73,6 @@ class ProfileViewController: UIViewController {
     }
 
     private func setupConstraints() {
-        //feedView.frame = view.bounds
         NSLayoutConstraint.activate([
             feedView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             feedView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
@@ -77,6 +84,7 @@ class ProfileViewController: UIViewController {
         feedView.dataSource = self
         feedView.register(PostViewCell.self, forCellReuseIdentifier: "cell")
         feedView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
+        feedView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotosTableViewCell")
     }
     
     private func setupKeyboardObservers() {
@@ -105,13 +113,18 @@ class ProfileViewController: UIViewController {
 
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        myPosts.count
+        myPosts.count + 1 // + 1 for PhotosTableViewCell
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let post = myPosts[indexPath.row]
-        let cell = PostViewCell(style: .default, reuseIdentifier: "cell", author: post.author, image: post.image, description: post.description, likes: post.likes, views: post.views)
-        return cell
+        if indexPath.row == 0 {
+            let cell = PhotosTableViewCell(style: .default, reuseIdentifier: "PhotosTableViewCell")
+            return cell
+        } else {
+            let post = myPosts[indexPath.row - 1]
+            let cell = PostViewCell(style: .default, reuseIdentifier: "cell", author: post.author, image: post.image, description: post.description, likes: post.likes, views: post.views)
+            return cell
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -124,6 +137,17 @@ extension ProfileViewController: UITableViewDataSource {
             return view
         }
         return nil
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0:
+            print("Hello, world!")
+            tableView.deselectRow(at: indexPath, animated: false)
+            navigationController?.pushViewController(PhotosViewController(), animated: true)
+        default:
+            assertionFailure("no registered section")
+        }
     }
 }
 

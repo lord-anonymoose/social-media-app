@@ -128,6 +128,11 @@ class LogInViewController: UIViewController {
         addSubviews()
         setupConstraints()
         setupContentOfScrollView()
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+
+        view.addGestureRecognizer(tap)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -165,6 +170,10 @@ class LogInViewController: UIViewController {
     
     @objc func willHideKeyboard(_ notification: NSNotification) {
         scrollView.contentInset.bottom = 0.0
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     // MARK: - Private
