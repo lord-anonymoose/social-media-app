@@ -97,22 +97,16 @@ class AnyProfileHeaderView: UITableViewHeaderFooterView {
             userImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor
                                                , constant: 16),
             userImage.widthAnchor.constraint(equalToConstant: userImage.layer.cornerRadius * 2),
-            userImage.heightAnchor.constraint(equalToConstant: userImage.layer.cornerRadius * 2)
-        ])
+            userImage.heightAnchor.constraint(equalToConstant: userImage.layer.cornerRadius * 2),
         
-        NSLayoutConstraint.activate([
             userName.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
             userName.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),
-            userName.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16)
-        ])
+            userName.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
         
-        NSLayoutConstraint.activate([
             userStatus.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: 16),
             userStatus.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),
-            userStatus.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16)
-        ])
-        
-        NSLayoutConstraint.activate([
+            userStatus.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            
             bottomAnchor
         ])
     }

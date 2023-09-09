@@ -5,7 +5,6 @@
 //  Created by Philipp Lazarev on 25.05.2023.
 //
 
-
 import UIKit
 
 class ProfileViewController: UIViewController {
@@ -14,12 +13,14 @@ class ProfileViewController: UIViewController {
 
     private lazy var profileView: ProfileHeaderView = {
         let profileView = ProfileHeaderView()
+        profileView.translatesAutoresizingMaskIntoConstraints = false
         return profileView
     }()
     
     private lazy var feedView: UITableView = {
         let feedView = UITableView().feedView(isHeaderHidden: true)
-
+        feedView.isUserInteractionEnabled = true
+        feedView.allowsSelection = true
         return feedView
     }()
 
@@ -27,6 +28,14 @@ class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        #if DEBUG
+        print("Debug")
+            view.backgroundColor = secondaryColor
+        #else
+            print("Release")
+        view.backgroundColor = accentColor
+        #endif
         
         setupUI()
         addSubviews()
@@ -75,15 +84,17 @@ class ProfileViewController: UIViewController {
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             feedView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            feedView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
-            feedView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            feedView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0)
+            feedView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            feedView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            feedView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
 
         feedView.delegate = self
         feedView.dataSource = self
+        
         feedView.register(PostViewCell.self, forCellReuseIdentifier: "cell")
-        feedView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
+        feedView.register(ProfileHeaderView
+            .self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
         feedView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotosTableViewCell")
     }
     
@@ -139,18 +150,15 @@ extension ProfileViewController: UITableViewDataSource {
         return nil
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case 0:
-            print("Hello, world!")
-            tableView.deselectRow(at: indexPath, animated: false)
-            navigationController?.pushViewController(PhotosViewController(), animated: true)
-        default:
-            assertionFailure("no registered section")
-        }
-    }
 }
 
 extension ProfileViewController: UITableViewDelegate {
-    
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            let photosViewController = PhotosViewController()
+            self.navigationController?.pushViewController(photosViewController, animated: true)
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }

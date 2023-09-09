@@ -10,8 +10,6 @@ import UIKit
 class PhotosTableViewCell: UITableViewCell {
     
     // MARK: - Subviews
-
-    private var tapGestureRecognizer: UITapGestureRecognizer!
     
     var photosLabel: UILabel = {
         let label = UILabel()
@@ -65,19 +63,6 @@ class PhotosTableViewCell: UITableViewCell {
         setupConstraints()
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
-        let panGesture = UIPanGestureRecognizer(target: self,
-                                            action: #selector(gestureAction))
-        addGestureRecognizer(panGesture)
-    }
-    
-    // MARK: - Actions
-
-    @objc func gestureAction() {
-        print("gesture action")
-    }
     
     // MARK: - Private
 
@@ -89,8 +74,8 @@ class PhotosTableViewCell: UITableViewCell {
     }
 
     private func setupPreviews() {
-        for ind in 0...2 {
-            let image = getPreviewImage(index: ind)
+        for i in 0...2 {
+            let image = getPreviewImage(index: i)
             imageStackView.addArrangedSubview(image)
             NSLayoutConstraint.activate([
                 image.widthAnchor.constraint(greaterThanOrEqualToConstant: (contentView.frame.width - 24) / 4),
