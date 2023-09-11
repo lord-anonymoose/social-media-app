@@ -35,11 +35,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
          
         tabBarController.selectedIndex = 0
-<<<<<<< HEAD:Social Media/SceneDelegate.swift
-                
-=======
-        
->>>>>>> feature-5:Social Media/Delegates/SceneDelegate.swift
+                        
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
                  
