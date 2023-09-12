@@ -14,6 +14,7 @@ class ProfileViewController: UIViewController {
     private lazy var profileView: ProfileHeaderView = {
         let profileView = ProfileHeaderView()
         profileView.translatesAutoresizingMaskIntoConstraints = false
+        
         return profileView
     }()
     
@@ -22,6 +23,23 @@ class ProfileViewController: UIViewController {
         feedView.isUserInteractionEnabled = true
         feedView.allowsSelection = true
         return feedView
+    }()
+    
+    private lazy var backgroundBlur: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .systemBackground
+        view.alpha = 0.0
+        return view
+    }()
+    
+    private lazy var blurCloseButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(systemName: "xmark.circle"), for: .normal)
+        button.tintColor = .systemBlue
+        button.alpha = 0.0
+        return button
     }()
 
     // MARK: - Lifecycle
@@ -56,6 +74,10 @@ class ProfileViewController: UIViewController {
     }
     
     // MARK: - Actions
+    
+    @objc private func didTapPicture() {
+        print("Did tap Profilw Picture")
+    }
 
     @objc func willShowKeyboard(_ notification: NSNotification) {
         let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height
@@ -79,6 +101,8 @@ class ProfileViewController: UIViewController {
     
     private func addSubviews() {
         view.addSubview(feedView)
+        view.addSubview(backgroundBlur)
+        view.addSubview(blurCloseButton)
     }
 
     private func setupConstraints() {
@@ -86,7 +110,19 @@ class ProfileViewController: UIViewController {
             feedView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             feedView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             feedView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            feedView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            feedView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            
+            backgroundBlur.topAnchor.constraint(equalTo: view.topAnchor),
+            backgroundBlur.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            backgroundBlur.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backgroundBlur.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            blurCloseButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            blurCloseButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            blurCloseButton.heightAnchor.constraint(equalToConstant: 30),
+            blurCloseButton.widthAnchor.constraint(equalToConstant: 30)
+            
+            
         ])
 
         feedView.delegate = self
@@ -145,6 +181,16 @@ extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
             let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView")
+            view?.isUserInteractionEnabled = true
+            
+            
+            let tapRed = UITapGestureRecognizer(
+                target: self,
+                action: #selector(didTapPicture)
+            )
+            
+            tapRed.numberOfTapsRequired = 1
+            view?.userImage.addGestureRecognizer(tapRed)            
             return view
         }
         return nil

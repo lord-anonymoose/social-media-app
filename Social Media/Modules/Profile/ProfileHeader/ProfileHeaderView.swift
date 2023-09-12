@@ -15,13 +15,15 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     private var statusText: String = ""
     
-    private lazy var userImage: UIImageView = {
+    lazy var userImage: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: me.login))
                 
         imageView.layer.cornerRadius = 45
         imageView.clipsToBounds = true
                 
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        imageView.isUserInteractionEnabled = true
         
         return imageView
     }()
