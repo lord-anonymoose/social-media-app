@@ -176,30 +176,10 @@ class ProfileViewController: UIViewController {
             self.blurCloseButton.alpha = 1.0
             self.userImage.alpha = 1.0
             self.userImage.layer.cornerRadius = 0
+            self.userImage.center = CGPoint(x: self.view.center.x, y: self.view.center.y)
         } completion: { finished in
             print("Background blur appeared")
         }
-        
-        UIView.addKeyframe(
-            withRelativeStartTime: 0.25,
-            relativeDuration: 0.25
-        ) {
-            self.profileView.userImage.layer.cornerRadius = 0.0
-            self.profileView.layoutSubviews()
-        }
-        
-        /*
-        UIView.animate(
-            withDuration: 2.5,
-            animations: {
-                self.profileView.userImage.layer.cornerRadius = 0
-                self.profileView.userImage.layoutIfNeeded()
-        }, completion: { _ in
-            UIView.animate(withDuration: 0.5, animations: {
-                print("Corner radius changed")
-            })
-        })
-         */
     }
     
     private func userImageAnimate() {
