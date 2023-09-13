@@ -46,15 +46,7 @@ class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        #if DEBUG
-        print("Debug")
-            view.backgroundColor = secondaryColor
-        #else
-            print("Release")
-        view.backgroundColor = accentColor
-        #endif
-        
+
         setupUI()
         addSubviews()
         setupConstraints()
@@ -183,12 +175,10 @@ extension ProfileViewController: UITableViewDataSource {
             if let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView") as? ProfileHeaderView {
                 view.isUserInteractionEnabled = true
                 
-                
                 let tapRed = UITapGestureRecognizer(
                     target: self,
                     action: #selector(didTapPicture)
                 )
-                
                 tapRed.numberOfTapsRequired = 1
                 view.userImage.addGestureRecognizer(tapRed)
                 return view

@@ -131,7 +131,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     func changeBackgroundColor() {
        #if DEBUG
-        contentView.backgroundColor = accentColor
+        contentView.backgroundColor = .white
        #else
         contentView.backgroundColor = secondaryColor
        #endif
