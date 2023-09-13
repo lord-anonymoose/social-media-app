@@ -180,18 +180,19 @@ extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
-            let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView")
-            view?.isUserInteractionEnabled = true
-            
-            
-            let tapRed = UITapGestureRecognizer(
-                target: self,
-                action: #selector(didTapPicture)
-            )
-            
-            tapRed.numberOfTapsRequired = 1
-            view?.userImage.addGestureRecognizer(tapRed)            
-            return view
+            if let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView") as? ProfileHeaderView {
+                view.isUserInteractionEnabled = true
+                
+                
+                let tapRed = UITapGestureRecognizer(
+                    target: self,
+                    action: #selector(didTapPicture)
+                )
+                
+                tapRed.numberOfTapsRequired = 1
+                view.userImage.addGestureRecognizer(tapRed)
+                return view
+            }
         }
         return nil
     }
