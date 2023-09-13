@@ -13,7 +13,6 @@ class ProfileViewController: UIViewController {
 
     private lazy var profileView: ProfileHeaderView = {
         let profileView = ProfileHeaderView()
-        profileView.translatesAutoresizingMaskIntoConstraints = false
         
         return profileView
     }()
@@ -40,6 +39,19 @@ class ProfileViewController: UIViewController {
         button.tintColor = .systemBlue
         button.alpha = 0.0
         return button
+    }()
+    
+    private lazy var userImage: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: me.login))
+                
+        imageView.layer.cornerRadius = 45
+        imageView.clipsToBounds = true
+                
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+        imageView.alpha = 0.0
+        
+        return imageView
     }()
 
     // MARK: - Lifecycle
@@ -68,7 +80,7 @@ class ProfileViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func didTapPicture() {
-        print("Did tap Profilw Picture")
+        blurAppears()
     }
 
     @objc func willShowKeyboard(_ notification: NSNotification) {
@@ -95,6 +107,7 @@ class ProfileViewController: UIViewController {
         view.addSubview(feedView)
         view.addSubview(backgroundBlur)
         view.addSubview(blurCloseButton)
+        view.addSubview(userImage)
     }
 
     private func setupConstraints() {
@@ -112,9 +125,13 @@ class ProfileViewController: UIViewController {
             blurCloseButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             blurCloseButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             blurCloseButton.heightAnchor.constraint(equalToConstant: 30),
-            blurCloseButton.widthAnchor.constraint(equalToConstant: 30)
+            blurCloseButton.widthAnchor.constraint(equalToConstant: 30),
             
-            
+            userImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            userImage.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor
+                                               , constant: 16),
+            userImage.widthAnchor.constraint(equalToConstant: 90),
+            userImage.heightAnchor.constraint(equalToConstant: 90),
         ])
 
         feedView.delegate = self
@@ -127,26 +144,65 @@ class ProfileViewController: UIViewController {
     }
     
     private func setupKeyboardObservers() {
-            let notificationCenter = NotificationCenter.default
+        let notificationCenter = NotificationCenter.default
             
-            notificationCenter.addObserver(
-                self,
-                selector: #selector(self.willShowKeyboard(_:)),
-                name: UIResponder.keyboardWillShowNotification,
-                object: nil
-            )
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(self.willShowKeyboard(_:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
             
-            notificationCenter.addObserver(
-                self,
-                selector: #selector(self.willHideKeyboard(_:)),
-                name: UIResponder.keyboardWillHideNotification,
-                object: nil
-            )
-        }
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(self.willHideKeyboard(_:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
         
     private func removeKeyboardObservers() {
-            let notificationCenter = NotificationCenter.default
-            notificationCenter.removeObserver(self)
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.removeObserver(self)
+    }
+    
+    private func blurAppears() {
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0.0,
+            options: .curveLinear
+        ) {
+            self.backgroundBlur.alpha = 0.5
+            self.blurCloseButton.alpha = 1.0
+            self.userImage.alpha = 1.0
+            self.userImage.layer.cornerRadius = 0
+        } completion: { finished in
+            print("Background blur appeared")
+        }
+        
+        UIView.addKeyframe(
+            withRelativeStartTime: 0.25,
+            relativeDuration: 0.25
+        ) {
+            self.profileView.userImage.layer.cornerRadius = 0.0
+            self.profileView.layoutSubviews()
+        }
+        
+        /*
+        UIView.animate(
+            withDuration: 2.5,
+            animations: {
+                self.profileView.userImage.layer.cornerRadius = 0
+                self.profileView.userImage.layoutIfNeeded()
+        }, completion: { _ in
+            UIView.animate(withDuration: 0.5, animations: {
+                print("Corner radius changed")
+            })
+        })
+         */
+    }
+    
+    private func userImageAnimate() {
     }
 }
 

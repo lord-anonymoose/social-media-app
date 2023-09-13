@@ -156,8 +156,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             userImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
             userImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor
                                                , constant: 16),
-            userImage.widthAnchor.constraint(equalToConstant: userImage.layer.cornerRadius * 2),
-            userImage.heightAnchor.constraint(equalToConstant: userImage.layer.cornerRadius * 2),
+            userImage.widthAnchor.constraint(equalToConstant: 90),
+            userImage.heightAnchor.constraint(equalToConstant: 90),
             
             userName.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
             userName.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),
