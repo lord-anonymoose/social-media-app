@@ -33,7 +33,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         
         userName.text = me.login
         userName.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        userName.textColor = .black
+        userName.textColor = textColor
         userName.sizeToFit()
         
         userName.translatesAutoresizingMaskIntoConstraints = false
@@ -131,7 +131,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     func changeBackgroundColor() {
        #if DEBUG
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = backgroundColor
        #else
         contentView.backgroundColor = secondaryColor
        #endif

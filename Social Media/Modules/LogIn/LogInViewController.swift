@@ -36,7 +36,7 @@ class LogInViewController: UIViewController {
     }()
     
     private lazy var appLogo: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "AppLogo"))
+        let imageView = UIImageView(image: UIImage(named: "appLogo"))
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -63,7 +63,7 @@ class LogInViewController: UIViewController {
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Username"
-        textField.textColor = .black
+        textField.textColor = textColor
         textField.font = .systemFont(ofSize: 16)
         textField.tintColor = accentColor
         textField.layer.borderWidth = 0.5
@@ -82,7 +82,7 @@ class LogInViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Password"
         textField.isSecureTextEntry = true
-        textField.textColor = .black
+        textField.textColor = textColor
         textField.font = .systemFont(ofSize: 16)
         textField.tintColor = accentColor
         textField.layer.masksToBounds = true
@@ -180,7 +180,7 @@ class LogInViewController: UIViewController {
     
     private func setupUI() {
         //self.navigationController?.isNavigationBarHidden = true
-        view.backgroundColor = .white
+        view.backgroundColor = backgroundColor
     }
     
     private func addSubviews() {
