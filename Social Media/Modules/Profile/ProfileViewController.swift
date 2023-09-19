@@ -8,9 +8,9 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-
+    
     // MARK: - Subviews
-
+    
     private lazy var profileView: ProfileHeaderView = {
         let profileView = ProfileHeaderView()
         
@@ -38,31 +38,35 @@ class ProfileViewController: UIViewController {
         button.setImage(UIImage(systemName: "xmark.circle"), for: .normal)
         button.tintColor = .systemBlue
         button.alpha = 0.0
+        
+        button.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
         return button
     }()
     
     private lazy var userImage: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: me.login))
-                
+        
         imageView.layer.cornerRadius = 45
         imageView.clipsToBounds = true
-                
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-
+        
+        //imageView.translatesAutoresizingMaskIntoConstraints = false
+        
         imageView.alpha = 0.0
+        
+        //imageView.frame = CGRect.init(x: self.view.safeAreaInsets.left + 16, y: self.view.safeAreaInsets.top + 16, width: 90, height: 90)
+        
         
         return imageView
     }()
-
+    
     // MARK: - Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupUI()
         addSubviews()
         setupConstraints()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -77,12 +81,20 @@ class ProfileViewController: UIViewController {
         removeKeyboardObservers()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        setupUserImage()
+    }
+    
     // MARK: - Actions
     
     @objc private func didTapPicture() {
         blurAppears()
     }
-
+    
+    @objc private func didTapCloseButton() {
+        blurDissapears()
+    }
+    
     @objc func willShowKeyboard(_ notification: NSNotification) {
         let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height
         feedView.contentInset.bottom = 0.0
@@ -98,7 +110,7 @@ class ProfileViewController: UIViewController {
     }
     
     // MARK: - Private
-
+    
     private func setupUI() {
         view.backgroundColor = backgroundColor
     }
@@ -109,7 +121,7 @@ class ProfileViewController: UIViewController {
         view.addSubview(blurCloseButton)
         view.addSubview(userImage)
     }
-
+    
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             feedView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
@@ -125,15 +137,10 @@ class ProfileViewController: UIViewController {
             blurCloseButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             blurCloseButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             blurCloseButton.heightAnchor.constraint(equalToConstant: 30),
-            blurCloseButton.widthAnchor.constraint(equalToConstant: 30),
-            
-            userImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            userImage.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor
-                                               , constant: 16),
-            userImage.widthAnchor.constraint(equalToConstant: 90),
-            userImage.heightAnchor.constraint(equalToConstant: 90),
+            blurCloseButton.widthAnchor.constraint(equalToConstant: 30)
         ])
-
+        
+        
         feedView.delegate = self
         feedView.dataSource = self
         
@@ -145,14 +152,14 @@ class ProfileViewController: UIViewController {
     
     private func setupKeyboardObservers() {
         let notificationCenter = NotificationCenter.default
-            
+        
         notificationCenter.addObserver(
             self,
             selector: #selector(self.willShowKeyboard(_:)),
             name: UIResponder.keyboardWillShowNotification,
             object: nil
         )
-            
+        
         notificationCenter.addObserver(
             self,
             selector: #selector(self.willHideKeyboard(_:)),
@@ -160,31 +167,71 @@ class ProfileViewController: UIViewController {
             object: nil
         )
     }
-        
+    
     private func removeKeyboardObservers() {
         let notificationCenter = NotificationCenter.default
         notificationCenter.removeObserver(self)
     }
     
+    private func setupUserImage() {
+        self.userImage.frame = CGRect.init(x: self.view.bounds.inset(by: self.view.safeAreaInsets).minX + 16, y: self.view.bounds.inset(by: self.view.safeAreaInsets).minY + 16, width: 90, height: 90)
+    }
+    
     private func blurAppears() {
+        let screenWidth = self.view.frame.size.width
+        let finalWidth = screenWidth
+        let finalHeight = screenWidth
+        
+        
         UIView.animate(
             withDuration: 0.5,
             delay: 0.0,
             options: .curveLinear
         ) {
-            self.backgroundBlur.alpha = 0.5
-            self.blurCloseButton.alpha = 1.0
+            self.backgroundBlur.alpha = 0.7
             self.userImage.alpha = 1.0
             self.userImage.layer.cornerRadius = 0
             self.userImage.center = CGPoint(x: self.view.center.x, y: self.view.center.y)
+            
+            self.userImage.frame = CGRect(
+                x: (screenWidth - finalWidth) / 2,
+                y: (self.view.frame.size.height - finalHeight) / 2,
+                width: finalWidth,
+                height: finalHeight
+            )
         } completion: { finished in
-            print("Background blur appeared")
+            UIView.animate(
+                withDuration: 0.3,
+                delay: 0.0,
+                options: .curveLinear
+            ) {
+                self.blurCloseButton.alpha = 1.0
+            }
         }
     }
     
-    private func userImageAnimate() {
+    private func blurDissapears() {
+        UIView.animate(
+            withDuration: 0.3,
+            delay: 0.0,
+            options: .curveLinear
+        ) {
+            self.blurCloseButton.alpha = 0.0
+        } completion: { finished in
+            UIView.animate(
+                withDuration: 0.5,
+                delay: 0.0,
+                options: .curveLinear
+            ) {
+                self.backgroundBlur.alpha = 0.0
+                self.setupUserImage()
+                self.userImage.layer.cornerRadius = 45
+                self.userImage.alpha = 0.0
+            }
+        }
     }
 }
+    
 
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
