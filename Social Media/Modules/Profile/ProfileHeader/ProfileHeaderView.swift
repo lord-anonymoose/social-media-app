@@ -138,18 +138,18 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     private func setupConstraints() {
 
         let safeAreaLayoutGuide = contentView.safeAreaLayoutGuide
-            
+
         let bottomAnchor = showStatusButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
         bottomAnchor.priority = .required - 1
 
         userImage.snp.makeConstraints { make in
-            make.top.equalTo(self.safeAreaInsets.top).inset(16)
-            make.left.equalTo(self.safeAreaInsets.left).inset(16)
+            make.top.equalTo(self.safeAreaInsets.top).offset(16)
+            make.left.equalTo(self.safeAreaInsets.left).offset(16)
             make.height.width.equalTo(userImage.layer.cornerRadius * 2)
         }
         
         userName.snp.makeConstraints { make in
-            make.top.equalTo(self.safeAreaInsets.top).inset(16)
+            make.top.equalTo(self.safeAreaInsets.top).offset(16)
             make.left.equalTo(userImage.snp.right).offset(16)
             make.right.equalTo(self.safeAreaInsets.right).inset(-16)
         }
@@ -161,7 +161,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         }
         
         textField.snp.makeConstraints { make in
-            make.top.equalTo(userImage.snp.bottom).offset(16)
+            make.top.equalTo(userStatus.snp.bottom).offset(40)
             make.left.equalTo(self.safeAreaInsets.left).offset(16)
             make.right.equalTo(self.safeAreaInsets.right).offset(-16)
             make.height.equalTo(32)
@@ -171,9 +171,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             make.top.equalTo(textField.snp.bottom).offset(16)
             make.left.equalTo(self.safeAreaInsets.left).offset(16)
             make.right.equalTo(self.safeAreaInsets.right).offset(-16)
-            make.bottom.equalTo(self.safeAreaInsets.bottom).offset(-16)
         }
         
-        //let bottomAnchor = showStatusButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
+        NSLayoutConstraint.activate([bottomAnchor])
     }
 }

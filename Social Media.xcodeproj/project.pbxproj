@@ -14,6 +14,7 @@
 		8E0614C12AABA83500DB3BBD /* StorageService.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E0614AC2AABA83500DB3BBD /* StorageService.framework */; };
 		8E0614C22AABA83500DB3BBD /* StorageService.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8E0614AC2AABA83500DB3BBD /* StorageService.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8E0614CB2AABA96B00DB3BBD /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0614CA2AABA96B00DB3BBD /* StorageService.swift */; };
+		8E070B1E2AD468B8004CE494 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 8E070B1D2AD468B8004CE494 /* iOSIntPackage */; };
 		8E1F68042A51739C008AE130 /* PostViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F68032A51739C008AE130 /* PostViewCell.swift */; };
 		8E2D1B322A54BE3400003EFF /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D1B312A54BE3400003EFF /* UserData.swift */; };
 		8E2D1B342A54C32300003EFF /* UserPosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D1B332A54C32300003EFF /* UserPosts.swift */; };
@@ -137,6 +138,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E070B1E2AD468B8004CE494 /* iOSIntPackage in Frameworks */,
 				8E0614C12AABA83500DB3BBD /* StorageService.framework in Frameworks */,
 				40475882AFDB9A8808F158B1 /* Pods_Social_Media.framework in Frameworks */,
 			);
@@ -320,7 +322,6 @@
 				1A0B83A91486E5C6BCD5556F /* Pods-StorageService-StorageServiceTests.debug.xcconfig */,
 				60A8AF533EEEFF5457DD862B /* Pods-StorageService-StorageServiceTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -395,6 +396,9 @@
 				8E0614C02AABA83500DB3BBD /* PBXTargetDependency */,
 			);
 			name = "Social Media";
+			packageProductDependencies = (
+				8E070B1D2AD468B8004CE494 /* iOSIntPackage */,
+			);
 			productName = "Social Media";
 			productReference = 8E4C15462A2699D800AA511B /* Social Media.app */;
 			productType = "com.apple.product-type.application";
@@ -430,6 +434,9 @@
 				Base,
 			);
 			mainGroup = 8E4C153D2A2699D800AA511B;
+			packageReferences = (
+				8E070B1C2AD468B8004CE494 /* XCRemoteSwiftPackageReference "iOSIntPackage" */,
+			);
 			productRefGroup = 8E4C15472A2699D800AA511B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -962,6 +969,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8E070B1C2AD468B8004CE494 /* XCRemoteSwiftPackageReference "iOSIntPackage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/TrueMax/iOSIntPackage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8E070B1D2AD468B8004CE494 /* iOSIntPackage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8E070B1C2AD468B8004CE494 /* XCRemoteSwiftPackageReference "iOSIntPackage" */;
+			productName = iOSIntPackage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8E4C153E2A2699D800AA511B /* Project object */;
 }
