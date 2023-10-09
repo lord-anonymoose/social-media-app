@@ -8,6 +8,7 @@
 // A UIView to represent any user profile except for the current user
 
 import UIKit
+import SnapKit
 
 class AnyProfileHeaderView: UITableViewHeaderFooterView {
     
