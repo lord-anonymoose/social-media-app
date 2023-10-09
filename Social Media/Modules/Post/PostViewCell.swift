@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import iOSIntPackage
 
 class PostViewCell: UITableViewCell {
     
@@ -29,6 +30,7 @@ class PostViewCell: UITableViewCell {
     
     let imgView: UIImageView = {
         let view = UIImageView()
+                
         view.backgroundColor = .black
         view.translatesAutoresizingMaskIntoConstraints = false
         view.contentMode = .scaleAspectFit
@@ -93,7 +95,19 @@ class PostViewCell: UITableViewCell {
         
         authorLabel.text = author
         authorProfilePicture.image = UIImage(named: author)
-        imgView.image = UIImage(named: image)
+        
+        let imageProcessor = ImageProcessor()
+
+        imageProcessor.processImage(sourceImage: UIImage(named: image) ?? UIImage(), filter: .noir) { filteredImage in
+            if let filteredImage = filteredImage {
+                imgView.image = filteredImage
+            } else {
+                imgView.image = UIImage(named: "notFound")!
+            }
+        }
+        
+        //imgView.image = UIImage(named: image)
+        
         descriptionLabel.text = description
         likesLabel.attributedText = likes.formattedString().embedSymbol(symbol: "heart")
         viewsLabel.attributedText = views.formattedString().embedSymbol(symbol: "eye")

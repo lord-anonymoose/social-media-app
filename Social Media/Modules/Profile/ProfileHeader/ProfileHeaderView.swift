@@ -161,7 +161,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         }
         
         textField.snp.makeConstraints { make in
-            make.top.equalTo(userStatus.snp.bottom).offset(40)
+            make.top.equalTo(userImage.snp.bottom).offset(20)
             make.left.equalTo(self.safeAreaInsets.left).offset(16)
             make.right.equalTo(self.safeAreaInsets.right).offset(-16)
             make.height.equalTo(32)
@@ -172,7 +172,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             make.left.equalTo(self.safeAreaInsets.left).offset(16)
             make.right.equalTo(self.safeAreaInsets.right).offset(-16)
         }
-        
+
         NSLayoutConstraint.activate([bottomAnchor])
     }
 }
