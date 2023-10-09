@@ -6,6 +6,7 @@
 //
 
 // A UIView to represent any user profile except for the current user
+// Following code is yet to be refactored
 
 import UIKit
 import SnapKit
@@ -92,22 +93,22 @@ class AnyProfileHeaderView: UITableViewHeaderFooterView {
         let bottomAnchor = userImage.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
         bottomAnchor.priority = .required - 1
             
-        NSLayoutConstraint.activate([
-            userImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
-            userImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor
-                                               , constant: 16),
-            userImage.widthAnchor.constraint(equalToConstant: userImage.layer.cornerRadius * 2),
-            userImage.heightAnchor.constraint(equalToConstant: userImage.layer.cornerRadius * 2),
+        userImage.snp.makeConstraints { make in
+            make.top.equalTo(self.safeAreaInsets.top).inset(16)
+            make.left.equalTo(self.safeAreaInsets.left).inset(16)
+            make.height.width.equalTo(userImage.layer.cornerRadius * 2)
+        }
         
-            userName.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
-            userName.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),
-            userName.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+        userName.snp.makeConstraints { make in
+            make.top.equalTo(self.safeAreaInsets.top).inset(16)
+            make.left.equalTo(userImage.snp.right).offset(16)
+            make.right.equalTo(self.safeAreaInsets.right).inset(-16)
+        }
         
-            userStatus.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: 16),
-            userStatus.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),
-            userStatus.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            
-            bottomAnchor
-        ])
+        userStatus.snp.makeConstraints { make in
+            make.top.equalTo(userName.snp.bottom).offset(16)
+            make.left.equalTo(userImage.snp.right).offset(16)
+            make.right.equalTo(self.safeAreaInsets.right).offset(-16)
+        }
     }
 }
