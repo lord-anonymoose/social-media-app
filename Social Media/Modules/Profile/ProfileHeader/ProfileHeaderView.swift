@@ -15,13 +15,15 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     private var statusText: String = ""
     
-    private lazy var userImage: UIImageView = {
+    lazy var userImage: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: me.login))
                 
         imageView.layer.cornerRadius = 45
         imageView.clipsToBounds = true
                 
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        imageView.isUserInteractionEnabled = true
         
         return imageView
     }()
@@ -31,7 +33,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         
         userName.text = me.login
         userName.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        userName.textColor = .black
+        userName.textColor = textColor
         userName.sizeToFit()
         
         userName.translatesAutoresizingMaskIntoConstraints = false
@@ -129,7 +131,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     func changeBackgroundColor() {
        #if DEBUG
-        contentView.backgroundColor = accentColor
+        contentView.backgroundColor = backgroundColor
        #else
         contentView.backgroundColor = secondaryColor
        #endif
@@ -154,8 +156,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             userImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
             userImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor
                                                , constant: 16),
-            userImage.widthAnchor.constraint(equalToConstant: userImage.layer.cornerRadius * 2),
-            userImage.heightAnchor.constraint(equalToConstant: userImage.layer.cornerRadius * 2),
+            userImage.widthAnchor.constraint(equalToConstant: 90),
+            userImage.heightAnchor.constraint(equalToConstant: 90),
             
             userName.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
             userName.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),

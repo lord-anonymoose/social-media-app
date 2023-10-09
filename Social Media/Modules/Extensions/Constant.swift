@@ -10,3 +10,5 @@ import UIKit
 
 let accentColor = UIColor(hex: "#01937C")
 let secondaryColor = UIColor(hex: "#FFC074")
+let textColor = UIColor(named: "BlackAndWhite")
+let backgroundColor = UIColor(named: "BackgroundColor")
