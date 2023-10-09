@@ -173,6 +173,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             make.right.equalTo(self.safeAreaInsets.right).offset(-16)
         }
 
+        // To be discussed
+        
         NSLayoutConstraint.activate([bottomAnchor])
     }
 }
