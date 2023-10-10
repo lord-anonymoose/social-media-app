@@ -44,7 +44,7 @@ class ProfileViewController: UIViewController {
     }()
     
     private lazy var userImage: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: me.login))
+        let imageView = UIImageView(image: UIImage(named: strawberry_moose.login))
         
         imageView.layer.cornerRadius = 45
         imageView.clipsToBounds = true

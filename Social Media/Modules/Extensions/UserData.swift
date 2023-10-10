@@ -7,7 +7,7 @@
 
 import StorageService
 
-public var me = StorageService.User(login: "strawberry_moose", name: "Philipp Lazarev")
+public var strawberry_moose = StorageService.User(login: "strawberry_moose", name: "Philipp Lazarev")
 public var katyperry = StorageService.User(login: "katyperry", name: "Katy Perry")
 public var teddyphotos = StorageService.User(login: "teddyphotos", name: "Ed Sheeran")
 public var joebiden = StorageService.User(login: "joebiden", name: "Joe Biden")

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 public class StorageService {
     
@@ -13,10 +14,12 @@ public class StorageService {
         let id = UUID()
         public var login: String
         public var name: String
+        public var image: UIImage
         
         public init(login: String, name: String) {
             self.login = login
             self.name = name
+            self.image = UIImage(named: login) ?? UIImage(named: "default")!
         }
     }
     

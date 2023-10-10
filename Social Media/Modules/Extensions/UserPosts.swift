@@ -8,10 +8,10 @@ import UIKit
 import StorageService
 
 public var myPosts = [
-    StorageService.Post(author: me.login, description: "Breathtaking Dublin ☘️🇮🇪", image: "my_post1", likes: 96, views: 100),
-    StorageService.Post(author: me.login, description: "Wonderful Madrid 🐻🇪🇸", image: "my_post2", likes: 90, views: 99),
-    StorageService.Post(author: me.login, description: "Warm Tbilisi ☀️🇬🇪", image: "my_post3", likes: 89, views: 96 ),
-    StorageService.Post(author: me.login, description: "Calm Paderborn 🏰🇩🇪", image: "my_post4", likes: 88, views: 95)
+    StorageService.Post(author: strawberry_moose.login, description: "Breathtaking Dublin ☘️🇮🇪", image: "my_post1", likes: 96, views: 100),
+    StorageService.Post(author: strawberry_moose.login, description: "Wonderful Madrid 🐻🇪🇸", image: "my_post2", likes: 90, views: 99),
+    StorageService.Post(author: strawberry_moose.login, description: "Warm Tbilisi ☀️🇬🇪", image: "my_post3", likes: 89, views: 96 ),
+    StorageService.Post(author: strawberry_moose.login, description: "Calm Paderborn 🏰🇩🇪", image: "my_post4", likes: 88, views: 95)
 ]
 
 public var posts = [
@@ -49,8 +49,8 @@ public var posts = [
 
 public var myPhotos: [UIImage] = {
     var array = [UIImage]()
-    for i in 1...20 {
-        if let newImage = UIImage(named: "my_photo\(i)") {
+    for i in 0...3 {
+        if let newImage = UIImage(named: myPosts[i].image) {
             array.append(newImage)
         }
     }
