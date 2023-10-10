@@ -148,6 +148,7 @@ class ProfileViewController: UIViewController {
         feedView.register(ProfileHeaderView
             .self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
         feedView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotosTableViewCell")
+        
     }
     
     private func setupKeyboardObservers() {

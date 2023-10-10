@@ -95,7 +95,10 @@ class PostViewCell: UITableViewCell {
         
         authorLabel.text = author
         authorProfilePicture.image = UIImage(named: author)
+
+        //Following code crucially affects app's productivity and it removed for now
         
+        /*
         let imageProcessor = ImageProcessor()
 
         imageProcessor.processImage(sourceImage: UIImage(named: image) ?? UIImage(), filter: .noir) { filteredImage in
@@ -105,8 +108,9 @@ class PostViewCell: UITableViewCell {
                 imgView.image = UIImage(named: "notFound")!
             }
         }
+        */
         
-        //imgView.image = UIImage(named: image)
+        imgView.image = UIImage(named: image)
         
         descriptionLabel.text = description
         likesLabel.attributedText = likes.formattedString().embedSymbol(symbol: "heart")

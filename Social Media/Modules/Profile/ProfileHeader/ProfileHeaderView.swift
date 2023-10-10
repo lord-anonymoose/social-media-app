@@ -141,38 +141,42 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
 
         let bottomAnchor = showStatusButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
         bottomAnchor.priority = .required - 1
-
+        
         userImage.snp.makeConstraints { make in
-            make.top.equalTo(self.safeAreaInsets.top).offset(16)
-            make.left.equalTo(self.safeAreaInsets.left).offset(16)
+            make.top.equalTo(contentView.snp.top).offset(16)
+            make.left.equalTo(contentView.snp.left).offset(16)
             make.height.width.equalTo(userImage.layer.cornerRadius * 2)
         }
         
         userName.snp.makeConstraints { make in
-            make.top.equalTo(self.safeAreaInsets.top).offset(16)
+            make.top.equalTo(contentView.snp.top).offset(16)
             make.left.equalTo(userImage.snp.right).offset(16)
-            make.right.equalTo(self.safeAreaInsets.right).inset(-16)
+            make.right.equalTo(contentView.snp.right).offset(-16)
         }
         
         userStatus.snp.makeConstraints { make in
             make.top.equalTo(userName.snp.bottom).offset(16)
             make.left.equalTo(userImage.snp.right).offset(16)
-            make.right.equalTo(self.safeAreaInsets.right).offset(-16)
+            make.right.equalTo(contentView.snp.right).offset(-16)
         }
         
         textField.snp.makeConstraints { make in
-            make.top.equalTo(userImage.snp.bottom).offset(20)
-            make.left.equalTo(self.safeAreaInsets.left).offset(16)
-            make.right.equalTo(self.safeAreaInsets.right).offset(-16)
+            make.top.equalTo(userStatus.snp.bottom).offset(16)
+            make.left.equalTo(userImage.snp.right).offset(16)
+            make.right.equalTo(contentView.snp.right).offset(-16)
             make.height.equalTo(32)
         }
         
         showStatusButton.snp.makeConstraints { make in
             make.top.equalTo(textField.snp.bottom).offset(16)
-            make.left.equalTo(self.safeAreaInsets.left).offset(16)
-            make.right.equalTo(self.safeAreaInsets.right).offset(-16)
+            make.left.equalTo(contentView.snp.left).offset(16)
+            make.right.equalTo(contentView.snp.right).offset(-16)
+            
+            //make.bottom.equalTo(contentView.snp.bottom).offset(-16)
         }
 
+        // To be discussed
+        
         NSLayoutConstraint.activate([bottomAnchor])
     }
 }
