@@ -6,14 +6,16 @@
 //
 
 import UIKit
+import StorageService
 
 class ProfileViewController: UIViewController {
     
     // MARK: - Subviews
-    
+    private var user: StorageService.User
+        
     private lazy var profileView: ProfileHeaderView = {
         let profileView = ProfileHeaderView()
-        
+
         return profileView
     }()
     
@@ -60,6 +62,14 @@ class ProfileViewController: UIViewController {
     }()
     
     // MARK: - Lifecycle
+    init(user: StorageService.User) {
+        self.user = user
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,6 +93,7 @@ class ProfileViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         setupUserImage()
+        print(user)
     }
     
     // MARK: - Actions
@@ -236,7 +247,7 @@ class ProfileViewController: UIViewController {
 
 extension ProfileViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        myPosts.count + 1 // + 1 for PhotosTableViewCell
+        posts.filter { $0.author == user.login }.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -244,6 +255,7 @@ extension ProfileViewController: UITableViewDataSource {
             let cell = PhotosTableViewCell(style: .default, reuseIdentifier: "PhotosTableViewCell")
             return cell
         } else {
+            let myPosts = posts.filter { $0.author == user.login }
             let post = myPosts[indexPath.row - 1]
             let cell = PostViewCell(style: .default, reuseIdentifier: "cell", author: post.author, image: post.image, description: post.description, likes: post.likes, views: post.views)
             return cell
@@ -265,6 +277,7 @@ extension ProfileViewController: UITableViewDataSource {
                 )
                 tapRed.numberOfTapsRequired = 1
                 view.userImage.addGestureRecognizer(tapRed)
+                view.user = self.user
                 return view
             }
         }

@@ -150,7 +150,7 @@ class LogInViewController: UIViewController {
     // MARK: - Actions
 
     @objc func loggedIn(_ sender: UIButton) {
-        let profileViewController = ProfileViewController()
+        let profileViewController = ProfileViewController(user: katyperry)
         
         if let navigationController = navigationController {
             navigationController.setViewControllers([profileViewController], animated: true)

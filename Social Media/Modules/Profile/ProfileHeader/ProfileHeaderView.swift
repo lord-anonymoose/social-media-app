@@ -8,15 +8,19 @@
 // Adding comment just to check
 
 import UIKit
+import SnapKit
+import StorageService
 
 class ProfileHeaderView: UITableViewHeaderFooterView {
     
     // MARK: - Subviews
     
+    public var user: StorageService.User = defaultUser
+    
     private var statusText: String = ""
     
     lazy var userImage: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: strawberry_moose.login))
+        let imageView = UIImageView(image: UIImage(named: user.login))
                 
         imageView.layer.cornerRadius = 45
         imageView.clipsToBounds = true
@@ -29,7 +33,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     private lazy var userName: UILabel = {
         let userName = UILabel()
         
-        userName.text = strawberry_moose.login
+        userName.text = user.login
         userName.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         userName.textColor = textColor
         userName.sizeToFit()
@@ -111,6 +115,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     }
     
     required init?(coder aDecoder: NSCoder) {
+        self.user = defaultUser
         super.init(coder: aDecoder)
         addSuviews()
         setupConstraints()

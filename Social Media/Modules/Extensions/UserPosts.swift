@@ -7,12 +7,14 @@
 import UIKit
 import StorageService
 
+/*
 public var myPosts = [
     StorageService.Post(author: strawberry_moose.login, description: "Breathtaking Dublin ☘️🇮🇪", image: "my_post1", likes: 96, views: 100),
     StorageService.Post(author: strawberry_moose.login, description: "Wonderful Madrid 🐻🇪🇸", image: "my_post2", likes: 90, views: 99),
     StorageService.Post(author: strawberry_moose.login, description: "Warm Tbilisi ☀️🇬🇪", image: "my_post3", likes: 89, views: 96 ),
     StorageService.Post(author: strawberry_moose.login, description: "Calm Paderborn 🏰🇩🇪", image: "my_post4", likes: 88, views: 95)
 ]
+*/
 
 public var posts = [
     StorageService.Post(author: "katyperry", description: "hi it's hunger games but also #AmericanIdol (but actually it's duets) 🤺", image: "katyperry_post1", likes: 268_559, views: 300_232),
@@ -47,10 +49,21 @@ public var posts = [
     StorageService.Post(author: "mkbhd", description: "I made my own shoe with Atoms! It's called 251. The length of my first YouTube video was 2:51, and this feels like a new beginning in the same way 🤓 Everything from the sole to the laces was designed by yours truly. It's been a 2 year design/build process and I'm so pumped to finally get them out in the world! They ship immediately and link is in bio!", image: "mkbhd_post3", likes: 263_359, views: 473_234),
 ].shuffled()
 
+/*
 public var myPhotos: [UIImage] = {
     var array = [UIImage]()
     for i in 0...3 {
         if let newImage = UIImage(named: myPosts[i].image) {
+            array.append(newImage)
+        }
+    }
+    return array
+}()
+*/
+public var myPhotos: [UIImage] = {
+    var array = [UIImage]()
+    for i in 0...3 {
+        if let newImage = UIImage(named: posts[i].image) {
             array.append(newImage)
         }
     }
