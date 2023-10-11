@@ -12,6 +12,10 @@ class ProfileViewController: UIViewController {
     
     // MARK: - Subviews
     private var user: StorageService.User
+    
+    private var userPosts: [StorageService.Post]
+    
+    private var userPhotos: [UIImage]
         
     private lazy var profileView: ProfileHeaderView = {
         let profileView = ProfileHeaderView()
@@ -50,13 +54,8 @@ class ProfileViewController: UIViewController {
         
         imageView.layer.cornerRadius = 45
         imageView.clipsToBounds = true
-        
-        //imageView.translatesAutoresizingMaskIntoConstraints = false
-        
+                
         imageView.alpha = 0.0
-        
-        //imageView.frame = CGRect.init(x: self.view.safeAreaInsets.left + 16, y: self.view.safeAreaInsets.top + 16, width: 90, height: 90)
-        
         
         return imageView
     }()
@@ -64,6 +63,15 @@ class ProfileViewController: UIViewController {
     // MARK: - Lifecycle
     init(user: StorageService.User) {
         self.user = user
+        self.userPosts = posts.filter { $0.author == user.login }
+        
+        var photos = [UIImage]()
+        
+        for p in userPosts {
+            photos.append(UIImage(named: p.image)!)
+        }
+        
+        self.userPhotos = photos
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -268,16 +276,16 @@ extension ProfileViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        posts.filter { $0.author == user.login }.count + 1
+        userPosts.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = PhotosTableViewCell(style: .default, reuseIdentifier: "PhotosTableViewCell")
+            cell.userPhotos = userPhotos
             return cell
         } else {
-            let myPosts = posts.filter { $0.author == user.login }
-            let post = myPosts[indexPath.row - 1]
+            let post = userPosts[indexPath.row - 1]
             let cell = PostViewCell(style: .default, reuseIdentifier: "cell", author: post.author, image: post.image, description: post.description, likes: post.likes, views: post.views)
             return cell
         }
@@ -288,7 +296,7 @@ extension ProfileViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            let photosViewController = PhotosViewController()
+            let photosViewController = PhotosViewController(userPhotos: userPhotos)
             self.navigationController?.pushViewController(photosViewController, animated: true)
         }
         tableView.deselectRow(at: indexPath, animated: true)

@@ -150,7 +150,7 @@ class LogInViewController: UIViewController {
     // MARK: - Actions
 
     @objc func loggedIn(_ sender: UIButton) {
-        let profileViewController = ProfileViewController(user: katyperry)
+        let profileViewController = ProfileViewController(user: timcook)
         
         if let navigationController = navigationController {
             navigationController.setViewControllers([profileViewController], animated: true)
@@ -179,7 +179,6 @@ class LogInViewController: UIViewController {
     // MARK: - Private
     
     private func setupUI() {
-        //self.navigationController?.isNavigationBarHidden = true
         view.backgroundColor = backgroundColor
     }
     

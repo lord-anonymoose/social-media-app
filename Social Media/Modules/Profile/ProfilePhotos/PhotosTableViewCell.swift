@@ -10,6 +10,12 @@ import UIKit
 class PhotosTableViewCell: UITableViewCell {
     
     // MARK: - Subviews
+    public var userPhotos: [UIImage]? {
+        didSet {
+            setupPreviews(images: userPhotos ?? [UIImage]())
+            setupConstraints()
+        }
+    }
     
     var photosLabel: UILabel = {
         let label = UILabel()
@@ -37,10 +43,12 @@ class PhotosTableViewCell: UITableViewCell {
         return stack
     }()
 
-    func getPreviewImage(index: Int) -> UIImageView {
+    func getPreviewImage(images: [UIImage], index: Int) -> UIImageView {
         let preview = UIImageView()
         preview.translatesAutoresizingMaskIntoConstraints = false
-        preview.image = myPhotos[index]
+        if index < images.count {
+            preview.image = images[index]
+        }
         preview.contentMode = .scaleAspectFill
         preview.layer.cornerRadius = 6
         preview.clipsToBounds = true
@@ -52,14 +60,12 @@ class PhotosTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubviews()
-        setupPreviews()
         setupConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         addSubviews()
-        setupPreviews()
         setupConstraints()
     }
     
@@ -73,9 +79,9 @@ class PhotosTableViewCell: UITableViewCell {
         contentView.addSubview(imageStackView)
     }
 
-    private func setupPreviews() {
+    private func setupPreviews(images: [UIImage]) {
         for i in 0...2 {
-            let image = getPreviewImage(index: i)
+            let image = getPreviewImage(images: images, index: i)
             imageStackView.addArrangedSubview(image)
             NSLayoutConstraint.activate([
                 image.widthAnchor.constraint(greaterThanOrEqualToConstant: (contentView.frame.width - 24) / 4),

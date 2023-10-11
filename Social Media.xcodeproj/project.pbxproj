@@ -272,9 +272,9 @@
 		8E586B4E2AA896EB00D89AF6 /* ProfilePhotos */ = {
 			isa = PBXGroup;
 			children = (
-				8EAD99672A599704004D3BEF /* PhotosTableViewCell.swift */,
 				8E586B4B2AA877BD00D89AF6 /* PhotosViewController.swift */,
 				8E586B512AA898B500D89AF6 /* PhotosCollectionViewCell.swift */,
+				8EAD99672A599704004D3BEF /* PhotosTableViewCell.swift */,
 			);
 			path = ProfilePhotos;
 			sourceTree = "<group>";

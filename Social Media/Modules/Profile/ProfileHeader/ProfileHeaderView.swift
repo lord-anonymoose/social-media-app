@@ -15,12 +15,17 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     // MARK: - Subviews
     
-    public var user: StorageService.User?
+    public var user: StorageService.User? {
+        didSet {
+            userImage.image = UIImage(named: user?.login ?? "default")
+            userName.text = user?.login ?? "default"
+        }
+    }
     
     private var statusText: String = ""
     
     lazy var userImage: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: user?.login ?? "default"))
+        let imageView = UIImageView(image: UIImage(named: "default"))
         imageView.layer.cornerRadius = 45
         imageView.clipsToBounds = true
                         
@@ -32,7 +37,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     private lazy var userName: UILabel = {
         let userName = UILabel()
         
-        userName.text = user?.login ?? "default"
+        userName.text = "default"
         userName.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         userName.textColor = textColor
         userName.sizeToFit()
@@ -96,7 +101,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        setUser()
         addSuviews()
         setupConstraints()
         changeBackgroundColor()
@@ -122,14 +126,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     }
     
     // MARK: - Private
-    func setUser() {
-        if let usr = user {
-            print(usr)
-        } else {
-            self.user = defaultUser
-            print("Failed")
-        }
-    }
     
     func changeBackgroundColor() {
        #if DEBUG
@@ -185,6 +181,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             make.right.equalTo(contentView.snp.right).offset(-16)
             
             make.bottom.equalTo(contentView.snp.bottom).offset(-16).priority(999)
-        }        
+        }
     }
 }
