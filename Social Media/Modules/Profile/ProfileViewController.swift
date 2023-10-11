@@ -46,7 +46,7 @@ class ProfileViewController: UIViewController {
     }()
     
     private lazy var userImage: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: strawberry_moose.login))
+        let imageView = UIImageView(image: UIImage(named: user.login))
         
         imageView.layer.cornerRadius = 45
         imageView.clipsToBounds = true
@@ -93,7 +93,6 @@ class ProfileViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         setupUserImage()
-        print(user)
     }
     
     // MARK: - Actions
@@ -246,6 +245,28 @@ class ProfileViewController: UIViewController {
     
 
 extension ProfileViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 0 {
+            if let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView") as? ProfileHeaderView {
+                view.isUserInteractionEnabled = true
+                view.user = user
+                let tapRed = UITapGestureRecognizer(
+                    target: self,
+                    action: #selector(didTapPicture)
+                )
+                tapRed.numberOfTapsRequired = 1
+                view.userImage.addGestureRecognizer(tapRed)
+                return view
+            }
+        }
+        return nil
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         posts.filter { $0.author == user.login }.count + 1
     }
@@ -261,29 +282,6 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
         }
     }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 0 {
-            if let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView") as? ProfileHeaderView {
-                view.isUserInteractionEnabled = true
-                
-                let tapRed = UITapGestureRecognizer(
-                    target: self,
-                    action: #selector(didTapPicture)
-                )
-                tapRed.numberOfTapsRequired = 1
-                view.userImage.addGestureRecognizer(tapRed)
-                view.user = self.user
-                return view
-            }
-        }
-        return nil
-    }
-    
 }
 
 extension ProfileViewController: UITableViewDelegate {
