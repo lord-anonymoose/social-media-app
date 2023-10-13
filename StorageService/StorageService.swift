@@ -15,6 +15,7 @@ public class StorageService {
         public var login: String
         public var name: String
         public var image: UIImage
+        public var status: String?
         
         public init(login: String, name: String) {
             self.login = login

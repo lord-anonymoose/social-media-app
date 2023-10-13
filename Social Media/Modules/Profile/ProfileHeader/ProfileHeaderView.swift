@@ -8,7 +8,6 @@
 // Adding comment just to check
 
 import UIKit
-import SnapKit
 import StorageService
 
 class ProfileHeaderView: UITableViewHeaderFooterView {
@@ -19,6 +18,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         didSet {
             userImage.image = UIImage(named: user?.login ?? "default")
             userName.text = user?.login ?? "default"
+            setupConstraints()
         }
     }
     
@@ -31,6 +31,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
                         
         imageView.isUserInteractionEnabled = true
         
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
         return imageView
     }()
     
@@ -41,7 +43,9 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         userName.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         userName.textColor = textColor
         userName.sizeToFit()
-                
+        
+        userName.translatesAutoresizingMaskIntoConstraints = false
+
         return userName
     }()
     
@@ -55,6 +59,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         userStatus.lineBreakMode = .byWordWrapping
         userStatus.textAlignment = .left
                 
+        userStatus.translatesAutoresizingMaskIntoConstraints = false
+
         return userStatus
     }()
     
@@ -75,6 +81,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
                 
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         
+        button.translatesAutoresizingMaskIntoConstraints = false
+
         return button
     }()
     
@@ -94,6 +102,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
                 
         textField.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)
         
+        textField.translatesAutoresizingMaskIntoConstraints = false
+
         return textField
     }()
 
@@ -102,7 +112,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         addSuviews()
-        setupConstraints()
+        //setupConstraints()
         changeBackgroundColor()
     }
     
@@ -144,43 +154,36 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     }
         
     private func setupConstraints() {
-
+        
         let safeAreaLayoutGuide = contentView.safeAreaLayoutGuide
 
         let bottomAnchor = showStatusButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
         bottomAnchor.priority = .required - 1
-        
-        userImage.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(16)
-            make.left.equalTo(contentView.snp.left).offset(16)
-            make.height.width.equalTo(userImage.layer.cornerRadius * 2)
-        }
-        
-        userName.snp.makeConstraints { make in
-            make.top.equalTo(contentView.snp.top).offset(16)
-            make.left.equalTo(userImage.snp.right).offset(16)
-            make.right.equalTo(contentView.snp.right).offset(-16)
-        }
-        
-        userStatus.snp.makeConstraints { make in
-            make.top.equalTo(userName.snp.bottom).offset(16)
-            make.left.equalTo(userImage.snp.right).offset(16)
-            make.right.equalTo(contentView.snp.right).offset(-16)
-        }
-        
-        textField.snp.makeConstraints { make in
-            make.top.equalTo(userStatus.snp.bottom).offset(16)
-            make.left.equalTo(userImage.snp.right).offset(16)
-            make.right.equalTo(contentView.snp.right).offset(-16)
-            make.height.equalTo(32)
-        }
-        
-        showStatusButton.snp.makeConstraints { make in
-            make.top.equalTo(textField.snp.bottom).offset(16)
-            make.left.equalTo(contentView.snp.left).offset(16)
-            make.right.equalTo(contentView.snp.right).offset(-16)
-            
-            make.bottom.equalTo(contentView.snp.bottom).offset(-16).priority(999)
-        }
+             
+        NSLayoutConstraint.activate([
+            userImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
+            userImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            userImage.widthAnchor.constraint(equalToConstant: 90),
+            userImage.heightAnchor.constraint(equalToConstant: 90),
+             
+            userName.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
+            userName.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),
+            userName.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+         
+            userStatus.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: 16),
+            userStatus.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),
+            userStatus.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+
+            textField.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: 48),
+            textField.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),
+            textField.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            textField.heightAnchor.constraint(equalToConstant: 32),
+         
+            showStatusButton.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 16),
+            showStatusButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            showStatusButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+             
+            bottomAnchor
+         ])
     }
 }

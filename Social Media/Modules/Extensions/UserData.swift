@@ -7,6 +7,28 @@
 
 import StorageService
 
+var users = [
+    StorageService.User(login: "default", name: "default"), // default user
+    StorageService.User(login: "strawberry_moose", name: "Philipp Lazarev"),
+    StorageService.User(login: "katyperry", name: "Katy Perry"),
+    StorageService.User(login: "teddyphotos", name: "Ed Sheeran"),
+    StorageService.User(login: "joebiden", name: "Joe Biden"),
+    StorageService.User(login: "tim_cook", name: "Tim Cook"),
+    StorageService.User(login: "ryantedder", name: "Ryan Tedder"),
+    StorageService.User(login: "billieeilish", name: "Billie Eilish"),
+    StorageService.User(login: "ijustine", name: "iJustine"),
+    StorageService.User(login: "mkbhd", name: "Marques Brownlee")
+]
+
+func getUser(login: String) -> StorageService.User {
+    for user in users {
+        if user.login == login {
+            return user
+        }
+    }
+    return users[0] // default user
+}
+;
 public var strawberry_moose = StorageService.User(login: "strawberry_moose", name: "Philipp Lazarev")
 public var katyperry = StorageService.User(login: "katyperry", name: "Katy Perry")
 public var teddyphotos = StorageService.User(login: "teddyphotos", name: "Ed Sheeran")

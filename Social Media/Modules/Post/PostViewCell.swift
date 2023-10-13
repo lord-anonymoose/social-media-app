@@ -95,20 +95,6 @@ class PostViewCell: UITableViewCell {
         
         authorLabel.text = author
         authorProfilePicture.image = UIImage(named: author)
-
-        //Following code crucially affects app's productivity and it removed for now
-        
-        /*
-        let imageProcessor = ImageProcessor()
-
-        imageProcessor.processImage(sourceImage: UIImage(named: image) ?? UIImage(), filter: .noir) { filteredImage in
-            if let filteredImage = filteredImage {
-                imgView.image = filteredImage
-            } else {
-                imgView.image = UIImage(named: "notFound")!
-            }
-        }
-        */
         
         imgView.image = UIImage(named: image)
         
