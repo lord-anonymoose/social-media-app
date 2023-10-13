@@ -7,6 +7,7 @@
 
 import UIKit
 import Foundation
+import UserService
 
 class LogInViewController: UIViewController {
 
@@ -139,6 +140,7 @@ class LogInViewController: UIViewController {
         super.viewWillAppear(animated)
         
         setupKeyboardObservers()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -150,7 +152,11 @@ class LogInViewController: UIViewController {
     // MARK: - Actions
 
     @objc func loggedIn(_ sender: UIButton) {
-        let profileViewController = ProfileViewController(user: timcook)
+        let userService = UserService.CurrentUserService()
+
+        let user = userService.checkUser(login: loginInput.text ?? "default")
+        
+        let profileViewController = ProfileViewController(user: user ?? defaultUser)
         
         if let navigationController = navigationController {
             navigationController.setViewControllers([profileViewController], animated: true)
