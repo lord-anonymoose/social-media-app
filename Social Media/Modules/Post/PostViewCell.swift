@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import iOSIntPackage
 
 class PostViewCell: UITableViewCell {
     
