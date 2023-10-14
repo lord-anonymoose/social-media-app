@@ -152,8 +152,12 @@ class LogInViewController: UIViewController {
     // MARK: - Actions
 
     @objc func loggedIn(_ sender: UIButton) {
-        let userService = UserService.CurrentUserService()
-
+        #if DEBUG
+            let userService = UserService.TestUserService()
+        #else
+            let userService = UserService.CurrentUserService()
+        #endif
+        
         if let user = userService.checkUser(login: loginInput.text) {
             let profileViewController = ProfileViewController(user: user)
             

@@ -13,10 +13,7 @@ protocol UserService {
 }
 
 public class CurrentUserService {
-    
-    public init() {
-        
-    }
+    public init() {}
     
     public func checkUser(login: String?) -> StorageService.User? {
         for user in users {
@@ -28,8 +25,16 @@ public class CurrentUserService {
     }
 }
 
+public class TestUserService {
+    public init() {}
+    
+    public func checkUser(login: String?) -> StorageService.User? {
+        return users[0]
+    }
+}
+
 public var users = [
-    StorageService.User(login: "default", name: "default"), // default user
+    StorageService.User(login: "default", name: "default"),
     StorageService.User(login: "strawberry_moose", name: "Philipp Lazarev"),
     StorageService.User(login: "katyperry", name: "Katy Perry"),
     StorageService.User(login: "teddyphotos", name: "Ed Sheeran"),
