@@ -9,6 +9,7 @@
 
 import UIKit
 import StorageService
+import UserService
 
 class ProfileHeaderView: UITableViewHeaderFooterView {
     
@@ -18,6 +19,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         didSet {
             userImage.image = UIImage(named: user?.login ?? "default")
             userName.text = user?.login ?? "default"
+            userStatus.text = user?.status ?? "Type in something..."
             setupConstraints()
         }
     }
@@ -127,6 +129,14 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
     
     @objc func buttonPressed(_ sender: UIButton) {
         userStatus.text = statusText
+        if self.user != nil {
+            for i in 0...UserService.users.count - 1 {
+                if UserService.users[i].login == self.user?.login {
+                    UserService.users[i].status = statusText
+                    print("\(UserService.users[i].login) changed status to \(statusText)")
+                }
+            }
+        }
     }
     
     @objc func statusTextChanged(_ textField: UITextField) {

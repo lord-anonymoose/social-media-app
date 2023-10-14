@@ -18,7 +18,7 @@ public class CurrentUserService {
         
     }
     
-    public func checkUser(login: String) -> StorageService.User? {
+    public func checkUser(login: String?) -> StorageService.User? {
         for user in users {
             if user.login == login {
                 return user

@@ -154,17 +154,21 @@ class LogInViewController: UIViewController {
     @objc func loggedIn(_ sender: UIButton) {
         let userService = UserService.CurrentUserService()
 
-        let user = userService.checkUser(login: loginInput.text ?? "default")
-        
-        let profileViewController = ProfileViewController(user: user ?? defaultUser)
-        
-        if let navigationController = navigationController {
-            navigationController.setViewControllers([profileViewController], animated: true)
-        }
-        
-        if let tabBarController = self.tabBarController {
-            tabBarController.tabBar.items?[1].image = UIImage(systemName: "person.crop.circle")
-            tabBarController.tabBar.items?[1].title = nil
+        if let user = userService.checkUser(login: loginInput.text) {
+            let profileViewController = ProfileViewController(user: user)
+            
+            if let navigationController = navigationController {
+                navigationController.setViewControllers([profileViewController], animated: true)
+            }
+            
+            if let tabBarController = self.tabBarController {
+                tabBarController.tabBar.items?[1].image = UIImage(systemName: "person.crop.circle")
+                tabBarController.tabBar.items?[1].title = nil
+            }
+        } else {
+            let alert = UIAlertController(title: "Error!", message: "Such user does not exist!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     

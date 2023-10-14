@@ -38,6 +38,11 @@ public var posts = [
     StorageService.Post(author: "mkbhd", description: "Nothing Phone 2 design revealed in the new Dope Tech video! Similar to the first phone of course, but updated with some features 👀", image: "mkbhd_post1", likes: 161_231, views: 465_193),
     StorageService.Post(author: "mkbhd", description: "RAZR beat Samsung to the punch by covering the whole outside of their flip phone with another screen... $999. cop or drop?", image: "mkbhd_post2", likes: 81_427, views: 99_223),
     StorageService.Post(author: "mkbhd", description: "I made my own shoe with Atoms! It's called 251. The length of my first YouTube video was 2:51, and this feels like a new beginning in the same way 🤓 Everything from the sole to the laces was designed by yours truly. It's been a 2 year design/build process and I'm so pumped to finally get them out in the world! They ship immediately and link is in bio!", image: "mkbhd_post3", likes: 263_359, views: 473_234),
+    
+    StorageService.Post(author: "strawberry_moose", description: "", image: "strawberry_moose_post1", likes: 120, views: 145),
+    StorageService.Post(author: "strawberry_moose", description: "", image: "strawberry_moose_post2", likes: 115, views: 120),
+    StorageService.Post(author: "strawberry_moose", description: "", image: "strawberry_moose_post3", likes: 140, views: 198),
+    StorageService.Post(author: "strawberry_moose", description: "", image: "strawberry_moose_post4", likes: 120, views: 140),
 ].shuffled()
 
 public var myPhotos: [UIImage] = {
