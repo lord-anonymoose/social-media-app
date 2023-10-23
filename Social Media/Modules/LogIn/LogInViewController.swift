@@ -8,7 +8,12 @@
 import UIKit
 import Foundation
 
-class LogInViewController: UIViewController {
+class LogInViewController: UIViewController, LoginViewControllerDelegate {
+    
+    func check(login: String, password: String) -> Bool {
+        return Checker.check(login: login, password: password)
+    }
+    
 
     // MARK: - Subviews
 
@@ -151,22 +156,32 @@ class LogInViewController: UIViewController {
     // MARK: - Actions
 
     @objc func loggedIn(_ sender: UIButton) {
+        /*
         #if DEBUG
             let userService = TestUserService()
         #else
             let userService = UserService.CurrentUserService()
         #endif
+        */
+        let userService = CurrentUserService()
         
-        if let user = userService.checkUser(login: loginInput.text ?? "") {
-            let profileViewController = ProfileViewController(user: user)
-            
-            if let navigationController = navigationController {
-                navigationController.setViewControllers([profileViewController], animated: true)
-            }
-            
-            if let tabBarController = self.tabBarController {
-                tabBarController.tabBar.items?[1].image = UIImage(systemName: "person.crop.circle")
-                tabBarController.tabBar.items?[1].title = nil
+        //print(check(login: loginInput.text!, password: passwordInput.text!))
+        if let user = userService.checkUser(login: loginInput.text!) {
+            if check(login: loginInput.text!, password: passwordInput.text!) {
+                let profileViewController = ProfileViewController(user: user)
+                
+                if let navigationController = navigationController {
+                    navigationController.setViewControllers([profileViewController], animated: true)
+                }
+                
+                if let tabBarController = self.tabBarController {
+                    tabBarController.tabBar.items?[1].image = UIImage(systemName: "person.crop.circle")
+                    tabBarController.tabBar.items?[1].title = nil
+                }
+            } else {
+                let alert = UIAlertController(title: "Error!", message: "Incorrect password!", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
         } else {
             let alert = UIAlertController(title: "Error!", message: "Such user does not exist!", preferredStyle: .alert)
