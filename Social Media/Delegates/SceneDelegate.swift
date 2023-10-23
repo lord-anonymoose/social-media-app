@@ -10,6 +10,8 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    
+    var loginInspector = LoginInspector()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
@@ -17,8 +19,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let feedViewController = FeedViewController()
         feedViewController.title = "Feed"
         let feedImage = UIImage(systemName: "house.circle")
-         
+        
         let logInViewController = LogInViewController()
+        logInViewController.loginDelegate = loginInspector
         logInViewController.title = "Log In"
         let logInImage = UIImage(systemName: "person.crop.circle.badge.exclamationmark")
 

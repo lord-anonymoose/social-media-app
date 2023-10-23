@@ -8,13 +8,10 @@
 import UIKit
 import Foundation
 
-class LogInViewController: UIViewController, LoginViewControllerDelegate {
+class LogInViewController: UIViewController {
     
-    func check(login: String, password: String) -> Bool {
-        return Checker.check(login: login, password: password)
-    }
+    weak var loginDelegate: LoginViewControllerDelegate?
     
-
     // MARK: - Subviews
 
     private lazy var scrollView: UIScrollView = {
@@ -165,9 +162,8 @@ class LogInViewController: UIViewController, LoginViewControllerDelegate {
         */
         let userService = CurrentUserService()
         
-        //print(check(login: loginInput.text!, password: passwordInput.text!))
         if let user = userService.checkUser(login: loginInput.text!) {
-            if check(login: loginInput.text!, password: passwordInput.text!) {
+            if loginDelegate?.check(login: loginInput.text!, password: passwordInput.text!) ?? false {
                 let profileViewController = ProfileViewController(user: user)
                 
                 if let navigationController = navigationController {
