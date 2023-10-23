@@ -44,3 +44,4 @@ public var users = [
     StorageService.User(login: "ijustine", name: "iJustine"),
     StorageService.User(login: "mkbhd", name: "Marques Brownlee")
 ]
+
