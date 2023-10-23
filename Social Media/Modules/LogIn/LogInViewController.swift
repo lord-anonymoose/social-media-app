@@ -10,7 +10,7 @@ import Foundation
 
 class LogInViewController: UIViewController {
     
-    weak var loginDelegate: LoginViewControllerDelegate?
+    var loginDelegate: LoginViewControllerDelegate?
     
     // MARK: - Subviews
 
@@ -163,7 +163,7 @@ class LogInViewController: UIViewController {
         let userService = CurrentUserService()
         
         if let user = userService.checkUser(login: loginInput.text!) {
-            if loginDelegate?.check(login: loginInput.text!, password: passwordInput.text!) ?? false {
+            if loginDelegate!.check(login: loginInput.text!, password: passwordInput.text!) {
                 let profileViewController = ProfileViewController(user: user)
                 
                 if let navigationController = navigationController {

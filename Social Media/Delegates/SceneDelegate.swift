@@ -11,14 +11,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     
-    var loginInspector = LoginInspector()
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
                                              
         let feedViewController = FeedViewController()
         feedViewController.title = "Feed"
         let feedImage = UIImage(systemName: "house.circle")
+        
+        let loginFactory = MyLoginFactory()
+        let loginInspector = loginFactory.makeLoginInspector()
+        print(loginInspector.check(login: "default", password: "default"))
         
         let logInViewController = LogInViewController()
         logInViewController.loginDelegate = loginInspector
