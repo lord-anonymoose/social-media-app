@@ -23,6 +23,7 @@
 		8E586B522AA898B500D89AF6 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E586B512AA898B500D89AF6 /* PhotosCollectionViewCell.swift */; };
 		8E6B57EF2ADF272800AC47C4 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0614CA2AABA96B00DB3BBD /* StorageService.swift */; };
 		8E6B57F02ADF273600AC47C4 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4A5C72AD98BA300C12FAA /* UserService.swift */; };
+		8E7C7EED2B971FE6003DDF5F /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 8E7C7EEC2B971FE6003DDF5F /* iOSIntPackage */; };
 		8E9B6D0A2A55944B009AD181 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9B6D092A55944B009AD181 /* PostView.swift */; };
 		8EAD99682A599704004D3BEF /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAD99672A599704004D3BEF /* PhotosTableViewCell.swift */; };
 		8EC3113C2A4C3540006C8FA2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC3113B2A4C3540006C8FA2 /* Extensions.swift */; };
@@ -74,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E7C7EED2B971FE6003DDF5F /* iOSIntPackage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,6 +240,9 @@
 			dependencies = (
 			);
 			name = "Social Media";
+			packageProductDependencies = (
+				8E7C7EEC2B971FE6003DDF5F /* iOSIntPackage */,
+			);
 			productName = "Social Media";
 			productReference = 8E4C15462A2699D800AA511B /* Social Media.app */;
 			productType = "com.apple.product-type.application";
@@ -266,6 +271,9 @@
 				Base,
 			);
 			mainGroup = 8E4C153D2A2699D800AA511B;
+			packageReferences = (
+				8E7C7EEB2B971FE6003DDF5F /* XCRemoteSwiftPackageReference "iOSIntPackage" */,
+			);
 			productRefGroup = 8E4C15472A2699D800AA511B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -518,6 +526,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8E7C7EEB2B971FE6003DDF5F /* XCRemoteSwiftPackageReference "iOSIntPackage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/TrueMax/iOSIntPackage";
+			requirement = {
+				branch = imagepublisher;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8E7C7EEC2B971FE6003DDF5F /* iOSIntPackage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8E7C7EEB2B971FE6003DDF5F /* XCRemoteSwiftPackageReference "iOSIntPackage" */;
+			productName = iOSIntPackage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 8E4C153E2A2699D800AA511B /* Project object */;
 }

@@ -154,7 +154,7 @@ class LogInViewController: UIViewController {
         #if DEBUG
             let userService = TestUserService()
         #else
-            let userService = UserService.CurrentUserService()
+            let userService = CurrentUserService()
         #endif
         
         if let user = userService.checkUser(login: loginInput.text ?? "") {
