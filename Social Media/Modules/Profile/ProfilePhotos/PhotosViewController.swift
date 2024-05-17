@@ -10,8 +10,11 @@ import iOSIntPackage
 
 class PhotosViewController: UIViewController, UICollectionViewDelegate {
     
-    public var userPhotos: [UIImage] = []
-    
+    public var userPhotos: [UIImage]
+    public var userPhotosShown: [UIImage] = [UIImage]()
+    let imagePublisherFacade = ImagePublisherFacade()
+
+
     // MARK: - Subviews
     private let photoCollectionView: UICollectionView = {
         let viewLayout = UICollectionViewFlowLayout()
@@ -30,11 +33,15 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     
     // MARK: - Lifecycle
     init(userPhotos: [UIImage]) {
-        self.userPhotos = myPhotos
-        print("Checking in")
+        self.userPhotos = userPhotos
         super.init(nibName: nil, bundle: nil)
         addSubviews()
         setupConstraints()
+    }
+    
+    deinit {
+        print("deinited")
+        imagePublisherFacade.removeSubscription(for: self)
     }
     
     required init?(coder: NSCoder) {
@@ -81,15 +88,14 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
 
 extension PhotosViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        self.userPhotos.count
+        self.userPhotosShown.count
     }
         
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotosCollectionViewCell
         
-        let photo = self.userPhotos[indexPath.row]
+        let photo = self.userPhotosShown[indexPath.row]
         cell.setup(with: photo)
-        
         return cell
     }
 }
@@ -116,14 +122,16 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
 
 extension PhotosViewController: ImageLibrarySubscriber {
     func receive(images: [UIImage]) {
-        self.userPhotos += images
-        print("Did receive images")
+        // Skipping duplicate images because imagePublisherFacade.addImagesWithTimer() takes a random element from array
+        self.userPhotosShown = images.unique()
+        DispatchQueue.main.async {
+            self.photoCollectionView.reloadData()
+        }
     }
     
     private func setupObservers() {
-        //let imagePublisherFacade = ImagePublisherFacade()
-        //print("Did set up observers")
-        //imagePublisherFacade.addImagesWithTimer(time: 5, repeat: 1, userImages: myPhotos)
-        //print(self.userPhotos)
+        imagePublisherFacade.addImagesWithTimer(time: 5, repeat: 13, userImages: self.userPhotos)
+        imagePublisherFacade.subscribe(self)
     }
+    
 }
