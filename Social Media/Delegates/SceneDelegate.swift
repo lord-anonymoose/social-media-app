@@ -17,24 +17,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let feedViewController = FeedViewController()
         feedViewController.title = "Feed"
         let feedImage = UIImage(systemName: "house.circle")
+
+        // Changed temporarly for task 4
+
         
-        let loginFactory = MyLoginFactory()
-        let loginInspector = loginFactory.makeLoginInspector()
-        print(loginInspector.check(login: "default", password: "default"))
+        //let loginFactory = MyLoginFactory()
+        //let loginInspector = loginFactory.makeLoginInspector()
         
-        let logInViewController = LogInViewController()
-        logInViewController.loginDelegate = loginInspector
-        logInViewController.title = "Log In"
-        let logInImage = UIImage(systemName: "person.crop.circle.badge.exclamationmark")
+        //let logInViewController = LogInViewController()
+        //logInViewController.loginDelegate = loginInspector
+        //logInViewController.title = "Log In"
+        //let logInImage = UIImage(systemName: "person.crop.circle.badge.exclamationmark")
+
+        let photosViewController = PhotosViewController(userPhotos: myPhotos) // to delete
+        let photosImage = UIImage(systemName: "photo.fill") // to delete
 
         let window = UIWindow(windowScene: scene)
-
         let tabBarController = UITabBarController()
                          
         feedViewController.tabBarItem = UITabBarItem(title: nil, image: feedImage, tag: 0)
-        logInViewController.tabBarItem = UITabBarItem(title: nil, image: logInImage, tag: 1)
-                         
-        let controllers = [feedViewController, logInViewController]
+        //logInViewController.tabBarItem = UITabBarItem(title: nil, image: logInImage, tag: 1)
+        photosViewController.tabBarItem = UITabBarItem(title: nil, image: photosImage, tag: 1)
+        //let controllers = [feedViewController, logInViewController]
+        let controllers = [feedViewController, photosViewController] // to delete
         tabBarController.viewControllers = controllers.map {
             UINavigationController(rootViewController: $0)
         }

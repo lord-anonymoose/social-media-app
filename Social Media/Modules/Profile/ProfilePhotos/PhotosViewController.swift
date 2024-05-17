@@ -116,12 +116,13 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
 extension PhotosViewController: ImageLibrarySubscriber {
     func receive(images: [UIImage]) {
         self.userPhotos += images
+        print("Did receive images")
     }
     
     private func setupObservers() {
         let imagePublisherFacade = ImagePublisherFacade()
+        print("Did set up observers")
         imagePublisherFacade.addImagesWithTimer(time: 5, repeat: 1, userImages: myPhotos)
-        print(self.userPhotos)
-
+        //print(self.userPhotos)
     }
 }
