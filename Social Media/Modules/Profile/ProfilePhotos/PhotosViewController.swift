@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import iOSIntPackage
 
 class PhotosViewController: UIViewController, UICollectionViewDelegate {
     
@@ -27,7 +28,6 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
         return collectionView
     }()
     
-    
     // MARK: - Lifecycle
     init(userPhotos: [UIImage]) {
         self.userPhotos = userPhotos
@@ -42,10 +42,10 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
         addSubviews()
         setupConstraints()
+        setupObservers()
     }
     
     
@@ -111,3 +111,17 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
 
 }
 
+// Task 4
+
+extension PhotosViewController: ImageLibrarySubscriber {
+    func receive(images: [UIImage]) {
+        self.userPhotos += images
+    }
+    
+    private func setupObservers() {
+        let imagePublisherFacade = ImagePublisherFacade()
+        imagePublisherFacade.addImagesWithTimer(time: 5, repeat: 1, userImages: myPhotos)
+        print(self.userPhotos)
+
+    }
+}
