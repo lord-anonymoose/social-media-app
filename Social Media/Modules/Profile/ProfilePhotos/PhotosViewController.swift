@@ -30,7 +30,8 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     
     // MARK: - Lifecycle
     init(userPhotos: [UIImage]) {
-        self.userPhotos = userPhotos
+        self.userPhotos = myPhotos
+        print("Checking in")
         super.init(nibName: nil, bundle: nil)
         addSubviews()
         setupConstraints()
@@ -80,13 +81,13 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
 
 extension PhotosViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        userPhotos.count
+        self.userPhotos.count
     }
         
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotosCollectionViewCell
         
-        let photo = userPhotos[indexPath.row]
+        let photo = self.userPhotos[indexPath.row]
         cell.setup(with: photo)
         
         return cell
@@ -120,9 +121,9 @@ extension PhotosViewController: ImageLibrarySubscriber {
     }
     
     private func setupObservers() {
-        let imagePublisherFacade = ImagePublisherFacade()
-        print("Did set up observers")
-        imagePublisherFacade.addImagesWithTimer(time: 5, repeat: 1, userImages: myPhotos)
+        //let imagePublisherFacade = ImagePublisherFacade()
+        //print("Did set up observers")
+        //imagePublisherFacade.addImagesWithTimer(time: 5, repeat: 1, userImages: myPhotos)
         //print(self.userPhotos)
     }
 }
