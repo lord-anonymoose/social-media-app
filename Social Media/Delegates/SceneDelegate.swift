@@ -32,14 +32,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let photosViewController = PhotosViewController(userPhotos: myPhotos) // to delete
         let photosImage = UIImage(systemName: "photo.fill") // to delete
 
+        let secretWordViewController = SecretWordViewController(secretWord: "secret")
+        let secretWordImage = UIImage(systemName: "dice.fill")
+        
         let window = UIWindow(windowScene: scene)
         let tabBarController = UITabBarController()
                          
         feedViewController.tabBarItem = UITabBarItem(title: nil, image: feedImage, tag: 0)
         //logInViewController.tabBarItem = UITabBarItem(title: nil, image: logInImage, tag: 1)
         photosViewController.tabBarItem = UITabBarItem(title: nil, image: photosImage, tag: 1)
+        secretWordViewController.tabBarItem = UITabBarItem(title: nil, image: secretWordImage, tag: 2)
         //let controllers = [feedViewController, logInViewController]
-        let controllers = [feedViewController, photosViewController] // to delete
+        let controllers = [feedViewController, photosViewController, secretWordViewController] // to delete
         tabBarController.viewControllers = controllers.map {
             UINavigationController(rootViewController: $0)
         }
