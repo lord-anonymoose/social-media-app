@@ -155,3 +155,15 @@ class UITextFieldWithPadding: UITextField {
         return rect.inset(by: textPadding)
     }
 }
+
+extension Array where Element: UIImage {
+    func unique() -> [UIImage] {
+        var unique = [UIImage]()
+        for image in self {
+            if !unique.contains(image) {
+                unique.append(image)
+            }
+        }
+        return unique
+    }
+}

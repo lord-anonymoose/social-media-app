@@ -10,6 +10,7 @@
 		8E1F68042A51739C008AE130 /* PostViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F68032A51739C008AE130 /* PostViewCell.swift */; };
 		8E2D1B322A54BE3400003EFF /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D1B312A54BE3400003EFF /* UserData.swift */; };
 		8E2D1B342A54C32300003EFF /* UserPosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D1B332A54C32300003EFF /* UserPosts.swift */; };
+		8E32E8222BF8B6AE00F2A49C /* SecretWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E32E8212BF8B6AE00F2A49C /* SecretWordViewController.swift */; };
 		8E4C154A2A2699D800AA511B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15492A2699D800AA511B /* AppDelegate.swift */; };
 		8E4C154C2A2699D800AA511B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C154B2A2699D800AA511B /* SceneDelegate.swift */; };
 		8E4C15532A2699D900AA511B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E4C15522A2699D900AA511B /* Assets.xcassets */; };
@@ -23,6 +24,7 @@
 		8E586B522AA898B500D89AF6 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E586B512AA898B500D89AF6 /* PhotosCollectionViewCell.swift */; };
 		8E6B57EF2ADF272800AC47C4 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0614CA2AABA96B00DB3BBD /* StorageService.swift */; };
 		8E6B57F02ADF273600AC47C4 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC4A5C72AD98BA300C12FAA /* UserService.swift */; };
+		8E98614A2BF8CAE800066827 /* SecretWordModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9861492BF8CAE800066827 /* SecretWordModel.swift */; };
 		8E9B6D0A2A55944B009AD181 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9B6D092A55944B009AD181 /* PostView.swift */; };
 		8EAD99682A599704004D3BEF /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAD99672A599704004D3BEF /* PhotosTableViewCell.swift */; };
 		8EC1CAEE2AE6920400B38364 /* LoginViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC1CAED2AE6920400B38364 /* LoginViewControllerDelegate.swift */; };
@@ -51,6 +53,7 @@
 		8E1F68032A51739C008AE130 /* PostViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewCell.swift; sourceTree = "<group>"; };
 		8E2D1B312A54BE3400003EFF /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		8E2D1B332A54C32300003EFF /* UserPosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPosts.swift; sourceTree = "<group>"; };
+		8E32E8212BF8B6AE00F2A49C /* SecretWordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretWordViewController.swift; sourceTree = "<group>"; };
 		8E4C15462A2699D800AA511B /* Social Media.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Social Media.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4C15492A2699D800AA511B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8E4C154B2A2699D800AA511B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -64,6 +67,7 @@
 		8E4C15682A269C7A00AA511B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		8E586B4B2AA877BD00D89AF6 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		8E586B512AA898B500D89AF6 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
+		8E9861492BF8CAE800066827 /* SecretWordModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretWordModel.swift; sourceTree = "<group>"; };
 		8E9B6D092A55944B009AD181 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		8EAD99672A599704004D3BEF /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 		8EC1CAED2AE6920400B38364 /* LoginViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewControllerDelegate.swift; sourceTree = "<group>"; };
@@ -159,6 +163,7 @@
 		8E4C155F2A269BD900AA511B /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				8E9861482BF8CA9200066827 /* SecretWord */,
 				8E586B502AA8976D00D89AF6 /* Extensions */,
 				8E59F57D2ADF286A00BE16F9 /* AppServices */,
 				8E3FC4B72A4D8D760064F250 /* Feed */,
@@ -208,6 +213,15 @@
 				8ED3547F2AE67C530038481C /* Checker.swift */,
 			);
 			path = AppServices;
+			sourceTree = "<group>";
+		};
+		8E9861482BF8CA9200066827 /* SecretWord */ = {
+			isa = PBXGroup;
+			children = (
+				8E32E8212BF8B6AE00F2A49C /* SecretWordViewController.swift */,
+				8E9861492BF8CAE800066827 /* SecretWordModel.swift */,
+			);
+			path = SecretWord;
 			sourceTree = "<group>";
 		};
 		8EC311392A4C3017006C8FA2 /* Delegates */ = {
@@ -261,7 +275,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					8E4C15452A2699D800AA511B = {
 						CreatedOnToolsVersion = 14.3;
@@ -320,6 +334,8 @@
 				8E4C15652A269C4400AA511B /* InfoViewController.swift in Sources */,
 				8EC1CAEE2AE6920400B38364 /* LoginViewControllerDelegate.swift in Sources */,
 				8E586B522AA898B500D89AF6 /* PhotosCollectionViewCell.swift in Sources */,
+				8E32E8222BF8B6AE00F2A49C /* SecretWordViewController.swift in Sources */,
+				8E98614A2BF8CAE800066827 /* SecretWordModel.swift in Sources */,
 				8E9B6D0A2A55944B009AD181 /* PostView.swift in Sources */,
 				8E6B57F02ADF273600AC47C4 /* UserService.swift in Sources */,
 				8E2D1B342A54C32300003EFF /* UserPosts.swift in Sources */,
@@ -348,6 +364,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -380,6 +397,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -408,6 +426,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -440,6 +459,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

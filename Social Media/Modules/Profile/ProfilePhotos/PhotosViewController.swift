@@ -6,11 +6,15 @@
 //
 
 import UIKit
+import iOSIntPackage
 
 class PhotosViewController: UIViewController, UICollectionViewDelegate {
     
-    public var userPhotos: [UIImage] = []
-    
+    public var userPhotos: [UIImage]
+    public var userPhotosShown: [UIImage] = [UIImage]()
+    let imagePublisherFacade = ImagePublisherFacade()
+
+
     // MARK: - Subviews
     private let photoCollectionView: UICollectionView = {
         let viewLayout = UICollectionViewFlowLayout()
@@ -27,7 +31,6 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
         return collectionView
     }()
     
-    
     // MARK: - Lifecycle
     init(userPhotos: [UIImage]) {
         self.userPhotos = userPhotos
@@ -36,16 +39,21 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
         setupConstraints()
     }
     
+    deinit {
+        print("deinited")
+        imagePublisherFacade.removeSubscription(for: self)
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
         addSubviews()
         setupConstraints()
+        setupObservers()
     }
     
     
@@ -80,15 +88,14 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
 
 extension PhotosViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        userPhotos.count
+        self.userPhotosShown.count
     }
         
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotosCollectionViewCell
         
-        let photo = userPhotos[indexPath.row]
+        let photo = self.userPhotosShown[indexPath.row]
         cell.setup(with: photo)
-        
         return cell
     }
 }
@@ -111,3 +118,20 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
 
 }
 
+// Task 4
+
+extension PhotosViewController: ImageLibrarySubscriber {
+    func receive(images: [UIImage]) {
+        // Skipping duplicate images because imagePublisherFacade.addImagesWithTimer() takes a random element from array
+        self.userPhotosShown = images.unique()
+        DispatchQueue.main.async {
+            self.photoCollectionView.reloadData()
+        }
+    }
+    
+    private func setupObservers() {
+        imagePublisherFacade.addImagesWithTimer(time: 5, repeat: 13, userImages: self.userPhotos)
+        imagePublisherFacade.subscribe(self)
+    }
+    
+}
