@@ -15,7 +15,12 @@ class SecretWordViewController: UIViewController {
     private let secretWord: String
     
     
-    var currentState = SecretWordState()
+    var currentState = SecretWordState() {
+        didSet {
+            self.emojiLabel.text = currentState.currentEmoji
+            self.phraseLabel.text = currentState.currentPhrase
+        }
+    }
     
     
     // MARK: - Subviews
@@ -66,13 +71,14 @@ class SecretWordViewController: UIViewController {
     }()
     
     private lazy var checkButton: CustomButton = {
-        let button = CustomButton(customTitle: "Check", customTitleColor: .black, customBackgroundColor: .green)
+        let button = CustomButton(customTitle: "Check")
         
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.cornerRadius = 10.0
-        button.addTarget(self, action: #selector(checkTapped), for: .touchUpInside)
         button.action = {
-            print("Hello, world!")
+            if self.textField.text?.lowercased() == self.secretWord.lowercased() {
+                self.currentState = SecretWordState(guessed: true)
+            } else {
+                self.currentState = SecretWordState(guessed: false)
+            }
         }
         return button
     }()
@@ -115,17 +121,9 @@ class SecretWordViewController: UIViewController {
         view.endEditing(true)
     }
     
-    @objc func checkTapped(_ sender: UIButton) {
-        print("Check tapped")
-    }
-    
     // MARK: - Private
     private func setupUI() {
         view.backgroundColor = backgroundColor
-
-        print(currentState.currentEmoji)
-        print(currentState.currentPhrase)
-        print("-----")
     }
     
     private func addSubviews() {
@@ -163,9 +161,5 @@ class SecretWordViewController: UIViewController {
             checkButton.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -30),
             checkButton.heightAnchor.constraint(equalToConstant: 50)
         ])
-    }
-    
-    private func check(word: String) {
-        
     }
 }

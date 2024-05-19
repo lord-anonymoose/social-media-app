@@ -35,7 +35,7 @@ struct SecretWordState {
     
     init(guessed: Bool?) {
         if guessed != nil {
-            if let _ = guessed {
+            if guessed == true {
                 self.currentEmoji = correctEmojis.randomElement() ?? "✅"
                 self.currentPhrase = correctPhrases.randomElement() ?? "Yes!"
             } else {
