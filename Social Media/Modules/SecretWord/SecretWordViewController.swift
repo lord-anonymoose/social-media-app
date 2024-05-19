@@ -58,14 +58,17 @@ class SecretWordViewController: UIViewController {
         return label
     }()
     
-    private lazy var textField: UITextField = {
-        let textField = UITextField()
+    private lazy var textField: UITextFieldWithPadding = {
+        let textField = UITextFieldWithPadding()
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Guess the word..."
         textField.tintColor = accentColor
         textField.layer.borderWidth = 0.5
         textField.layer.borderColor = UIColor.lightGray.cgColor
+        textField.autocorrectionType = .no
+        textField.autocapitalizationType = .none
+        textField.delegate = self
         
         return textField
     }()
@@ -105,6 +108,19 @@ class SecretWordViewController: UIViewController {
         setupConstraints()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setupKeyboardObservers()
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        removeKeyboardObservers()
+    }
+    
     // MARK: - Actions
 
     @objc func willShowKeyboard(_ notification: NSNotification) {
@@ -127,6 +143,7 @@ class SecretWordViewController: UIViewController {
     }
     
     private func addSubviews() {
+        view.addSubview(scrollView)
         view.addSubview(emojiLabel)
         view.addSubview(phraseLabel)
         view.addSubview(textField)
@@ -135,9 +152,16 @@ class SecretWordViewController: UIViewController {
     
     private func setupConstraints() {
         let safeAreaGuide = view.safeAreaLayoutGuide
-
+        
         NSLayoutConstraint.activate([
-            emojiLabel.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor, constant: 100),
+            scrollView.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            emojiLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 100),
             emojiLabel.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor),
             emojiLabel.heightAnchor.constraint(equalToConstant: 100)
         ])
@@ -150,16 +174,39 @@ class SecretWordViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             textField.topAnchor.constraint(equalTo: phraseLabel.bottomAnchor, constant: 30),
-            textField.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 30),
-            textField.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -30),
+            textField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 30),
+            textField.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -30),
             textField.heightAnchor.constraint(equalToConstant: 30)
         ])
         
         NSLayoutConstraint.activate([
             checkButton.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 30),
-            checkButton.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 30),
-            checkButton.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -30),
+            checkButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 30),
+            checkButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -30),
             checkButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+    }
+    
+    private func setupKeyboardObservers() {
+            let notificationCenter = NotificationCenter.default
+            
+            notificationCenter.addObserver(
+                self,
+                selector: #selector(self.willShowKeyboard(_:)),
+                name: UIResponder.keyboardWillShowNotification,
+                object: nil
+            )
+            
+            notificationCenter.addObserver(
+                self,
+                selector: #selector(self.willHideKeyboard(_:)),
+                name: UIResponder.keyboardWillHideNotification,
+                object: nil
+            )
+        }
+        
+    private func removeKeyboardObservers() {
+            let notificationCenter = NotificationCenter.default
+            notificationCenter.removeObserver(self)
     }
 }

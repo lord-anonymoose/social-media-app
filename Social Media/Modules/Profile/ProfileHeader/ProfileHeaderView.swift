@@ -9,7 +9,7 @@
 
 import UIKit
 
-class ProfileHeaderView: UITableViewHeaderFooterView {
+class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
     // MARK: - Subviews
     
@@ -124,6 +124,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         textField.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)
         
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.delegate = self
 
         return textField
     }()

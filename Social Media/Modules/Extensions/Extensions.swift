@@ -131,32 +131,6 @@ extension UITableView {
     }
 }
 
-class UITextFieldWithPadding: UITextField {
-    
-    // MARK: - Subviews
-    
-    var textPadding = UIEdgeInsets(
-        top: 0,
-        left: 10,
-        bottom: 0,
-        right: 0
-    )
-    
-    // MARK: - Lifecycle
-    
-    override func textRect(forBounds bounds: CGRect) -> CGRect {
-        let rect = super.textRect(forBounds: bounds)
-        return rect.inset(by: textPadding)
-    }
-
-    override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        let rect = super.editingRect(forBounds: bounds)
-        return rect.inset(by: textPadding)
-    }
-}
-
-// Custom Button class for Task 6
-
 extension UIButton {
   func setBackgroundColor(_ color: UIColor, forState controlState: UIControl.State) {
     let colorImage = UIGraphicsImageRenderer(size: CGSize(width: 1, height: 1)).image { _ in
@@ -176,5 +150,12 @@ extension Array where Element: UIImage {
             }
         }
         return unique
+    }
+}
+
+extension UIViewController: UITextFieldDelegate {
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder() // dismiss keyboard
+        return true
     }
 }
