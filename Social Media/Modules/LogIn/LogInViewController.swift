@@ -95,6 +95,7 @@ class LogInViewController: UIViewController {
         return textField
     }()
     
+    
     private lazy var logInButton: UIButton = {
         let button = UIButton(type: .system)
         
@@ -119,7 +120,12 @@ class LogInViewController: UIViewController {
 
         return button
     }()
-
+    
+    /*
+    private lazy var logInButton: UIButton = {
+        let button = CustomButton(customText: "Log In", cus)
+    }
+    */
     
     // MARK: - Lifecycle
 

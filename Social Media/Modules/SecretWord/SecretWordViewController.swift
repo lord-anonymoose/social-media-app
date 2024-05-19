@@ -69,9 +69,11 @@ class SecretWordViewController: UIViewController {
         let button = CustomButton(customText: "Check", customTitleColor: .black, customBackgroundColor: .green)
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        
+        button.layer.cornerRadius = 10.0
         button.addTarget(self, action: #selector(checkTapped), for: .touchUpInside)
-
+        button.action = {
+            print("Hello, world!")
+        }
         return button
     }()
     
