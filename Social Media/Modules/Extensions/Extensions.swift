@@ -167,38 +167,6 @@ extension UIButton {
   }
 }
 
-class CustomButton: UIButton {
-
-    var action: (() -> Void)?
-
-    required init(customText: String, customTitleColor: UIColor = .black, customBackgroundColor: UIColor = .white, customCornerRadius: CGFloat = 10.0) {
-        
-        super.init(frame: .zero)
-        
-        setTitle(customText, for: .normal)
-        
-        setTitleColor(customTitleColor, for: .normal)
-        setTitleColor(customTitleColor.withAlphaComponent(0.3), for: .highlighted)
-        
-        setBackgroundColor(customBackgroundColor, forState: .normal)
-        setBackgroundColor(customBackgroundColor.withAlphaComponent(0.3), forState: .highlighted)
-        
-        layer.cornerRadius = customCornerRadius
-        layer.masksToBounds = true
-        
-        addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    @objc private func buttonTapped() {
-        action?()
-    }
-}
-
 extension Array where Element: UIImage {
     func unique() -> [UIImage] {
         var unique = [UIImage]()

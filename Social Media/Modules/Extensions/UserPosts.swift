@@ -45,8 +45,6 @@ public var posts = [
 ].shuffled()
 
 
-// Edited for task 4
-/*
 public var myPhotos: [UIImage] = {
     var array = [UIImage]()
     for i in 0...3 {
@@ -57,22 +55,4 @@ public var myPhotos: [UIImage] = {
     }
     return array
 }()
-*/
 
-/* To delete */
-public var myPhotos: [UIImage] = [
-    UIImage(named: "strawberry_moose_post1") ?? UIImage(),
-    UIImage(named: "strawberry_moose_post2") ?? UIImage(),
-    UIImage(named: "strawberry_moose_post3") ?? UIImage(),
-    UIImage(named: "strawberry_moose_post4") ?? UIImage(),
-    UIImage(named: "strawberry_moose_post5") ?? UIImage(),
-    UIImage(named: "strawberry_moose_post6") ?? UIImage(),
-    UIImage(named: "strawberry_moose_post7") ?? UIImage(),
-    UIImage(named: "strawberry_moose_post8") ?? UIImage(),
-    UIImage(named: "strawberry_moose_post9") ?? UIImage(),
-    UIImage(named: "strawberry_moose_post10") ?? UIImage(),
-    UIImage(named: "strawberry_moose_post11") ?? UIImage(),
-    UIImage(named: "strawberry_moose_post12") ?? UIImage(),
-    UIImage(named: "strawberry_moose_post13") ?? UIImage(),
-    UIImage(named: "strawberry_moose_post14") ?? UIImage(),
-]
