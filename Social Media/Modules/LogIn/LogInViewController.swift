@@ -124,7 +124,7 @@ class LogInViewController: UIViewController {
     
     // Legacy code. Removed with customButton implementation
     private lazy var logInButton: UIButton = {
-        let button = CustomButton(customText: "Log In")
+        let button = CustomButton(customTitle: "Log In")
         
         button.action = {
             let userService = CurrentUserService()

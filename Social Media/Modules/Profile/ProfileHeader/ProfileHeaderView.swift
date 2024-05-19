@@ -64,6 +64,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         return userStatus
     }()
     
+    // Legacy code. Removed with customButton implementation
+    /*
     private lazy var showStatusButton: UIButton = {
         let button = UIButton(type: .system)
         
@@ -83,6 +85,25 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         
         button.translatesAutoresizingMaskIntoConstraints = false
 
+        return button
+    }()
+    */
+    
+    private lazy var setStatusButton: UIButton = {
+        let button = CustomButton(customTitle: "Set Status")
+        
+        button.action = { [self] in
+            userStatus.text = self.statusText
+            if self.user != nil {
+                for i in 0...users.count - 1 {
+                    if users[i].login == self.user?.login {
+                        users[i].status = self.statusText
+                        print("\(users[i].login) changed status to \(self.statusText)")
+                    }
+                }
+            }
+        }
+        
         return button
     }()
     
@@ -125,6 +146,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
      
     // MARK: - Actions
     
+    // Legacy code. Removed with customButton implementation
+    /*
     @objc func buttonPressed(_ sender: UIButton) {
         userStatus.text = statusText
         if self.user != nil {
@@ -136,6 +159,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             }
         }
     }
+    */
     
     @objc func statusTextChanged(_ textField: UITextField) {
         if let text = textField.text {
@@ -158,14 +182,14 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         contentView.addSubview(userName)
         contentView.addSubview(userStatus)
         contentView.addSubview(textField)
-        contentView.addSubview(showStatusButton)
+        contentView.addSubview(setStatusButton)
     }
         
     private func setupConstraints() {
         
         let safeAreaLayoutGuide = contentView.safeAreaLayoutGuide
 
-        let bottomAnchor = showStatusButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
+        let bottomAnchor = setStatusButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
         bottomAnchor.priority = .required - 1
              
         NSLayoutConstraint.activate([
@@ -173,25 +197,34 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             userImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
             userImage.widthAnchor.constraint(equalToConstant: 90),
             userImage.heightAnchor.constraint(equalToConstant: 90),
-             
+        ])
+        
+        NSLayoutConstraint.activate([
             userName.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
             userName.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),
             userName.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-         
+        ])
+        
+        NSLayoutConstraint.activate([
             userStatus.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: 16),
             userStatus.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),
             userStatus.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-
+        ])
+        
+        NSLayoutConstraint.activate([
             textField.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: 48),
             textField.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),
             textField.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             textField.heightAnchor.constraint(equalToConstant: 32),
-         
-            showStatusButton.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 16),
-            showStatusButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            showStatusButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-             
-            bottomAnchor
-         ])
+        ])
+        
+        NSLayoutConstraint.activate([
+            setStatusButton.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 16),
+            setStatusButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            setStatusButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            setStatusButton.heightAnchor.constraint(equalToConstant: 30),
+        ])
+        
+        NSLayoutConstraint.activate([bottomAnchor])
     }
 }

@@ -66,7 +66,7 @@ class SecretWordViewController: UIViewController {
     }()
     
     private lazy var checkButton: CustomButton = {
-        let button = CustomButton(customText: "Check", customTitleColor: .black, customBackgroundColor: .green)
+        let button = CustomButton(customTitle: "Check", customTitleColor: .black, customBackgroundColor: .green)
         
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 10.0

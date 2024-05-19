@@ -17,13 +17,13 @@ class CustomButton: UIButton {
 
     var action: (() -> Void)?
 
-    required init(customText: String, customTitleColor: UIColor = .white, customBackgroundColor: UIColor = accentColor, customCornerRadius: CGFloat = 10.0) {
+    required init(customTitle: String, customTitleColor: UIColor = .white, customBackgroundColor: UIColor = accentColor, customCornerRadius: CGFloat = 10.0) {
         
         super.init(frame: .zero)
         
         translatesAutoresizingMaskIntoConstraints = false
         
-        setTitle(customText, for: .normal)
+        setTitle(customTitle, for: .normal)
         
         setTitleColor(customTitleColor, for: .normal)
         setTitleColor(customTitleColor.withAlphaComponent(0.3), for: .highlighted)
