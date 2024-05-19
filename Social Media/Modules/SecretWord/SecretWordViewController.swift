@@ -5,6 +5,8 @@
 //  Created by Philipp Lazarev on 18.05.2024.
 //
 
+//Task 6
+
 import UIKit
 import Foundation
 
