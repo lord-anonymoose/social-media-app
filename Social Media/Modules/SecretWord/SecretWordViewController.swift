@@ -11,7 +11,7 @@ import UIKit
 import Foundation
 
 class SecretWordViewController: UIViewController {
- 
+    
     private let secretWord: String
     
     
@@ -29,7 +29,7 @@ class SecretWordViewController: UIViewController {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         
         scrollView.isUserInteractionEnabled = true
-
+        
         return scrollView
     }()
     
@@ -61,8 +61,18 @@ class SecretWordViewController: UIViewController {
         textField.tintColor = accentColor
         textField.layer.borderWidth = 0.5
         textField.layer.borderColor = UIColor.lightGray.cgColor
-
+        
         return textField
+    }()
+    
+    private lazy var checkButton: CustomButton = {
+        let button = CustomButton(customText: "Check", customTitleColor: .black, customBackgroundColor: .green)
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        button.addTarget(self, action: #selector(checkTapped), for: .touchUpInside)
+
+        return button
     }()
     
     // MARK: - Lifecycle
@@ -103,6 +113,10 @@ class SecretWordViewController: UIViewController {
         view.endEditing(true)
     }
     
+    @objc func checkTapped(_ sender: UIButton) {
+        print("Check tapped")
+    }
+    
     // MARK: - Private
     private func setupUI() {
         view.backgroundColor = backgroundColor
@@ -116,6 +130,7 @@ class SecretWordViewController: UIViewController {
         view.addSubview(emojiLabel)
         view.addSubview(phraseLabel)
         view.addSubview(textField)
+        view.addSubview(checkButton)
     }
     
     private func setupConstraints() {
@@ -138,6 +153,13 @@ class SecretWordViewController: UIViewController {
             textField.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 30),
             textField.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -30),
             textField.heightAnchor.constraint(equalToConstant: 30)
+        ])
+        
+        NSLayoutConstraint.activate([
+            checkButton.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 30),
+            checkButton.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 30),
+            checkButton.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -30),
+            checkButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
