@@ -11,6 +11,12 @@ class FeedViewController: UIViewController {
     
     // MARK: - Subviews
 
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
     private lazy var feedView: UITableView = {
         let feedView = UITableView().feedView()
         return feedView
@@ -33,14 +39,24 @@ class FeedViewController: UIViewController {
     
     private func addSubviews() {
         view.addSubview(feedView)
+        view.addSubview(activityIndicator)
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
     }
 
     private func setupConstraints() {
+        let safeAreaGuide = view.safeAreaLayoutGuide
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: safeAreaGuide.centerYAnchor),
+        ])
+        
         NSLayoutConstraint.activate([
             feedView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            feedView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
-            feedView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            feedView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0)
+            feedView.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor, constant: 0),
+            feedView.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 0),
+            feedView.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: 0)
         ])
 
         feedView.delegate = self
