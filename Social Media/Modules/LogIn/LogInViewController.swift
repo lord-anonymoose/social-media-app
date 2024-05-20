@@ -95,66 +95,34 @@ class LogInViewController: UIViewController {
         return textField
     }()
     
-    /*
-     private lazy var logInButton: UIButton = {
-     let button = UIButton(type: .system)
-     
-     button.translatesAutoresizingMaskIntoConstraints = false
-     
-     button.setTitle("Log In", for: .normal)
-     button.setTitleColor(.white, for: .normal)
-     
-     let backgroundImage = UIImage(named: "greenPixel")
-     let backgroundImageTinted = backgroundImage?.image(alpha: 0.8)
-     button.setBackgroundImage(backgroundImage, for: .normal)
-     button.setBackgroundImage(backgroundImageTinted, for: .selected)
-     button.setBackgroundImage(backgroundImageTinted, for: .highlighted)
-     button.setBackgroundImage(backgroundImageTinted, for: .disabled)
-     
-     button.layer.cornerRadius = 10.0
-     button.layer.masksToBounds = true
-     
-     button.isUserInteractionEnabled = true
-     
-     button.addTarget(self, action: #selector(loggedIn), for: .touchUpInside)
-     
-     return button
-     }()
-    */
-    
-    // Legacy code. Removed with customButton implementation
-    private lazy var logInButton: UIButton = {
-        let button = CustomButton(customTitle: "Log In")
+    private lazy var logInButton = CustomButton(customTitle: "Log In") { [unowned self] in
+        let userService = CurrentUserService()
         
-        button.action = {
-            let userService = CurrentUserService()
-            
-            if let user = userService.checkUser(login: self.loginInput.text!) {
-                if self.loginDelegate!.check(login: self.loginInput.text!, password: self.passwordInput.text!) {
-                    let profileViewController = ProfileViewController(user: user)
-                    
-                    if let navigationController = self.navigationController {
-                        navigationController.setViewControllers([profileViewController], animated: true)
-                    }
-                    
-                    if let tabBarController = self.tabBarController {
-                        tabBarController.tabBar.items?[1].image = UIImage(systemName: "person.crop.circle")
-                        tabBarController.tabBar.items?[1].title = nil
-                    }
-                } else {
-                    let alert = UIAlertController(title: "Error!", message: "Incorrect password!", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
+        if let user = userService.checkUser(login: self.loginInput.text!) {
+            if self.loginDelegate!.check(login: self.loginInput.text!, password: self.passwordInput.text!) {
+                let profileViewController = ProfileViewController(user: user)
+                
+                if let navigationController = self.navigationController {
+                    navigationController.setViewControllers([profileViewController], animated: true)
+                }
+                
+                if let tabBarController = self.tabBarController {
+                    tabBarController.tabBar.items?[1].image = UIImage(systemName: "person.crop.circle")
+                    tabBarController.tabBar.items?[1].title = nil
                 }
             } else {
-                let alert = UIAlertController(title: "Error!", message: "Such user does not exist!", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Error!", message: "Incorrect password!", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             }
+        } else {
+            let alert = UIAlertController(title: "Error!", message: "Such user does not exist!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
-        
-        return button
-    }()
+    }
+    
+    
     
     // MARK: - Lifecycle
     
@@ -186,43 +154,6 @@ class LogInViewController: UIViewController {
     }
     
     // MARK: - Actions
-
-    // Legacy code. Removed with customButton implementation
-    /*
-    @objc func loggedIn(_ sender: UIButton) {
-        /*
-        #if DEBUG
-            let userService = TestUserService()
-        #else
-            let userService = UserService.CurrentUserService()
-        #endif
-        */
-        let userService = CurrentUserService()
-        
-        if let user = userService.checkUser(login: loginInput.text!) {
-            if loginDelegate!.check(login: loginInput.text!, password: passwordInput.text!) {
-                let profileViewController = ProfileViewController(user: user)
-                
-                if let navigationController = navigationController {
-                    navigationController.setViewControllers([profileViewController], animated: true)
-                }
-                
-                if let tabBarController = self.tabBarController {
-                    tabBarController.tabBar.items?[1].image = UIImage(systemName: "person.crop.circle")
-                    tabBarController.tabBar.items?[1].title = nil
-                }
-            } else {
-                let alert = UIAlertController(title: "Error!", message: "Incorrect password!", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            }
-        } else {
-            let alert = UIAlertController(title: "Error!", message: "Such user does not exist!", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-    */
     
     @objc func willShowKeyboard(_ notification: NSNotification) {
         let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height
