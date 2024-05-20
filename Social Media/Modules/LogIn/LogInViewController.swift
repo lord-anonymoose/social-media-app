@@ -13,7 +13,7 @@ class LogInViewController: UIViewController {
     var loginDelegate: LoginViewControllerDelegate?
     
     // MARK: - Subviews
-
+    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         
@@ -23,7 +23,7 @@ class LogInViewController: UIViewController {
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         
         scrollView.isUserInteractionEnabled = true
-
+        
         return scrollView
     }()
     
@@ -44,7 +44,7 @@ class LogInViewController: UIViewController {
         
         return imageView
     }()
-
+    
     
     private lazy var logInInputContainer: UIView = {
         let view = UIView()
@@ -59,7 +59,7 @@ class LogInViewController: UIViewController {
         
         return view
     }()
-
+    
     private lazy var loginInput: UITextFieldWithPadding = {
         let textField = UITextFieldWithPadding()
         
@@ -95,34 +95,69 @@ class LogInViewController: UIViewController {
         return textField
     }()
     
+    /*
+     private lazy var logInButton: UIButton = {
+     let button = UIButton(type: .system)
+     
+     button.translatesAutoresizingMaskIntoConstraints = false
+     
+     button.setTitle("Log In", for: .normal)
+     button.setTitleColor(.white, for: .normal)
+     
+     let backgroundImage = UIImage(named: "greenPixel")
+     let backgroundImageTinted = backgroundImage?.image(alpha: 0.8)
+     button.setBackgroundImage(backgroundImage, for: .normal)
+     button.setBackgroundImage(backgroundImageTinted, for: .selected)
+     button.setBackgroundImage(backgroundImageTinted, for: .highlighted)
+     button.setBackgroundImage(backgroundImageTinted, for: .disabled)
+     
+     button.layer.cornerRadius = 10.0
+     button.layer.masksToBounds = true
+     
+     button.isUserInteractionEnabled = true
+     
+     button.addTarget(self, action: #selector(loggedIn), for: .touchUpInside)
+     
+     return button
+     }()
+    */
+    
+    // Legacy code. Removed with customButton implementation
     private lazy var logInButton: UIButton = {
-        let button = UIButton(type: .system)
+        let button = CustomButton(customTitle: "Log In")
         
-        button.translatesAutoresizingMaskIntoConstraints = false
+        button.action = {
+            let userService = CurrentUserService()
+            
+            if let user = userService.checkUser(login: self.loginInput.text!) {
+                if self.loginDelegate!.check(login: self.loginInput.text!, password: self.passwordInput.text!) {
+                    let profileViewController = ProfileViewController(user: user)
+                    
+                    if let navigationController = self.navigationController {
+                        navigationController.setViewControllers([profileViewController], animated: true)
+                    }
+                    
+                    if let tabBarController = self.tabBarController {
+                        tabBarController.tabBar.items?[1].image = UIImage(systemName: "person.crop.circle")
+                        tabBarController.tabBar.items?[1].title = nil
+                    }
+                } else {
+                    let alert = UIAlertController(title: "Error!", message: "Incorrect password!", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            } else {
+                let alert = UIAlertController(title: "Error!", message: "Such user does not exist!", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
         
-        button.setTitle("Log In", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        
-        let backgroundImage = UIImage(named: "greenPixel")
-        let backgroundImageTinted = backgroundImage?.image(alpha: 0.8)
-        button.setBackgroundImage(backgroundImage, for: .normal)
-        button.setBackgroundImage(backgroundImageTinted, for: .selected)
-        button.setBackgroundImage(backgroundImageTinted, for: .highlighted)
-        button.setBackgroundImage(backgroundImageTinted, for: .disabled)
-        
-        button.layer.cornerRadius = 10.0
-        button.layer.masksToBounds = true
-        
-        button.isUserInteractionEnabled = true
-
-        button.addTarget(self, action: #selector(loggedIn), for: .touchUpInside)
-
         return button
     }()
-
     
     // MARK: - Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -132,9 +167,9 @@ class LogInViewController: UIViewController {
         setupContentOfScrollView()
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
-
+        
         view.addGestureRecognizer(tap)
-
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -152,6 +187,8 @@ class LogInViewController: UIViewController {
     
     // MARK: - Actions
 
+    // Legacy code. Removed with customButton implementation
+    /*
     @objc func loggedIn(_ sender: UIButton) {
         /*
         #if DEBUG
@@ -185,6 +222,7 @@ class LogInViewController: UIViewController {
             self.present(alert, animated: true, completion: nil)
         }
     }
+    */
     
     @objc func willShowKeyboard(_ notification: NSNotification) {
         let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height

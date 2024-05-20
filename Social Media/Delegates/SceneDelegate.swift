@@ -13,37 +13,32 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
-                                             
+                               
+        let window = UIWindow(windowScene: scene)
+        let tabBarController = UITabBarController()
+        
+        // Feed Tab
         let feedViewController = FeedViewController()
         feedViewController.title = "Feed"
         let feedImage = UIImage(systemName: "house.circle")
-
-        // Changed temporarly for task 4
-
+        feedViewController.tabBarItem = UITabBarItem(title: nil, image: feedImage, tag: 0)
         
-        //let loginFactory = MyLoginFactory()
-        //let loginInspector = loginFactory.makeLoginInspector()
-        
-        //let logInViewController = LogInViewController()
-        //logInViewController.loginDelegate = loginInspector
-        //logInViewController.title = "Log In"
-        //let logInImage = UIImage(systemName: "person.crop.circle.badge.exclamationmark")
+        // Log In Tab
+        let loginFactory = MyLoginFactory()
+        let loginInspector = loginFactory.makeLoginInspector()
+        let logInViewController = LogInViewController()
+        logInViewController.loginDelegate = loginInspector
+        logInViewController.title = "Log In"
+        let logInImage = UIImage(systemName: "person.crop.circle.badge.exclamationmark")
+        logInViewController.tabBarItem = UITabBarItem(title: nil, image: logInImage, tag: 1)
 
-        let photosViewController = PhotosViewController(userPhotos: myPhotos) // to delete
-        let photosImage = UIImage(systemName: "photo.fill") // to delete
-
+        // Secret Word Game Tab (Task 6)
         let secretWordViewController = SecretWordViewController(secretWord: "secret")
         let secretWordImage = UIImage(systemName: "dice.fill")
-        
-        let window = UIWindow(windowScene: scene)
-        let tabBarController = UITabBarController()
-                         
-        feedViewController.tabBarItem = UITabBarItem(title: nil, image: feedImage, tag: 0)
-        //logInViewController.tabBarItem = UITabBarItem(title: nil, image: logInImage, tag: 1)
-        photosViewController.tabBarItem = UITabBarItem(title: nil, image: photosImage, tag: 1)
         secretWordViewController.tabBarItem = UITabBarItem(title: nil, image: secretWordImage, tag: 2)
-        //let controllers = [feedViewController, logInViewController]
-        let controllers = [feedViewController, photosViewController, secretWordViewController] // to delete
+                         
+
+        let controllers = [feedViewController, logInViewController, secretWordViewController]
         tabBarController.viewControllers = controllers.map {
             UINavigationController(rootViewController: $0)
         }
