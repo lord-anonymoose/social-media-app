@@ -35,6 +35,7 @@ class FeedViewController: UIViewController {
 
     private func setupUI() {
         view.backgroundColor = UIColor(named: "BackgroundColor")
+        let service = FeedService()
     }
     
     private func addSubviews() {
