@@ -29,7 +29,16 @@ class FeedViewController: UIViewController {
         setupUI()
         addSubviews()
         setupConstraints()
+        setupNavigationBar()
     }
+    
+    @IBAction func reloadButtonTapped(sender: AnyObject) {
+        print("Check reload button")
+        feedView.isHidden = true
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+    }
+    
     
     // MARK: - Private
 
@@ -41,8 +50,6 @@ class FeedViewController: UIViewController {
     private func addSubviews() {
         view.addSubview(feedView)
         view.addSubview(activityIndicator)
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
     }
 
     private func setupConstraints() {
@@ -64,6 +71,20 @@ class FeedViewController: UIViewController {
         feedView.dataSource = self
         feedView.register(PostViewCell.self, forCellReuseIdentifier: "cell")
     }
+    
+    private func setupNavigationBar() {
+        self.navigationItem.title = "Feed"
+
+        let reloadButton = UIBarButtonItem(
+            image: UIImage(systemName: "arrow.clockwise.icloud")?.withTintColor(accentColor, renderingMode: .alwaysOriginal),
+            style: .plain,
+            target: self,
+            action: #selector(reloadButtonTapped)
+        )
+            
+        navigationItem.rightBarButtonItems = [reloadButton]
+    }
+
 }
 
 extension FeedViewController: UITableViewDataSource {
