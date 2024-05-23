@@ -10,6 +10,10 @@ import UIKit
 class FeedViewController: UIViewController {
     
     // MARK: - Subviews
+    
+    private var loadedPosts: [StorageService.Post] = []
+    
+    private let viewModel: FeedVMOutput
 
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .large)
@@ -23,6 +27,15 @@ class FeedViewController: UIViewController {
     }()
     
     // MARK: - Lifecycle
+    
+    init(viewModel: FeedVMOutput) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,13 +43,11 @@ class FeedViewController: UIViewController {
         addSubviews()
         setupConstraints()
         setupNavigationBar()
+        bindModel()
     }
     
     @IBAction func reloadButtonTapped(sender: AnyObject) {
-        print("Check reload button")
-        feedView.isHidden = true
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
+        self.viewModel.changeState()
     }
     
     
@@ -44,7 +55,6 @@ class FeedViewController: UIViewController {
 
     private func setupUI() {
         view.backgroundColor = UIColor(named: "BackgroundColor")
-        let service = FeedService()
     }
     
     private func addSubviews() {
@@ -84,16 +94,41 @@ class FeedViewController: UIViewController {
             
         navigationItem.rightBarButtonItems = [reloadButton]
     }
+    
+    private func bindModel() {
+        viewModel.currentState = { [weak self] state in
+            guard let self else { return }
+            switch state {
+            case .initial:
+                print("Feed: Initial State")
+            case .loading:
+                feedView.isHidden = true
+                activityIndicator.isHidden = false
+                activityIndicator.startAnimating()
+            case .loaded(let posts):
+                DispatchQueue.main.async { [weak self] in
+                    guard let self else { return }
+                    self.loadedPosts = posts
+                    activityIndicator.isHidden = true
+                    activityIndicator.stopAnimating()
+                    feedView.isHidden = false
+                    feedView.reloadData()
+                }
+            case .error:
+                print("Feed: Error")
+            }
+        }
+    }
 
 }
 
 extension FeedViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        posts.count
+        loadedPosts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let post = posts[indexPath.row]
+        let post = loadedPosts[indexPath.row]
         let cell = PostViewCell(style: .default, reuseIdentifier: "cell", author: post.author, image: post.image, description: post.description, likes: post.likes, views: post.views)
         
         return cell

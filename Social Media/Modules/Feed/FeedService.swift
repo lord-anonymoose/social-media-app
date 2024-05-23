@@ -10,10 +10,10 @@ import Foundation
 class FeedService {
     private var loadedPosts: [StorageService.Post] = []
     
-    func loadPosts(completion: @escaping () -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+    func loadPosts(completion: @escaping (Result<[StorageService.Post], Error>) -> Void) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.loadedPosts = posts.shuffled()
-            completion()
+            completion(.success(posts))
         }
     }
     
