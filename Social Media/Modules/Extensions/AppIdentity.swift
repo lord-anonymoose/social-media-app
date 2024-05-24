@@ -13,11 +13,15 @@ let secondaryColor = UIColor(hex: "#FFC074")!
 let textColor = UIColor(named: "BlackAndWhite")!
 let backgroundColor = UIColor(named: "BackgroundColor")!
 
-class CustomButton: UIButton {
+final class CustomButton: UIButton {
+    
+    typealias Action = () -> Void
+    
+    var buttonAction: Action
 
-    var action: (() -> Void)?
-
-    required init(customTitle: String, customTitleColor: UIColor = .white, customBackgroundColor: UIColor = accentColor, customCornerRadius: CGFloat = 10.0) {
+    required init(customTitle: String, customTitleColor: UIColor = .white, customBackgroundColor: UIColor = accentColor, customCornerRadius: CGFloat = 10.0, action: @escaping Action) {
+        
+        buttonAction = action
         
         super.init(frame: .zero)
         
@@ -43,7 +47,7 @@ class CustomButton: UIButton {
     }
     
     @objc private func buttonTapped() {
-        action?()
+        buttonAction()
     }
 }
 

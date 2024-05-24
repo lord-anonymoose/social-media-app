@@ -15,7 +15,7 @@ class SecretWordViewController: UIViewController {
     private let secretWord: String
     
     
-    var currentState = SecretWordState() {
+    var currentState = SecretWordModel() {
         didSet {
             self.emojiLabel.text = currentState.currentEmoji
             self.phraseLabel.text = currentState.currentPhrase
@@ -73,19 +73,17 @@ class SecretWordViewController: UIViewController {
         return textField
     }()
     
-    private lazy var checkButton: CustomButton = {
-        let button = CustomButton(customTitle: "Check")
-        
-        button.action = {
-            if self.textField.text?.lowercased() == self.secretWord.lowercased() {
-                self.currentState = SecretWordState(guessed: true)
-            } else {
-                self.currentState = SecretWordState(guessed: false)
-            }
+    private lazy var checkButton = CustomButton(customTitle: "Check") { [unowned self] in
+        guard let word = textField.text else { return }
+        if word.lowercased() == self.secretWord.lowercased() {
+            self.currentState = SecretWordModel(guessed: true)
+        } else {
+            self.currentState = SecretWordModel(guessed: false)
         }
-        return button
-    }()
-    
+    }
+
+
+
     // MARK: - Lifecycle
     init(secretWord: String) {
         self.secretWord = secretWord.lowercased()

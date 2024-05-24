@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SecretWordState {
+struct SecretWordModel {
     var guessed: Bool?
     var currentEmoji = ""
     var currentPhrase = ""

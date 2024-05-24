@@ -64,48 +64,16 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         return userStatus
     }()
     
-    // Legacy code. Removed with customButton implementation
-    /*
-    private lazy var showStatusButton: UIButton = {
-        let button = UIButton(type: .system)
-        
-        button.backgroundColor = accentColor
-                
-        button.setTitle("Set status", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        
-        button.layer.cornerRadius = 12
-        
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOffset = CGSize(width: 4, height: 4)
-        button.layer.shadowOpacity = 0.7
-        button.layer.shadowRadius = 4
-                
-        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-
-        return button
-    }()
-    */
-    
-    private lazy var setStatusButton: UIButton = {
-        let button = CustomButton(customTitle: "Set Status")
-        
-        button.action = { [self] in
-            userStatus.text = self.statusText
-            if self.user != nil {
-                for i in 0...users.count - 1 {
-                    if users[i].login == self.user?.login {
-                        users[i].status = self.statusText
-                        print("\(users[i].login) changed status to \(self.statusText)")
-                    }
+    private lazy var setStatusButton = CustomButton(customTitle: "Set Status") {[unowned self] in
+        userStatus.text = self.statusText
+        if self.user != nil {
+            for i in 0...users.count - 1 {
+                if users[i].login == self.user?.login {
+                    users[i].status = self.statusText
                 }
             }
         }
-        
-        return button
-    }()
+    }
     
     private lazy var textField: UITextFieldWithPadding = {
         let textField = UITextFieldWithPadding()
@@ -145,22 +113,9 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         changeBackgroundColor()
     }
      
-    // MARK: - Actions
     
-    // Legacy code. Removed with customButton implementation
-    /*
-    @objc func buttonPressed(_ sender: UIButton) {
-        userStatus.text = statusText
-        if self.user != nil {
-            for i in 0...users.count - 1 {
-                if users[i].login == self.user?.login {
-                    users[i].status = statusText
-                    print("\(users[i].login) changed status to \(statusText)")
-                }
-            }
-        }
-    }
-    */
+    
+    // MARK: - Actions
     
     @objc func statusTextChanged(_ textField: UITextField) {
         if let text = textField.text {

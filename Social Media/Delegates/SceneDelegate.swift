@@ -5,6 +5,7 @@
 //  Created by Philipp Lazarev on 18.05.2023.
 //
 
+// Working on Task 7
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -18,7 +19,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tabBarController = UITabBarController()
         
         // Feed Tab
-        let feedViewController = FeedViewController()
+        let feedService = FeedService()
+        let feedViewModel = FeedVMOutput(service: feedService)
+        let feedViewController = FeedViewController(viewModel: feedViewModel)
         feedViewController.title = "Feed"
         let feedImage = UIImage(systemName: "house.circle")
         feedViewController.tabBarItem = UITabBarItem(title: nil, image: feedImage, tag: 0)
