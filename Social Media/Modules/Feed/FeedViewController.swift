@@ -9,6 +9,8 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
+    //weak var coordinator: MainCoo
+    
     // MARK: - Subviews
     
     private var loadedPosts: [StorageService.Post] = []
