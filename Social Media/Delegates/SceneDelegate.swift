@@ -13,61 +13,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        //guard let scene = (scene as? UIWindowScene) else { return }
+        guard let scene = (scene as? UIWindowScene) else { return }
                                
-        //let window = UIWindow(windowScene: scene)
+        let window = UIWindow(windowScene: scene)
         
-        /*
-        let tabBarController = UITabBarController()
-        
-        // Feed Tab
-        let feedService = FeedService()
-        let feedViewModel = FeedVMOutput(service: feedService)
-        let feedViewController = FeedViewController(viewModel: feedViewModel)
-        feedViewController.title = "Feed"
-        let feedImage = UIImage(systemName: "house.circle")
-        feedViewController.tabBarItem = UITabBarItem(title: nil, image: feedImage, tag: 0)
-        
-        // Log In Tab
-        let loginFactory = MyLoginFactory()
-        let loginInspector = loginFactory.makeLoginInspector()
-        let logInViewController = LogInViewController()
-        logInViewController.loginDelegate = loginInspector
-        logInViewController.title = "Log In"
-        let logInImage = UIImage(systemName: "person.crop.circle.badge.exclamationmark")
-        logInViewController.tabBarItem = UITabBarItem(title: nil, image: logInImage, tag: 1)
-
-        // Secret Word Game Tab (Task 6)
-        let secretWordViewController = SecretWordViewController(secretWord: "secret")
-        let secretWordImage = UIImage(systemName: "dice.fill")
-        secretWordViewController.tabBarItem = UITabBarItem(title: nil, image: secretWordImage, tag: 2)
-                         
-
-        let controllers = [feedViewController, logInViewController, secretWordViewController]
-        tabBarController.viewControllers = controllers.map {
-            UINavigationController(rootViewController: $0)
-        }
-         
-        tabBarController.selectedIndex = 0
-        */
-        
-        
-             /*
-        //window.rootViewController = tabBarController
         let navigationController = UINavigationController()
+        
         let coordinator = MainCoordinator(navigationController: navigationController)
-        
-        let window = UIWindow(frame: UIScreen.main.bounds)
-        //window.rootViewController = navigationController
-        window.makeKeyAndVisible()
-        
         coordinator.addFeedViewController()
         coordinator.addLogInViewController()
         coordinator.addSecretWordViewController()
         coordinator.start()
-                 
+        window.rootViewController = coordinator.tabBarController
+        window.makeKeyAndVisible()
         self.window = window
-        */
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
