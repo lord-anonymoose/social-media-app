@@ -20,11 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationController = UINavigationController()
         
         let coordinator = MainCoordinator(navigationController: navigationController)
-        coordinator.addFeedViewController()
-        coordinator.addLogInViewController()
-        coordinator.addSecretWordViewController()
-        coordinator.start()
-        window.rootViewController = coordinator.tabBarController
+        
+        window.rootViewController = coordinator.start()
         window.makeKeyAndVisible()
         self.window = window
     }

@@ -8,8 +8,7 @@
 import UIKit
 
 protocol Coordinator {
-    var childCoordinators: [Coordinator] { get set }
-    var tabBarController: UITabBarController { get set }
+    //var childCoordinators: [Coordinator] { get set }
 
-    func start()
+    func start() -> UIViewController
 }

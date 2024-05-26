@@ -8,11 +8,9 @@
 import UIKit
 
 class MainCoordinator: Coordinator {
-    var childCoordinators = [Coordinator]()
+    //var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
-    
-    var tabBarController = UITabBarController()
-    
+        
     var controllers = [UIViewController]()
     
     init(navigationController: UINavigationController) {
@@ -47,11 +45,17 @@ class MainCoordinator: Coordinator {
         controllers.append(secretWordViewController)
     }
     
-    func start() {
+    func start() -> UIViewController {
+        addFeedViewController()
+        addLogInViewController()
+        addSecretWordViewController()
+        
+        let tabBarController = UITabBarController()
+        
         tabBarController.viewControllers = controllers.map {
             UINavigationController(rootViewController: $0)
         }
         tabBarController.selectedIndex = 0
-        navigationController.pushViewController(tabBarController, animated: false)
+        return tabBarController
     }
 }
