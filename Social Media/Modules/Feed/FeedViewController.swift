@@ -9,7 +9,6 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
-    //weak var coordinator: MainCoo
     
     // MARK: - Subviews
     
@@ -25,6 +24,7 @@ class FeedViewController: UIViewController {
     
     private lazy var feedView: UITableView = {
         let feedView = UITableView().feedView()
+        self.viewModel.changeState()
         return feedView
     }()
     

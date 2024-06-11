@@ -8,7 +8,7 @@
 import UIKit
 
 class MainCoordinator: Coordinator {
-    //var childCoordinators = [Coordinator]()
+
     var navigationController: UINavigationController
         
     var controllers = [UIViewController]()
@@ -45,7 +45,7 @@ class MainCoordinator: Coordinator {
         controllers.append(secretWordViewController)
     }
     
-    func start() -> UIViewController {
+    func start() {
         addFeedViewController()
         addLogInViewController()
         addSecretWordViewController()
@@ -56,6 +56,8 @@ class MainCoordinator: Coordinator {
             UINavigationController(rootViewController: $0)
         }
         tabBarController.selectedIndex = 0
-        return tabBarController
+        
+        navigationController.pushViewController(tabBarController, animated: false)
+
     }
 }

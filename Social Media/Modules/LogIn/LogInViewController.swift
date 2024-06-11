@@ -100,15 +100,14 @@ class LogInViewController: UIViewController {
         
         if let user = userService.checkUser(login: self.loginInput.text!) {
             if self.loginDelegate!.check(login: self.loginInput.text!, password: self.passwordInput.text!) {
-                let profileViewController = ProfileViewController(user: user)
-                
+
                 if let navigationController = self.navigationController {
-                    navigationController.setViewControllers([profileViewController], animated: true)
-                }
-                
-                if let tabBarController = self.tabBarController {
-                    tabBarController.tabBar.items?[1].image = UIImage(systemName: "person.crop.circle")
-                    tabBarController.tabBar.items?[1].title = nil
+                    let coordinator = ProfileCoordinator(navigationController: navigationController)
+                    coordinator.authenticate(user: user)
+                    coordinator.start()
+                    if let tabBarController = self.tabBarController {
+                        coordinator.updateTabBar(tabBarController: tabBarController)
+                    }
                 }
             } else {
                 let alert = UIAlertController(title: "Error!", message: "Incorrect password!", preferredStyle: .alert)
