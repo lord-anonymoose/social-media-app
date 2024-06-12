@@ -9,7 +9,7 @@ import UIKit
 import iOSIntPackage
 
 class PhotosViewController: UIViewController, UICollectionViewDelegate {
-
+    
     public var userPhotos: [UIImage] = []
     //public var userPhotosShown: [UIImage] = [UIImage]()
     //let imagePublisherFacade = ImagePublisherFacade()
@@ -46,7 +46,10 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        processImages(qualityOfService: .background)
+        processImages(qualityOfService: .default)
+        processImages(qualityOfService: .userInitiated)
+        processImages(qualityOfService: .userInteractive)
         setupUI()
         addSubviews()
         setupConstraints()
@@ -79,6 +82,38 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
             photoCollectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             photoCollectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
+    }
+    
+    private func processImages(qualityOfService: QualityOfService) { // Applying filter to images
+        let imageProcessor = ImageProcessor()
+        var processedPhotos = [UIImage]()
+        
+        let start = DispatchTime.now() // <<<<<<<<<< Start time
+        
+        imageProcessor.processImagesOnThread(
+            sourceImages: self.userPhotos,
+            filter: .chrome,
+            qos: qualityOfService
+        ) { processedImages in
+            // Handle the processed images
+            for processedImage in processedImages {
+                if let cgImage = processedImage {
+                    let image = UIImage(cgImage: cgImage)
+                    processedPhotos.append(image)
+                }
+            }
+            DispatchQueue.main.async {
+                self.userPhotos = processedPhotos
+                self.photoCollectionView.reloadData() // Reload the collection view after images are processed
+            }
+        }
+        
+        let end = DispatchTime.now() // <<<<<<<<<<<< End time
+        
+        let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds // <<<<< Difference in nano seconds (UInt64)
+        let timeInterval = Double(nanoTime) / 1_000_000_000 // Technically could overflow for long running tests
+
+        print("\(qualityOfService) elapsed in \(timeInterval) seconds")
     }
 }
 

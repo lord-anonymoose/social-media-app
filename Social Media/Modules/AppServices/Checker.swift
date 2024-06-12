@@ -14,7 +14,7 @@ class Checker {
         "katyperry":"uU3d^csaaqw",
         "teddyphotos":"%Edc_Swdcd21",
         "joebiden":"s2esdSQd22&$",
-        "tim_cook":"!@WDjdd_23ds2",
+        "tim_cook":"WDjdd_23ds2",
         "ryantedder":"dd&ghrjkx_dwas",
         "billieeilish":"83a1_93JFfdaz",
         "ijustine":"!ddffgccd_*753s",
