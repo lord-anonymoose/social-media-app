@@ -28,9 +28,9 @@ class MainCoordinator: Coordinator {
     }
     
     func addLogInViewController() {
-        let loginFactory = MyLoginFactory()
-        let loginInspector = loginFactory.makeLoginInspector()
         let logInViewController = LogInViewController()
+        let loginFactory = MyLoginFactory()
+        let loginInspector = loginFactory.makeLoginInspector(viewController: logInViewController)
         logInViewController.loginDelegate = loginInspector
         logInViewController.title = "Log In"
         let logInImage = UIImage(systemName: "person.crop.circle.badge.exclamationmark")

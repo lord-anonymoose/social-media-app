@@ -23,13 +23,22 @@ class Checker {
     
     private init() {}
     
-    static func check(login: String, password: String) -> Bool {
+    static func check(login: String, password: String) throws -> StorageService.User? {
+        
+        guard passwords.keys.contains(login) else {
+            throw appError.userNotExist
+        }
+        
         for (key, value) in passwords {
             if (key == login) && (value == password) {
-                return true
+                let userService = CurrentUserService()
+                if let user = userService.checkUser(login: login) {
+                    return user
+                }
             }
         }
-        return false
+
+        throw appError.passwordIncorrect
     }
 }
 

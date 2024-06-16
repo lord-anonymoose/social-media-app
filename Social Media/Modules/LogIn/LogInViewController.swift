@@ -11,7 +11,7 @@ import Foundation
 class LogInViewController: UIViewController {
     
     var loginDelegate: LoginViewControllerDelegate?
-    
+        
     // MARK: - Subviews
     
     private lazy var scrollView: UIScrollView = {
@@ -97,28 +97,28 @@ class LogInViewController: UIViewController {
     
     private lazy var logInButton = CustomButton(customTitle: "Log In") { [unowned self] in
         let userService = CurrentUserService()
-        
-        if let user = userService.checkUser(login: self.loginInput.text!) {
-            if self.loginDelegate!.check(login: self.loginInput.text!, password: self.passwordInput.text!) {
 
-                if let navigationController = self.navigationController {
-                    let coordinator = ProfileCoordinator(navigationController: navigationController)
-                    coordinator.authenticate(user: user)
-                    coordinator.start()
-                    if let tabBarController = self.tabBarController {
-                        coordinator.updateTabBar(tabBarController: tabBarController)
-                    }
+        //if let user = userService.checkUser(login: self.loginInput.text!) {
+        if let user = self.loginDelegate?.check(login: self.loginInput.text!, password: self.passwordInput.text!) {
+            if let navigationController = self.navigationController {
+                let coordinator = ProfileCoordinator(navigationController: navigationController)
+                coordinator.authenticate(user: user)
+                coordinator.start()
+                if let tabBarController = self.tabBarController {
+                    coordinator.updateTabBar(tabBarController: tabBarController)
                 }
-            } else {
-                let alert = UIAlertController(title: "Error!", message: "Incorrect password!", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
             }
+        } 
+        /*else {
+            let alert = UIAlertController(title: "Error!", message: "Incorrect password!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         } else {
             let alert = UIAlertController(title: "Error!", message: "Such user does not exist!", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
+         */
     }
     
     
@@ -134,9 +134,6 @@ class LogInViewController: UIViewController {
         setupContentOfScrollView()
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
-        
-        view.addGestureRecognizer(tap)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {

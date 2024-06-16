@@ -73,7 +73,7 @@ class FeedViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            feedView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            feedView.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor, constant: 0),
             feedView.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor, constant: 0),
             feedView.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 0),
             feedView.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: 0)
