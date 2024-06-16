@@ -43,11 +43,13 @@ class PhotosTableViewCell: UITableViewCell {
         return stack
     }()
 
-    func getPreviewImage(images: [UIImage], index: Int) -> UIImageView {
+    func getPreviewImage(images: [UIImage], index: Int) -> UIImageView? {
         let preview = UIImageView()
         preview.translatesAutoresizingMaskIntoConstraints = false
         if index < images.count {
             preview.image = images[index]
+        } else {
+            return nil
         }
         preview.contentMode = .scaleAspectFill
         preview.layer.cornerRadius = 6
@@ -81,7 +83,9 @@ class PhotosTableViewCell: UITableViewCell {
 
     private func setupPreviews(images: [UIImage]) {
         for i in 0...2 {
-            let image = getPreviewImage(images: images, index: i)
+            guard let image = getPreviewImage(images: images, index: i) else {
+                preconditionFailure("Failed to PreviewImage")
+            }
             imageStackView.addArrangedSubview(image)
             NSLayoutConstraint.activate([
                 image.widthAnchor.constraint(greaterThanOrEqualToConstant: (contentView.frame.width - 24) / 4),
