@@ -81,6 +81,7 @@ class PhotosTableViewCell: UITableViewCell {
         contentView.addSubview(imageStackView)
     }
 
+    // Remove fatal error in future versions
     private func setupPreviews(images: [UIImage]) {
         for i in 0...2 {
             guard let image = getPreviewImage(images: images, index: i) else {
