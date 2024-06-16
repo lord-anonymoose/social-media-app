@@ -308,10 +308,32 @@ class LogInViewController: UIViewController {
     
     private func setupBruteforceButtonAction() {
         bruteforceButton.buttonAction = { [weak bruteforceButton] in
+            self.startBruteforceOperation()
+            /*
             self.activityIndicator.startAnimating()
             bruteforceButton?.setBackgroundColor(.systemGray, forState: .normal)
             bruteforceButton?.isUserInteractionEnabled = false
             self.logInButton.isUserInteractionEnabled = false
+            */
+        }
+    }
+    
+    private func startBruteforceOperation() {
+        // Start animating the activity indicator on the main thread
+        DispatchQueue.main.async {
+            self.activityIndicator.startAnimating()
+        }
+        
+        // Perform the time-consuming task on a background queue
+        DispatchQueue.global(qos: .background).async {
+            sleep(10)
+            print("Secondary action is done")
+            
+            // Update the UI on the main thread after the operation is complete
+            DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
+                self.bruteforceButton.setBackgroundColor(.systemGray, forState: .normal)
+            }
         }
     }
 }
