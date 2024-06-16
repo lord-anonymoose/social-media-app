@@ -120,6 +120,10 @@ class LogInViewController: UIViewController {
         }
          */
     }
+
+    private lazy var bruteforceButton = CustomButton(customTitle: "Bruteforce password", action: {
+        
+    })
     
     
     
@@ -182,6 +186,7 @@ class LogInViewController: UIViewController {
         logInInputContainer.addSubview(passwordInput)
         
         contentView.addSubview(logInButton)
+        contentView.addSubview(bruteforceButton)
     }
     
     private func setupConstraints() {
@@ -231,11 +236,19 @@ class LogInViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            logInButton.topAnchor.constraint(equalTo: logInInputContainer.bottomAnchor, constant: 16),
+            bruteforceButton.topAnchor.constraint(equalTo: logInInputContainer.bottomAnchor, constant: 16),
+            bruteforceButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            bruteforceButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            bruteforceButton.heightAnchor.constraint(equalToConstant: 50),
+            
+        ])
+        
+        NSLayoutConstraint.activate([
             logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             logInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            logInButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+            logInButton.topAnchor.constraint(equalTo: bruteforceButton.bottomAnchor, constant: 16),
             logInButton.heightAnchor.constraint(equalToConstant: 50),
+            logInButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
     }
     
