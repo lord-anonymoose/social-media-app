@@ -11,8 +11,6 @@ import iOSIntPackage
 class PhotosViewController: UIViewController, UICollectionViewDelegate {
     
     public var userPhotos: [UIImage] = []
-    //public var userPhotosShown: [UIImage] = [UIImage]()
-    //let imagePublisherFacade = ImagePublisherFacade()
     
     
     // MARK: - Subviews
@@ -122,6 +120,7 @@ extension PhotosViewController: UICollectionViewDataSource {
         userPhotos.count
     }
         
+    // Throwing error
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotosCollectionViewCell
         

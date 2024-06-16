@@ -6,13 +6,13 @@
 //
 
 
-func getUser(login: String) -> StorageService.User {
+func getUser(login: String) throws -> Result<StorageService.User, Error> {
     for user in users {
         if user.login == login {
-            return user
+            return .success(user)
         }
     }
-    return users[0] // default user
+    return .failure(appError.userNotExist)
 }
 
 public var strawberry_moose = StorageService.User(login: "strawberry_moose", name: "Philipp Lazarev")
