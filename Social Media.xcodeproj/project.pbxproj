@@ -37,6 +37,7 @@
 		8EC3113C2A4C3540006C8FA2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC3113B2A4C3540006C8FA2 /* Extensions.swift */; };
 		8EC3113E2A4CB631006C8FA2 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC3113D2A4CB631006C8FA2 /* LogInViewController.swift */; };
 		8ED354802AE67C530038481C /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED3547F2AE67C530038481C /* Checker.swift */; };
+		8EDDCEB32C1F8C140097A874 /* Bruteforce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDDCEB22C1F8C140097A874 /* Bruteforce.swift */; };
 		8EDF8EE12B6041A300154433 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 8EDF8EE02B6041A300154433 /* iOSIntPackage */; };
 		8EF48DA52A27797F0099166A /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF48DA42A27797F0099166A /* ProfileHeaderView.swift */; };
 /* End PBXBuildFile section */
@@ -87,6 +88,7 @@
 		8EC3113D2A4CB631006C8FA2 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		8EC4A5C72AD98BA300C12FAA /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		8ED3547F2AE67C530038481C /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
+		8EDDCEB22C1F8C140097A874 /* Bruteforce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bruteforce.swift; sourceTree = "<group>"; };
 		8EF48DA42A27797F0099166A /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -229,6 +231,7 @@
 				8EC4A5C72AD98BA300C12FAA /* UserService.swift */,
 				8E0614CA2AABA96B00DB3BBD /* StorageService.swift */,
 				8ED3547F2AE67C530038481C /* Checker.swift */,
+				8EDDCEB22C1F8C140097A874 /* Bruteforce.swift */,
 			);
 			path = AppServices;
 			sourceTree = "<group>";
@@ -354,6 +357,7 @@
 				8E4C15652A269C4400AA511B /* InfoViewController.swift in Sources */,
 				8EC1CAEE2AE6920400B38364 /* LoginViewControllerDelegate.swift in Sources */,
 				8E586B522AA898B500D89AF6 /* PhotosCollectionViewCell.swift in Sources */,
+				8EDDCEB32C1F8C140097A874 /* Bruteforce.swift in Sources */,
 				8E32E8222BF8B6AE00F2A49C /* SecretWordViewController.swift in Sources */,
 				8E98614A2BF8CAE800066827 /* SecretWordModel.swift in Sources */,
 				8EAC9EB42BFBFF1300D27B28 /* FeedService.swift in Sources */,

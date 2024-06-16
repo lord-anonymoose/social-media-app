@@ -11,6 +11,7 @@ import Foundation
 class LogInViewController: UIViewController {
     
     var loginDelegate: LoginViewControllerDelegate?
+    var isBruteforsing: Bool = false
         
     // MARK: - Subviews
     
@@ -122,8 +123,16 @@ class LogInViewController: UIViewController {
     }
 
     private lazy var bruteforceButton = CustomButton(customTitle: "Bruteforce password", action: {
-        
+        /*activityIndicator.startAnimating()
+        bruteforceButton?.setBackgroundColor(.systemGray, forState: .normal)
+        */
     })
+    
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        return activityIndicator
+    }()
     
     
     
@@ -136,8 +145,13 @@ class LogInViewController: UIViewController {
         addSubviews()
         setupConstraints()
         setupContentOfScrollView()
-        
+        setupBruteforceButtonAction()
+        /*
+        let appBruteforce = AppBruteforce()
+        appBruteforce.bruteForce(passwordToUnlock: "AAA")
         let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+         
+        */
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -187,6 +201,7 @@ class LogInViewController: UIViewController {
         
         contentView.addSubview(logInButton)
         contentView.addSubview(bruteforceButton)
+        contentView.addSubview(activityIndicator)
     }
     
     private func setupConstraints() {
@@ -235,12 +250,19 @@ class LogInViewController: UIViewController {
             passwordInput.trailingAnchor.constraint(equalTo: logInInputContainer.trailingAnchor, constant: 0)
         ])
         
+        
         NSLayoutConstraint.activate([
             bruteforceButton.topAnchor.constraint(equalTo: logInInputContainer.bottomAnchor, constant: 16),
             bruteforceButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             bruteforceButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             bruteforceButton.heightAnchor.constraint(equalToConstant: 50),
-            
+        ])
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerYAnchor.constraint(equalTo: bruteforceButton.centerYAnchor),
+            activityIndicator.trailingAnchor.constraint(equalTo: bruteforceButton.trailingAnchor, constant: -16),
+            activityIndicator.widthAnchor.constraint(equalToConstant: 50),
+            activityIndicator.heightAnchor.constraint(equalToConstant: 50)
         ])
         
         NSLayoutConstraint.activate([
@@ -250,6 +272,15 @@ class LogInViewController: UIViewController {
             logInButton.heightAnchor.constraint(equalToConstant: 50),
             logInButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
+        
+        /*
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            activityIndicator.heightAnchor.constraint(equalToConstant: 100),
+            activityIndicator.widthAnchor.constraint(equalToConstant: 100)
+        ])
+        */
     }
     
     private func setupKeyboardObservers() {
@@ -273,5 +304,14 @@ class LogInViewController: UIViewController {
     private func removeKeyboardObservers() {
             let notificationCenter = NotificationCenter.default
             notificationCenter.removeObserver(self)
+    }
+    
+    private func setupBruteforceButtonAction() {
+        bruteforceButton.buttonAction = { [weak bruteforceButton] in
+            self.activityIndicator.startAnimating()
+            bruteforceButton?.setBackgroundColor(.systemGray, forState: .normal)
+            bruteforceButton?.isUserInteractionEnabled = false
+            self.logInButton.isUserInteractionEnabled = false
+        }
     }
 }
