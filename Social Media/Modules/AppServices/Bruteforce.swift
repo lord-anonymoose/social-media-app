@@ -8,19 +8,29 @@
 import Foundation
 
 final class AppBruteforce {
-    func bruteForce(userdToUnclock: String) {
+    func bruteForce(userToUnclock: String) {
         let ALLOWED_CHARACTERS:   [String] = String().printable.map { String($0) }
 
-        var password: 
-
-        // Will strangely ends at 0000 instead of ~~~
-        while password != passwordToUnlock { // Increase MAXIMUM_PASSWORD_SIZE value for more
-            password = generateBruteForce(password, fromArray: ALLOWED_CHARACTERS)
-            // Your stuff here
-//            print(password)
-            // Your stuff here
-        }
+        var password: String = ""
         
+        
+        do {
+            let passwordToUnlock = try Checker.getPassword(login: userToUnclock)
+            
+            while password != passwordToUnlock { // Increase MAXIMUM_PASSWORD_SIZE value for more
+                password = generateBruteForce(password, fromArray: ALLOWED_CHARACTERS)
+                print(password)
+            }
+        }
+        catch AppError.userNotExist {
+            print("User does not exist")
+        }
+        catch AppError.passwordIncorrect {
+            print("Password is incorrect")
+        }
+        catch {
+            print("Unknown error")
+        }        
         print("Password unlocked: \(password)")
     }
     

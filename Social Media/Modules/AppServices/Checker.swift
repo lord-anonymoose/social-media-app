@@ -9,7 +9,7 @@ import Foundation
 
 class Checker {
     private static var passwords: Dictionary = [
-        "default":"default",
+        "default":"AAA",
         "strawberry_moose":"3sfQasf23d_&3",
         "katyperry":"uU3d^csaaqw",
         "teddyphotos":"%Edc_Swdcd21",
@@ -31,7 +31,6 @@ class Checker {
         case .success(let user):
             for (key, value) in passwords {
                 if (key == login) && (value == password) {
-                    let userService = CurrentUserService()
                     return user
                 }
             }
@@ -50,13 +49,15 @@ class Checker {
         switch result {
         case .success(let user):
             for (key, value) in passwords {
-                if (key == login) {
+                if (key == user.login) {
                     return value
                 }
             }
         case .failure(let error):
             throw error
         }
+        
+        return nil
     }
 }
 

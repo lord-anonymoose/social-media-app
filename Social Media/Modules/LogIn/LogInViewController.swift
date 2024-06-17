@@ -123,9 +123,6 @@ class LogInViewController: UIViewController {
     }
 
     private lazy var bruteforceButton = CustomButton(customTitle: "Bruteforce password", action: {
-        /*activityIndicator.startAnimating()
-        bruteforceButton?.setBackgroundColor(.systemGray, forState: .normal)
-        */
     })
     
     private lazy var activityIndicator: UIActivityIndicatorView = {
@@ -293,13 +290,13 @@ class LogInViewController: UIViewController {
     
     private func setupBruteforceButtonAction() {
         bruteforceButton.buttonAction = { [unowned self] in
-            startBruteforceOperation()
-            /*
-            self.activityIndicator.startAnimating()
-            bruteforceButton?.setBackgroundColor(.systemGray, forState: .normal)
-            bruteforceButton?.isUserInteractionEnabled = false
-            self.logInButton.isUserInteractionEnabled = false
-            */
+            do {
+                print("Starting bruteforce")
+                try self.startBruteforceOperation()
+            } catch {
+                // Handle the error appropriately
+                print("Error starting brute force operation: \(error)")
+            }
         }
     }
     
@@ -310,34 +307,30 @@ class LogInViewController: UIViewController {
         
         switch result {
         case .success(let user):
-            let bruteforce = AppBruteforce()
-            bruteforce.bruteForce(passwordToUnlock: <#T##String#>)
+            DispatchQueue.main.async {
+                self.activityIndicator.startAnimating()
+                self.activityIndicator.isHidden = false
+                self.bruteforceButton.setBackgroundColor(.systemGray, forState: .normal)
+                self.loginInput.isUserInteractionEnabled = false
+            }
+            
+            DispatchQueue.global(qos: .background).async {
+                
+                let bruteforce = AppBruteforce()
+                bruteforce.bruteForce(userToUnclock: user.login)
+                
+                DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
+                    self.activityIndicator.isHidden = true
+                    self.bruteforceButton.setBackgroundColor(accentColor, forState: .normal)
+                    self.loginInput.isUserInteractionEnabled = true
+                    self.passwordInput.text = "ЛОХ"
+                    self.passwordInput.isSecureTextEntry = false
+                }
+            }
             
         case .failure(let error):
             throw error
-        }
-        
-        DispatchQueue.main.async {
-            self.activityIndicator.startAnimating()
-            self.activityIndicator.isHidden = false
-            self.bruteforceButton.setBackgroundColor(.systemGray, forState: .normal)
-            self.loginInput.isUserInteractionEnabled = false
-        }
-        
-        // Perform the time-consuming task on a background queue
-        DispatchQueue.global(qos: .background).async {
-            sleep(10)
-            
-            
-            // Update the UI on the main thread after the operation is complete
-            DispatchQueue.main.async {
-                self.activityIndicator.stopAnimating()
-                self.activityIndicator.isHidden = true
-                self.bruteforceButton.setBackgroundColor(accentColor, forState: .normal)
-                self.loginInput.isUserInteractionEnabled = true
-                self.passwordInput.text = "ЛОХ"
-                self.passwordInput.isSecureTextEntry = false
-            }
         }
     }
     
