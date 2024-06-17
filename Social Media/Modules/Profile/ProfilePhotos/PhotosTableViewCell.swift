@@ -81,17 +81,17 @@ class PhotosTableViewCell: UITableViewCell {
         contentView.addSubview(imageStackView)
     }
 
-    // Remove fatal error in future versions
     private func setupPreviews(images: [UIImage]) {
         for i in 0...2 {
-            guard let image = getPreviewImage(images: images, index: i) else {
-                preconditionFailure("Failed to PreviewImage")
+            if let image = getPreviewImage(images: images, index: i) {
+                imageStackView.addArrangedSubview(image)
+                NSLayoutConstraint.activate([
+                    image.widthAnchor.constraint(greaterThanOrEqualToConstant: (contentView.frame.width - 24) / 4),
+                    image.heightAnchor.constraint(equalTo: image.widthAnchor, multiplier: 0.56),
+                ])
+            } else {
+                
             }
-            imageStackView.addArrangedSubview(image)
-            NSLayoutConstraint.activate([
-                image.widthAnchor.constraint(greaterThanOrEqualToConstant: (contentView.frame.width - 24) / 4),
-                image.heightAnchor.constraint(equalTo: image.widthAnchor, multiplier: 0.56),
-            ])
         }
     }
     

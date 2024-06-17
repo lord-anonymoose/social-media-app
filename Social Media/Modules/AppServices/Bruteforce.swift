@@ -8,7 +8,7 @@
 import Foundation
 
 final class AppBruteforce {
-    func bruteForce(userToUnclock: String) {
+    func bruteForce(userToUnclock: String) -> String {
         let ALLOWED_CHARACTERS:   [String] = String().printable.map { String($0) }
 
         var password: String = ""
@@ -32,6 +32,7 @@ final class AppBruteforce {
             print("Unknown error")
         }        
         print("Password unlocked: \(password)")
+        return password
     }
     
     func indexOf(character: Character, _ array: [String]) -> Int {

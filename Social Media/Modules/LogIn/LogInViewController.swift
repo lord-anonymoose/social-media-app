@@ -317,14 +317,14 @@ class LogInViewController: UIViewController {
             DispatchQueue.global(qos: .background).async {
                 
                 let bruteforce = AppBruteforce()
-                bruteforce.bruteForce(userToUnclock: user.login)
+                let password = bruteforce.bruteForce(userToUnclock: user.login)
                 
                 DispatchQueue.main.async {
                     self.activityIndicator.stopAnimating()
                     self.activityIndicator.isHidden = true
                     self.bruteforceButton.setBackgroundColor(accentColor, forState: .normal)
                     self.loginInput.isUserInteractionEnabled = true
-                    self.passwordInput.text = "ЛОХ"
+                    self.passwordInput.text = password
                     self.passwordInput.isSecureTextEntry = false
                 }
             }
