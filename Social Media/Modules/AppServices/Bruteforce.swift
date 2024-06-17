@@ -8,10 +8,10 @@
 import Foundation
 
 final class AppBruteforce {
-    func bruteForce(passwordToUnlock: String) {
+    func bruteForce(userdToUnclock: String) {
         let ALLOWED_CHARACTERS:   [String] = String().printable.map { String($0) }
 
-        var password: String = ""
+        var password: 
 
         // Will strangely ends at 0000 instead of ~~~
         while password != passwordToUnlock { // Increase MAXIMUM_PASSWORD_SIZE value for more

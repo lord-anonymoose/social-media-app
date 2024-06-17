@@ -7,14 +7,14 @@
 
 import Foundation
 
-enum appError: Error {
+enum AppError: Error {
     case datatypeError
     case userNotExist
     case passwordIncorrect
     case networkError
 }
 
-extension appError: CustomStringConvertible {
+extension AppError: CustomStringConvertible {
     public var description: String {
         switch self {
         case .datatypeError:

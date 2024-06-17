@@ -146,12 +146,6 @@ class LogInViewController: UIViewController {
         setupConstraints()
         setupContentOfScrollView()
         setupBruteforceButtonAction()
-        /*
-        let appBruteforce = AppBruteforce()
-        appBruteforce.bruteForce(passwordToUnlock: "AAA")
-        let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
-         
-        */
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -272,15 +266,6 @@ class LogInViewController: UIViewController {
             logInButton.heightAnchor.constraint(equalToConstant: 50),
             logInButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
-        
-        /*
-        NSLayoutConstraint.activate([
-            activityIndicator.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
-            activityIndicator.heightAnchor.constraint(equalToConstant: 100),
-            activityIndicator.widthAnchor.constraint(equalToConstant: 100)
-        ])
-        */
     }
     
     private func setupKeyboardObservers() {
@@ -307,8 +292,8 @@ class LogInViewController: UIViewController {
     }
     
     private func setupBruteforceButtonAction() {
-        bruteforceButton.buttonAction = { [weak bruteforceButton] in
-            self.startBruteforceOperation()
+        bruteforceButton.buttonAction = { [unowned self] in
+            startBruteforceOperation()
             /*
             self.activityIndicator.startAnimating()
             bruteforceButton?.setBackgroundColor(.systemGray, forState: .normal)
@@ -318,22 +303,46 @@ class LogInViewController: UIViewController {
         }
     }
     
-    private func startBruteforceOperation() {
+    private func startBruteforceOperation() throws {
         // Start animating the activity indicator on the main thread
+        let login = self.loginInput.text ?? ""
+        let result = try getUser(login: login)
+        
+        switch result {
+        case .success(let user):
+            let bruteforce = AppBruteforce()
+            bruteforce.bruteForce(passwordToUnlock: <#T##String#>)
+            
+        case .failure(let error):
+            throw error
+        }
+        
         DispatchQueue.main.async {
             self.activityIndicator.startAnimating()
+            self.activityIndicator.isHidden = false
+            self.bruteforceButton.setBackgroundColor(.systemGray, forState: .normal)
+            self.loginInput.isUserInteractionEnabled = false
         }
         
         // Perform the time-consuming task on a background queue
         DispatchQueue.global(qos: .background).async {
             sleep(10)
-            print("Secondary action is done")
+            
             
             // Update the UI on the main thread after the operation is complete
             DispatchQueue.main.async {
                 self.activityIndicator.stopAnimating()
-                self.bruteforceButton.setBackgroundColor(.systemGray, forState: .normal)
+                self.activityIndicator.isHidden = true
+                self.bruteforceButton.setBackgroundColor(accentColor, forState: .normal)
+                self.loginInput.isUserInteractionEnabled = true
+                self.passwordInput.text = "ЛОХ"
+                self.passwordInput.isSecureTextEntry = false
             }
         }
+    }
+    
+    private func stopBruteForceOperation(with password: String) {
+        self.activityIndicator.stopAnimating()
+        self.activityIndicator.isHidden = true
     }
 }

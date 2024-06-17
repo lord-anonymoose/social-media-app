@@ -12,7 +12,7 @@ func getUser(login: String) throws -> Result<StorageService.User, Error> {
             return .success(user)
         }
     }
-    return .failure(appError.userNotExist)
+    return .failure(AppError.userNotExist)
 }
 
 public var strawberry_moose = StorageService.User(login: "strawberry_moose", name: "Philipp Lazarev")

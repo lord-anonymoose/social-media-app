@@ -36,8 +36,24 @@ class Checker {
                 }
             }
             
-            throw appError.passwordIncorrect
+            throw AppError.passwordIncorrect
             
+        case .failure(let error):
+            throw error
+        }
+    }
+    
+    static func getPassword(login: String) throws -> String? {
+        
+        let result = try getUser(login: login)
+        
+        switch result {
+        case .success(let user):
+            for (key, value) in passwords {
+                if (key == login) {
+                    return value
+                }
+            }
         case .failure(let error):
             throw error
         }

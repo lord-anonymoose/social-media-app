@@ -19,11 +19,11 @@ struct LoginInspector: LoginViewControllerDelegate {
         do {
             return try Checker.check(login: login, password: password)
         }
-        catch appError.userNotExist {
+        catch AppError.userNotExist {
             print("User does not exist")
             showAlert(error: .userNotExist)
         }
-        catch appError.passwordIncorrect {
+        catch AppError.passwordIncorrect {
             print("Password is incorrect")
             showAlert(error: .passwordIncorrect)
         }
@@ -33,7 +33,7 @@ struct LoginInspector: LoginViewControllerDelegate {
         return nil
     }
     
-    func showAlert(error: appError) {
+    func showAlert(error: AppError) {
         let title = "Error!"
         let message = error.description
     
