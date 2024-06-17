@@ -17,9 +17,8 @@ final class AppBruteforce {
         do {
             let passwordToUnlock = try Checker.getPassword(login: userToUnclock)
             
-            while password != passwordToUnlock { // Increase MAXIMUM_PASSWORD_SIZE value for more
+            while password != passwordToUnlock {
                 password = generateBruteForce(password, fromArray: ALLOWED_CHARACTERS)
-                print(password)
             }
         }
         catch AppError.userNotExist {

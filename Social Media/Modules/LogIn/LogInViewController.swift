@@ -291,17 +291,14 @@ class LogInViewController: UIViewController {
     private func setupBruteforceButtonAction() {
         bruteforceButton.buttonAction = { [unowned self] in
             do {
-                print("Starting bruteforce")
                 try self.startBruteforceOperation()
             } catch {
-                // Handle the error appropriately
                 print("Error starting brute force operation: \(error)")
             }
         }
     }
     
     private func startBruteforceOperation() throws {
-        // Start animating the activity indicator on the main thread
         let login = self.loginInput.text ?? ""
         let result = try getUser(login: login)
         
@@ -311,6 +308,7 @@ class LogInViewController: UIViewController {
                 self.activityIndicator.startAnimating()
                 self.activityIndicator.isHidden = false
                 self.bruteforceButton.setBackgroundColor(.systemGray, forState: .normal)
+                self.bruteforceButton.isUserInteractionEnabled = false
                 self.loginInput.isUserInteractionEnabled = false
             }
             
@@ -323,6 +321,7 @@ class LogInViewController: UIViewController {
                     self.activityIndicator.stopAnimating()
                     self.activityIndicator.isHidden = true
                     self.bruteforceButton.setBackgroundColor(accentColor, forState: .normal)
+                    self.bruteforceButton.isUserInteractionEnabled = true
                     self.loginInput.isUserInteractionEnabled = true
                     self.passwordInput.text = password
                     self.passwordInput.isSecureTextEntry = false
