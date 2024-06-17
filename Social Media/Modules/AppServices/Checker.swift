@@ -10,7 +10,7 @@ import Foundation
 class Checker {
     private static var passwords: Dictionary = [
         "default":"AAA",
-        "strawberry_moose":"3sfQasf23d_&3",
+        "strawberry_moose":"1234",
         "katyperry":"uU3d^csaaqw",
         "teddyphotos":"%Edc_Swdcd21",
         "joebiden":"s2esdSQd22&$",
