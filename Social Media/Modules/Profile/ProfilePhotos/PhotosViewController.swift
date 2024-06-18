@@ -44,13 +44,19 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+        addSubviews()
+        setupConstraints()
+        
+        guard !self.userPhotos.isEmpty else {
+            print("No images to process")
+            return
+        }
+        
         processImages(qualityOfService: .background)
         processImages(qualityOfService: .default)
         processImages(qualityOfService: .userInitiated)
         processImages(qualityOfService: .userInteractive)
-        setupUI()
-        addSubviews()
-        setupConstraints()
     }
     
     
