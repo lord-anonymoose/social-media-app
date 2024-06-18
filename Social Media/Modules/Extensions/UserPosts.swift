@@ -44,12 +44,15 @@ public var posts = [
     StorageService.Post(author: "strawberry_moose", description: "", image: "strawberry_moose_post4", likes: 120, views: 140),
 ].shuffled()
 
+
 public var myPhotos: [UIImage] = {
     var array = [UIImage]()
     for i in 0...3 {
         if let newImage = UIImage(named: posts[i].image) {
             array.append(newImage)
+            print(newImage)
         }
     }
     return array
 }()
+

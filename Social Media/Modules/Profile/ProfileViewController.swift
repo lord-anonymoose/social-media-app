@@ -61,17 +61,17 @@ class ProfileViewController: UIViewController {
     
     // MARK: - Lifecycle
     init(user: StorageService.User) {
-        self.user = user
-        self.userPosts = posts.filter { $0.author == user.login }
-        
-        var photos = [UIImage]()
-        
-        for p in userPosts {
-            photos.append(UIImage(named: p.image)!)
-        }
-        
-        self.userPhotos = photos
-        super.init(nibName: nil, bundle: nil)
+            self.user = user
+            self.userPosts = posts.filter { $0.author == user.login }
+            
+            var photos = [UIImage]()
+            
+            for p in userPosts {
+                photos.append(UIImage(named: p.image)!)
+            }
+            
+            self.userPhotos = photos
+            super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {

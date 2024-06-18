@@ -1,4 +1,5 @@
 {
+  "originHash" : "a7f8d3303ab7f12df4865aef063e34efc308a2e28e4b25fd238406a23e78c60d",
   "pins" : [
     {
       "identity" : "iosintpackage",
@@ -10,5 +11,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

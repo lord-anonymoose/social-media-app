@@ -9,7 +9,9 @@
 
 import UIKit
 
-class ProfileHeaderView: UITableViewHeaderFooterView {
+class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
+    
+    var timeLeft: Int = 60
     
     // MARK: - Subviews
     
@@ -64,27 +66,17 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         return userStatus
     }()
     
-    private lazy var showStatusButton: UIButton = {
-        let button = UIButton(type: .system)
-        
-        button.backgroundColor = accentColor
-                
-        button.setTitle("Set status", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        
-        button.layer.cornerRadius = 12
-        
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOffset = CGSize(width: 4, height: 4)
-        button.layer.shadowOpacity = 0.7
-        button.layer.shadowRadius = 4
-                
-        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-
-        return button
-    }()
+    private lazy var setStatusButton = CustomButton(customTitle: "Set Status") {[unowned self] in
+        userStatus.text = self.statusText
+        if self.user != nil {
+            for i in 0...users.count - 1 {
+                if users[i].login == self.user?.login {
+                    users[i].status = self.statusText
+                }
+            }
+        }
+        startTimer()
+    }
     
     private lazy var textField: UITextFieldWithPadding = {
         let textField = UITextFieldWithPadding()
@@ -103,6 +95,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         textField.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)
         
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.delegate = self
 
         return textField
     }()
@@ -123,19 +116,9 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         changeBackgroundColor()
     }
      
-    // MARK: - Actions
     
-    @objc func buttonPressed(_ sender: UIButton) {
-        userStatus.text = statusText
-        if self.user != nil {
-            for i in 0...users.count - 1 {
-                if users[i].login == self.user?.login {
-                    users[i].status = statusText
-                    print("\(users[i].login) changed status to \(statusText)")
-                }
-            }
-        }
-    }
+    
+    // MARK: - Actions
     
     @objc func statusTextChanged(_ textField: UITextField) {
         if let text = textField.text {
@@ -158,14 +141,14 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
         contentView.addSubview(userName)
         contentView.addSubview(userStatus)
         contentView.addSubview(textField)
-        contentView.addSubview(showStatusButton)
+        contentView.addSubview(setStatusButton)
     }
         
     private func setupConstraints() {
         
         let safeAreaLayoutGuide = contentView.safeAreaLayoutGuide
 
-        let bottomAnchor = showStatusButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
+        let bottomAnchor = setStatusButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
         bottomAnchor.priority = .required - 1
              
         NSLayoutConstraint.activate([
@@ -173,25 +156,52 @@ class ProfileHeaderView: UITableViewHeaderFooterView {
             userImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
             userImage.widthAnchor.constraint(equalToConstant: 90),
             userImage.heightAnchor.constraint(equalToConstant: 90),
-             
+        ])
+        
+        NSLayoutConstraint.activate([
             userName.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
             userName.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),
             userName.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-         
+        ])
+        
+        NSLayoutConstraint.activate([
             userStatus.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: 16),
             userStatus.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),
             userStatus.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-
+        ])
+        
+        NSLayoutConstraint.activate([
             textField.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: 48),
             textField.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),
             textField.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             textField.heightAnchor.constraint(equalToConstant: 32),
-         
-            showStatusButton.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 16),
-            showStatusButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            showStatusButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-             
-            bottomAnchor
-         ])
+        ])
+        
+        NSLayoutConstraint.activate([
+            setStatusButton.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 16),
+            setStatusButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            setStatusButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            setStatusButton.heightAnchor.constraint(equalToConstant: 30),
+        ])
+        
+        NSLayoutConstraint.activate([bottomAnchor])
+
+    }
+    
+    func startTimer() {
+        setStatusButton.isUserInteractionEnabled = false
+        setStatusButton.setBackgroundColor(.systemGray, forState: .normal)
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [unowned self] timer in
+            if timeLeft > 0 {
+                timeLeft -= 1
+                setStatusButton.setTitle("\(timeLeft) seconds left", for: .normal)
+            } else {
+                timer.invalidate()
+                setStatusButton.setTitle("Set Status", for: .normal)
+                setStatusButton.isUserInteractionEnabled = true
+                setStatusButton.setBackgroundColor(accentColor, forState: .normal)
+                timeLeft = 60
+            }
+        }
     }
 }

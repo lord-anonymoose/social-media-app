@@ -120,7 +120,6 @@ extension UITableView {
     func feedView(isHeaderHidden: Bool = false) -> UITableView {
         var tableView = UITableView()
         if isHeaderHidden {
-            //let tableView = UITableView(frame: .zero, style: .grouped)
             tableView = UITableView(frame: .zero, style: .grouped)
         }
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -132,26 +131,48 @@ extension UITableView {
     }
 }
 
-class UITextFieldWithPadding: UITextField {
-    
-    // MARK: - Subviews
-    
-    var textPadding = UIEdgeInsets(
-        top: 0,
-        left: 10,
-        bottom: 0,
-        right: 0
-    )
-    
-    // MARK: - Lifecycle
-    
-    override func textRect(forBounds bounds: CGRect) -> CGRect {
-        let rect = super.textRect(forBounds: bounds)
-        return rect.inset(by: textPadding)
+extension UIButton {
+  func setBackgroundColor(_ color: UIColor, forState controlState: UIControl.State) {
+    let colorImage = UIGraphicsImageRenderer(size: CGSize(width: 1, height: 1)).image { _ in
+      color.setFill()
+      UIBezierPath(rect: CGRect(x: 0, y: 0, width: 1, height: 1)).fill()
     }
+    setBackgroundImage(colorImage, for: controlState)
+  }
+}
 
-    override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        let rect = super.editingRect(forBounds: bounds)
-        return rect.inset(by: textPadding)
+extension Array where Element: UIImage {
+    func unique() -> [UIImage] {
+        var unique = [UIImage]()
+        for image in self {
+            if !unique.contains(image) {
+                unique.append(image)
+            }
+        }
+        return unique
+    }
+}
+
+extension UIViewController: UITextFieldDelegate {
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder() // dismiss keyboard
+        return true
+    }
+}
+
+extension String {
+    var digits:      String { return "0123456789" }
+    var lowercase:   String { return "abcdefghijklmnopqrstuvwxyz" }
+    var uppercase:   String { return "ABCDEFGHIJKLMNOPQRSTUVWXYZ" }
+    var punctuation: String { return "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~" }
+    var letters:     String { return lowercase + uppercase }
+    var printable:   String { return digits + letters + punctuation }
+
+
+
+    mutating func replace(at index: Int, with character: Character) {
+        var stringArray = Array(self)
+        stringArray[index] = character
+        self = String(stringArray)
     }
 }
