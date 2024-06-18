@@ -11,7 +11,6 @@ import UIKit
 
 class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
-    var timer: Timer?
     var timeLeft: Int = 60
     
     // MARK: - Subviews
@@ -127,20 +126,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         }
     }
     
-    @objc func updateTimer(sender: Any) {
-        if timeLeft > 0 {
-            timeLeft -= 1
-            setStatusButton.setTitle("\(timeLeft) seconds left", for: .normal)
-        } else {
-            timer?.invalidate()
-            timer = nil
-            setStatusButton.setTitle("Set Status", for: .normal)
-            setStatusButton.isUserInteractionEnabled = true
-            setStatusButton.setBackgroundColor(accentColor, forState: .normal)
-            timeLeft = 60
-        }
-    }
-    
     // MARK: - Private
     
     func changeBackgroundColor() {
@@ -206,6 +191,17 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     func startTimer() {
         setStatusButton.isUserInteractionEnabled = false
         setStatusButton.setBackgroundColor(.systemGray, forState: .normal)
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [unowned self] timer in
+            if timeLeft > 0 {
+                timeLeft -= 1
+                setStatusButton.setTitle("\(timeLeft) seconds left", for: .normal)
+            } else {
+                timer.invalidate()
+                setStatusButton.setTitle("Set Status", for: .normal)
+                setStatusButton.isUserInteractionEnabled = true
+                setStatusButton.setBackgroundColor(accentColor, forState: .normal)
+                timeLeft = 60
+            }
+        }
     }
 }
