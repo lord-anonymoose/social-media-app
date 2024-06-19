@@ -44,13 +44,19 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+        addSubviews()
+        setupConstraints()
+        
+        guard !self.userPhotos.isEmpty else {
+            print("No images to process")
+            return
+        }
+        
         processImages(qualityOfService: .background)
         processImages(qualityOfService: .default)
         processImages(qualityOfService: .userInitiated)
         processImages(qualityOfService: .userInteractive)
-        setupUI()
-        addSubviews()
-        setupConstraints()
     }
     
     
@@ -102,16 +108,14 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
             }
             DispatchQueue.main.async {
                 self.userPhotos = processedPhotos
-                self.photoCollectionView.reloadData() // Reload the collection view after images are processed
+                self.photoCollectionView.reloadData()
+                
+                let end = DispatchTime.now()
+                let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds
+                let timeInterval = Double(nanoTime) / 1_000_000_000
+                print("\(qualityOfService) elapsed in \(timeInterval) seconds")
             }
         }
-        
-        let end = DispatchTime.now() // <<<<<<<<<<<< End time
-        
-        let nanoTime = end.uptimeNanoseconds - start.uptimeNanoseconds // <<<<< Difference in nano seconds (UInt64)
-        let timeInterval = Double(nanoTime) / 1_000_000_000 // Technically could overflow for long running tests
-
-        print("\(qualityOfService) elapsed in \(timeInterval) seconds")
     }
 }
 
@@ -148,7 +152,6 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-//
 /*
 extension PhotosViewController: ImageLibrarySubscriber {
     func receive(images: [UIImage]) {
