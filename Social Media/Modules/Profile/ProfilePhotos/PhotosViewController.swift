@@ -152,7 +152,6 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-//
 /*
 extension PhotosViewController: ImageLibrarySubscriber {
     func receive(images: [UIImage]) {
