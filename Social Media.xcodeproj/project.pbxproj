@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8E0D227A2C18EDF800A9BBA8 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0D22792C18EDF800A9BBA8 /* ProfileCoordinator.swift */; };
 		8E0D227C2C19FDB200A9BBA8 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0D227B2C19FDB200A9BBA8 /* Error.swift */; };
+		8E1CC6842C2394C6007F9108 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1CC6832C2394C6007F9108 /* NetworkService.swift */; };
 		8E1F68042A51739C008AE130 /* PostViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F68032A51739C008AE130 /* PostViewCell.swift */; };
 		8E2D1B322A54BE3400003EFF /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D1B312A54BE3400003EFF /* UserData.swift */; };
 		8E2D1B342A54C32300003EFF /* UserPosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D1B332A54C32300003EFF /* UserPosts.swift */; };
@@ -59,6 +60,7 @@
 		8E0614CA2AABA96B00DB3BBD /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		8E0D22792C18EDF800A9BBA8 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		8E0D227B2C19FDB200A9BBA8 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		8E1CC6832C2394C6007F9108 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		8E1F68032A51739C008AE130 /* PostViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewCell.swift; sourceTree = "<group>"; };
 		8E2D1B312A54BE3400003EFF /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		8E2D1B332A54C32300003EFF /* UserPosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPosts.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 				8E0D227B2C19FDB200A9BBA8 /* Error.swift */,
 				8EC4A5C72AD98BA300C12FAA /* UserService.swift */,
 				8E0614CA2AABA96B00DB3BBD /* StorageService.swift */,
+				8E1CC6832C2394C6007F9108 /* NetworkService.swift */,
 				8ED3547F2AE67C530038481C /* Checker.swift */,
 				8EDDCEB22C1F8C140097A874 /* Bruteforce.swift */,
 			);
@@ -369,6 +372,7 @@
 				8E4C15692A269C7A00AA511B /* ProfileViewController.swift in Sources */,
 				8EC3113C2A4C3540006C8FA2 /* Extensions.swift in Sources */,
 				8E1F68042A51739C008AE130 /* PostViewCell.swift in Sources */,
+				8E1CC6842C2394C6007F9108 /* NetworkService.swift in Sources */,
 				8E7B08AE2C02194300E958FF /* MainCoordinator.swift in Sources */,
 				8E4C155E2A269B9200AA511B /* AppIdentity.swift in Sources */,
 			);
