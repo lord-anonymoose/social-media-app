@@ -12,7 +12,7 @@ class LogInViewController: UIViewController {
     
     var loginDelegate: LoginViewControllerDelegate?
     var isBruteforsing: Bool = false
-        
+    
     // MARK: - Subviews
     
     private lazy var scrollView: UIScrollView = {
@@ -98,8 +98,7 @@ class LogInViewController: UIViewController {
     
     private lazy var logInButton = CustomButton(customTitle: "Log In") { [unowned self] in
         let userService = CurrentUserService()
-
-        //if let user = userService.checkUser(login: self.loginInput.text!) {
+        
         if let user = self.loginDelegate?.check(login: self.loginInput.text!, password: self.passwordInput.text!) {
             if let navigationController = self.navigationController {
                 let coordinator = ProfileCoordinator(navigationController: navigationController)
@@ -109,19 +108,20 @@ class LogInViewController: UIViewController {
                     coordinator.updateTabBar(tabBarController: tabBarController)
                 }
             }
-        } 
-        /*else {
-            let alert = UIAlertController(title: "Error!", message: "Incorrect password!", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        } else {
-            let alert = UIAlertController(title: "Error!", message: "Such user does not exist!", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
         }
-         */
     }
-
+    
+    private lazy var showPasswordButton: UIButton = {
+        let button = UIButton()
+        
+        button.setImage(UIImage(systemName: "eye"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(toggleShowPassword), for: .touchUpInside)
+        button.tintColor = .systemGray
+        
+        return button
+    }()
+    
     private lazy var bruteforceButton = CustomButton(customTitle: "Bruteforce password", action: {
     })
     
@@ -174,6 +174,16 @@ class LogInViewController: UIViewController {
         view.endEditing(true)
     }
     
+    @objc func toggleShowPassword() {
+        if showPasswordButton.image(for: .normal) == UIImage(systemName: "eye") {
+            showPasswordButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
+            passwordInput.isSecureTextEntry = false
+        } else {
+            showPasswordButton.setImage(UIImage(systemName: "eye"), for: .normal)
+            passwordInput.isSecureTextEntry = true
+        }
+    }
+    
     // MARK: - Private
     
     private func setupUI() {
@@ -189,6 +199,7 @@ class LogInViewController: UIViewController {
         contentView.addSubview(logInInputContainer)
         logInInputContainer.addSubview(loginInput)
         logInInputContainer.addSubview(passwordInput)
+        logInInputContainer.addSubview(showPasswordButton)
         
         contentView.addSubview(logInButton)
         contentView.addSubview(bruteforceButton)
@@ -234,11 +245,15 @@ class LogInViewController: UIViewController {
             loginInput.bottomAnchor.constraint(equalTo: logInInputContainer.bottomAnchor, constant: -50),
             loginInput.leadingAnchor.constraint(equalTo: logInInputContainer.leadingAnchor, constant: 0),
             loginInput.trailingAnchor.constraint(equalTo: logInInputContainer.trailingAnchor, constant: 0),
-    
+            
             passwordInput.topAnchor.constraint(equalTo: loginInput.bottomAnchor, constant: 0),
             passwordInput.bottomAnchor.constraint(equalTo: logInInputContainer.bottomAnchor, constant: 0),
             passwordInput.leadingAnchor.constraint(equalTo: logInInputContainer.leadingAnchor, constant: 0),
-            passwordInput.trailingAnchor.constraint(equalTo: logInInputContainer.trailingAnchor, constant: 0)
+            passwordInput.trailingAnchor.constraint(equalTo: logInInputContainer.trailingAnchor, constant: 0),
+            
+            showPasswordButton.topAnchor.constraint(equalTo: passwordInput.topAnchor),
+            showPasswordButton.bottomAnchor.constraint(equalTo: passwordInput.bottomAnchor),
+            showPasswordButton.trailingAnchor.constraint(equalTo: passwordInput.trailingAnchor, constant: -10)
         ])
         
         
@@ -266,26 +281,26 @@ class LogInViewController: UIViewController {
     }
     
     private func setupKeyboardObservers() {
-            let notificationCenter = NotificationCenter.default
-            
-            notificationCenter.addObserver(
-                self,
-                selector: #selector(self.willShowKeyboard(_:)),
-                name: UIResponder.keyboardWillShowNotification,
-                object: nil
-            )
-            
-            notificationCenter.addObserver(
-                self,
-                selector: #selector(self.willHideKeyboard(_:)),
-                name: UIResponder.keyboardWillHideNotification,
-                object: nil
-            )
-        }
+        let notificationCenter = NotificationCenter.default
         
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(self.willShowKeyboard(_:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(self.willHideKeyboard(_:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
     private func removeKeyboardObservers() {
-            let notificationCenter = NotificationCenter.default
-            notificationCenter.removeObserver(self)
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.removeObserver(self)
     }
     
     private func setupBruteforceButtonAction() {
@@ -299,6 +314,7 @@ class LogInViewController: UIViewController {
     }
     
     private func startBruteforceOperation() throws {
+        
         let login = self.loginInput.text ?? ""
         let result = try getUser(login: login)
         
