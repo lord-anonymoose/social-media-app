@@ -9,10 +9,40 @@ import Foundation
 import UIKit
 
 struct NetworkService {
-    static func request(for configuration: AppConfiguration) {
+    static func request(for configuration: AppConfiguration) throws {
         switch getBaseURL(for: configuration) {
         case .success(let url):
             print("Succedeed with \(url)")
+            
+            let session = URLSession.shared
+            let task = session.dataTask(with: url) { (data, response, error) in
+                if let data {
+                    print("Data is: \(data)")
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    } catch {
+                        print("Ошибка обработки JSON")
+                    }
+                } else {
+                    print(AppError.jsonError.description)
+                    throw AppError.jsonError
+                }
+            
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    return
+                }
+                
+                if let error {
+                    print("Error is: \(error)")
+                } else {
+                    return
+                }
+                
+
+            }
+            
+            task.resume()
+            
         case .failure(let error):
             print(error.localizedDescription)
         }
