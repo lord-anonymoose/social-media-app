@@ -14,7 +14,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
-        NetworkService.request(for: .films)
+        NetworkService.request(for: AppConfiguration.people) { result in
+            switch result {
+            case .success(let json):
+                print("JSON: \(json)")
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
+            }
+        }
         
         guard let scene = (scene as? UIWindowScene) else { return }
                                

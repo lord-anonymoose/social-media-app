@@ -9,42 +9,48 @@ import Foundation
 import UIKit
 
 struct NetworkService {
-    static func request(for configuration: AppConfiguration) throws {
+    static func request(for configuration: AppConfiguration, completion: @escaping (Result<Any, Error>) -> Void) {
         switch getBaseURL(for: configuration) {
         case .success(let url):
-            print("Succedeed with \(url)")
-            
             let session = URLSession.shared
             let task = session.dataTask(with: url) { (data, response, error) in
                 if let data {
-                    print("Data is: \(data)")
+                    print("data: \(data)")
                     do {
                         let json = try JSONSerialization.jsonObject(with: data, options: [])
+                        completion(.success(json))
                     } catch {
-                        print("Ошибка обработки JSON")
+                        print(NetworkError.jsonError.description)
+                        completion(.failure(NetworkError.jsonError))
                     }
                 } else {
-                    print(AppError.jsonError.description)
-                    throw AppError.jsonError
+                    print(NetworkError.jsonError.description)
+                    completion(.failure(NetworkError.jsonError))
                 }
             
-                guard let httpResponse = response as? HTTPURLResponse else {
-                    return
-                }
-                
-                if let error {
-                    print("Error is: \(error)")
+                if let httpResponse = response as? HTTPURLResponse {
+                    print(".HeaderFields: \(httpResponse.allHeaderFields)")
+                    print(".statusCode: \(httpResponse.statusCode)")
                 } else {
-                    return
+                    print(NetworkError.httpResponseError.description)
+                    completion(.failure(NetworkError.httpResponseError))
                 }
                 
-
+                if let error = error as? URLError {
+                    print("URLError code: \(error.code.rawValue)")
+                } else {
+                    if let error {
+                        print("Error: \(error)")
+                        completion(.failure(error))
+                    }
+                }
             }
             
             task.resume()
             
         case .failure(let error):
-            print(error.localizedDescription)
+            completion(.failure(error))
+            return
         }
     }
 }
@@ -70,6 +76,6 @@ func getBaseURL(for configuration: AppConfiguration) -> Result<URL,Error> {
     if let url = configuration.baseURL {
         return .success(url)
     } else {
-        return .failure(AppError.invalidURL)
+        return .failure(NetworkError.urlError)
     }
 }

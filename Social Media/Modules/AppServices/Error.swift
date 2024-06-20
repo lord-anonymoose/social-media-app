@@ -40,6 +40,7 @@ enum NetworkError: Error {
     case urlError
     case jsonError
     case networkError
+    case httpResponseError
 }
 
 extension NetworkError {
@@ -51,6 +52,8 @@ extension NetworkError {
             return "Couldn't parse JSON data!"
         case .networkError:
             return "Your connection is lost!"
+        case .httpResponseError:
+            return "HTTP Response Error!"
         }
     }
 }
