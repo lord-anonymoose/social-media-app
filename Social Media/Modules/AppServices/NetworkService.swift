@@ -14,6 +14,26 @@ struct NetworkService {
         case .success(let url):
             let session = URLSession.shared
             let task = session.dataTask(with: url) { (data, response, error) in
+                
+                if let error = error as? URLError {
+                    print("URLError code: \(error.code.rawValue)")
+                } else {
+                    if let error {
+                        print("Error: \(error)")
+                        completion(.failure(error))
+                        return
+                    }
+                }
+                
+                if let httpResponse = response as? HTTPURLResponse {
+                    print(".HeaderFields: \(httpResponse.allHeaderFields)")
+                    print(".statusCode: \(httpResponse.statusCode)")
+                } else {
+                    print(NetworkError.httpResponseError.description)
+                    completion(.failure(NetworkError.httpResponseError))
+                    return
+                }
+                
                 if let data {
                     print("data: \(data)")
                     do {
@@ -22,28 +42,14 @@ struct NetworkService {
                     } catch {
                         print(NetworkError.jsonError.description)
                         completion(.failure(NetworkError.jsonError))
+                        return
                     }
                 } else {
                     print(NetworkError.jsonError.description)
                     completion(.failure(NetworkError.jsonError))
+                    return
                 }
             
-                if let httpResponse = response as? HTTPURLResponse {
-                    print(".HeaderFields: \(httpResponse.allHeaderFields)")
-                    print(".statusCode: \(httpResponse.statusCode)")
-                } else {
-                    print(NetworkError.httpResponseError.description)
-                    completion(.failure(NetworkError.httpResponseError))
-                }
-                
-                if let error = error as? URLError {
-                    print("URLError code: \(error.code.rawValue)")
-                } else {
-                    if let error {
-                        print("Error: \(error)")
-                        completion(.failure(error))
-                    }
-                }
             }
             
             task.resume()
