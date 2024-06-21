@@ -61,25 +61,18 @@ struct NetworkService {
     }
 }
 
-enum AppConfiguration {
-    case people
-    case planets
-    case films
+enum AppConfiguration: String, CaseIterable {
+    case people = "https://swapi.dev/api/people"
+    case planets = "https://swapi.dev/api/planets/"
+    case films = "https://swapi.dev/api/films/"
     
-    var baseURL: URL? {
-        switch self {
-        case .people:
-            return(URL(string: "https://swapi.dev/api/people/"))
-        case .planets:
-            return(URL(string: "https://swapi.dev/api/planets/"))
-        case .films:
-            return(URL(string: "https://swapi.dev/api/films/"))
-        }
+    var url: URL? {
+        URL(string: self.rawValue)
     }
 }
 
 func getBaseURL(for configuration: AppConfiguration) -> Result<URL,Error> {
-    if let url = configuration.baseURL {
+    if let url = URL(string: configuration.rawValue) {
         return .success(url)
     } else {
         return .failure(NetworkError.urlError)
