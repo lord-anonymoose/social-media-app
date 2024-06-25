@@ -6,7 +6,6 @@
 //
 
 import Foundation
-
 import UIKit
 
 class PlanetViewController: UIViewController {
@@ -132,21 +131,33 @@ class PlanetViewController: UIViewController {
         NetworkService.request(urlString: urlString) { result in
             switch result {
             case .success(let data):
+                // Subtask 1
+                if let myData = data as? Data {
+                    let object = try? JSONSerialization.jsonObject(
+                        with: myData,
+                        options: []
+                    )
+                    print(object ?? "Nothing to show")
+                }
+                
+                // Subtask 2
                 let decoder = JSONDecoder()
                 do {
-                    let planet = try decoder.decode(Planet.self, from: data as! Data)
-                    DispatchQueue.main.async { [self] in
-                        activityIndicator.stopAnimating()
-                        activityIndicator.isHidden = true
-                        
-                        planetLabel.text = planet.name
-                        planetLabel.isHidden = false
-                        
-                        orbitalPeriodLabel.text = "Orbital period: \(planet.orbitalPeriod)"
-                        orbitalPeriodLabel.isHidden = false
-                        
-                        self.planet = planet
-                        fetchResidentsData()
+                    if data is Data {
+                        let planet = try decoder.decode(Planet.self, from: data as! Data)
+                        DispatchQueue.main.async { [self] in
+                            activityIndicator.stopAnimating()
+                            activityIndicator.isHidden = true
+                            
+                            //planetLabel.text = planet.name
+                            planetLabel.isHidden = false
+                            
+                            orbitalPeriodLabel.text = "Orbital period: \(planet.orbitalPeriod)"
+                            orbitalPeriodLabel.isHidden = false
+                            
+                            self.planet = planet
+                            fetchResidentsData()
+                        }
                     }
                 } catch {
                     print("Error decoding data!")

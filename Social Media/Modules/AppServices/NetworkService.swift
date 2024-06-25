@@ -40,7 +40,7 @@ struct NetworkService {
                     return
                 }
                 
-                completion(.success(data))
+                completion(.success(data as Data))
 
             }
             
