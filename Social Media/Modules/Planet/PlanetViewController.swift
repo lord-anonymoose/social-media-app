@@ -72,6 +72,7 @@ class PlanetViewController: UIViewController {
     func addSubviews() {
         view.addSubview(activityIndicator)
         view.addSubview(planetLabel)
+        view.addSubview(orbitalPeriodLabel)
     }
     
     func setupConstraints() {
@@ -89,6 +90,13 @@ class PlanetViewController: UIViewController {
             planetLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
         
+        NSLayoutConstraint.activate([
+            orbitalPeriodLabel.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 20),
+            orbitalPeriodLabel.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -20),
+            orbitalPeriodLabel.topAnchor.constraint(equalTo: planetLabel.bottomAnchor, constant: 20),
+            orbitalPeriodLabel.heightAnchor.constraint(equalToConstant: 20)
+        ])
+        
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
     }
@@ -101,11 +109,15 @@ class PlanetViewController: UIViewController {
                 let decoder = JSONDecoder()
                 do {
                     let planet = try decoder.decode(Planet.self, from: data as! Data)
-                    DispatchQueue.main.async {
-                        self.activityIndicator.stopAnimating()
-                        self.activityIndicator.isHidden = true
-                        self.planetLabel.text = planet.name
-                        self.planetLabel.isHidden = false
+                    DispatchQueue.main.async { [self] in
+                        activityIndicator.stopAnimating()
+                        activityIndicator.isHidden = true
+                        
+                        planetLabel.text = planet.name
+                        planetLabel.isHidden = false
+                        
+                        orbitalPeriodLabel.text = "Orbital period: \(planet.orbitalPeriod)"
+                        orbitalPeriodLabel.isHidden = false
                     }
                 } catch {
                     print("Error decoding data!")
