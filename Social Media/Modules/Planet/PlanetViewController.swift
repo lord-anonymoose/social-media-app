@@ -12,51 +12,109 @@ import UIKit
 class PlanetViewController: UIViewController {
     
     // MARK: - Subviews
-    
-    /*
-    private lazy var rateButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .blue
-        button.layer.cornerRadius = 10
-        button.clipsToBounds = true
-        button.setTitle("  Rate the App  ", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.addTarget(self, action: #selector(rateButtonPressed), for: .touchUpInside)
-        return button
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
     }()
-    */
+    
+    private lazy var planetLabel: UILabel = {
+        let label = UILabel()
+
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
+        label.text = "N/A"
+        label.font = .boldSystemFont(ofSize: 20)
+        
+        return label
+    }()
+    
+    private lazy var orbitalPeriodLabel: UILabel = {
+        let label = UILabel()
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
+        label.text = "Orbital period: N/A"
+        label.font = .systemFont(ofSize: 16)
+        
+        return label
+    }()
     
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        addSubviews()
+        setupConstraints()
+        fetchData()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+
     
     // MARK: - Actions
-    
-    /*
-    @objc func rateButtonPressed(_ sender: UIButton) {
-        let alertController = UIAlertController(title: "Rate my App", message: "Let me know how you like my app!", preferredStyle: .alert)
-        let goodAction = UIAlertAction(title: "👍", style: .default) {
-            UIAlertAction in
-            NSLog("Thank you! I appreciate it!")
-        }
-        let badAction = UIAlertAction(title: "👎", style: .default) {
-            UIAlertAction in
-            NSLog("Let me know how I can improve it!")
-        }
-        alertController.addAction(goodAction)
-        alertController.addAction(badAction)
-        present(alertController, animated: true, completion: nil)
-    }
-    */
+
     
     // MARK: - Private
 
     func setupUI() {
-        //view.backgroundColor = UIColor(named: "BackgroundColor")
-        view.backgroundColor = .systemOrange
+        view.backgroundColor = UIColor(named: "BackgroundColor")
+    }
+    
+    func addSubviews() {
+        view.addSubview(activityIndicator)
+        view.addSubview(planetLabel)
+    }
+    
+    func setupConstraints() {
+        let safeAreaGuide = view.safeAreaLayoutGuide
+
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: safeAreaGuide.centerYAnchor),
+        ])
+        
+        NSLayoutConstraint.activate([
+            planetLabel.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 20),
+            planetLabel.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -20),
+            planetLabel.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor, constant: 20),
+            planetLabel.heightAnchor.constraint(equalToConstant: 20)
+        ])
+        
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+    }
+    
+    func fetchData() {
+        let urlString = "https://swapi.dev/api/planets/1"
+        NetworkService.request(urlString: urlString) { result in
+            switch result {
+            case .success(let data):
+                let decoder = JSONDecoder()
+                do {
+                    let planet = try decoder.decode(Planet.self, from: data as! Data)
+                    DispatchQueue.main.async {
+                        self.activityIndicator.stopAnimating()
+                        self.activityIndicator.isHidden = true
+                        self.planetLabel.text = planet.name
+                        self.planetLabel.isHidden = false
+                    }
+                } catch {
+                    print("Error decoding data!")
+                }
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
+            }
+        }
+        
+
     }
 }

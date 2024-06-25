@@ -48,6 +48,14 @@ class FeedViewController: UIViewController {
         bindModel()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.hidesBarsOnSwipe = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.hidesBarsOnTap = false
+    }
+    
     @IBAction func reloadButtonTapped(sender: AnyObject) {
         self.viewModel.changeState()
     }
