@@ -11,6 +11,10 @@ import UIKit
 
 class PlanetViewController: UIViewController {
     
+    var planet: Planet?
+    var residents = [Person]()
+
+    
     // MARK: - Subviews
     private lazy var activityIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .large)
@@ -47,7 +51,7 @@ class PlanetViewController: UIViewController {
         setupUI()
         addSubviews()
         setupConstraints()
-        fetchData()
+        fetchPlanetData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,17 +69,17 @@ class PlanetViewController: UIViewController {
     
     // MARK: - Private
 
-    func setupUI() {
+    private func setupUI() {
         view.backgroundColor = UIColor(named: "BackgroundColor")
     }
     
-    func addSubviews() {
+    private func addSubviews() {
         view.addSubview(activityIndicator)
         view.addSubview(planetLabel)
         view.addSubview(orbitalPeriodLabel)
     }
     
-    func setupConstraints() {
+    private func setupConstraints() {
         let safeAreaGuide = view.safeAreaLayoutGuide
 
         NSLayoutConstraint.activate([
@@ -101,7 +105,7 @@ class PlanetViewController: UIViewController {
         activityIndicator.startAnimating()
     }
     
-    func fetchData() {
+    private func fetchPlanetData() {
         let urlString = "https://swapi.dev/api/planets/1"
         NetworkService.request(urlString: urlString) { result in
             switch result {
@@ -118,6 +122,9 @@ class PlanetViewController: UIViewController {
                         
                         orbitalPeriodLabel.text = "Orbital period: \(planet.orbitalPeriod)"
                         orbitalPeriodLabel.isHidden = false
+                        
+                        self.planet = planet
+                        fetchResidentsData()
                     }
                 } catch {
                     print("Error decoding data!")
@@ -126,7 +133,30 @@ class PlanetViewController: UIViewController {
                 print("Error: \(error.localizedDescription)")
             }
         }
+    }
+    
+    private func fetchResidentsData() {
+        guard let planet else {
+            return
+        }
         
-
+        for resident in planet.residents {
+            NetworkService.request(urlString: resident) { result in
+                switch result {
+                case .success(let data):
+                    let decoder = JSONDecoder()
+                    do {
+                        let person = try decoder.decode(Person.self, from: data as! Data)
+                        DispatchQueue.main.async { [self] in
+                            residents.append(person)
+                        }
+                    } catch {
+                        print("Error decoding data!")
+                    }
+                case .failure(let error):
+                    print("Error: \(error.localizedDescription)")
+                }
+            }
+        }
     }
 }
