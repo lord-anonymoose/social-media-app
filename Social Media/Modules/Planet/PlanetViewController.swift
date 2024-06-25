@@ -44,6 +44,12 @@ class PlanetViewController: UIViewController {
         return label
     }()
     
+    private lazy var residentsTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+    
     // MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -77,6 +83,7 @@ class PlanetViewController: UIViewController {
         view.addSubview(activityIndicator)
         view.addSubview(planetLabel)
         view.addSubview(orbitalPeriodLabel)
+        view.addSubview(residentsTableView)
     }
     
     private func setupConstraints() {
@@ -101,8 +108,18 @@ class PlanetViewController: UIViewController {
             orbitalPeriodLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
         
+        NSLayoutConstraint.activate([
+            residentsTableView.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor),
+            residentsTableView.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor),
+            residentsTableView.topAnchor.constraint(equalTo: orbitalPeriodLabel.bottomAnchor, constant: 20)
+        ])
+        
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
+        
+        residentsTableView.delegate = self
+        residentsTableView.dataSource = self
+        //residentsTableView.register(PostViewCell.self, forCellReuseIdentifier: "cell")
     }
     
     private func fetchPlanetData() {
@@ -140,23 +157,50 @@ class PlanetViewController: UIViewController {
             return
         }
         
+        let dispatchGroup = DispatchGroup()
+        
         for resident in planet.residents {
+            dispatchGroup.enter()
             NetworkService.request(urlString: resident) { result in
                 switch result {
                 case .success(let data):
                     let decoder = JSONDecoder()
                     do {
                         let person = try decoder.decode(Person.self, from: data as! Data)
-                        DispatchQueue.main.async { [self] in
-                            residents.append(person)
-                        }
+                        self.residents.append(person)
                     } catch {
                         print("Error decoding data!")
                     }
                 case .failure(let error):
                     print("Error: \(error.localizedDescription)")
                 }
+                dispatchGroup.leave()
             }
         }
+        
+        dispatchGroup.notify(queue: .main) {
+            for resident in self.residents {
+                print(resident.name)
+            }
+            self.residentsTableView.reloadData()
+            print(self.residentsTableView.numberOfRows(inSection: 0))
+        }
     }
+}
+
+extension PlanetViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        residents.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let post = residents[indexPath.row]
+        let cell = UITableViewCell()
+        
+        return cell
+    }
+}
+
+extension PlanetViewController: UITableViewDelegate {
+    
 }
