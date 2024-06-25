@@ -27,7 +27,7 @@ struct NetworkService {
                 }
                 
                 if let httpResponse = response as? HTTPURLResponse {
-                    print(".statusCode: \(httpResponse.statusCode)")
+                    // print(".statusCode: \(httpResponse.statusCode)")
                 } else {
                     print(NetworkError.httpResponseError.description)
                     completion(.failure(NetworkError.httpResponseError))

@@ -28,7 +28,7 @@ class PlanetViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isHidden = true
         label.text = "N/A"
-        label.font = .boldSystemFont(ofSize: 20)
+        label.font = .boldSystemFont(ofSize: 40)
         
         return label
     }()
@@ -39,14 +39,17 @@ class PlanetViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isHidden = true
         label.text = "Orbital period: N/A"
-        label.font = .systemFont(ofSize: 16)
+        label.font = .boldSystemFont(ofSize: 20)
         
         return label
     }()
     
     private lazy var residentsTableView: UITableView = {
         let tableView = UITableView()
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.isHidden = true
+        
         return tableView
     }()
     
@@ -98,7 +101,7 @@ class PlanetViewController: UIViewController {
             planetLabel.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 20),
             planetLabel.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -20),
             planetLabel.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor, constant: 20),
-            planetLabel.heightAnchor.constraint(equalToConstant: 20)
+            planetLabel.heightAnchor.constraint(equalToConstant: 40)
         ])
         
         NSLayoutConstraint.activate([
@@ -111,15 +114,17 @@ class PlanetViewController: UIViewController {
         NSLayoutConstraint.activate([
             residentsTableView.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor),
             residentsTableView.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor),
-            residentsTableView.topAnchor.constraint(equalTo: orbitalPeriodLabel.bottomAnchor, constant: 20)
+            residentsTableView.topAnchor.constraint(equalTo: orbitalPeriodLabel.bottomAnchor, constant: 20),
+            residentsTableView.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor)
         ])
         
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
         
-        residentsTableView.delegate = self
         residentsTableView.dataSource = self
-        //residentsTableView.register(PostViewCell.self, forCellReuseIdentifier: "cell")
+        residentsTableView.delegate = self
+        
+        residentsTableView.register(UITableViewCell.self, forCellReuseIdentifier: "ResidentsTableViewCell")
     }
     
     private func fetchPlanetData() {
@@ -179,11 +184,8 @@ class PlanetViewController: UIViewController {
         }
         
         dispatchGroup.notify(queue: .main) {
-            for resident in self.residents {
-                print(resident.name)
-            }
             self.residentsTableView.reloadData()
-            print(self.residentsTableView.numberOfRows(inSection: 0))
+            self.residentsTableView.isHidden = false
         }
     }
 }
@@ -194,10 +196,26 @@ extension PlanetViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let post = residents[indexPath.row]
-        let cell = UITableViewCell()
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ResidentsTableViewCell", for: indexPath)
+        cell.textLabel?.text = self.residents[indexPath.row].name
+        cell.selectionStyle = .none
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willS indexPath: IndexPath) -> IndexPath? {
+        return nil
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+
+        let sectionName: String
+        switch section {
+        case 0:
+                sectionName = NSLocalizedString("Residents", comment: "mySectionName")
+        default:
+            sectionName = ""
+        }
+        return sectionName
     }
 }
 
