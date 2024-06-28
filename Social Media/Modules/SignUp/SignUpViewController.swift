@@ -122,14 +122,46 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.loginInput.delegate = self
+        self.firstPasswordInput.delegate = self
+        self.secondPasswordInput.delegate = self
+        
         setupUI()
         addSubviews()
         setupConstraints()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setupKeyboardObservers()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        removeKeyboardObservers()
+    }
+    
+    
+    
     // MARK: - Actions
     @objc func sampleFunction() {
         //
+    }
+    
+    @objc func willShowKeyboard(_ notification: NSNotification) {
+        let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height
+        scrollView.contentInset.bottom = 0.0
+        scrollView.contentInset.bottom += keyboardHeight ?? 0.0
+    }
+    
+    @objc func willHideKeyboard(_ notification: NSNotification) {
+        scrollView.contentInset.bottom = 0.0
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     // MARK: - Private
@@ -137,21 +169,18 @@ class SignUpViewController: UIViewController {
     private func setupUI() {
         view.backgroundColor = backgroundColor
     }
-    
+
     private func addSubviews() {
         view.addSubview(scrollView)
-        
         scrollView.addSubview(contentView)
-                
-        contentView.addSubview(signUpButton)
-        contentView.addSubview(logInInputContainer)
         contentView.addSubview(wavingHandLabel)
         contentView.addSubview(welcomeLabel)
         contentView.addSubview(logInInputContainer)
         logInInputContainer.addSubview(loginInput)
         logInInputContainer.addSubview(firstPasswordInput)
         logInInputContainer.addSubview(secondPasswordInput)
-        
+        contentView.addSubview(signUpButton)
+
     }
     
     private func setupConstraints() {
@@ -174,17 +203,21 @@ class SignUpViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            signUpButton.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor, constant: -50),
-            signUpButton.heightAnchor.constraint(equalToConstant: 50),
-            signUpButton.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 16),
-            signUpButton.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -16),
-            signUpButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            wavingHandLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50),
+            wavingHandLabel.heightAnchor.constraint(equalToConstant: 100),
+            wavingHandLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
         ])
         
         NSLayoutConstraint.activate([
-            logInInputContainer.bottomAnchor.constraint(equalTo: signUpButton.topAnchor, constant: -25),
-            logInInputContainer.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 16),
-            logInInputContainer.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -16),
+            welcomeLabel.topAnchor.constraint(equalTo: wavingHandLabel.bottomAnchor, constant: 25),
+            welcomeLabel.heightAnchor.constraint(equalToConstant: 30),
+            welcomeLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+        ])
+        
+        NSLayoutConstraint.activate([
+            logInInputContainer.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 150),
+            logInInputContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            logInInputContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             logInInputContainer.heightAnchor.constraint(equalToConstant: 150)
         ])
         
@@ -210,16 +243,39 @@ class SignUpViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            welcomeLabel.bottomAnchor.constraint(equalTo: logInInputContainer.topAnchor, constant: -100),
-            welcomeLabel.heightAnchor.constraint(equalToConstant: 30),
-            welcomeLabel.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor),
+            signUpButton.topAnchor.constraint(equalTo: logInInputContainer.bottomAnchor, constant: 25),
+            signUpButton.heightAnchor.constraint(equalToConstant: 50),
+            signUpButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            signUpButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            signUpButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+    }
+    
+    private func setupKeyboardObservers() {
+        let notificationCenter = NotificationCenter.default
         
-        NSLayoutConstraint.activate([
-            wavingHandLabel.bottomAnchor.constraint(equalTo: welcomeLabel.topAnchor, constant: -25),
-            wavingHandLabel.heightAnchor.constraint(equalToConstant: 100),
-            wavingHandLabel.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor),
-        ])
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(self.willShowKeyboard(_:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
         
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(self.willHideKeyboard(_:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+    
+    private func removeKeyboardObservers() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.removeObserver(self)
+    }
+    
+    func textFieldShouldReturn(userText: UITextField!) -> Bool {
+        userText.resignFirstResponder()
+        return true;
     }
 }
