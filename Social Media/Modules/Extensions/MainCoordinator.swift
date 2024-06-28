@@ -56,7 +56,7 @@ class MainCoordinator: Coordinator {
         addFeedViewController()
         addLogInViewController()
         //addSecretWordViewController()
-        addPlanetViewController()
+        //addPlanetViewController()
         
         let tabBarController = UITabBarController()
         

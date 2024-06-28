@@ -46,20 +46,7 @@ class LogInViewController: UIViewController {
         return imageView
     }()
     
-    
-    private lazy var logInInputContainer: UIView = {
-        let view = UIView()
-        
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemGray6
-        
-        view.layer.borderWidth = 0.5
-        view.layer.borderColor = UIColor.lightGray.cgColor
-        view.layer.cornerRadius = 10.0
-        view.layer.masksToBounds = true
-        
-        return view
-    }()
+    private lazy var logInInputContainer = LoginInputContainer()
     
     private lazy var loginInput: UITextFieldWithPadding = {
         let textField = UITextFieldWithPadding()
@@ -130,6 +117,11 @@ class LogInViewController: UIViewController {
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         return activityIndicator
     }()
+    
+    private lazy var signUpButton = CustomButton(customTitle: "Not a member yet? Sign up!", customBackgroundColor: secondaryColor ,action: {
+        let signUpViewController = SignUpViewController()
+        self.navigationController?.pushViewController(signUpViewController, animated: true)
+    })
     
     
     
@@ -202,8 +194,10 @@ class LogInViewController: UIViewController {
         logInInputContainer.addSubview(showPasswordButton)
         
         contentView.addSubview(logInButton)
+        contentView.addSubview(signUpButton)
         contentView.addSubview(bruteforceButton)
         contentView.addSubview(activityIndicator)
+        
     }
     
     private func setupConstraints() {
@@ -234,7 +228,7 @@ class LogInViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            logInInputContainer.topAnchor.constraint(equalTo: appLogo.bottomAnchor, constant: 120),
+            logInInputContainer.topAnchor.constraint(equalTo: appLogo.bottomAnchor, constant: 100),
             logInInputContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             logInInputContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             logInInputContainer.heightAnchor.constraint(equalToConstant: 100)
@@ -256,9 +250,23 @@ class LogInViewController: UIViewController {
             showPasswordButton.trailingAnchor.constraint(equalTo: passwordInput.trailingAnchor, constant: -10)
         ])
         
+        NSLayoutConstraint.activate([
+            logInButton.topAnchor.constraint(equalTo: logInInputContainer.bottomAnchor, constant: 16),
+            logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            logInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            logInButton.heightAnchor.constraint(equalToConstant: 50),
+        ])
         
         NSLayoutConstraint.activate([
-            bruteforceButton.topAnchor.constraint(equalTo: logInInputContainer.bottomAnchor, constant: 16),
+            signUpButton.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: 16),
+            signUpButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            signUpButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            signUpButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        
+        NSLayoutConstraint.activate([
+            bruteforceButton.topAnchor.constraint(equalTo: signUpButton.bottomAnchor, constant: 16),
+            bruteforceButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             bruteforceButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             bruteforceButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             bruteforceButton.heightAnchor.constraint(equalToConstant: 50),
@@ -269,14 +277,6 @@ class LogInViewController: UIViewController {
             activityIndicator.trailingAnchor.constraint(equalTo: bruteforceButton.trailingAnchor, constant: -16),
             activityIndicator.widthAnchor.constraint(equalToConstant: 50),
             activityIndicator.heightAnchor.constraint(equalToConstant: 50)
-        ])
-        
-        NSLayoutConstraint.activate([
-            logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            logInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            logInButton.topAnchor.constraint(equalTo: bruteforceButton.bottomAnchor, constant: 16),
-            logInButton.heightAnchor.constraint(equalToConstant: 50),
-            logInButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
         ])
     }
     
@@ -308,7 +308,9 @@ class LogInViewController: UIViewController {
             do {
                 try self.startBruteforceOperation()
             } catch {
-                print("Error starting brute force operation: \(error)")
+                let alert = UIAlertController(title: "Error!", message: "Such user doesn't exist!", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }
