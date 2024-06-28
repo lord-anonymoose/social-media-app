@@ -9,8 +9,9 @@ import Foundation
 import UIKit
 
 struct NetworkService {
-    static func request(for configuration: AppConfiguration, completion: @escaping (Result<Any, Error>) -> Void) {
-        switch getBaseURL(for: configuration) {
+
+    static func request(urlString: String, completion: @escaping (Result<Any, Error>) -> Void) {
+        switch getBaseURL(urlString: urlString) {
         case .success(let url):
             let session = URLSession.shared
             let task = session.dataTask(with: url) { (data, response, error) in
@@ -26,30 +27,21 @@ struct NetworkService {
                 }
                 
                 if let httpResponse = response as? HTTPURLResponse {
-                    print(".HeaderFields: \(httpResponse.allHeaderFields)")
-                    print(".statusCode: \(httpResponse.statusCode)")
+                    // print(".statusCode: \(httpResponse.statusCode)")
                 } else {
                     print(NetworkError.httpResponseError.description)
                     completion(.failure(NetworkError.httpResponseError))
                     return
                 }
                 
-                if let data {
-                    print("data: \(data)")
-                    do {
-                        let json = try JSONSerialization.jsonObject(with: data, options: [])
-                        completion(.success(json))
-                    } catch {
-                        print(NetworkError.jsonError.description)
-                        completion(.failure(NetworkError.jsonError))
-                        return
-                    }
-                } else {
+                guard let data else {
                     print(NetworkError.jsonError.description)
                     completion(.failure(NetworkError.jsonError))
                     return
                 }
-            
+                
+                completion(.success(data as Data))
+
             }
             
             task.resume()
@@ -61,20 +53,12 @@ struct NetworkService {
     }
 }
 
-enum AppConfiguration: String, CaseIterable {
-    case people = "https://swapi.dev/api/people"
-    case planets = "https://swapi.dev/api/planets/"
-    case films = "https://swapi.dev/api/films/"
-    
-    var url: URL? {
-        URL(string: self.rawValue)
-    }
-}
-
-func getBaseURL(for configuration: AppConfiguration) -> Result<URL,Error> {
-    if let url = URL(string: configuration.rawValue) {
+func getBaseURL(urlString: String) -> Result<URL, Error> {
+    if let url = URL(string: urlString) {
         return .success(url)
     } else {
         return .failure(NetworkError.urlError)
     }
 }
+
+

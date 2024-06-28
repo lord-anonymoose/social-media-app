@@ -45,10 +45,18 @@ class MainCoordinator: Coordinator {
         controllers.append(secretWordViewController)
     }
     
+    func addPlanetViewController() {
+        let planetViewController = PlanetViewController()
+        let planetImage = UIImage(systemName: "globe.americas.fill")
+        planetViewController.tabBarItem = UITabBarItem(title: nil, image: planetImage, tag: 2)
+        controllers.append(planetViewController)
+    }
+    
     func start() {
         addFeedViewController()
         addLogInViewController()
-        addSecretWordViewController()
+        //addSecretWordViewController()
+        addPlanetViewController()
         
         let tabBarController = UITabBarController()
         
