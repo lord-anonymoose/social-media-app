@@ -12,6 +12,7 @@ import UIKit
 class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
     var timeLeft: Int = 60
+    var timer: Timer?
     
     // MARK: - Subviews
     
@@ -115,6 +116,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         setupConstraints()
         changeBackgroundColor()
     }
+    
+    deinit {
+        stopTimer()
+    }
      
     
     
@@ -191,7 +196,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     func startTimer() {
         setStatusButton.isUserInteractionEnabled = false
         setStatusButton.setBackgroundColor(.systemGray, forState: .normal)
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [unowned self] timer in
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [unowned self] timer in
             if timeLeft > 0 {
                 timeLeft -= 1
                 setStatusButton.setTitle("\(timeLeft) seconds left", for: .normal)
@@ -203,5 +208,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
                 timeLeft = 60
             }
         }
+    }
+    
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil
     }
 }
