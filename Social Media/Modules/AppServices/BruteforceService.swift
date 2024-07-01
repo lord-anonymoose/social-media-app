@@ -8,6 +8,7 @@
 
 // LEGACY CODE
 // SUBJECT TO CHANGE
+/*
 import Foundation
 
 final class AppBruteforce {
@@ -65,4 +66,4 @@ final class AppBruteforce {
         return str
     }
 }
-
+*/

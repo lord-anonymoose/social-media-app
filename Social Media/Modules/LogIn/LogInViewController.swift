@@ -9,13 +9,16 @@ import UIKit
 import Foundation
 import Firebase
 import FirebaseAuth
+import FirebaseDatabase
+
 
 
 class LogInViewController: UIViewController {
     
     var loginDelegate: LoginViewControllerDelegate?
     var isBruteforsing: Bool = false
-    
+    var ref: DatabaseReference!
+
     // MARK: - Subviews
     
     private lazy var scrollView: UIScrollView = {
@@ -103,6 +106,13 @@ class LogInViewController: UIViewController {
                     coordinator.authenticate(user: user)
                     coordinator.start()
                 }
+                
+                self.ref = Database.database(url: "https://social-media-5eea4-default-rtdb.firebaseio.com/").reference()
+
+                self.fetchUsernames { usernames in
+                    print("Usernames: \(usernames)")
+                }
+
             case .failure(let error):
                 self.showErrorAlert(description: error.description)
                 self.stopLoginOperation()
@@ -152,7 +162,7 @@ class LogInViewController: UIViewController {
         addSubviews()
         setupConstraints()
         setupContentOfScrollView()
-        setupBruteforceButtonAction()
+        //setupBruteforceButtonAction()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -160,7 +170,7 @@ class LogInViewController: UIViewController {
         
         setupKeyboardObservers()
         self.loginInput.delegate = self
-        self.passwordInput.delegate = self        
+        self.passwordInput.delegate = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -336,6 +346,7 @@ class LogInViewController: UIViewController {
         notificationCenter.removeObserver(self)
     }
     
+    /*
     private func setupBruteforceButtonAction() {
         bruteforceButton.buttonAction = { [unowned self] in
             do {
@@ -388,6 +399,8 @@ class LogInViewController: UIViewController {
         self.bruteForceIndicator.stopAnimating()
         self.bruteForceIndicator.isHidden = true
     }
+    */
+
     
     private func startLoginOperation() {
         self.logInButton.setBackgroundColor(.systemGray, forState: .normal)
@@ -420,5 +433,23 @@ class LogInViewController: UIViewController {
         let alert = UIAlertController(title: "Error!", message: description, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func fetchUsernames(completion: @escaping ([User]) -> Void) {
+        ref.child("users").observeSingleEvent(of: .value, with: { snapshot in
+            var users: [User] = []
+            
+            // Iterate through all users and fetch their usernames
+            for child in snapshot.children.allObjects as! [DataSnapshot] {
+                if let name = child.value as? String {
+                    users.append(User(login: child.key, name: name))
+                }
+            }
+            
+            completion(users)
+        }) { error in
+            print("Error fetching usernames: \(error.localizedDescription)")
+            completion([])
+        }
     }
 }

@@ -149,7 +149,6 @@ class PlanetViewController: UIViewController {
                             activityIndicator.stopAnimating()
                             activityIndicator.isHidden = true
                             
-                            //planetLabel.text = planet.name
                             planetLabel.isHidden = false
                             
                             orbitalPeriodLabel.text = "Orbital period: \(planet.orbitalPeriod)"
