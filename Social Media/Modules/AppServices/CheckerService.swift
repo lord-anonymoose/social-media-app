@@ -44,20 +44,28 @@ final class CheckerService: CheckerServiceProtocol {
                 return
             } else {
                 let login = email.replacingOccurrences(of: "@media.com", with: "")
+                print("Current login: \(login)")
                 var user: User? = nil
-                let users = try 
-                for usr in users {
-                    if usr.login == login {
-                        user = usr
+                
+                var fetchedUsers = [User]()
+                
+                self.fetchUsernames { users in
+                    fetchedUsers = users
+                    
+                    for usr in fetchedUsers {
+                        if usr.login == login {
+                            user = usr
+                        }
                     }
-                }
-                if let result = user {
-                    print(result)
-                    completion(.success(result))
-                    return
-                } else {
-                    completion(.failure(CheckerError.userNotExist))
-                    return
+                    
+                    if let result = user {
+                        print(result)
+                        completion(.success(result))
+                        return
+                    } else {
+                        completion(.failure(CheckerError.userNotExist))
+                        return
+                    }
                 }
             }
         }
@@ -66,14 +74,15 @@ final class CheckerService: CheckerServiceProtocol {
 
 extension CheckerService {
     private func fetchUsernames(completion: @escaping ([User]) -> Void) {
-        var ref: DatabaseReference!
-        ref.child("users").observeSingleEvent(of: .value, with: { snapshot in
-            var users: [User] = []
+        let ref = Database.database().reference().child("users")
+
+        ref.observeSingleEvent(of: .value, with: { snapshot in
+            var users = [User]()
             
-            // Iterate through all users and fetch their usernames
             for child in snapshot.children.allObjects as! [DataSnapshot] {
                 if let name = child.value as? String {
                     users.append(User(login: child.key, name: name))
+                    print(name)
                 }
             }
             

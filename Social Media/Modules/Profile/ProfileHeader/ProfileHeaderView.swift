@@ -70,11 +70,13 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     private lazy var setStatusButton = CustomButton(customTitle: "Set Status") {[unowned self] in
         userStatus.text = self.statusText
         if self.user != nil {
+            /*
             for i in 0...users.count - 1 {
                 if users[i].login == self.user?.login {
                     users[i].status = self.statusText
                 }
             }
+            */
         }
         startTimer()
     }

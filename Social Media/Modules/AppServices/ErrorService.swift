@@ -14,7 +14,6 @@ enum AppError: Error {
     case passwordIncorrect
     case networkError
     case noImages
-    //case authError
 }
 
 extension AppError: CustomStringConvertible {
@@ -30,8 +29,6 @@ extension AppError: CustomStringConvertible {
             return "Your connection is lost!"
         case .noImages:
             return "No images to present!"
-        //case .authError:
-            //return "Incorrect password!"
         }
         
     }
