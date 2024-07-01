@@ -44,19 +44,8 @@ final class CheckerService: CheckerServiceProtocol {
                 return
             } else {
                 let login = email.replacingOccurrences(of: "@media.com", with: "")
-                var user: User? = nil
-                
-                var fetchedUsers = [User]()
-                
-                self.fetchUsernames { users in
-                    fetchedUsers = users
-                    
-                    for usr in fetchedUsers {
-                        if usr.login == login {
-                            user = usr
-                        }
-                    }
-                    
+                                
+                self.getUser(username: login) {user in
                     if let result = user {
                         completion(.success(result))
                         return
@@ -87,6 +76,17 @@ extension CheckerService {
         }) { error in
             print("Error fetching usernames: \(error.localizedDescription)")
             completion([])
+        }
+    }
+    
+    private func getUser(username: String, completion: @escaping (User?) -> Void) {
+        self.fetchUsernames { users in
+            for user in users {
+                if user.login == username {
+                    completion(user)
+                    return
+                }
+            }
         }
     }
 }
