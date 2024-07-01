@@ -7,6 +7,9 @@
 
 import UIKit
 import Foundation
+import Firebase
+import FirebaseAuth
+import FirebaseCore
 
 class SignUpViewController: UIViewController {
     
@@ -127,7 +130,11 @@ class SignUpViewController: UIViewController {
     
     private lazy var signUpButton = CustomButton(customTitle: "Sign Up", action: {
         if self.checkMatchingPasswords() {
-            print("Success")
+            if let email = self.loginInput.text {
+                if let password = self.firstPasswordInput.text {
+                    Auth.auth().createUser(withEmail: email, password: password)
+                }
+            }
         }
     })
     
