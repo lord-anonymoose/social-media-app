@@ -133,12 +133,14 @@ class LogInViewController: UIViewController {
     private lazy var bruteForceIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.isHidden = true
         return activityIndicator
     }()
     
     private lazy var loginIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.isHidden = true
         return activityIndicator
     }()
     

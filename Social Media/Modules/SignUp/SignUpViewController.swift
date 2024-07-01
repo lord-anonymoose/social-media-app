@@ -128,19 +128,31 @@ class SignUpViewController: UIViewController {
         return textField
     }()
     
-    private lazy var signUpButton = CustomButton(customTitle: "Sign Up", action: {
+    private lazy var signUpButton = CustomButton(customTitle: "Sign Up", action: { [self] in
+        self.startSignupProcess()
         guard let email = self.loginInput.text else {
             self.showErrorAlert(message: "Email is empty!")
+            finishSignupProcess()
             return
         }
         
         if !email.contains("@media.com") {
             self.showErrorAlert(message: "Email should contain @media.com!")
+            finishSignupProcess()
             return
         }
         
+        //if
+        
         guard let password = self.firstPasswordInput.text else {
             self.showErrorAlert(message: "Password cannot be empty!")
+            self.finishSignupProcess()
+            return
+        }
+        
+        if !self.checkMatchingPasswords() {
+            self.showErrorAlert(message: "Passwords do not match!")
+            finishSignupProcess()
             return
         }
         
@@ -151,18 +163,27 @@ class SignUpViewController: UIViewController {
                 self.showErrorAlert(message: "User already exists!")
                 return
             } else {
-                Auth.auth().createUser(withEmail: email, password: password)
-                print("User \(email) created!")
-                
-                Auth.auth().signIn(withEmail: email, password: password)
-                print("Logged in to the user!")
-                checkerService.addUserToDatabase(login: login, name: login)
-                
-                if let navigationController = self.navigationController {
-                    let coordinator = ProfileCoordinator(navigationController: navigationController)
-                    let newUser = User(login: login, name: login)
-                    coordinator.authenticate(user: newUser)
-                    coordinator.start()
+                Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                    if let error = error {
+                        self.showErrorAlert(message: error.localizedDescription)
+                        self.finishSignupProcess()
+                    } else {
+                        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+                            if let error = error {
+                                self.showErrorAlert(message: error.localizedDescription)
+                                self.finishSignupProcess()
+                            } else {
+                                checkerService.addUserToDatabase(login: login, name: login)
+                                if let navigationController = self.navigationController {
+                                    let coordinator = ProfileCoordinator(navigationController: navigationController)
+                                    let newUser = User(login: login, name: login)
+                                    coordinator.authenticate(user: newUser)
+                                    coordinator.start()
+                                    self.finishSignupProcess()
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -171,6 +192,7 @@ class SignUpViewController: UIViewController {
     private lazy var signupIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.isHidden = true
         return activityIndicator
     }()
     
@@ -235,6 +257,7 @@ class SignUpViewController: UIViewController {
         logInInputContainer.addSubview(firstPasswordInput)
         logInInputContainer.addSubview(secondPasswordInput)
         contentView.addSubview(signUpButton)
+        contentView.addSubview(signupIndicator)
 
     }
     
@@ -303,6 +326,13 @@ class SignUpViewController: UIViewController {
             signUpButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             signUpButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             signUpButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            signupIndicator.centerYAnchor.constraint(equalTo: signUpButton.centerYAnchor),
+            signupIndicator.trailingAnchor.constraint(equalTo: signUpButton.trailingAnchor, constant: -16),
+            signupIndicator.widthAnchor.constraint(equalToConstant: 50),
+            signupIndicator.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
@@ -373,6 +403,9 @@ class SignUpViewController: UIViewController {
         self.firstPasswordInput.isUserInteractionEnabled = false
         self.secondPasswordInput.isUserInteractionEnabled = false
         
+        self.signupIndicator.isHidden = false
+        self.signupIndicator.startAnimating()
+        
     }
     
     private func finishSignupProcess() {
@@ -382,5 +415,8 @@ class SignUpViewController: UIViewController {
         self.loginInput.isUserInteractionEnabled = true
         self.firstPasswordInput.isUserInteractionEnabled = true
         self.secondPasswordInput.isUserInteractionEnabled = true
+        
+        self.signupIndicator.stopAnimating()
+        self.signupIndicator.isHidden = true
     }
 }
