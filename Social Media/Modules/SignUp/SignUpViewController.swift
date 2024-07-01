@@ -129,11 +129,29 @@ class SignUpViewController: UIViewController {
     }()
     
     private lazy var signUpButton = CustomButton(customTitle: "Sign Up", action: {
-        if self.checkMatchingPasswords() {
-            if let email = self.loginInput.text {
-                if let password = self.firstPasswordInput.text {
-                    Auth.auth().createUser(withEmail: email, password: password)
-                }
+        guard let email = self.loginInput.text, email.contains("@media.com") else {
+            self.showErrorAlert(message: "Invalid email!")
+            return
+        }
+        
+        guard let password = self.firstPasswordInput.text else {
+            self.showErrorAlert(message: "Password cannot be empty!")
+            return
+        }
+        
+        let login = email.replacingOccurrences(of: "@media.com", with: "")
+        let checkerService = CheckerService()
+        checkerService.getUser(username: login) {user in
+            if let result = user {
+                self.showErrorAlert(message: "User already exists!")
+                return
+            } else {
+                Auth.auth().createUser(withEmail: email, password: password)
+                print("User \(email) created!")
+                
+                Auth.auth().signIn(withEmail: email, password: password)
+                print("Logged in to the user!")
+                checkerService.addUserToDatabase(login: login, name: login)
             }
         }
     })
@@ -307,7 +325,6 @@ class SignUpViewController: UIViewController {
                 }
                 
                 if firstPassword == secondPassword {
-                    print("Success")
                     return true
                 } else {
                     showErrorAlert(message: "Passwords don't match!")

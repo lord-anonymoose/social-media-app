@@ -79,13 +79,25 @@ extension CheckerService {
         }
     }
     
-    private func getUser(username: String, completion: @escaping (User?) -> Void) {
+    func getUser(username: String, completion: @escaping (User?) -> Void) {
         self.fetchUsernames { users in
             for user in users {
                 if user.login == username {
                     completion(user)
                     return
                 }
+            }
+            completion(nil)
+        }
+    }
+    
+    func addUserToDatabase(login: String, name: String) {
+        let ref = Database.database().reference().child("users")
+        ref.child(login).setValue(name) { error, _ in
+            if let error = error {
+                print("Could not add user to database!")
+            } else {
+                print("User \(name) added to database!")
             }
         }
     }

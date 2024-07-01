@@ -107,11 +107,7 @@ class LogInViewController: UIViewController {
                     coordinator.start()
                 }
                 
-                self.ref = Database.database(url: "https://social-media-5eea4-default-rtdb.firebaseio.com/").reference()
-
-                self.fetchUsernames { usernames in
-                    print("Usernames: \(usernames)")
-                }
+                //self.ref = Database.database(url: "https://social-media-5eea4-default-rtdb.firebaseio.com/").reference()
 
             case .failure(let error):
                 self.showErrorAlert(description: error.description)
@@ -435,6 +431,7 @@ class LogInViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    /*
     private func fetchUsernames(completion: @escaping ([User]) -> Void) {
         ref.child("users").observeSingleEvent(of: .value, with: { snapshot in
             var users: [User] = []
@@ -452,4 +449,5 @@ class LogInViewController: UIViewController {
             completion([])
         }
     }
+    */
 }
