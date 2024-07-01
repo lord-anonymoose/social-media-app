@@ -5,6 +5,8 @@
 //  Created by Philipp Lazarev on 23.10.2023.
 //
 
+// LEGACY CODE
+// SUBJECT TO REMOVE
 import Foundation
 
 class Checker {

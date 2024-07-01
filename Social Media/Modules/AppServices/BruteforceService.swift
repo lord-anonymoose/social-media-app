@@ -5,6 +5,9 @@
 //  Created by Philipp Lazarev on 17.06.2024.
 //
 
+
+// LEGACY CODE
+// SUBJECT TO CHANGE
 import Foundation
 
 final class AppBruteforce {
@@ -12,6 +15,7 @@ final class AppBruteforce {
         let ALLOWED_CHARACTERS:   [String] = String().printable.map { String($0) }
 
         var password: String = ""
+        
         
         
         do {
@@ -61,3 +65,4 @@ final class AppBruteforce {
         return str
     }
 }
+

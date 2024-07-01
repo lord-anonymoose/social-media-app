@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8E0D227A2C18EDF800A9BBA8 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0D22792C18EDF800A9BBA8 /* ProfileCoordinator.swift */; };
-		8E0D227C2C19FDB200A9BBA8 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0D227B2C19FDB200A9BBA8 /* Error.swift */; };
+		8E0D227C2C19FDB200A9BBA8 /* ErrorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0D227B2C19FDB200A9BBA8 /* ErrorService.swift */; };
 		8E1CC6842C2394C6007F9108 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1CC6832C2394C6007F9108 /* NetworkService.swift */; };
 		8E1F68042A51739C008AE130 /* PostViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F68032A51739C008AE130 /* PostViewCell.swift */; };
 		8E2D1B322A54BE3400003EFF /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D1B312A54BE3400003EFF /* UserData.swift */; };
@@ -44,7 +44,7 @@
 		8ECCBF5E2C32095300D5C4C4 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8ECCBF5D2C32095300D5C4C4 /* FirebaseFirestoreSwift */; };
 		8ECCBF602C32A7DE00D5C4C4 /* CheckerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECCBF5F2C32A7DE00D5C4C4 /* CheckerService.swift */; };
 		8ED354802AE67C530038481C /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED3547F2AE67C530038481C /* Checker.swift */; };
-		8EDDCEB32C1F8C140097A874 /* Bruteforce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDDCEB22C1F8C140097A874 /* Bruteforce.swift */; };
+		8EDDCEB32C1F8C140097A874 /* BruteforceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDDCEB22C1F8C140097A874 /* BruteforceService.swift */; };
 		8EDF8EE12B6041A300154433 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 8EDF8EE02B6041A300154433 /* iOSIntPackage */; };
 		8EF48DA52A27797F0099166A /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF48DA42A27797F0099166A /* ProfileHeaderView.swift */; };
 /* End PBXBuildFile section */
@@ -65,7 +65,7 @@
 /* Begin PBXFileReference section */
 		8E0614CA2AABA96B00DB3BBD /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		8E0D22792C18EDF800A9BBA8 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
-		8E0D227B2C19FDB200A9BBA8 /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		8E0D227B2C19FDB200A9BBA8 /* ErrorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorService.swift; sourceTree = "<group>"; };
 		8E1CC6832C2394C6007F9108 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		8E1F68032A51739C008AE130 /* PostViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewCell.swift; sourceTree = "<group>"; };
 		8E2D1B312A54BE3400003EFF /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
@@ -99,7 +99,7 @@
 		8ECCBF562C3207BD00D5C4C4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8ECCBF5F2C32A7DE00D5C4C4 /* CheckerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckerService.swift; sourceTree = "<group>"; };
 		8ED3547F2AE67C530038481C /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
-		8EDDCEB22C1F8C140097A874 /* Bruteforce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bruteforce.swift; sourceTree = "<group>"; };
+		8EDDCEB22C1F8C140097A874 /* BruteforceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BruteforceService.swift; sourceTree = "<group>"; };
 		8EF48DA42A27797F0099166A /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -242,13 +242,13 @@
 		8E59F57D2ADF286A00BE16F9 /* AppServices */ = {
 			isa = PBXGroup;
 			children = (
-				8E0D227B2C19FDB200A9BBA8 /* Error.swift */,
+				8E0D227B2C19FDB200A9BBA8 /* ErrorService.swift */,
 				8EC4A5C72AD98BA300C12FAA /* UserService.swift */,
 				8E0614CA2AABA96B00DB3BBD /* StorageService.swift */,
 				8E1CC6832C2394C6007F9108 /* NetworkService.swift */,
 				8ED3547F2AE67C530038481C /* Checker.swift */,
 				8ECCBF5F2C32A7DE00D5C4C4 /* CheckerService.swift */,
-				8EDDCEB22C1F8C140097A874 /* Bruteforce.swift */,
+				8EDDCEB22C1F8C140097A874 /* BruteforceService.swift */,
 			);
 			path = AppServices;
 			sourceTree = "<group>";
@@ -396,7 +396,7 @@
 				8E4C15652A269C4400AA511B /* InfoViewController.swift in Sources */,
 				8EC1CAEE2AE6920400B38364 /* LoginViewControllerDelegate.swift in Sources */,
 				8E586B522AA898B500D89AF6 /* PhotosCollectionViewCell.swift in Sources */,
-				8EDDCEB32C1F8C140097A874 /* Bruteforce.swift in Sources */,
+				8EDDCEB32C1F8C140097A874 /* BruteforceService.swift in Sources */,
 				8E32E8222BF8B6AE00F2A49C /* SecretWordViewController.swift in Sources */,
 				8E98614A2BF8CAE800066827 /* SecretWordModel.swift in Sources */,
 				8EAC9EB42BFBFF1300D27B28 /* FeedService.swift in Sources */,
@@ -404,7 +404,7 @@
 				8E672EC72C2F60E90063DFC2 /* SignUpViewController.swift in Sources */,
 				8E6B57F02ADF273600AC47C4 /* UserService.swift in Sources */,
 				8ECCBF602C32A7DE00D5C4C4 /* CheckerService.swift in Sources */,
-				8E0D227C2C19FDB200A9BBA8 /* Error.swift in Sources */,
+				8E0D227C2C19FDB200A9BBA8 /* ErrorService.swift in Sources */,
 				8E2D1B342A54C32300003EFF /* UserPosts.swift in Sources */,
 				8EAE53252C2AE40200BD640E /* PlanetViewController.swift in Sources */,
 				8EAC9EB02BFBFCD400D27B28 /* FeedVMOutput.swift in Sources */,

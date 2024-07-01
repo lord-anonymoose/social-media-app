@@ -12,10 +12,10 @@ import FirebaseAuth
 protocol CheckerServiceProtocol {
     func checkCredentials(email: String, password: String, completion: @escaping (Result<User, CheckerError>) -> Void)
     func singUp(email: String, password: String)
-    func getUser(email: String) -> User
 }
 
 final class CheckerService: CheckerServiceProtocol {
+    
     func singUp(email: String, password: String) {
         print("")
     }
@@ -59,16 +59,4 @@ final class CheckerService: CheckerServiceProtocol {
             }
         }
     }
-    
-    func singUp() {
-        print("")
-    }
-    
-    func getUser(email: String) -> User {
-        
-        print("")
-        return User(login: "", name: "")
-    }
-    
-    
 }

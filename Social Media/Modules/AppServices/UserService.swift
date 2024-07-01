@@ -5,6 +5,9 @@
 //  Created by Philipp Lazarev on 13.10.2023.
 //
 
+
+// LEGACY CODE
+// SUBJECT TO REMOVE
 import Foundation
 
 protocol UserService {

@@ -53,3 +53,4 @@ struct MyLoginFactory: LoginFactory {
         return inspector
     }
 }
+
