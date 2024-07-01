@@ -14,6 +14,7 @@ enum AppError: Error {
     case passwordIncorrect
     case networkError
     case noImages
+    //case authError
 }
 
 extension AppError: CustomStringConvertible {
@@ -29,6 +30,8 @@ extension AppError: CustomStringConvertible {
             return "Your connection is lost!"
         case .noImages:
             return "No images to present!"
+        //case .authError:
+            //return "Incorrect password!"
         }
         
     }
@@ -54,6 +57,35 @@ extension NetworkError {
             return "Your connection is lost!"
         case .httpResponseError:
             return "HTTP Response Error!"
+        }
+    }
+}
+
+// Checking user functionality
+enum CheckerError: Error {
+    case invalidEmail
+    case emptyLogin
+    case emptyPassword
+    case wrongCredentials
+    case passwordsNotMatching
+    case userNotExist
+}
+
+extension CheckerError {
+    public var description: String {
+        switch self {
+        case .invalidEmail:
+            return "An email is invalid!"
+        case .emptyLogin:
+            return "A login field can not be empty!"
+        case .emptyPassword:
+            return "A password field can not be empty!"
+        case .wrongCredentials:
+            return "Wrong credentials!"
+        case .passwordsNotMatching:
+            return "Passwords do not match!"
+        case .userNotExist:
+            return "User doesn't exist!"
         }
     }
 }

@@ -44,6 +44,7 @@
 		8ECCBF5A2C32095300D5C4C4 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 8ECCBF592C32095300D5C4C4 /* FirebaseAuth */; };
 		8ECCBF5C2C32095300D5C4C4 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 8ECCBF5B2C32095300D5C4C4 /* FirebaseFirestore */; };
 		8ECCBF5E2C32095300D5C4C4 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8ECCBF5D2C32095300D5C4C4 /* FirebaseFirestoreSwift */; };
+		8ECCBF602C32A7DE00D5C4C4 /* CheckerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECCBF5F2C32A7DE00D5C4C4 /* CheckerService.swift */; };
 		8ED354802AE67C530038481C /* Checker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED3547F2AE67C530038481C /* Checker.swift */; };
 		8EDDCEB32C1F8C140097A874 /* Bruteforce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDDCEB22C1F8C140097A874 /* Bruteforce.swift */; };
 		8EDF8EE12B6041A300154433 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 8EDF8EE02B6041A300154433 /* iOSIntPackage */; };
@@ -100,6 +101,7 @@
 		8EC3113D2A4CB631006C8FA2 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		8EC4A5C72AD98BA300C12FAA /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		8ECCBF562C3207BD00D5C4C4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8ECCBF5F2C32A7DE00D5C4C4 /* CheckerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckerService.swift; sourceTree = "<group>"; };
 		8ED3547F2AE67C530038481C /* Checker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checker.swift; sourceTree = "<group>"; };
 		8EDDCEB22C1F8C140097A874 /* Bruteforce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bruteforce.swift; sourceTree = "<group>"; };
 		8EF48DA42A27797F0099166A /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 				8E0614CA2AABA96B00DB3BBD /* StorageService.swift */,
 				8E1CC6832C2394C6007F9108 /* NetworkService.swift */,
 				8ED3547F2AE67C530038481C /* Checker.swift */,
+				8ECCBF5F2C32A7DE00D5C4C4 /* CheckerService.swift */,
 				8EDDCEB22C1F8C140097A874 /* Bruteforce.swift */,
 			);
 			path = AppServices;
@@ -407,6 +410,7 @@
 				8E9B6D0A2A55944B009AD181 /* PostView.swift in Sources */,
 				8E672EC72C2F60E90063DFC2 /* SignUpViewController.swift in Sources */,
 				8E6B57F02ADF273600AC47C4 /* UserService.swift in Sources */,
+				8ECCBF602C32A7DE00D5C4C4 /* CheckerService.swift in Sources */,
 				8E0D227C2C19FDB200A9BBA8 /* Error.swift in Sources */,
 				8E2D1B342A54C32300003EFF /* UserPosts.swift in Sources */,
 				8EAE53252C2AE40200BD640E /* PlanetViewController.swift in Sources */,

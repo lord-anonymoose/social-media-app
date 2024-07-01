@@ -41,3 +41,6 @@ public class StorageService {
         }
     }
 }
+
+typealias User = StorageService.User
+typealias Post = StorageService.Post

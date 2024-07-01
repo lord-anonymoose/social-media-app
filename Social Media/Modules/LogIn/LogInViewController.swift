@@ -7,6 +7,9 @@
 
 import UIKit
 import Foundation
+import Firebase
+import FirebaseAuth
+
 
 class LogInViewController: UIViewController {
     
@@ -84,6 +87,7 @@ class LogInViewController: UIViewController {
     }()
     
     private lazy var logInButton = CustomButton(customTitle: "Log In") { [unowned self] in
+        /*
         let userService = CurrentUserService()
         
         if let user = self.loginDelegate?.check(login: self.loginInput.text!, password: self.passwordInput.text!) {
@@ -96,6 +100,26 @@ class LogInViewController: UIViewController {
                 }
             }
         }
+        */
+        
+        
+        let service = CheckerService()
+        service.checkCredentials(email: loginInput.text ?? "", password: passwordInput.text ?? "", completion: {result in
+            switch result {
+            case .success(let user):
+                print("Sign-in successful")
+                if let navigationController = self.navigationController {
+                    let coordinator = ProfileCoordinator(navigationController: navigationController)
+                    coordinator.authenticate(user: user)
+                    coordinator.start()
+                    if let tabBarController = self.tabBarController {
+                        coordinator.updateTabBar(tabBarController: tabBarController)
+                    }
+                }
+            case .failure(let error):
+                self.showErrorAlert(description: error.description)
+            }
+        })
     }
     
     private lazy var showPasswordButton: UIButton = {
@@ -141,7 +165,8 @@ class LogInViewController: UIViewController {
         super.viewWillAppear(animated)
         
         setupKeyboardObservers()
-        
+        self.loginInput.delegate = self
+        self.passwordInput.delegate = self        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -354,5 +379,16 @@ class LogInViewController: UIViewController {
     private func stopBruteForceOperation(with password: String) {
         self.activityIndicator.stopAnimating()
         self.activityIndicator.isHidden = true
+    }
+    
+    func textFieldShouldReturn(userText: UITextField!) -> Bool {
+        userText.resignFirstResponder()
+        return true;
+    }
+    
+    private func showErrorAlert(description: String) {
+        let alert = UIAlertController(title: "Error!", message: description, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }

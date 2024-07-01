@@ -89,6 +89,12 @@ class SignUpViewController: UIViewController {
         textField.font = .systemFont(ofSize: 16)
         textField.tintColor = accentColor
         textField.layer.masksToBounds = true
+        textField.textContentType = UITextContentType(rawValue: "")
+        
+        // Disabling Automatic Password Suggestion
+        textField.textContentType = .none
+        textField.isSecureTextEntry = false
+        textField.keyboardType = .default
         
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .none
@@ -100,12 +106,18 @@ class SignUpViewController: UIViewController {
         let textField = UITextFieldWithPadding()
         
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Password"
+        textField.placeholder = "Repeat Password"
         textField.isSecureTextEntry = true
         textField.textColor = textColor
         textField.font = .systemFont(ofSize: 16)
         textField.tintColor = accentColor
         textField.layer.masksToBounds = true
+        textField.textContentType = UITextContentType(rawValue: "")
+
+        // Disabling Automatic Password Suggestion
+        textField.textContentType = .none
+        textField.isSecureTextEntry = false
+        textField.keyboardType = .default
         
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .none
@@ -114,7 +126,9 @@ class SignUpViewController: UIViewController {
     }()
     
     private lazy var signUpButton = CustomButton(customTitle: "Sign Up", action: {
-        
+        if self.checkMatchingPasswords() {
+            print("Success")
+        }
     })
     
     // MARK: - Lifecycle
@@ -146,9 +160,6 @@ class SignUpViewController: UIViewController {
     
     
     // MARK: - Actions
-    @objc func sampleFunction() {
-        //
-    }
     
     @objc func willShowKeyboard(_ notification: NSNotification) {
         let keyboardHeight = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue.height
@@ -163,6 +174,7 @@ class SignUpViewController: UIViewController {
     @objc func dismissKeyboard() {
         view.endEditing(true)
     }
+    
     
     // MARK: - Private
     
@@ -272,6 +284,38 @@ class SignUpViewController: UIViewController {
     private func removeKeyboardObservers() {
         let notificationCenter = NotificationCenter.default
         notificationCenter.removeObserver(self)
+    }
+    
+    private func checkMatchingPasswords() -> Bool {
+        if let firstPassword = firstPasswordInput.text {
+            if firstPassword == "" {
+                showErrorAlert(message: "First password field is empty!")
+                return false
+            }
+            
+            if let secondPassword = secondPasswordInput.text {
+                if secondPassword == "" {
+                    showErrorAlert(message: "Second password field is empty!")
+                    return false
+                }
+                
+                if firstPassword == secondPassword {
+                    print("Success")
+                    return true
+                } else {
+                    showErrorAlert(message: "Passwords don't match!")
+                    print("Fail")
+                    return false
+                }
+            }
+        }
+        return false
+    }
+    
+    private func showErrorAlert(message: String) {
+        let alert = UIAlertController(title: "Error!", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func textFieldShouldReturn(userText: UITextField!) -> Bool {
