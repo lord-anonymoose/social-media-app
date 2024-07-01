@@ -129,8 +129,13 @@ class SignUpViewController: UIViewController {
     }()
     
     private lazy var signUpButton = CustomButton(customTitle: "Sign Up", action: {
-        guard let email = self.loginInput.text, email.contains("@media.com") else {
-            self.showErrorAlert(message: "Invalid email!")
+        guard let email = self.loginInput.text else {
+            self.showErrorAlert(message: "Email is empty!")
+            return
+        }
+        
+        if !email.contains("@media.com") {
+            self.showErrorAlert(message: "Email should contain @media.com!")
             return
         }
         
@@ -152,9 +157,22 @@ class SignUpViewController: UIViewController {
                 Auth.auth().signIn(withEmail: email, password: password)
                 print("Logged in to the user!")
                 checkerService.addUserToDatabase(login: login, name: login)
+                
+                if let navigationController = self.navigationController {
+                    let coordinator = ProfileCoordinator(navigationController: navigationController)
+                    let newUser = User(login: login, name: login)
+                    coordinator.authenticate(user: newUser)
+                    coordinator.start()
+                }
             }
         }
     })
+    
+    private lazy var signupIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        return activityIndicator
+    }()
     
     // MARK: - Lifecycle
     
@@ -345,5 +363,24 @@ class SignUpViewController: UIViewController {
     func textFieldShouldReturn(userText: UITextField!) -> Bool {
         userText.resignFirstResponder()
         return true;
+    }
+    
+    private func startSignupProcess() {
+        self.signUpButton.setBackgroundColor(.systemGray, forState: .normal)
+        
+        self.signUpButton.isUserInteractionEnabled = false
+        self.loginInput.isUserInteractionEnabled = false
+        self.firstPasswordInput.isUserInteractionEnabled = false
+        self.secondPasswordInput.isUserInteractionEnabled = false
+        
+    }
+    
+    private func finishSignupProcess() {
+        self.signUpButton.setBackgroundColor(accentColor, forState: .normal)
+        
+        self.signUpButton.isUserInteractionEnabled = true
+        self.loginInput.isUserInteractionEnabled = true
+        self.firstPasswordInput.isUserInteractionEnabled = true
+        self.secondPasswordInput.isUserInteractionEnabled = true
     }
 }
