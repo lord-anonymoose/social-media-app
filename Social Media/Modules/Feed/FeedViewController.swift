@@ -65,6 +65,8 @@ class FeedViewController: UIViewController {
 
     private func setupUI() {
         view.backgroundColor = UIColor(named: "BackgroundColor")
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
     }
     
     private func addSubviews() {

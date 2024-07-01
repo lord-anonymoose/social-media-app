@@ -44,7 +44,6 @@ final class CheckerService: CheckerServiceProtocol {
                 return
             } else {
                 let login = email.replacingOccurrences(of: "@media.com", with: "")
-                print("Current login: \(login)")
                 var user: User? = nil
                 
                 var fetchedUsers = [User]()
@@ -59,7 +58,6 @@ final class CheckerService: CheckerServiceProtocol {
                     }
                     
                     if let result = user {
-                        print(result)
                         completion(.success(result))
                         return
                     } else {
@@ -82,7 +80,6 @@ extension CheckerService {
             for child in snapshot.children.allObjects as! [DataSnapshot] {
                 if let name = child.value as? String {
                     users.append(User(login: child.key, name: name))
-                    print(name)
                 }
             }
             
