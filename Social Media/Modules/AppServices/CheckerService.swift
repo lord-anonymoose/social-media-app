@@ -8,6 +8,8 @@
 import Foundation
 import Firebase
 import FirebaseAuth
+import FirebaseDatabase
+
 
 protocol CheckerServiceProtocol {
     func checkCredentials(email: String, password: String, completion: @escaping (Result<User, CheckerError>) -> Void)
@@ -43,6 +45,7 @@ final class CheckerService: CheckerServiceProtocol {
             } else {
                 let login = email.replacingOccurrences(of: "@media.com", with: "")
                 var user: User? = nil
+                let users = try 
                 for usr in users {
                     if usr.login == login {
                         user = usr
@@ -57,6 +60,27 @@ final class CheckerService: CheckerServiceProtocol {
                     return
                 }
             }
+        }
+    }
+}
+
+extension CheckerService {
+    private func fetchUsernames(completion: @escaping ([User]) -> Void) {
+        var ref: DatabaseReference!
+        ref.child("users").observeSingleEvent(of: .value, with: { snapshot in
+            var users: [User] = []
+            
+            // Iterate through all users and fetch their usernames
+            for child in snapshot.children.allObjects as! [DataSnapshot] {
+                if let name = child.value as? String {
+                    users.append(User(login: child.key, name: name))
+                }
+            }
+            
+            completion(users)
+        }) { error in
+            print("Error fetching usernames: \(error.localizedDescription)")
+            completion([])
         }
     }
 }
