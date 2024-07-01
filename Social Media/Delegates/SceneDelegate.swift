@@ -19,11 +19,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: scene)
         
         let navigationController = UINavigationController()
+        let loginViewController = LogInViewController()
         
-        let coordinator = MainCoordinator(navigationController: navigationController)
-    
-        window.rootViewController = coordinator.navigationController
-        coordinator.start()
+        navigationController.pushViewController(loginViewController, animated: true)
+            
+        window.rootViewController = navigationController
         window.makeKeyAndVisible()
         self.window = window
     }

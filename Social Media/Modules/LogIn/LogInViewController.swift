@@ -87,37 +87,25 @@ class LogInViewController: UIViewController {
     }()
     
     private lazy var logInButton = CustomButton(customTitle: "Log In") { [unowned self] in
-        /*
-        let userService = CurrentUserService()
         
-        if let user = self.loginDelegate?.check(login: self.loginInput.text!, password: self.passwordInput.text!) {
-            if let navigationController = self.navigationController {
-                let coordinator = ProfileCoordinator(navigationController: navigationController)
-                coordinator.authenticate(user: user)
-                coordinator.start()
-                if let tabBarController = self.tabBarController {
-                    coordinator.updateTabBar(tabBarController: tabBarController)
-                }
-            }
-        }
-        */
-        
+        startLoginOperation()
         
         let service = CheckerService()
         service.checkCredentials(email: loginInput.text ?? "", password: passwordInput.text ?? "", completion: {result in
             switch result {
             case .success(let user):
                 print("Sign-in successful")
+                self.loginInput.text = ""
+                self.passwordInput.text = ""
                 if let navigationController = self.navigationController {
+                    self.stopLoginOperation()
                     let coordinator = ProfileCoordinator(navigationController: navigationController)
                     coordinator.authenticate(user: user)
                     coordinator.start()
-                    if let tabBarController = self.tabBarController {
-                        coordinator.updateTabBar(tabBarController: tabBarController)
-                    }
                 }
             case .failure(let error):
                 self.showErrorAlert(description: error.description)
+                self.stopLoginOperation()
             }
         })
     }
@@ -136,7 +124,13 @@ class LogInViewController: UIViewController {
     private lazy var bruteforceButton = CustomButton(customTitle: "Bruteforce password", action: {
     })
     
-    private lazy var activityIndicator: UIActivityIndicatorView = {
+    private lazy var bruteForceIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        return activityIndicator
+    }()
+    
+    private lazy var loginIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         return activityIndicator
@@ -170,8 +164,9 @@ class LogInViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        self.bruteForceIndicator.stopAnimating()
+        self.loginIndicator.stopAnimating()
         super.viewWillDisappear(animated)
-        
         removeKeyboardObservers()
     }
     
@@ -219,9 +214,10 @@ class LogInViewController: UIViewController {
         logInInputContainer.addSubview(showPasswordButton)
         
         contentView.addSubview(logInButton)
+        contentView.addSubview(loginIndicator)
         contentView.addSubview(signUpButton)
-        contentView.addSubview(bruteforceButton)
-        contentView.addSubview(activityIndicator)
+        //contentView.addSubview(bruteforceButton)
+        //contentView.addSubview(bruteForceIndicator)
         
     }
     
@@ -284,11 +280,22 @@ class LogInViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             signUpButton.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: 16),
+            // Remove following code in case of using Bruteforsing feature
+            signUpButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+            //
             signUpButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             signUpButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             signUpButton.heightAnchor.constraint(equalToConstant: 50)
         ])
         
+        NSLayoutConstraint.activate([
+            loginIndicator.centerYAnchor.constraint(equalTo: logInButton.centerYAnchor),
+            loginIndicator.trailingAnchor.constraint(equalTo: logInButton.trailingAnchor, constant: -16),
+            loginIndicator.widthAnchor.constraint(equalToConstant: 50),
+            loginIndicator.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        
+        /*
         NSLayoutConstraint.activate([
             bruteforceButton.topAnchor.constraint(equalTo: signUpButton.bottomAnchor, constant: 16),
             bruteforceButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
@@ -298,11 +305,12 @@ class LogInViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            activityIndicator.centerYAnchor.constraint(equalTo: bruteforceButton.centerYAnchor),
-            activityIndicator.trailingAnchor.constraint(equalTo: bruteforceButton.trailingAnchor, constant: -16),
-            activityIndicator.widthAnchor.constraint(equalToConstant: 50),
-            activityIndicator.heightAnchor.constraint(equalToConstant: 50)
+            bruteForceIndicator.centerYAnchor.constraint(equalTo: bruteforceButton.centerYAnchor),
+            bruteForceIndicator.trailingAnchor.constraint(equalTo: bruteforceButton.trailingAnchor, constant: -16),
+            bruteForceIndicator.widthAnchor.constraint(equalToConstant: 50),
+            bruteForceIndicator.heightAnchor.constraint(equalToConstant: 50)
         ])
+        */
     }
     
     private func setupKeyboardObservers() {
@@ -348,8 +356,8 @@ class LogInViewController: UIViewController {
         switch result {
         case .success(let user):
             DispatchQueue.main.async {
-                self.activityIndicator.startAnimating()
-                self.activityIndicator.isHidden = false
+                self.bruteForceIndicator.startAnimating()
+                self.bruteForceIndicator.isHidden = false
                 self.bruteforceButton.setBackgroundColor(.systemGray, forState: .normal)
                 self.bruteforceButton.isUserInteractionEnabled = false
                 self.loginInput.isUserInteractionEnabled = false
@@ -361,8 +369,8 @@ class LogInViewController: UIViewController {
                 let password = bruteforce.bruteForce(userToUnclock: user.login)
                 
                 DispatchQueue.main.async {
-                    self.activityIndicator.stopAnimating()
-                    self.activityIndicator.isHidden = true
+                    self.bruteForceIndicator.stopAnimating()
+                    self.bruteForceIndicator.isHidden = true
                     self.bruteforceButton.setBackgroundColor(accentColor, forState: .normal)
                     self.bruteforceButton.isUserInteractionEnabled = true
                     self.loginInput.isUserInteractionEnabled = true
@@ -377,8 +385,30 @@ class LogInViewController: UIViewController {
     }
     
     private func stopBruteForceOperation(with password: String) {
-        self.activityIndicator.stopAnimating()
-        self.activityIndicator.isHidden = true
+        self.bruteForceIndicator.stopAnimating()
+        self.bruteForceIndicator.isHidden = true
+    }
+    
+    private func startLoginOperation() {
+        self.logInButton.setBackgroundColor(.systemGray, forState: .normal)
+        
+        self.loginIndicator.startAnimating()
+        self.loginIndicator.isHidden = false
+        
+        self.bruteforceButton.isUserInteractionEnabled = false
+        self.loginInput.isUserInteractionEnabled = false
+        self.passwordInput.isUserInteractionEnabled = false
+    }
+    
+    private func stopLoginOperation() {
+        self.logInButton.setBackgroundColor(accentColor, forState: .normal)
+        
+        self.loginIndicator.stopAnimating()
+        self.loginIndicator.isHidden = true
+        
+        self.bruteforceButton.isUserInteractionEnabled = true
+        self.loginInput.isUserInteractionEnabled = true
+        self.passwordInput.isUserInteractionEnabled = true
     }
     
     func textFieldShouldReturn(userText: UITextField!) -> Bool {

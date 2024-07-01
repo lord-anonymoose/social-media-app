@@ -8,6 +8,10 @@
 import Foundation
 import UIKit
 
+protocol Coordinator {
+    func start()
+}
+
 extension UIColor {
     convenience init?(hex: String) {
         var hexCleaned = hex.trimmingCharacters(in: .whitespacesAndNewlines)
