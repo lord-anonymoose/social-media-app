@@ -13,6 +13,23 @@ let secondaryColor = UIColor(hex: "#FFC074")!
 let textColor = UIColor(named: "BlackAndWhite")!
 let backgroundColor = UIColor(named: "BackgroundColor")!
 
+final class LoginInputContainer: UIView {
+    required init() {
+        super.init(frame: .zero)
+        
+        translatesAutoresizingMaskIntoConstraints = false
+        backgroundColor = .systemGray6
+        layer.borderWidth = 0.5
+        layer.borderColor = UIColor.lightGray.cgColor
+        layer.cornerRadius = 10.0
+        layer.masksToBounds = true
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 final class CustomButton: UIButton {
     
     typealias Action = () -> Void

@@ -12,6 +12,7 @@ import UIKit
 class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
     var timeLeft: Int = 60
+    var timer: Timer?
     
     // MARK: - Subviews
     
@@ -69,11 +70,13 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     private lazy var setStatusButton = CustomButton(customTitle: "Set Status") {[unowned self] in
         userStatus.text = self.statusText
         if self.user != nil {
+            /*
             for i in 0...users.count - 1 {
                 if users[i].login == self.user?.login {
                     users[i].status = self.statusText
                 }
             }
+            */
         }
         startTimer()
     }
@@ -114,6 +117,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         addSuviews()
         setupConstraints()
         changeBackgroundColor()
+    }
+    
+    deinit {
+        stopTimer()
     }
      
     
@@ -191,7 +198,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     func startTimer() {
         setStatusButton.isUserInteractionEnabled = false
         setStatusButton.setBackgroundColor(.systemGray, forState: .normal)
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [unowned self] timer in
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [unowned self] timer in
             if timeLeft > 0 {
                 timeLeft -= 1
                 setStatusButton.setTitle("\(timeLeft) seconds left", for: .normal)
@@ -203,5 +210,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
                 timeLeft = 60
             }
         }
+    }
+    
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil
     }
 }

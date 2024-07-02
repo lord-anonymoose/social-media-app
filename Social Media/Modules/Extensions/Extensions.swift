@@ -8,6 +8,10 @@
 import Foundation
 import UIKit
 
+protocol Coordinator {
+    func start()
+}
+
 extension UIColor {
     convenience init?(hex: String) {
         var hexCleaned = hex.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -167,12 +171,13 @@ extension String {
     var punctuation: String { return "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~" }
     var letters:     String { return lowercase + uppercase }
     var printable:   String { return digits + letters + punctuation }
-
-
-
+    
+    
+    
     mutating func replace(at index: Int, with character: Character) {
         var stringArray = Array(self)
         stringArray[index] = character
         self = String(stringArray)
     }
 }
+

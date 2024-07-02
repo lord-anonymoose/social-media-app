@@ -6,6 +6,7 @@
 //
 
 
+/*
 func getUser(login: String) throws -> Result<StorageService.User, Error> {
     for user in users {
         if user.login == login {
@@ -14,7 +15,9 @@ func getUser(login: String) throws -> Result<StorageService.User, Error> {
     }
     return .failure(AppError.userNotExist)
 }
+*/
 
+/*
 public var strawberry_moose = StorageService.User(login: "strawberry_moose", name: "Philipp Lazarev")
 public var katyperry = StorageService.User(login: "katyperry", name: "Katy Perry")
 public var teddyphotos = StorageService.User(login: "teddyphotos", name: "Ed Sheeran")
@@ -25,4 +28,4 @@ public var billieeilish = StorageService.User(login: "billieeilish", name: "Bill
 public var ijustine = StorageService.User(login: "ijustine", name: "iJustine")
 public var mkbhd = StorageService.User(login: "mkbhd", name: "Marques Brownlee")
 public var defaultUser = StorageService.User(login: "default", name: "default")
-
+*/
