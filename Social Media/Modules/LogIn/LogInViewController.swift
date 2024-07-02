@@ -65,6 +65,7 @@ class LogInViewController: UIViewController {
         textField.layer.borderWidth = 0.5
         textField.layer.borderColor = UIColor.lightGray.cgColor
         textField.layer.masksToBounds = true
+        textField.keyboardType = .emailAddress
         
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .none
