@@ -81,6 +81,17 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         startTimer()
     }
     
+    lazy var logoutButton: UIButton = {
+        let button = UIButton()
+        let image = UIImage(systemName: "rectangle.portrait.and.arrow.forward")
+        button.setImage(image, for: .normal)
+        button.tintColor = .systemRed
+        //button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+        button.isUserInteractionEnabled = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     private lazy var textField: UITextFieldWithPadding = {
         let textField = UITextFieldWithPadding()
                 
@@ -108,7 +119,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         addSuviews()
-        //setupConstraints()
         changeBackgroundColor()
     }
     
@@ -149,6 +159,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         contentView.addSubview(userStatus)
         contentView.addSubview(textField)
         contentView.addSubview(setStatusButton)
+        contentView.addSubview(logoutButton)
     }
         
     private func setupConstraints() {
@@ -189,6 +200,13 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
             setStatusButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
             setStatusButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             setStatusButton.heightAnchor.constraint(equalToConstant: 30),
+        ])
+        
+        NSLayoutConstraint.activate([
+            logoutButton.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            logoutButton.heightAnchor.constraint(equalToConstant: 25),
+            logoutButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            logoutButton.heightAnchor.constraint(equalToConstant: 25)
         ])
         
         NSLayoutConstraint.activate([bottomAnchor])

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class ProfileCoordinator: Coordinator {
     
@@ -31,9 +32,29 @@ class ProfileCoordinator: Coordinator {
             UINavigationController(rootViewController: $0)
         }
         tabBarViewController.selectedIndex = 0
-        
         navigationController.pushViewController(tabBarViewController, animated: false)
         self.navigationController.setNavigationBarHidden(true, animated: true)
+    }
+    
+    func logout() {
+        do {
+            try Auth.auth().signOut()
+            print("Signed out!")
+        } catch {
+            print("Couldn't logout")
+            return
+        }
+        
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first else {
+            return
+        }
+        
+        let loginViewController = LogInViewController() // Replace with your view controller initialization
+        let navigationController = UINavigationController(rootViewController: loginViewController)
+        
+        window.rootViewController = navigationController
+        UIView.transition(with: window, duration: 0.5, options: .transitionFlipFromRight, animations: nil, completion: nil)
     }
     
     // Feed

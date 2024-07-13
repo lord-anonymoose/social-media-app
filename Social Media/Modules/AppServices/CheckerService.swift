@@ -94,7 +94,7 @@ extension CheckerService {
     func addUserToDatabase(login: String, name: String) {
         let ref = Database.database().reference().child("users")
         ref.child(login).setValue(name) { error, _ in
-            if let error = error {
+            if error != nil {
                 print("Could not add user to database!")
             } else {
                 print("User \(name) added to database!")

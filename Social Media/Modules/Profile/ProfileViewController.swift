@@ -126,6 +126,16 @@ class ProfileViewController: UIViewController {
         view.endEditing(true)
     }
     
+    @objc func logoutButtonTapped(_ button: UIButton) {
+        print("logoutButtonTapped")
+        if let navigationController = self.navigationController {
+            let coordinator = ProfileCoordinator(navigationController: navigationController)
+            coordinator.logout()
+        }
+        //self.navigationController?.pushViewController(LogInViewController(), animated: true)
+        //self.navigationController?.popToRootViewController(animated: true)
+    }
+    
     // MARK: - Private
     
     private func setupUI() {
@@ -268,6 +278,7 @@ extension ProfileViewController: UITableViewDataSource {
                 )
                 tapRed.numberOfTapsRequired = 1
                 view.userImage.addGestureRecognizer(tapRed)
+                view.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
                 return view
             }
         }

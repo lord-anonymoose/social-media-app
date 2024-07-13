@@ -30,6 +30,7 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     }()
     
     
+    
     // MARK: - Lifecycle
     init(userPhotos: [UIImage]) {
         self.userPhotos = userPhotos
