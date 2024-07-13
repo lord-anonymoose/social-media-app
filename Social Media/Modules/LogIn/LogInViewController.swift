@@ -233,7 +233,8 @@ class LogInViewController: UIViewController {
     
     private func setupConstraints() {
         let safeAreaGuide = view.safeAreaLayoutGuide
-
+        let bottom = view.safeAreaLayoutGuide.layoutFrame.height
+        
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor),
             scrollView.widthAnchor.constraint(equalTo: safeAreaGuide.widthAnchor),
@@ -247,14 +248,13 @@ class LogInViewController: UIViewController {
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.heightAnchor.constraint(equalToConstant: bottom),
         ])
     }
     
     private func setupContentOfScrollView() {
         
         let centerY = view.safeAreaLayoutGuide.layoutFrame.height / 2
-        let bottom = view.safeAreaLayoutGuide.layoutFrame.height
         
         NSLayoutConstraint.activate([
             logInInputContainer.centerYAnchor.constraint(equalTo: contentView.topAnchor, constant: centerY),
@@ -287,7 +287,6 @@ class LogInViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            contentView.heightAnchor.constraint(equalToConstant: bottom),
             signUpButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -150),
             signUpButton.heightAnchor.constraint(equalToConstant: 50),
             signUpButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25),
