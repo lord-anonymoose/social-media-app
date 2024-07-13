@@ -30,6 +30,6 @@ class LikesViewController: UIViewController {
     
     // MARK: - Private
     private func setupUI() {
-        view.backgroundColor = .green
+        view.backgroundColor = .systemBackground
     }
 }

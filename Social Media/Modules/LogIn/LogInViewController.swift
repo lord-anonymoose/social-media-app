@@ -233,6 +233,7 @@ class LogInViewController: UIViewController {
     
     private func setupConstraints() {
         let safeAreaGuide = view.safeAreaLayoutGuide
+
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor),
             scrollView.widthAnchor.constraint(equalTo: safeAreaGuide.widthAnchor),
@@ -251,17 +252,14 @@ class LogInViewController: UIViewController {
     }
     
     private func setupContentOfScrollView() {
-        NSLayoutConstraint.activate([
-            appLogo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 120),
-            appLogo.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            appLogo.heightAnchor.constraint(equalToConstant: 100),
-            appLogo.widthAnchor.constraint(equalToConstant: 100),
-        ])
+        
+        let centerY = view.safeAreaLayoutGuide.layoutFrame.height / 2
+        let bottom = view.safeAreaLayoutGuide.layoutFrame.height
         
         NSLayoutConstraint.activate([
-            logInInputContainer.topAnchor.constraint(equalTo: appLogo.bottomAnchor, constant: 100),
-            logInInputContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            logInInputContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            logInInputContainer.centerYAnchor.constraint(equalTo: contentView.topAnchor, constant: centerY),
+            logInInputContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25),
+            logInInputContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25),
             logInInputContainer.heightAnchor.constraint(equalToConstant: 100)
         ])
         
@@ -282,22 +280,27 @@ class LogInViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            logInButton.topAnchor.constraint(equalTo: logInInputContainer.bottomAnchor, constant: 16),
-            logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            logInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            logInButton.heightAnchor.constraint(equalToConstant: 50),
+            appLogo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 120),
+            appLogo.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            appLogo.heightAnchor.constraint(equalToConstant: 100),
+            appLogo.widthAnchor.constraint(equalToConstant: 100),
         ])
         
         NSLayoutConstraint.activate([
-            signUpButton.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: 16),
-            // Remove following code in case of using Bruteforsing feature
-            signUpButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
-            //
-            signUpButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            signUpButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            signUpButton.heightAnchor.constraint(equalToConstant: 50)
+            contentView.heightAnchor.constraint(equalToConstant: bottom),
+            signUpButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -150),
+            signUpButton.heightAnchor.constraint(equalToConstant: 50),
+            signUpButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25),
+            signUpButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25)
         ])
         
+        NSLayoutConstraint.activate([
+            logInButton.bottomAnchor.constraint(equalTo: signUpButton.topAnchor, constant: -10),
+            logInButton.heightAnchor.constraint(equalToConstant: 50),
+            logInButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25),
+            logInButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25)
+        ])
+
         NSLayoutConstraint.activate([
             loginIndicator.centerYAnchor.constraint(equalTo: logInButton.centerYAnchor),
             loginIndicator.trailingAnchor.constraint(equalTo: logInButton.trailingAnchor, constant: -16),

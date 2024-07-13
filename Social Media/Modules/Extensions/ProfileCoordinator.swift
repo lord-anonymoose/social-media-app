@@ -25,6 +25,7 @@ class ProfileCoordinator: Coordinator {
     func start() {
         addFeedViewController()
         addProfileviewController()
+        addLikesViewController()
         
         let tabBarViewController = UITabBarController()
         
@@ -89,5 +90,12 @@ class ProfileCoordinator: Coordinator {
         let planetImage = UIImage(systemName: "globe.americas.fill")
         planetViewController.tabBarItem = UITabBarItem(title: nil, image: planetImage, tag: 2)
         controllers.append(planetViewController)
+    }
+    
+    func addLikesViewController() {
+        let likesViewController = LikesViewController()
+        let likesImage = UIImage(systemName: "heart.fill")
+        likesViewController.tabBarItem = UITabBarItem(title: nil, image: likesImage, tag: 2)
+        controllers.append(likesViewController)
     }
 }
