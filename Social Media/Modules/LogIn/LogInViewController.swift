@@ -60,9 +60,9 @@ class LogInViewController: UIViewController {
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Username"
-        textField.textColor = textColor
+        textField.textColor = .textColor
         textField.font = .systemFont(ofSize: 16)
-        textField.tintColor = accentColor
+        textField.tintColor = .accentColor
         textField.layer.borderWidth = 0.5
         textField.layer.borderColor = UIColor.lightGray.cgColor
         textField.layer.masksToBounds = true
@@ -70,6 +70,8 @@ class LogInViewController: UIViewController {
         
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .none
+        
+        textField.text = "strawberry_moose@media.com"
         
         return textField
     }()
@@ -80,13 +82,15 @@ class LogInViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Password"
         textField.isSecureTextEntry = true
-        textField.textColor = textColor
+        textField.textColor = .textColor
         textField.font = .systemFont(ofSize: 16)
-        textField.tintColor = accentColor
+        textField.tintColor = .accentColor
         textField.layer.masksToBounds = true
         
         textField.autocorrectionType = .no
         textField.autocapitalizationType = .none
+        
+        textField.text = "123456"
         
         return textField
     }()
@@ -146,7 +150,7 @@ class LogInViewController: UIViewController {
         return activityIndicator
     }()
     
-    private lazy var signUpButton = CustomButton(customTitle: "Not a member yet? Sign up!", customBackgroundColor: secondaryColor ,action: {
+    private lazy var signUpButton = CustomButton(customTitle: "Not a member yet? Sign up!", customBackgroundColor: .secondaryColor ,action: {
         let signUpViewController = SignUpViewController()
         self.navigationController?.pushViewController(signUpViewController, animated: true)
     })
@@ -209,7 +213,7 @@ class LogInViewController: UIViewController {
     // MARK: - Private
     
     private func setupUI() {
-        view.backgroundColor = backgroundColor
+        view.backgroundColor = .systemBackground
     }
     
     private func addSubviews() {
@@ -416,7 +420,7 @@ class LogInViewController: UIViewController {
     }
     
     private func stopLoginOperation() {
-        self.logInButton.setBackgroundColor(accentColor, forState: .normal)
+        self.logInButton.setBackgroundColor(.accentColor, forState: .normal)
         
         self.loginIndicator.stopAnimating()
         self.loginIndicator.isHidden = true

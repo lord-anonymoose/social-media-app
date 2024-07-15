@@ -8,6 +8,13 @@
 import UIKit
 import FirebaseAuth
 
+
+
+protocol Coordinator {
+    func start()
+}
+
+
 class ProfileCoordinator: Coordinator {
     
     var user = StorageService.User(login: "default", name: "default")

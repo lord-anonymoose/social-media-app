@@ -78,7 +78,7 @@ class PlanetViewController: UIViewController {
     // MARK: - Private
 
     private func setupUI() {
-        view.backgroundColor = UIColor(named: "BackgroundColor")
+        view.backgroundColor = .systemBackground
     }
     
     private func addSubviews() {

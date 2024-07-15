@@ -139,7 +139,7 @@ class ProfileViewController: UIViewController {
     // MARK: - Private
     
     private func setupUI() {
-        view.backgroundColor = backgroundColor
+        view.backgroundColor = .systemBackground
     }
     
     private func addSubviews() {

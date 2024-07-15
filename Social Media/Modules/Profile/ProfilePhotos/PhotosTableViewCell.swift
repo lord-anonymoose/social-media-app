@@ -22,7 +22,7 @@ class PhotosTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Photos"
         label.font = .systemFont(ofSize: 24, weight: .bold)
-        label.textColor = UIColor(named: "BlackAndWhite") ?? secondaryColor
+        label.textColor = .textColor
         return label
     }()
 

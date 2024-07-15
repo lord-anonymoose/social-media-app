@@ -69,9 +69,9 @@ class SignUpViewController: UIViewController {
         
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Username"
-        textField.textColor = textColor
+        textField.textColor = .textColor
         textField.font = .systemFont(ofSize: 16)
-        textField.tintColor = accentColor
+        textField.tintColor = .accentColor
         textField.layer.borderWidth = 0.5
         textField.layer.borderColor = UIColor.lightGray.cgColor
         textField.layer.masksToBounds = true
@@ -89,9 +89,9 @@ class SignUpViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Password"
         textField.isSecureTextEntry = true
-        textField.textColor = textColor
+        textField.textColor = .textColor
         textField.font = .systemFont(ofSize: 16)
-        textField.tintColor = accentColor
+        textField.tintColor = .accentColor
         textField.layer.masksToBounds = true
         textField.textContentType = UITextContentType(rawValue: "")
         
@@ -112,9 +112,9 @@ class SignUpViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "Repeat Password"
         textField.isSecureTextEntry = true
-        textField.textColor = textColor
+        textField.textColor = .textColor
         textField.font = .systemFont(ofSize: 16)
-        textField.tintColor = accentColor
+        textField.tintColor = .accentColor
         textField.layer.masksToBounds = true
         textField.textContentType = UITextContentType(rawValue: "")
 
@@ -142,9 +142,7 @@ class SignUpViewController: UIViewController {
             finishSignupProcess()
             return
         }
-        
-        //if
-        
+                
         guard let password = self.firstPasswordInput.text else {
             self.showErrorAlert(message: "Password cannot be empty!")
             self.finishSignupProcess()
@@ -245,7 +243,7 @@ class SignUpViewController: UIViewController {
     // MARK: - Private
     
     private func setupUI() {
-        view.backgroundColor = backgroundColor
+        view.backgroundColor = .systemBackground
     }
 
     private func addSubviews() {
@@ -411,7 +409,7 @@ class SignUpViewController: UIViewController {
     }
     
     private func finishSignupProcess() {
-        self.signUpButton.setBackgroundColor(accentColor, forState: .normal)
+        self.signUpButton.setBackgroundColor(.accentColor, forState: .normal)
         
         self.signUpButton.isUserInteractionEnabled = true
         self.loginInput.isUserInteractionEnabled = true

@@ -64,7 +64,7 @@ class FeedViewController: UIViewController {
     // MARK: - Private
 
     private func setupUI() {
-        view.backgroundColor = UIColor(named: "BackgroundColor")
+        view.backgroundColor = .systemBackground
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
     }
@@ -98,7 +98,7 @@ class FeedViewController: UIViewController {
         self.navigationItem.title = "Feed"
 
         let reloadButton = UIBarButtonItem(
-            image: UIImage(systemName: "arrow.clockwise.icloud")?.withTintColor(accentColor, renderingMode: .alwaysOriginal),
+            image: UIImage(systemName: "arrow.clockwise.icloud")?.withTintColor(.accentColor, renderingMode: .alwaysOriginal),
             style: .plain,
             target: self,
             action: #selector(reloadButtonTapped)

@@ -44,7 +44,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         
         userName.text = "default"
         userName.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        userName.textColor = textColor
+        userName.textColor = .textColor
         userName.sizeToFit()
         
         userName.translatesAutoresizingMaskIntoConstraints = false
@@ -147,9 +147,9 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
     func changeBackgroundColor() {
        #if DEBUG
-        contentView.backgroundColor = backgroundColor
+        contentView.backgroundColor = .systemBackground
        #else
-        contentView.backgroundColor = secondaryColor
+        contentView.backgroundColor = .secondaryColor
        #endif
     }
         
@@ -224,7 +224,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
                 timer.invalidate()
                 setStatusButton.setTitle("Set Status", for: .normal)
                 setStatusButton.isUserInteractionEnabled = true
-                setStatusButton.setBackgroundColor(accentColor, forState: .normal)
+                setStatusButton.setBackgroundColor(.accentColor, forState: .normal)
                 timeLeft = 60
             }
         }
