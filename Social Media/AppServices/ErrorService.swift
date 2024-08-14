@@ -20,15 +20,15 @@ extension AppError: CustomStringConvertible {
     public var description: String {
         switch self {
         case .datatypeError:
-            return "Failed working with datatype"
+            return String(localized: "Failed working with datatype", comment: "Error message")
         case .userNotExist:
-            return "Such user does not exist!"
+            return String(localized: "Such user does not exist!", comment: "Error message")
         case .passwordIncorrect:
-            return "Password is incorrect!"
+            return String(localized: "Password is incorrect!", comment: "Error message")
         case .networkError:
-            return "Your connection is lost!"
+            return String(localized: "Your connection is lost!", comment: "Error message")
         case .noImages:
-            return "No images to present!"
+            return String(localized: "No images to present!", comment: "Error message")
         }
         
     }
@@ -47,13 +47,13 @@ extension NetworkError {
     public var description: String {
         switch self {
         case .urlError:
-            return "The URL is not valid!"
+            return String(localized: "The URL is not valid!", comment: "Error message")
         case .jsonError:
-            return "Couldn't parse JSON data!"
+            return String(localized: "Couldn't parse JSON data!", comment: "Error message")
         case .networkError:
-            return "Your connection is lost!"
+            return String(localized: "Your connection is lost!", comment: "Error message")
         case .httpResponseError:
-            return "HTTP Response Error!"
+            return String(localized: "HTTP Response Error!", comment: "Error message")
         }
     }
 }
@@ -66,23 +66,26 @@ enum CheckerError: Error {
     case wrongCredentials
     case passwordsNotMatching
     case userNotExist
+    case networkNotAvailable
 }
 
 extension CheckerError {
-    public var description: String {
+    public var localizedDescription: String {
         switch self {
         case .invalidEmail:
-            return "An email is invalid!"
+            return String(localized: "An email is invalid!", comment: "Error message")
         case .emptyLogin:
-            return "A login field can not be empty!"
+            return String(localized: "A login field can not be empty!", comment: "Error message")
         case .emptyPassword:
-            return "A password field can not be empty!"
+            return String(localized: "A password field can not be empty!", comment: "Error message")
         case .wrongCredentials:
-            return "Wrong credentials!"
+            return String(localized: "Wrong credentials!", comment: "Error message")
         case .passwordsNotMatching:
-            return "Passwords do not match!"
+            return String(localized: "Passwords do not match!", comment: "Error message")
         case .userNotExist:
-            return "User doesn't exist!"
+            return String(localized: "User doesn't exist!", comment: "Error message")
+        case .networkNotAvailable:
+            return String(localized: "Network is not available!", comment: "Error message")
         }
     }
 }

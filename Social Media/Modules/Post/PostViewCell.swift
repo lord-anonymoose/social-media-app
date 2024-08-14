@@ -47,19 +47,12 @@ class PostViewCell: UITableViewCell {
         return label
     }()
     
-    let likesLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.textColor
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
     let likeButton: UIButton = {
         let button = UIButton()
         let image = UIImage(systemName: "heart.fill")
         button.setImage(image, for: .normal)
         button.tintColor = .accentColor
-        //button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+        button.addTarget(PostViewCell.self, action: #selector(likeButtonTapped), for: .touchUpInside)
         button.isUserInteractionEnabled = true
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -75,33 +68,38 @@ class PostViewCell: UITableViewCell {
     
     // MARK: - Lifecycle
 
-    init(style: UITableViewCell.CellStyle, reuseIdentifier: String?, author: String, image: String, description: String, likes: Int, views: Int) {
+    init(style: UITableViewCell.CellStyle, reuseIdentifier: String?, author: String, image: String, description: String, likes: Int) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubviews(author: author, image: image, description: description, views: views)
+        addSubviews(author: author, image: image, description: description)
         setupConstraints()
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubviews(author: "Unknown", image: "notFound", description: "Unknown", views: 0)
+        addSubviews(author: "Unknown", image: "notFound", description: "Unknown")
         setupConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        addSubviews(author: "Unknown", image: "notFound", description: "Unknown", views: 0)
+        addSubviews(author: "Unknown", image: "notFound", description: "Unknown")
         setupConstraints()
     }
     
+    // MARK: - Action
+    @objc func likeButtonTapped(_ button: UIButton) {
+        print("likeButtonTapped")
+    }
+    
+    
     // MARK: - Private
 
-    private func addSubviews(author: String, image: String, description: String, views: Int) {
+    private func addSubviews(author: String, image: String, description: String) {
         contentView.addSubview(authorLabel)
         contentView.addSubview(authorProfilePicture)
         contentView.addSubview(imgView)
         contentView.addSubview(descriptionLabel)
         contentView.addSubview(likeButton)
-        contentView.addSubview(viewsLabel)
         
         authorLabel.text = author
         authorProfilePicture.image = UIImage(named: author)
@@ -109,7 +107,6 @@ class PostViewCell: UITableViewCell {
         imgView.image = UIImage(named: image)
         
         descriptionLabel.text = description
-        viewsLabel.attributedText = views.formattedString().embedSymbol(symbol: "eye")
     }
     
     private func setupConstraints() {
@@ -146,15 +143,7 @@ class PostViewCell: UITableViewCell {
             likeButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
             likeButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             likeButton.widthAnchor.constraint(equalToConstant: 25),
-            //likeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             likeButton.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16)
-        ])
-        
-        NSLayoutConstraint.activate([
-            viewsLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
-            viewsLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            viewsLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            viewsLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16)
         ])
     }
 }

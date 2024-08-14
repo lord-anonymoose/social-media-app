@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 
+
 extension Int {
     func formattedString() -> String {
         let numberFormatter = NumberFormatter()
@@ -20,6 +21,8 @@ extension Int {
         }
     }
 }
+
+
 
 extension String {
     func embedSymbol(symbol: String) -> NSAttributedString {
@@ -51,6 +54,8 @@ extension Array where Element: UIImage {
         return unique
     }
 }
+
+
 
 extension String {
     var digits:      String { return "0123456789" }

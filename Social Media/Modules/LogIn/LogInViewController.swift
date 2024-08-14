@@ -59,7 +59,7 @@ class LogInViewController: UIViewController {
         let textField = UITextFieldWithPadding()
         
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Username"
+        textField.placeholder = String(localized: "Username")
         textField.textColor = .textColor
         textField.font = .systemFont(ofSize: 16)
         textField.tintColor = .accentColor
@@ -116,7 +116,7 @@ class LogInViewController: UIViewController {
                 //self.ref = Database.database(url: "https://social-media-5eea4-default-rtdb.firebaseio.com/").reference()
 
             case .failure(let error):
-                self.showErrorAlert(description: error.description)
+                self.showErrorAlert(description: error.localizedDescription)
                 self.stopLoginOperation()
             }
         })

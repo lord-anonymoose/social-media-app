@@ -296,7 +296,7 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
         } else {
             let post = userPosts[indexPath.row - 1]
-            let cell = PostViewCell(style: .default, reuseIdentifier: "cell", author: post.author, image: post.image, description: post.description, likes: post.likes, views: post.views)
+            let cell = PostViewCell(style: .default, reuseIdentifier: "cell", author: post.author, image: post.image, description: post.description, likes: post.likes)
             return cell
         }
     }

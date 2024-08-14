@@ -1,0 +1,176 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "A login field can not be empty!" : {
+      "comment" : "Error message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поле ввода логина не заполнено!"
+          }
+        }
+      }
+    },
+    "A password field can not be empty!" : {
+      "comment" : "Error message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поле ввода пароля не заполнено!"
+          }
+        }
+      }
+    },
+    "An email is invalid!" : {
+      "comment" : "Error message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Некорректный email!"
+          }
+        }
+      }
+    },
+    "Couldn't parse JSON data!" : {
+      "comment" : "Error message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось получить данные из JSON"
+          }
+        }
+      }
+    },
+    "Failed working with datatype" : {
+      "comment" : "Error message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось обработать тип данных!"
+          }
+        }
+      }
+    },
+    "HTTP Response Error!" : {
+      "comment" : "Error message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HTTP ошибка!"
+          }
+        }
+      }
+    },
+    "Network is not available!" : {
+      "comment" : "Error message"
+    },
+    "No images to present!" : {
+      "comment" : "Error message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отсутствуют изображения для показа"
+          }
+        }
+      }
+    },
+    "Password is incorrect!" : {
+      "comment" : "Error message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неверный пароль!"
+          }
+        }
+      }
+    },
+    "Passwords do not match!" : {
+      "comment" : "Error message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введенные пароли не совпадают!"
+          }
+        }
+      }
+    },
+    "Residents" : {
+      "comment" : "mySectionName"
+    },
+    "Such user does not exist!" : {
+      "comment" : "Error message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пользователь не существует!"
+          }
+        }
+      }
+    },
+    "The URL is not valid!" : {
+      "comment" : "Error message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Некорректная ссылка!"
+          }
+        }
+      }
+    },
+    "User doesn't exist!" : {
+      "comment" : "Error message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пользователь не существует!"
+          }
+        }
+      }
+    },
+    "Username" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Имя пользователя"
+          }
+        }
+      }
+    },
+    "Wrong credentials!" : {
+      "comment" : "Error message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неверные данные пользователя!"
+          }
+        }
+      }
+    },
+    "Your connection is lost!" : {
+      "comment" : "Error message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Потеряно соединение!"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

@@ -11,7 +11,7 @@ import UIKit
 
 extension UIViewController: UITextFieldDelegate {
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder() // dismiss keyboard
+        textField.resignFirstResponder()
         return true
     }
 }

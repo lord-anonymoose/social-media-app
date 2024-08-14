@@ -9,10 +9,11 @@ import Foundation
 import Firebase
 import FirebaseAuth
 import FirebaseDatabase
+import Network
 
 
 protocol CheckerServiceProtocol {
-    func checkCredentials(email: String, password: String, completion: @escaping (Result<User, CheckerError>) -> Void)
+    func checkCredentials(email: String, password: String, completion: @escaping (Result<User, Error>) -> Void)
     func singUp(email: String, password: String)
 }
 
@@ -22,37 +23,52 @@ final class CheckerService: CheckerServiceProtocol {
         print("")
     }
     
-    func checkCredentials(email: String, password: String, completion: @escaping (Result<User, CheckerError>) -> Void) {
+    /*
+    private func checkNetworkAvailability(completion: @escaping (Bool) -> Void) {
+        let monitor = NWPathMonitor()
+        let queue = DispatchQueue(label: "NetworkCheck")
+
+        monitor.pathUpdateHandler = { path in
+            if path.status == .satisfied {
+                completion(true)
+            } else {
+                completion(false)
+            }
+            monitor.cancel() // Stop monitoring after the first check
+        }
+
+        monitor.start(queue: queue)
+    }
+     */
+    
+    func checkCredentials(email: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
+        if email.isEmpty {
+            completion(.failure(CheckerError.emptyLogin))
+            return
+        }
+        
+        if password.isEmpty {
+            completion(.failure(CheckerError.emptyPassword))
+            return
+        }
+        
         if !email.contains("@media.com") {
             completion(.failure(CheckerError.invalidEmail))
             return
         }
         
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-            if email == "" {
-                completion(.failure(CheckerError.emptyLogin))
+            if let error = error {
+                completion(.failure(error))
                 return
             }
-            
-            if password == "" {
-                completion(.failure(CheckerError.emptyPassword))
-                return
-            }
-            
-            if error != nil {
-                completion(.failure(CheckerError.wrongCredentials))
-                return
-            } else {
-                let login = email.replacingOccurrences(of: "@media.com", with: "")
-                                
-                self.getUser(username: login) {user in
-                    if let result = user {
-                        completion(.success(result))
-                        return
-                    } else {
-                        completion(.failure(CheckerError.userNotExist))
-                        return
-                    }
+                
+            let login = email.replacingOccurrences(of: "@media.com", with: "")
+            self.getUser(username: login) { user in
+                if let user = user {
+                    completion(.success(user))
+                } else {
+                    completion(.failure(CheckerError.userNotExist))
                 }
             }
         }
@@ -95,6 +111,7 @@ extension CheckerService {
         let ref = Database.database().reference().child("users")
         ref.child(login).setValue(name) { error, _ in
             if error != nil {
+                //let message = String(localized: "Could not add user to database!", comment: "Error message")
                 print("Could not add user to database!")
             } else {
                 print("User \(name) added to database!")

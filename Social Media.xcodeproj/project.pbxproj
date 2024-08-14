@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8E0D227A2C18EDF800A9BBA8 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0D22792C18EDF800A9BBA8 /* ProfileCoordinator.swift */; };
 		8E0D227C2C19FDB200A9BBA8 /* ErrorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0D227B2C19FDB200A9BBA8 /* ErrorService.swift */; };
+		8E17FDFA2C6BF06E00559CA6 /* MapKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E17FDF92C6BF06E00559CA6 /* MapKit.swift */; };
 		8E1CC6842C2394C6007F9108 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1CC6832C2394C6007F9108 /* NetworkService.swift */; };
 		8E1F68042A51739C008AE130 /* PostViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F68032A51739C008AE130 /* PostViewCell.swift */; };
 		8E29336B2C4548D400F2CC69 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E29336A2C4548D400F2CC69 /* UIColor.swift */; };
@@ -52,6 +53,8 @@
 		8EDDCEB32C1F8C140097A874 /* BruteforceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDDCEB22C1F8C140097A874 /* BruteforceService.swift */; };
 		8EDF8EE12B6041A300154433 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 8EDF8EE02B6041A300154433 /* iOSIntPackage */; };
 		8EF48DA52A27797F0099166A /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF48DA42A27797F0099166A /* ProfileHeaderView.swift */; };
+		8EFB63562C51C2290058572C /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFB63552C51C2290058572C /* MapViewController.swift */; };
+		8EFB635D2C51D19D0058572C /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 8EFB635C2C51D19D0058572C /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -71,6 +74,7 @@
 		8E0614CA2AABA96B00DB3BBD /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		8E0D22792C18EDF800A9BBA8 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		8E0D227B2C19FDB200A9BBA8 /* ErrorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorService.swift; sourceTree = "<group>"; };
+		8E17FDF92C6BF06E00559CA6 /* MapKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKit.swift; sourceTree = "<group>"; };
 		8E1CC6832C2394C6007F9108 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		8E1F68032A51739C008AE130 /* PostViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewCell.swift; sourceTree = "<group>"; };
 		8E29336A2C4548D400F2CC69 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
@@ -110,6 +114,9 @@
 		8ECCBF5F2C32A7DE00D5C4C4 /* CheckerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckerService.swift; sourceTree = "<group>"; };
 		8EDDCEB22C1F8C140097A874 /* BruteforceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BruteforceService.swift; sourceTree = "<group>"; };
 		8EF48DA42A27797F0099166A /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		8EFB63552C51C2290058572C /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		8EFB63572C51CF330058572C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		8EFB635C2C51D19D0058572C /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +206,7 @@
 				8E4C15542A2699D900AA511B /* LaunchScreen.storyboard */,
 				8E4C15572A2699D900AA511B /* Info.plist */,
 				8ECCBF562C3207BD00D5C4C4 /* GoogleService-Info.plist */,
+				8EFB635C2C51D19D0058572C /* Localizable.xcstrings */,
 			);
 			path = "Social Media";
 			sourceTree = "<group>";
@@ -206,6 +214,7 @@
 		8E4C155F2A269BD900AA511B /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				8EFB63542C51C21A0058572C /* Map */,
 				8EA0FF6F2C42CC6C0025572E /* Likes */,
 				8EAE53232C2AE3EC00BD640E /* Planet */,
 				8E3FC4B72A4D8D760064F250 /* Feed */,
@@ -249,6 +258,7 @@
 				8E2933742C454AB800F2CC69 /* UITableView.swift */,
 				8E29336C2C45490D00F2CC69 /* LoginInputContainer.swift */,
 				8E29336E2C45493200F2CC69 /* CustomButton.swift */,
+				8E17FDF92C6BF06E00559CA6 /* MapKit.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -320,6 +330,14 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		8EFB63542C51C21A0058572C /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				8EFB63552C51C2290058572C /* MapViewController.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -370,6 +388,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 8E4C153D2A2699D800AA511B;
 			packageReferences = (
@@ -391,6 +410,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E4C15562A2699D900AA511B /* LaunchScreen.storyboard in Resources */,
+				8EFB635D2C51D19D0058572C /* Localizable.xcstrings in Resources */,
 				8E4C15532A2699D900AA511B /* Assets.xcassets in Resources */,
 				8ECCBF572C3207BD00D5C4C4 /* GoogleService-Info.plist in Resources */,
 			);
@@ -405,11 +425,13 @@
 			files = (
 				8E4C154A2A2699D800AA511B /* AppDelegate.swift in Sources */,
 				8EAE53272C2AE40C00BD640E /* PlanetModel.swift in Sources */,
+				8E17FDFA2C6BF06E00559CA6 /* MapKit.swift in Sources */,
 				8E4C15612A269C0200AA511B /* ErrorViewController.swift in Sources */,
 				8E29336F2C45493200F2CC69 /* CustomButton.swift in Sources */,
 				8EAD99682A599704004D3BEF /* PhotosTableViewCell.swift in Sources */,
 				8E2933752C454AB800F2CC69 /* UITableView.swift in Sources */,
 				8EC3113E2A4CB631006C8FA2 /* LogInViewController.swift in Sources */,
+				8EFB63562C51C2290058572C /* MapViewController.swift in Sources */,
 				8E4C154C2A2699D800AA511B /* SceneDelegate.swift in Sources */,
 				8E29336B2C4548D400F2CC69 /* UIColor.swift in Sources */,
 				8E0D227A2C18EDF800A9BBA8 /* ProfileCoordinator.swift in Sources */,
@@ -450,6 +472,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				8E4C15552A2699D900AA511B /* Base */,
+				8EFB63572C51CF330058572C /* ru */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -462,6 +485,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -524,6 +548,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -589,6 +614,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -616,6 +642,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

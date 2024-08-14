@@ -32,7 +32,7 @@ class ProfileCoordinator: Coordinator {
     func start() {
         addFeedViewController()
         addProfileviewController()
-        addLikesViewController()
+        addMapViewController()
         
         let tabBarViewController = UITabBarController()
         
@@ -47,9 +47,7 @@ class ProfileCoordinator: Coordinator {
     func logout() {
         do {
             try Auth.auth().signOut()
-            print("Signed out!")
         } catch {
-            print("Couldn't logout")
             return
         }
         
@@ -58,7 +56,7 @@ class ProfileCoordinator: Coordinator {
             return
         }
         
-        let loginViewController = LogInViewController() // Replace with your view controller initialization
+        let loginViewController = LogInViewController()
         let navigationController = UINavigationController(rootViewController: loginViewController)
         
         window.rootViewController = navigationController
@@ -83,6 +81,22 @@ class ProfileCoordinator: Coordinator {
         controllers.append(profileViewController)
     }
     
+    // Map
+    func addMapViewController() {
+        let mapViewController = MapViewController()
+        let mapImage = UIImage(systemName: "map.fill")
+        mapViewController.tabBarItem = UITabBarItem(title: nil, image: mapImage, tag: 2)
+        controllers.append(mapViewController)
+    }
+    
+    // Liked Posts
+    func addLikesViewController() {
+        let likesViewController = LikesViewController()
+        let likesImage = UIImage(systemName: "heart.fill")
+        likesViewController.tabBarItem = UITabBarItem(title: nil, image: likesImage, tag: 3)
+        controllers.append(likesViewController)
+    }
+    
     // Secret Word
     func addSecretWordViewController() {
         let secretWordViewController = SecretWordViewController(secretWord: "secret")
@@ -97,12 +111,5 @@ class ProfileCoordinator: Coordinator {
         let planetImage = UIImage(systemName: "globe.americas.fill")
         planetViewController.tabBarItem = UITabBarItem(title: nil, image: planetImage, tag: 2)
         controllers.append(planetViewController)
-    }
-    
-    func addLikesViewController() {
-        let likesViewController = LikesViewController()
-        let likesImage = UIImage(systemName: "heart.fill")
-        likesViewController.tabBarItem = UITabBarItem(title: nil, image: likesImage, tag: 2)
-        controllers.append(likesViewController)
     }
 }
