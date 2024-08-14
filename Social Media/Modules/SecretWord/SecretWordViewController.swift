@@ -62,7 +62,7 @@ class SecretWordViewController: UIViewController {
         let textField = UITextFieldWithPadding()
         
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Guess the word..."
+        textField.placeholder = String(localized: "Guess the word...")
         textField.tintColor = .accentColor
         textField.layer.borderWidth = 0.5
         textField.layer.borderColor = UIColor.lightGray.cgColor
@@ -73,7 +73,7 @@ class SecretWordViewController: UIViewController {
         return textField
     }()
     
-    private lazy var checkButton = CustomButton(customTitle: "Check") { [unowned self] in
+    private lazy var checkButton = CustomButton(customTitle: String(localized: "Check")) { [unowned self] in
         guard let word = textField.text else { return }
         if word.lowercased() == self.secretWord.lowercased() {
             self.currentState = SecretWordModel(guessed: true)

@@ -24,7 +24,7 @@ class ErrorViewController: UIViewController {
         label.sizeToFit()
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
-        label.text = "Sorry, the page you were searching could not be found..."
+        label.text = String(localized: "Sorry, the page you were searching could not be found...")
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.sizeToFit()

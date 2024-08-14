@@ -20,7 +20,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         didSet {
             userImage.image = UIImage(named: user?.login ?? "default")
             userName.text = user?.login ?? "default"
-            userStatus.text = user?.status ?? "Type in something..."
+            userStatus.text = user?.status ?? String(localized: "Type new status")
             setupConstraints()
         }
     }
@@ -55,7 +55,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     private lazy var userStatus: UILabel = {
         let userStatus = UILabel()
                 
-        userStatus.text = "Waiting for something..."
+        userStatus.text = String(localized: "Waiting for something...")
         userStatus.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         userStatus.textColor = .gray
         userStatus.sizeToFit()
@@ -67,7 +67,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         return userStatus
     }()
     
-    private lazy var setStatusButton = CustomButton(customTitle: "Set Status") {[unowned self] in
+    private lazy var setStatusButton = CustomButton(customTitle: String(localized: "Set Status")) {[unowned self] in
         userStatus.text = self.statusText
         if self.user != nil {
             /*
@@ -95,7 +95,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     private lazy var textField: UITextFieldWithPadding = {
         let textField = UITextFieldWithPadding()
                 
-        textField.placeholder = "Hello, world"
+        textField.placeholder = String(localized: "Hello, world")
         textField.backgroundColor = .white
         
         textField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
@@ -222,7 +222,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
                 setStatusButton.setTitle("\(timeLeft) seconds left", for: .normal)
             } else {
                 timer.invalidate()
-                setStatusButton.setTitle("Set Status", for: .normal)
+                setStatusButton.setTitle(String(localized: "Set Status"), for: .normal)
                 setStatusButton.isUserInteractionEnabled = true
                 setStatusButton.setBackgroundColor(.accentColor, forState: .normal)
                 timeLeft = 60

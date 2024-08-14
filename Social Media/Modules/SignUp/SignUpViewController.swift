@@ -54,7 +54,7 @@ class SignUpViewController: UIViewController {
     private lazy var welcomeLabel: UILabel = {
        let label = UILabel()
         
-        label.text = "Welcome on board!"
+        label.text = String(localized: "Welcome on board!")
         label.font = .systemFont(ofSize: 30)
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -68,7 +68,7 @@ class SignUpViewController: UIViewController {
         let textField = UITextFieldWithPadding()
         
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Username"
+        textField.placeholder = String(localized: "Username")
         textField.textColor = .textColor
         textField.font = .systemFont(ofSize: 16)
         textField.tintColor = .accentColor
@@ -87,7 +87,7 @@ class SignUpViewController: UIViewController {
         let textField = UITextFieldWithPadding()
         
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Password"
+        textField.placeholder = String(localized: "Password")
         textField.isSecureTextEntry = true
         textField.textColor = .textColor
         textField.font = .systemFont(ofSize: 16)
@@ -110,7 +110,7 @@ class SignUpViewController: UIViewController {
         let textField = UITextFieldWithPadding()
         
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Repeat Password"
+        textField.placeholder = String(localized: "Repeat Password")
         textField.isSecureTextEntry = true
         textField.textColor = .textColor
         textField.font = .systemFont(ofSize: 16)
@@ -132,25 +132,25 @@ class SignUpViewController: UIViewController {
     private lazy var signUpButton = CustomButton(customTitle: "Sign Up", action: { [self] in
         self.startSignupProcess()
         guard let email = self.loginInput.text else {
-            self.showErrorAlert(message: "Email is empty!")
+            self.showErrorAlert(message: String(localized: "Email is empty!"))
             finishSignupProcess()
             return
         }
         
         if !email.contains("@media.com") {
-            self.showErrorAlert(message: "Email should contain @media.com!")
+            self.showErrorAlert(message: String(localized: "Email should contain @media.com!"))
             finishSignupProcess()
             return
         }
                 
         guard let password = self.firstPasswordInput.text else {
-            self.showErrorAlert(message: "Password cannot be empty!")
+            self.showErrorAlert(message: String(localized: "Password cannot be empty!"))
             self.finishSignupProcess()
             return
         }
         
         if !self.checkMatchingPasswords() {
-            self.showErrorAlert(message: "Passwords do not match!")
+            self.showErrorAlert(message: String(localized: "Passwords do not match!"))
             finishSignupProcess()
             return
         }
@@ -159,7 +159,7 @@ class SignUpViewController: UIViewController {
         let checkerService = CheckerService()
         checkerService.getUser(username: login) {user in
             if let result = user {
-                self.showErrorAlert(message: "User already exists!")
+                self.showErrorAlert(message: String(localized: "User already exists!"))
                 return
             } else {
                 Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
@@ -362,21 +362,20 @@ class SignUpViewController: UIViewController {
     private func checkMatchingPasswords() -> Bool {
         if let firstPassword = firstPasswordInput.text {
             if firstPassword == "" {
-                showErrorAlert(message: "First password field is empty!")
+                showErrorAlert(message: String(localized: "First password field is empty!"))
                 return false
             }
             
             if let secondPassword = secondPasswordInput.text {
                 if secondPassword == "" {
-                    showErrorAlert(message: "Second password field is empty!")
+                    showErrorAlert(message: String(localized: "Second password field is empty!"))
                     return false
                 }
                 
                 if firstPassword == secondPassword {
                     return true
                 } else {
-                    showErrorAlert(message: "Passwords don't match!")
-                    print("Fail")
+                    showErrorAlert(message: String(localized: "Passwords don't match!"))
                     return false
                 }
             }
@@ -385,8 +384,8 @@ class SignUpViewController: UIViewController {
     }
     
     private func showErrorAlert(message: String) {
-        let alert = UIAlertController(title: "Error!", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        let alert = UIAlertController(title: String(localized: "Error!"), message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: String(localized: "OK"), style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     

@@ -36,7 +36,7 @@ struct LoginInspector: LoginViewControllerDelegate {
     */
     
     func showAlert(error: AppError) {
-        let title = "Error!"
+        let title = String(localized: "Error!")
         let message = error.description
     
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)

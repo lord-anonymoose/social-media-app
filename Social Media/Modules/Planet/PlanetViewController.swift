@@ -37,7 +37,7 @@ class PlanetViewController: UIViewController {
         
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isHidden = true
-        label.text = "Orbital period: N/A"
+        label.text = String(localized: "Orbital period: N/A")
         label.font = .boldSystemFont(ofSize: 20)
         
         return label
@@ -151,7 +151,7 @@ class PlanetViewController: UIViewController {
                             
                             planetLabel.isHidden = false
                             
-                            orbitalPeriodLabel.text = "Orbital period: \(planet.orbitalPeriod)"
+                            orbitalPeriodLabel.text = String(localized: "Orbital period: \(planet.orbitalPeriod)")
                             orbitalPeriodLabel.isHidden = false
                             
                             self.planet = planet

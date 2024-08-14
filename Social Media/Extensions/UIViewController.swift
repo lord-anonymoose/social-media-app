@@ -15,3 +15,11 @@ extension UIViewController: UITextFieldDelegate {
         return true
     }
 }
+
+extension UIViewController {
+    public func showErrorAlert(description: String) {
+        let alert = UIAlertController(title: String(localized: "Error!"), message: description, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: String(localized: "OK"), style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+}

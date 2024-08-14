@@ -127,7 +127,6 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func logoutButtonTapped(_ button: UIButton) {
-        print("logoutButtonTapped")
         if let navigationController = self.navigationController {
             let coordinator = ProfileCoordinator(navigationController: navigationController)
             coordinator.logout()

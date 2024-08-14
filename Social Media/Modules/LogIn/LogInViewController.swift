@@ -80,7 +80,7 @@ class LogInViewController: UIViewController {
         let textField = UITextFieldWithPadding()
         
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Password"
+        textField.placeholder = String(localized: "Password")
         textField.isSecureTextEntry = true
         textField.textColor = .textColor
         textField.font = .systemFont(ofSize: 16)
@@ -95,7 +95,7 @@ class LogInViewController: UIViewController {
         return textField
     }()
     
-    private lazy var logInButton = CustomButton(customTitle: "Log In") { [unowned self] in
+    private lazy var logInButton = CustomButton(customTitle: String(localized: "Log In")) { [unowned self] in
         
         startLoginOperation()
         
@@ -103,7 +103,6 @@ class LogInViewController: UIViewController {
         service.checkCredentials(email: loginInput.text ?? "", password: passwordInput.text ?? "", completion: {result in
             switch result {
             case .success(let user):
-                print("Sign-in successful")
                 self.loginInput.text = ""
                 self.passwordInput.text = ""
                 if let navigationController = self.navigationController {
@@ -133,7 +132,7 @@ class LogInViewController: UIViewController {
         return button
     }()
     
-    private lazy var bruteforceButton = CustomButton(customTitle: "Bruteforce password", action: {
+    private lazy var bruteforceButton = CustomButton(customTitle: String(localized: "Bruteforce password"), action: {
     })
     
     private lazy var bruteForceIndicator: UIActivityIndicatorView = {
@@ -150,7 +149,7 @@ class LogInViewController: UIViewController {
         return activityIndicator
     }()
     
-    private lazy var signUpButton = CustomButton(customTitle: "Not a member yet? Sign up!", customBackgroundColor: .secondaryColor ,action: {
+    private lazy var signUpButton = CustomButton(customTitle: String(localized: "Not a member yet? Sign up!"), customBackgroundColor: .secondaryColor ,action: {
         let signUpViewController = SignUpViewController()
         self.navigationController?.pushViewController(signUpViewController, animated: true)
     })
@@ -433,12 +432,6 @@ class LogInViewController: UIViewController {
     func textFieldShouldReturn(userText: UITextField!) -> Bool {
         userText.resignFirstResponder()
         return true;
-    }
-    
-    private func showErrorAlert(description: String) {
-        let alert = UIAlertController(title: "Error!", message: description, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
     }
     
     /*

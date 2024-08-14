@@ -95,7 +95,7 @@ class FeedViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        self.navigationItem.title = "Feed"
+        self.navigationItem.title = String(localized: "Feed")
 
         let reloadButton = UIBarButtonItem(
             image: UIImage(systemName: "arrow.clockwise.icloud")?.withTintColor(.accentColor, renderingMode: .alwaysOriginal),

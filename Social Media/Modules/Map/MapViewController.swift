@@ -84,10 +84,6 @@ class MapViewController: UIViewController {
         setupDelegates()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        print("Disappeared")
-    }
-    
     
     // MARK: - Actions
     @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
@@ -98,8 +94,9 @@ class MapViewController: UIViewController {
             
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
-            annotation.title = "Location \(annotations.count + 1)"
-            annotation.subtitle = "Lat: \(coordinate.latitude), Lon: \(coordinate.longitude)"
+            
+            annotation.title = String(localized: "Location \(annotations.count + 1)")
+            annotation.subtitle = String(localized: "Lat: \(coordinate.latitude), Lon: \(coordinate.longitude)")
             
             mapView.addAnnotation(annotation)
             annotations.append(annotation)
@@ -109,7 +106,7 @@ class MapViewController: UIViewController {
     @objc func makeRouteButtonTapped(_ sender: UIButton) {
 
         guard let userLocation = locationManager.location?.coordinate else {
-            print("User location is not available.")
+            self.showErrorAlert(description: String(localized: "No access to user location!"))
             return
         }
         
@@ -133,7 +130,7 @@ class MapViewController: UIViewController {
             directions.calculate { (response, error) in
                 guard let response = response else {
                     if let error = error {
-                        print("Error calculating directions: \(error.localizedDescription)")
+                        self.showErrorAlert(description: String(localized: "Error calculating directions: \(error.localizedDescription)"))
                     }
                     return
                 }

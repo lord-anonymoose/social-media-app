@@ -17,7 +17,7 @@ class InfoViewController: UIViewController {
         button.backgroundColor = .blue
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
-        button.setTitle("  Rate the App  ", for: .normal)
+        button.setTitle(String(localized: "  Rate the App  "), for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: #selector(rateButtonPressed), for: .touchUpInside)
         return button
@@ -33,14 +33,14 @@ class InfoViewController: UIViewController {
     // MARK: - Actions
     
     @objc func rateButtonPressed(_ sender: UIButton) {
-        let alertController = UIAlertController(title: "Rate my App", message: "Let me know how you like my app!", preferredStyle: .alert)
+        let alertController = UIAlertController(title: String(localized: "Rate my App"), message: String(localized: "Let me know how you like my app!"), preferredStyle: .alert)
         let goodAction = UIAlertAction(title: "👍", style: .default) {
             UIAlertAction in
-            NSLog("Thank you! I appreciate it!")
+            //NSLog(String(localized: "Thank you! I appreciate it!"))
         }
         let badAction = UIAlertAction(title: "👎", style: .default) {
             UIAlertAction in
-            NSLog("Let me know how I can improve it!")
+            //NSLog("Let me know how I can improve it!")
         }
         alertController.addAction(goodAction)
         alertController.addAction(badAction)
