@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  Social Media
+
+  Created by Philipp Lazarev on 15.08.2024.
+  
+*/
+
+"NSLocationWhenInUseUsageDescription"="Мы не храним и не передаем Вашу геолокацию. Она используется исключительно для функций карт и навигатора.";

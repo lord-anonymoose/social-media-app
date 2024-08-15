@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  Social Media
+
+  Created by Philipp Lazarev on 15.08.2024.
+  
+*/
+
+"NSLocationWhenInUseUsageDescription"="Location access would allow us providing you with weather for your current location.";
