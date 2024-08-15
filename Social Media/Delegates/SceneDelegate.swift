@@ -18,13 +18,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
                                
         let window = UIWindow(windowScene: scene)
-        
-        let loginViewController = LogInViewController()
-        //let loginViewController = MapViewController()
-        let navigationController = UINavigationController(rootViewController: loginViewController)
+                
+        let loadingViewController = LoadingViewController()
+        let navigationController = UINavigationController(rootViewController: loadingViewController)
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         self.window = window
+        
+        if let username = Auth.auth().currentUser?.email?.replacingOccurrences(of: "@media.com", with: "") {
+            CheckerService().getUser(username: username) { user in
+                if let user = user {
+                    let secondaryLoginViewController = SecondaryLoginViewController(user: user)
+                    let newNavigationController = UINavigationController(rootViewController: secondaryLoginViewController)
+                    window.rootViewController = newNavigationController
+                }
+            }
+        }
+        
+        else {
+            let loginViewController = LogInViewController()
+            let newNavigationController = UINavigationController(rootViewController: loginViewController)
+            window.rootViewController = newNavigationController
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -33,10 +48,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Release any resources associated with this scene that can be re-created the next time the scene connects.
         // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
         
+        /*
         do {
             try Auth.auth().signOut()
             print("Signed out!")
         } catch {}
+        */
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {

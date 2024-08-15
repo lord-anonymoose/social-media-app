@@ -6,4 +6,6 @@
   
 */
 
-"NSLocationWhenInUseUsageDescription"="Location access would allow us providing you with weather for your current location.";
+"NSLocationWhenInUseUsageDescription" = "Location access would allow us providing you with weather for your current location.";
+"NSFaceIDUsageDescription" = "Biometrics are used to authenticate to the app.";
+

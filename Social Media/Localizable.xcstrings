@@ -214,6 +214,17 @@
         }
       }
     },
+    "Failed to authenticate using biometrics!" : {
+      "comment" : "Error message",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось авторизироваться с помощью биометрии!"
+          }
+        }
+      }
+    },
     "Failed working with datatype" : {
       "comment" : "Error message",
       "localizations" : {
@@ -275,6 +286,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Привет, Мир"
+          }
+        }
+      }
+    },
+    "Hi, %@ 👋" : {
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Привет, %@ 👋"
           }
         }
       }
