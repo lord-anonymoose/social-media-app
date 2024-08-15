@@ -61,10 +61,13 @@ extension NetworkError {
 // Checking user functionality
 enum CheckerError: Error {
     case invalidEmail
+    case emptyEmail
     case emptyLogin
     case emptyPassword
+    case emptyRepeatPassword
     case wrongCredentials
     case passwordsNotMatching
+    case userExists
     case userNotExist
     case networkNotAvailable
 }
@@ -74,14 +77,20 @@ extension CheckerError {
         switch self {
         case .invalidEmail:
             return String(localized: "An email is invalid!", comment: "Error message")
+        case .emptyEmail:
+            return String(localized: "An email field ca not be empty!", comment: "Error message")
         case .emptyLogin:
             return String(localized: "A login field can not be empty!", comment: "Error message")
         case .emptyPassword:
             return String(localized: "A password field can not be empty!", comment: "Error message")
+        case .emptyRepeatPassword:
+            return String(localized: "Password should be repeated!", comment: "Error message")
         case .wrongCredentials:
             return String(localized: "Wrong credentials!", comment: "Error message")
         case .passwordsNotMatching:
             return String(localized: "Passwords do not match!", comment: "Error message")
+        case .userExists:
+            return String(localized: "User already exists!", comment: "Error message")
         case .userNotExist:
             return String(localized: "User doesn't exist!", comment: "Error message")
         case .networkNotAvailable:

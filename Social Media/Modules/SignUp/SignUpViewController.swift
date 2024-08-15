@@ -129,28 +129,28 @@ class SignUpViewController: UIViewController {
         return textField
     }()
     
-    private lazy var signUpButton = CustomButton(customTitle: "Sign Up", action: { [self] in
+    private lazy var signUpButton = CustomButton(customTitle: String(localized: "Sign Up"), action: { [self] in
         self.startSignupProcess()
         guard let email = self.loginInput.text else {
-            self.showErrorAlert(message: String(localized: "Email is empty!"))
+            self.showErrorAlert(description: CheckerError.emptyEmail.localizedDescription)
             finishSignupProcess()
             return
         }
         
         if !email.contains("@media.com") {
-            self.showErrorAlert(message: String(localized: "Email should contain @media.com!"))
+            self.showErrorAlert(description: CheckerError.invalidEmail.localizedDescription)
             finishSignupProcess()
             return
         }
                 
         guard let password = self.firstPasswordInput.text else {
-            self.showErrorAlert(message: String(localized: "Password cannot be empty!"))
+            self.showErrorAlert(description: CheckerError.emptyPassword.localizedDescription)
             self.finishSignupProcess()
             return
         }
         
         if !self.checkMatchingPasswords() {
-            self.showErrorAlert(message: String(localized: "Passwords do not match!"))
+            self.showErrorAlert(description: CheckerError.passwordsNotMatching.localizedDescription)
             finishSignupProcess()
             return
         }
@@ -159,17 +159,17 @@ class SignUpViewController: UIViewController {
         let checkerService = CheckerService()
         checkerService.getUser(username: login) {user in
             if let result = user {
-                self.showErrorAlert(message: String(localized: "User already exists!"))
+                self.showErrorAlert(description: CheckerError.userExists.localizedDescription)
                 return
             } else {
                 Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
                     if let error = error {
-                        self.showErrorAlert(message: error.localizedDescription)
+                        self.showErrorAlert(description: error.localizedDescription)
                         self.finishSignupProcess()
                     } else {
                         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
                             if let error = error {
-                                self.showErrorAlert(message: error.localizedDescription)
+                                self.showErrorAlert(description: error.localizedDescription)
                                 self.finishSignupProcess()
                             } else {
                                 checkerService.addUserToDatabase(login: login, name: login)
@@ -362,31 +362,25 @@ class SignUpViewController: UIViewController {
     private func checkMatchingPasswords() -> Bool {
         if let firstPassword = firstPasswordInput.text {
             if firstPassword == "" {
-                showErrorAlert(message: String(localized: "First password field is empty!"))
+                showErrorAlert(description: CheckerError.emptyPassword.localizedDescription)
                 return false
             }
             
             if let secondPassword = secondPasswordInput.text {
                 if secondPassword == "" {
-                    showErrorAlert(message: String(localized: "Second password field is empty!"))
+                    showErrorAlert(description: CheckerError.emptyRepeatPassword.localizedDescription)
                     return false
                 }
                 
                 if firstPassword == secondPassword {
                     return true
                 } else {
-                    showErrorAlert(message: String(localized: "Passwords don't match!"))
+                    showErrorAlert(description: CheckerError.passwordsNotMatching.localizedDescription)
                     return false
                 }
             }
         }
         return false
-    }
-    
-    private func showErrorAlert(message: String) {
-        let alert = UIAlertController(title: String(localized: "Error!"), message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: String(localized: "OK"), style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
     }
     
     func textFieldShouldReturn(userText: UITextField!) -> Bool {
@@ -395,7 +389,7 @@ class SignUpViewController: UIViewController {
     }
     
     private func startSignupProcess() {
-        self.signUpButton.setBackgroundColor(.systemGray, forState: .normal)
+        //self.signUpButton.setBackgroundColor(.systemGray, forState: .normal)
         
         self.signUpButton.isUserInteractionEnabled = false
         self.loginInput.isUserInteractionEnabled = false
@@ -408,7 +402,7 @@ class SignUpViewController: UIViewController {
     }
     
     private func finishSignupProcess() {
-        self.signUpButton.setBackgroundColor(.accentColor, forState: .normal)
+        //self.signUpButton.setBackgroundColor(.accentColor, forState: .normal)
         
         self.signUpButton.isUserInteractionEnabled = true
         self.loginInput.isUserInteractionEnabled = true

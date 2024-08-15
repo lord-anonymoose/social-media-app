@@ -1,22 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "  Rate the App  " : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "  Rate the App  "
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Оцените приложение"
-          }
-        }
-      }
-    },
     "%lld seconds" : {
       "localizations" : {
         "en" : {
@@ -115,6 +99,23 @@
         }
       }
     },
+    "An email field ca not be empty!" : {
+      "comment" : "Error message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "An email field ca not be empty!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поле ввода email не заполнено!"
+          }
+        }
+      }
+    },
     "An email is invalid!" : {
       "comment" : "Error message",
       "localizations" : {
@@ -177,38 +178,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Не удалось получить данные из JSON!"
-          }
-        }
-      }
-    },
-    "Email is empty!" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Email is empty!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Не заполнен электронный адрес!"
-          }
-        }
-      }
-    },
-    "Email should contain @media.com!" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Email should contain @media.com!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Электронная почта должна содержать @media.com!"
           }
         }
       }
@@ -278,22 +247,6 @@
         }
       }
     },
-    "First password field is empty!" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "First password field is empty!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Не заполнен пароль!"
-          }
-        }
-      }
-    },
     "Guess the word..." : {
       "localizations" : {
         "en" : {
@@ -355,22 +308,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lat: %1$lf, Lon: %2$lf"
-          }
-        }
-      }
-    },
-    "Let me know how you like my app!" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Let me know how you like my app!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Поделитесь своим мнением о приложении!"
           }
         }
       }
@@ -537,22 +474,6 @@
         }
       }
     },
-    "Password cannot be empty!" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Password cannot be empty!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Не заполнен пароль!"
-          }
-        }
-      }
-    },
     "Password is incorrect!" : {
       "comment" : "Error message",
       "localizations" : {
@@ -570,6 +491,23 @@
         }
       }
     },
+    "Password should be repeated!" : {
+      "comment" : "Error message",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Password should be repeated!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите пароль повторно!"
+          }
+        }
+      }
+    },
     "Passwords do not match!" : {
       "comment" : "Error message",
       "localizations" : {
@@ -583,22 +521,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Введенные пароли не совпадают!"
-          }
-        }
-      }
-    },
-    "Passwords don't match!" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Passwords don't match!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Пароли не совпадают!"
           }
         }
       }
@@ -631,22 +553,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Фото"
-          }
-        }
-      }
-    },
-    "Rate my App" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rate my App"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Оцените приложение"
           }
         }
       }
@@ -684,22 +590,6 @@
         }
       }
     },
-    "Second password field is empty!" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Second password field is empty!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Не заполнено поле для повтора пароля!"
-          }
-        }
-      }
-    },
     "Set Status" : {
       "localizations" : {
         "en" : {
@@ -716,19 +606,18 @@
         }
       }
     },
-    "Sorry, the page you were searching could not be found..." : {
-      "extractionState" : "stale",
+    "Sign Up" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sorry, the page you were searching could not be found..."
+            "value" : "Sign Up"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не удалось найти запрашиваемую страницу"
+            "value" : "Зарегистрироваться"
           }
         }
       }
@@ -784,6 +673,7 @@
       }
     },
     "User already exists!" : {
+      "comment" : "Error message",
       "localizations" : {
         "en" : {
           "stringUnit" : {
