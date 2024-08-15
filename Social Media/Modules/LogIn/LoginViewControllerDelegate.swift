@@ -8,13 +8,14 @@
 import UIKit
 
 protocol LoginViewControllerDelegate {
-    func check(login: String, password: String) -> StorageService.User?
+    //func check(login: String, password: String) -> StorageService.User?
 }
 
 struct LoginInspector: LoginViewControllerDelegate {
 
     var viewController: UIViewController
     
+    /*
     func check(login: String, password: String) -> StorageService.User? {
         do {
             return try Checker.check(login: login, password: password)
@@ -32,9 +33,10 @@ struct LoginInspector: LoginViewControllerDelegate {
         }
         return nil
     }
+    */
     
     func showAlert(error: AppError) {
-        let title = "Error!"
+        let title = String(localized: "Error!")
         let message = error.description
     
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -53,3 +55,4 @@ struct MyLoginFactory: LoginFactory {
         return inspector
     }
 }
+

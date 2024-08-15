@@ -126,10 +126,19 @@ class ProfileViewController: UIViewController {
         view.endEditing(true)
     }
     
+    @objc func logoutButtonTapped(_ button: UIButton) {
+        if let navigationController = self.navigationController {
+            let coordinator = ProfileCoordinator(navigationController: navigationController)
+            coordinator.logout()
+        }
+        //self.navigationController?.pushViewController(LogInViewController(), animated: true)
+        //self.navigationController?.popToRootViewController(animated: true)
+    }
+    
     // MARK: - Private
     
     private func setupUI() {
-        view.backgroundColor = backgroundColor
+        view.backgroundColor = .systemBackground
     }
     
     private func addSubviews() {
@@ -268,6 +277,7 @@ extension ProfileViewController: UITableViewDataSource {
                 )
                 tapRed.numberOfTapsRequired = 1
                 view.userImage.addGestureRecognizer(tapRed)
+                view.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
                 return view
             }
         }
@@ -285,7 +295,7 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
         } else {
             let post = userPosts[indexPath.row - 1]
-            let cell = PostViewCell(style: .default, reuseIdentifier: "cell", author: post.author, image: post.image, description: post.description, likes: post.likes, views: post.views)
+            let cell = PostViewCell(style: .default, reuseIdentifier: "cell", author: post.author, image: post.image, description: post.description, likes: post.likes)
             return cell
         }
     }

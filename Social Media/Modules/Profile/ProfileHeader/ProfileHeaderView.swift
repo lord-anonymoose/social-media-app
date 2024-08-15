@@ -12,6 +12,7 @@ import UIKit
 class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
     var timeLeft: Int = 60
+    var timer: Timer?
     
     // MARK: - Subviews
     
@@ -19,7 +20,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         didSet {
             userImage.image = UIImage(named: user?.login ?? "default")
             userName.text = user?.login ?? "default"
-            userStatus.text = user?.status ?? "Type in something..."
+            userStatus.text = user?.status ?? String(localized: "Type new status")
             setupConstraints()
         }
     }
@@ -43,7 +44,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         
         userName.text = "default"
         userName.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        userName.textColor = textColor
+        userName.textColor = .textColor
         userName.sizeToFit()
         
         userName.translatesAutoresizingMaskIntoConstraints = false
@@ -54,7 +55,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     private lazy var userStatus: UILabel = {
         let userStatus = UILabel()
                 
-        userStatus.text = "Waiting for something..."
+        userStatus.text = String(localized: "Waiting for something...")
         userStatus.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         userStatus.textColor = .gray
         userStatus.sizeToFit()
@@ -66,22 +67,35 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         return userStatus
     }()
     
-    private lazy var setStatusButton = CustomButton(customTitle: "Set Status") {[unowned self] in
+    private lazy var setStatusButton = CustomButton(customTitle: String(localized: "Set Status")) {[unowned self] in
         userStatus.text = self.statusText
         if self.user != nil {
+            /*
             for i in 0...users.count - 1 {
                 if users[i].login == self.user?.login {
                     users[i].status = self.statusText
                 }
             }
+            */
         }
         startTimer()
     }
     
+    lazy var logoutButton: UIButton = {
+        let button = UIButton()
+        let image = UIImage(systemName: "rectangle.portrait.and.arrow.forward")
+        button.setImage(image, for: .normal)
+        button.tintColor = .systemRed
+        //button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+        button.isUserInteractionEnabled = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     private lazy var textField: UITextFieldWithPadding = {
         let textField = UITextFieldWithPadding()
                 
-        textField.placeholder = "Hello, world"
+        textField.placeholder = String(localized: "Hello, world")
         textField.backgroundColor = .white
         
         textField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
@@ -105,7 +119,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         addSuviews()
-        //setupConstraints()
         changeBackgroundColor()
     }
     
@@ -114,6 +127,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         addSuviews()
         setupConstraints()
         changeBackgroundColor()
+    }
+    
+    deinit {
+        stopTimer()
     }
      
     
@@ -130,9 +147,9 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
     func changeBackgroundColor() {
        #if DEBUG
-        contentView.backgroundColor = backgroundColor
+        contentView.backgroundColor = .systemBackground
        #else
-        contentView.backgroundColor = secondaryColor
+        contentView.backgroundColor = .secondaryColor
        #endif
     }
         
@@ -142,6 +159,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         contentView.addSubview(userStatus)
         contentView.addSubview(textField)
         contentView.addSubview(setStatusButton)
+        contentView.addSubview(logoutButton)
     }
         
     private func setupConstraints() {
@@ -184,6 +202,13 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
             setStatusButton.heightAnchor.constraint(equalToConstant: 30),
         ])
         
+        NSLayoutConstraint.activate([
+            logoutButton.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            logoutButton.heightAnchor.constraint(equalToConstant: 25),
+            logoutButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            logoutButton.heightAnchor.constraint(equalToConstant: 25)
+        ])
+        
         NSLayoutConstraint.activate([bottomAnchor])
 
     }
@@ -191,17 +216,22 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     func startTimer() {
         setStatusButton.isUserInteractionEnabled = false
         setStatusButton.setBackgroundColor(.systemGray, forState: .normal)
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [unowned self] timer in
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [unowned self] timer in
             if timeLeft > 0 {
                 timeLeft -= 1
-                setStatusButton.setTitle("\(timeLeft) seconds left", for: .normal)
+                setStatusButton.setTitle(localizedTimerString(seconds: timeLeft), for: .normal)
             } else {
                 timer.invalidate()
-                setStatusButton.setTitle("Set Status", for: .normal)
+                setStatusButton.setTitle(String(localized: "Set Status"), for: .normal)
                 setStatusButton.isUserInteractionEnabled = true
-                setStatusButton.setBackgroundColor(accentColor, forState: .normal)
+                setStatusButton.setBackgroundColor(.accentColor, forState: .normal)
                 timeLeft = 60
             }
         }
+    }
+    
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil
     }
 }

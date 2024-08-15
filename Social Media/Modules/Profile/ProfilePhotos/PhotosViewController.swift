@@ -30,6 +30,7 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     }()
     
     
+    
     // MARK: - Lifecycle
     init(userPhotos: [UIImage]) {
         self.userPhotos = userPhotos
@@ -64,8 +65,8 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     // MARK: - Private
     
     private func setupUI() {
-        view.backgroundColor = UIColor(named: "BackgroundColor")
-        title = "Photo gallery"
+        view.backgroundColor = .systemBackground
+        title = String(localized: "Photo gallery")
     }
     
     private func addSubviews() {

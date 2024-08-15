@@ -48,6 +48,14 @@ class FeedViewController: UIViewController {
         bindModel()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.hidesBarsOnSwipe = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.hidesBarsOnTap = false
+    }
+    
     @IBAction func reloadButtonTapped(sender: AnyObject) {
         self.viewModel.changeState()
     }
@@ -56,7 +64,9 @@ class FeedViewController: UIViewController {
     // MARK: - Private
 
     private func setupUI() {
-        view.backgroundColor = UIColor(named: "BackgroundColor")
+        view.backgroundColor = .systemBackground
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
     }
     
     private func addSubviews() {
@@ -85,10 +95,10 @@ class FeedViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        self.navigationItem.title = "Feed"
+        self.navigationItem.title = String(localized: "Feed")
 
         let reloadButton = UIBarButtonItem(
-            image: UIImage(systemName: "arrow.clockwise.icloud")?.withTintColor(accentColor, renderingMode: .alwaysOriginal),
+            image: UIImage(systemName: "arrow.clockwise.icloud")?.withTintColor(.accentColor, renderingMode: .alwaysOriginal),
             style: .plain,
             target: self,
             action: #selector(reloadButtonTapped)
@@ -131,7 +141,7 @@ extension FeedViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let post = loadedPosts[indexPath.row]
-        let cell = PostViewCell(style: .default, reuseIdentifier: "cell", author: post.author, image: post.image, description: post.description, likes: post.likes, views: post.views)
+        let cell = PostViewCell(style: .default, reuseIdentifier: "cell", author: post.author, image: post.image, description: post.description, likes: post.likes)
         
         return cell
     }
