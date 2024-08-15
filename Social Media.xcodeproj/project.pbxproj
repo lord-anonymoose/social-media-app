@@ -25,9 +25,7 @@
 		8E4C154C2A2699D800AA511B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C154B2A2699D800AA511B /* SceneDelegate.swift */; };
 		8E4C15532A2699D900AA511B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E4C15522A2699D900AA511B /* Assets.xcassets */; };
 		8E4C15562A2699D900AA511B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E4C15542A2699D900AA511B /* LaunchScreen.storyboard */; };
-		8E4C15612A269C0200AA511B /* ErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15602A269C0200AA511B /* ErrorViewController.swift */; };
 		8E4C15632A269C1E00AA511B /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15622A269C1E00AA511B /* FeedViewController.swift */; };
-		8E4C15652A269C4400AA511B /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15642A269C4400AA511B /* InfoViewController.swift */; };
 		8E4C15692A269C7A00AA511B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15682A269C7A00AA511B /* ProfileViewController.swift */; };
 		8E586B4C2AA877BD00D89AF6 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E586B4B2AA877BD00D89AF6 /* PhotosViewController.swift */; };
 		8E586B522AA898B500D89AF6 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E586B512AA898B500D89AF6 /* PhotosCollectionViewCell.swift */; };
@@ -93,9 +91,7 @@
 		8E4C15522A2699D900AA511B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8E4C15552A2699D900AA511B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8E4C15572A2699D900AA511B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8E4C15602A269C0200AA511B /* ErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewController.swift; sourceTree = "<group>"; };
 		8E4C15622A269C1E00AA511B /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
-		8E4C15642A269C4400AA511B /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		8E4C15682A269C7A00AA511B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		8E586B4B2AA877BD00D89AF6 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		8E586B512AA898B500D89AF6 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -146,14 +142,6 @@
 			path = LogIn;
 			sourceTree = "<group>";
 		};
-		8E3FC4B62A4D8D690064F250 /* Error */ = {
-			isa = PBXGroup;
-			children = (
-				8E4C15602A269C0200AA511B /* ErrorViewController.swift */,
-			);
-			path = Error;
-			sourceTree = "<group>";
-		};
 		8E3FC4B72A4D8D760064F250 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
@@ -162,14 +150,6 @@
 				8EAC9EB32BFBFF1300D27B28 /* FeedService.swift */,
 			);
 			path = Feed;
-			sourceTree = "<group>";
-		};
-		8E3FC4B82A4D8D850064F250 /* Info */ = {
-			isa = PBXGroup;
-			children = (
-				8E4C15642A269C4400AA511B /* InfoViewController.swift */,
-			);
-			path = Info;
 			sourceTree = "<group>";
 		};
 		8E3FC4B92A4D8D930064F250 /* Post */ = {
@@ -225,8 +205,6 @@
 				8EC8A3E42A2778D2008CC17C /* Profile */,
 				8E9861482BF8CA9200066827 /* SecretWord */,
 				8E3FC4B92A4D8D930064F250 /* Post */,
-				8E3FC4B82A4D8D850064F250 /* Info */,
-				8E3FC4B62A4D8D690064F250 /* Error */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -429,7 +407,6 @@
 				8E4C154A2A2699D800AA511B /* AppDelegate.swift in Sources */,
 				8EAE53272C2AE40C00BD640E /* PlanetModel.swift in Sources */,
 				8E17FDFA2C6BF06E00559CA6 /* MapKit.swift in Sources */,
-				8E4C15612A269C0200AA511B /* ErrorViewController.swift in Sources */,
 				8E29336F2C45493200F2CC69 /* CustomButton.swift in Sources */,
 				8EAD99682A599704004D3BEF /* PhotosTableViewCell.swift in Sources */,
 				8E2933752C454AB800F2CC69 /* UITableView.swift in Sources */,
@@ -444,7 +421,6 @@
 				8E2933772C454ADB00F2CC69 /* UIViewController.swift in Sources */,
 				8EA0FF712C42CC790025572E /* LikesViewController.swift in Sources */,
 				8E4C15632A269C1E00AA511B /* FeedViewController.swift in Sources */,
-				8E4C15652A269C4400AA511B /* InfoViewController.swift in Sources */,
 				8EC1CAEE2AE6920400B38364 /* LoginViewControllerDelegate.swift in Sources */,
 				8E2933712C45495500F2CC69 /* UITextFieldWithPadding.swift in Sources */,
 				8E29336D2C45490D00F2CC69 /* LoginInputContainer.swift in Sources */,

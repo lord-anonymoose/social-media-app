@@ -717,6 +717,7 @@
       }
     },
     "Sorry, the page you were searching could not be found..." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
