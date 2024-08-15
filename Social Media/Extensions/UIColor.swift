@@ -56,12 +56,10 @@ extension UIColor {
     static var textColor: UIColor {
         if #available(iOS 13.0, *) {
             return UIColor { (traits) -> UIColor in
-                // Return one of two colors depending on light or dark mode
                 return (traits.userInterfaceStyle == .dark ?
                     UIColor(hex: "#FFC074") : UIColor(hex: "#01937C")) ?? .white
             }
         } else {
-            // Same old color used for iOS 12 and earlier
             return UIColor(red: 0.3, green: 0.4, blue: 0.5, alpha: 1)
         }
     }
