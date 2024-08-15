@@ -219,7 +219,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [unowned self] timer in
             if timeLeft > 0 {
                 timeLeft -= 1
-                setStatusButton.setTitle("\(timeLeft) seconds left", for: .normal)
+                setStatusButton.setTitle(localizedTimerString(seconds: timeLeft), for: .normal)
             } else {
                 timer.invalidate()
                 setStatusButton.setTitle(String(localized: "Set Status"), for: .normal)

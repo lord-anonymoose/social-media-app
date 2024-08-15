@@ -52,6 +52,7 @@
 		8ECCBF622C32E38700D5C4C4 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 8ECCBF612C32E38700D5C4C4 /* FirebaseDatabase */; };
 		8EDDCEB32C1F8C140097A874 /* BruteforceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDDCEB22C1F8C140097A874 /* BruteforceService.swift */; };
 		8EDF8EE12B6041A300154433 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 8EDF8EE02B6041A300154433 /* iOSIntPackage */; };
+		8EF427B72C6DF7A500B22C46 /* TimerLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF427B62C6DF7A500B22C46 /* TimerLocalization.swift */; };
 		8EF48DA52A27797F0099166A /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF48DA42A27797F0099166A /* ProfileHeaderView.swift */; };
 		8EFB63562C51C2290058572C /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFB63552C51C2290058572C /* MapViewController.swift */; };
 		8EFB635D2C51D19D0058572C /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 8EFB635C2C51D19D0058572C /* Localizable.xcstrings */; };
@@ -113,6 +114,7 @@
 		8ECCBF562C3207BD00D5C4C4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8ECCBF5F2C32A7DE00D5C4C4 /* CheckerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckerService.swift; sourceTree = "<group>"; };
 		8EDDCEB22C1F8C140097A874 /* BruteforceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BruteforceService.swift; sourceTree = "<group>"; };
+		8EF427B62C6DF7A500B22C46 /* TimerLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLocalization.swift; sourceTree = "<group>"; };
 		8EF48DA42A27797F0099166A /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		8EFB63552C51C2290058572C /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		8EFB63572C51CF330058572C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 				8E29336C2C45490D00F2CC69 /* LoginInputContainer.swift */,
 				8E29336E2C45493200F2CC69 /* CustomButton.swift */,
 				8E17FDF92C6BF06E00559CA6 /* MapKit.swift */,
+				8EF427B62C6DF7A500B22C46 /* TimerLocalization.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 				8E98614A2BF8CAE800066827 /* SecretWordModel.swift in Sources */,
 				8EAC9EB42BFBFF1300D27B28 /* FeedService.swift in Sources */,
 				8E9B6D0A2A55944B009AD181 /* PostView.swift in Sources */,
+				8EF427B72C6DF7A500B22C46 /* TimerLocalization.swift in Sources */,
 				8E672EC72C2F60E90063DFC2 /* SignUpViewController.swift in Sources */,
 				8ECCBF602C32A7DE00D5C4C4 /* CheckerService.swift in Sources */,
 				8E0D227C2C19FDB200A9BBA8 /* ErrorService.swift in Sources */,
