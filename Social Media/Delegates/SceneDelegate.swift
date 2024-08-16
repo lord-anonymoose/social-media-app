@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAuth
 import LocalAuthentication
+import UserNotifications
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 

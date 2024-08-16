@@ -166,7 +166,20 @@
       }
     },
     "Couldn't get to Log In screen." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couldn't get to Log In screen."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось перейти на экран входа."
+          }
+        }
+      }
     },
     "Couldn't parse JSON data!" : {
       "comment" : "Error message",
@@ -220,6 +233,12 @@
     "Failed to authenticate using biometrics!" : {
       "comment" : "Error message",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to authenticate using biometrics!"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -295,6 +314,12 @@
     },
     "Hi, %@ 👋" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hi, %@ 👋"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -321,7 +346,20 @@
       }
     },
     "Identification" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Identification"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Идентификация"
+          }
+        }
+      }
     },
     "Lat: %lf, Lon: %lf" : {
       "localizations" : {
@@ -617,6 +655,22 @@
         }
       }
     },
+    "See what's happening in GoSocial!" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "See what's happening in GoSocial!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проверь, что нового в GoSocial!"
+          }
+        }
+      }
+    },
     "Set Status" : {
       "localizations" : {
         "en" : {
@@ -777,6 +831,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Добро пожаловать!"
+          }
+        }
+      }
+    },
+    "What's up?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What's up?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Как дела?"
           }
         }
       }
