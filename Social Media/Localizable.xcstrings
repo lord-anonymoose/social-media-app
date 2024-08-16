@@ -165,6 +165,9 @@
         }
       }
     },
+    "Couldn't get to Log In screen." : {
+
+    },
     "Couldn't parse JSON data!" : {
       "comment" : "Error message",
       "localizations" : {
@@ -316,6 +319,9 @@
           }
         }
       }
+    },
+    "Identification" : {
+
     },
     "Lat: %lf, Lon: %lf" : {
       "localizations" : {
