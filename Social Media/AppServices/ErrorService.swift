@@ -70,6 +70,7 @@ enum CheckerError: Error {
     case userExists
     case userNotExist
     case networkNotAvailable
+    case biometricsAuthFail
 }
 
 extension CheckerError {
@@ -95,6 +96,8 @@ extension CheckerError {
             return String(localized: "User doesn't exist!", comment: "Error message")
         case .networkNotAvailable:
             return String(localized: "Network is not available!", comment: "Error message")
+        case .biometricsAuthFail:
+            return String(localized: "Failed to authenticate using biometrics!", comment: "Error message")
         }
     }
 }

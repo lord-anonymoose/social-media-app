@@ -29,6 +29,10 @@ class ProfileCoordinator: Coordinator {
         self.user = user
     }
     
+    func showSecondaryLogin() {
+        
+    }
+    
     func start() {
         addFeedViewController()
         addProfileviewController()
