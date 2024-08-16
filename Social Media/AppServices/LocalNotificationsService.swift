@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import UIKit
 import UserNotifications
 
 
 
-class LocalNotificationsService {
+class LocalNotificationsService: NSObject {
         
     static func checkPermission() {
         let center = UNUserNotificationCenter.current()
@@ -65,8 +66,34 @@ class LocalNotificationsService {
             }
         }
     }
+    
+    static func registerUpdatesCategory() {
+        let center = UNUserNotificationCenter.current()
+        
+        let markAsReadAction = UNNotificationAction(
+            identifier: "markAsRead",
+            title: "Mark as Read",
+            options: [.foreground]
+        )
+        
+        let updatesCategory = UNNotificationCategory(
+            identifier: "updates",
+            actions: [markAsReadAction],
+            intentIdentifiers: [],
+            options: [.customDismissAction]
+        )
+        
+        center.setNotificationCategories([updatesCategory])
+    }
 }
 
-extension Notification.Name {
-    static let didRegisterNotification = Notification.Name("didRegisternNotification")
+extension LocalNotificationsService: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+        let actionIdentifier = response.actionIdentifier
+        
+        if actionIdentifier == "markAsRead" {
+            print("Notification marked as read")
+        }
+    }
 }
+
