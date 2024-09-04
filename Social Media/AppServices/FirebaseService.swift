@@ -36,7 +36,7 @@ enum FirebaseServiceError: Error, LocalizedError {
     }
 }
 
-final class Firebaseservice {
+final class FirebaseService {
     
     private let logger = Logger()
     
@@ -105,6 +105,21 @@ final class Firebaseservice {
                 print(error.localizedDescription)
                 throw FirebaseServiceError.firebaseError(error.localizedDescription)
             }
+        }
+    }
+    
+    static func resetPassword(email: String) async throws {
+        guard email.isValidEmail() else {
+            print(FirebaseServiceError.invalidEmail.localizedDescription)
+            throw FirebaseServiceError.invalidEmail
+        }
+        
+        do {
+            try await Auth.auth().sendPasswordReset(withEmail: email)
+            print("Email sent")
+        } catch {
+            print(error.localizedDescription)
+            throw FirebaseServiceError.firebaseError(error.localizedDescription)
         }
     }
 }

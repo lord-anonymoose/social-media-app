@@ -11,6 +11,7 @@ import Firebase
 import FirebaseAuth
 import FirebaseCore
 
+
 class SignUpViewController: UIViewController {
     
     

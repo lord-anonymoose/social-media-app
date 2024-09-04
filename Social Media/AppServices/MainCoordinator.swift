@@ -15,7 +15,7 @@ protocol Coordinator {
 }
 
 
-class ProfileCoordinator: Coordinator {
+class MainCoordinator: Coordinator {
     
     var user = StorageService.User(login: "default", name: "default")
     var navigationController: UINavigationController
@@ -28,9 +28,11 @@ class ProfileCoordinator: Coordinator {
     func authenticate(user: StorageService.User) {
         self.user = user
     }
+
     
-    func showSecondaryLogin() {
-        
+    func showSignUpViewController() {
+        let signUpViewController = SignUpViewController()
+        navigationController.pushViewController(signUpViewController, animated: true)
     }
     
     func start() {

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8E0D227A2C18EDF800A9BBA8 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0D22792C18EDF800A9BBA8 /* ProfileCoordinator.swift */; };
+		8E0D227A2C18EDF800A9BBA8 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0D22792C18EDF800A9BBA8 /* MainCoordinator.swift */; };
 		8E0D227C2C19FDB200A9BBA8 /* ErrorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0D227B2C19FDB200A9BBA8 /* ErrorService.swift */; };
 		8E17FDFA2C6BF06E00559CA6 /* MapKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E17FDF92C6BF06E00559CA6 /* MapKit.swift */; };
 		8E1CC6842C2394C6007F9108 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1CC6832C2394C6007F9108 /* NetworkService.swift */; };
@@ -21,7 +21,7 @@
 		8E2933772C454ADB00F2CC69 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2933762C454ADB00F2CC69 /* UIViewController.swift */; };
 		8E2D1B342A54C32300003EFF /* UserPosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D1B332A54C32300003EFF /* UserPosts.swift */; };
 		8E32E8222BF8B6AE00F2A49C /* SecretWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E32E8212BF8B6AE00F2A49C /* SecretWordViewController.swift */; };
-		8E47DA922C88CA4D00FEB205 /* Firebaseservice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E47DA912C88CA4D00FEB205 /* Firebaseservice.swift */; };
+		8E47DA922C88CA4D00FEB205 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E47DA912C88CA4D00FEB205 /* FirebaseService.swift */; };
 		8E4C154A2A2699D800AA511B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15492A2699D800AA511B /* AppDelegate.swift */; };
 		8E4C154C2A2699D800AA511B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C154B2A2699D800AA511B /* SceneDelegate.swift */; };
 		8E4C15532A2699D900AA511B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E4C15522A2699D900AA511B /* Assets.xcassets */; };
@@ -76,7 +76,7 @@
 
 /* Begin PBXFileReference section */
 		8E0614CA2AABA96B00DB3BBD /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
-		8E0D22792C18EDF800A9BBA8 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
+		8E0D22792C18EDF800A9BBA8 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		8E0D227B2C19FDB200A9BBA8 /* ErrorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorService.swift; sourceTree = "<group>"; };
 		8E17FDF92C6BF06E00559CA6 /* MapKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKit.swift; sourceTree = "<group>"; };
 		8E1CC6832C2394C6007F9108 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
@@ -90,7 +90,7 @@
 		8E2933762C454ADB00F2CC69 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		8E2D1B332A54C32300003EFF /* UserPosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPosts.swift; sourceTree = "<group>"; };
 		8E32E8212BF8B6AE00F2A49C /* SecretWordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretWordViewController.swift; sourceTree = "<group>"; };
-		8E47DA912C88CA4D00FEB205 /* Firebaseservice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firebaseservice.swift; sourceTree = "<group>"; };
+		8E47DA912C88CA4D00FEB205 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		8E4C15462A2699D800AA511B /* Social Media.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Social Media.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4C15492A2699D800AA511B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8E4C154B2A2699D800AA511B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -282,12 +282,12 @@
 		8E59F57D2ADF286A00BE16F9 /* AppServices */ = {
 			isa = PBXGroup;
 			children = (
+				8E47DA912C88CA4D00FEB205 /* FirebaseService.swift */,
+				8E0D22792C18EDF800A9BBA8 /* MainCoordinator.swift */,
 				8E0D227B2C19FDB200A9BBA8 /* ErrorService.swift */,
-				8E47DA912C88CA4D00FEB205 /* Firebaseservice.swift */,
 				8E0614CA2AABA96B00DB3BBD /* StorageService.swift */,
 				8E1CC6832C2394C6007F9108 /* NetworkService.swift */,
 				8ECCBF5F2C32A7DE00D5C4C4 /* CheckerService.swift */,
-				8E0D22792C18EDF800A9BBA8 /* ProfileCoordinator.swift */,
 				8E2D1B332A54C32300003EFF /* UserPosts.swift */,
 				8E5439352C6E966D00D257EC /* LocalAuthorizationService.swift */,
 				8EBCFFD62C6F90FA009E31CE /* LocalNotificationsService.swift */,
@@ -454,14 +454,14 @@
 				8EFB63562C51C2290058572C /* MapViewController.swift in Sources */,
 				8E4C154C2A2699D800AA511B /* SceneDelegate.swift in Sources */,
 				8E29336B2C4548D400F2CC69 /* UIColor.swift in Sources */,
-				8E0D227A2C18EDF800A9BBA8 /* ProfileCoordinator.swift in Sources */,
+				8E0D227A2C18EDF800A9BBA8 /* MainCoordinator.swift in Sources */,
 				8EF48DA52A27797F0099166A /* ProfileHeaderView.swift in Sources */,
 				8E6B57EF2ADF272800AC47C4 /* StorageService.swift in Sources */,
 				8E586B4C2AA877BD00D89AF6 /* PhotosViewController.swift in Sources */,
 				8E2933772C454ADB00F2CC69 /* UIViewController.swift in Sources */,
 				8EA0FF712C42CC790025572E /* LikesViewController.swift in Sources */,
 				8E5439312C6E924A00D257EC /* SecondaryLoginViewController.swift in Sources */,
-				8E47DA922C88CA4D00FEB205 /* Firebaseservice.swift in Sources */,
+				8E47DA922C88CA4D00FEB205 /* FirebaseService.swift in Sources */,
 				8E4C15632A269C1E00AA511B /* FeedViewController.swift in Sources */,
 				8E2933712C45495500F2CC69 /* UITextFieldWithPadding.swift in Sources */,
 				8E29336D2C45490D00F2CC69 /* LoginInputContainer.swift in Sources */,

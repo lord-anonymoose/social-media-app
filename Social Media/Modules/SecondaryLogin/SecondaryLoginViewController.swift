@@ -123,7 +123,7 @@ class SecondaryLoginViewController: UIViewController {
         LocalAuthorizationService.authenticate(
             success: {
                 if let navigationController = self.navigationController {
-                    let coordinator = ProfileCoordinator(navigationController: navigationController)
+                    let coordinator = MainCoordinator(navigationController: navigationController)
                     coordinator.authenticate(user: self.user)
                     coordinator.start()
                 }

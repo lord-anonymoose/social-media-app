@@ -15,10 +15,8 @@ import FirebaseDatabase
 
 class LogInViewController: UIViewController {
     
-    //var ref: DatabaseReference!
 
-    
-    
+
     // MARK: - Subviews
     
     private lazy var scrollView: UIScrollView = {
@@ -90,12 +88,13 @@ class LogInViewController: UIViewController {
     private lazy var logInButton = CustomButton(customTitle: String(localized: "Log In")) { [unowned self] in
         
         startLoginOperation()
+
         Task {
             do {
-                try await Firebaseservice.login(email: loginTextField.text ?? "", password: passwordTextField.text ?? "")
+                try await FirebaseService.login(email: loginTextField.text ?? "", password: passwordTextField.text ?? "")
                 stopLoginOperation()
                 if let navigationController = self.navigationController {
-                    let coordinator = ProfileCoordinator(navigationController: navigationController)
+                    let coordinator = MainCoordinator(navigationController: navigationController)
                     coordinator.start()
                 }
             } catch {
@@ -104,6 +103,16 @@ class LogInViewController: UIViewController {
             }
         }
         
+        
+        /*
+        Task {
+            do {
+                try await FirebaseService.resetPassword(email: loginTextField.text ?? "")
+                stopLoginOperation()
+            } catch {
+                showErrorAlert(description: error.localizedDescription)
+            }
+        }*/
     }
     
     private lazy var showPasswordButton: UIButton = {
@@ -128,9 +137,11 @@ class LogInViewController: UIViewController {
     
     private lazy var signUpButton = CustomButton(customTitle: String(localized: "Not a member yet? Sign up!"), customBackgroundColor: .secondaryColor ,action: {
         
-        let signUpViewController = SignUpViewController()
-        self.navigationController?.pushViewController(signUpViewController, animated: true)
-        
+        print("Started action")
+        if let navigationController = self.navigationController {
+            let coordinator = MainCoordinator(navigationController: navigationController)
+            coordinator.showSignUpViewController()
+        }
     })
     
     
