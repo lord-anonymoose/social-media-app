@@ -19,27 +19,10 @@ protocol CheckerServiceProtocol {
 
 final class CheckerService: CheckerServiceProtocol {
     
+    
     func singUp(email: String, password: String) {
         print("")
     }
-    
-    /*
-    private func checkNetworkAvailability(completion: @escaping (Bool) -> Void) {
-        let monitor = NWPathMonitor()
-        let queue = DispatchQueue(label: "NetworkCheck")
-
-        monitor.pathUpdateHandler = { path in
-            if path.status == .satisfied {
-                completion(true)
-            } else {
-                completion(false)
-            }
-            monitor.cancel() // Stop monitoring after the first check
-        }
-
-        monitor.start(queue: queue)
-    }
-     */
     
     func checkCredentials(email: String, password: String, completion: @escaping (Result<User, Error>) -> Void) {
         if email.isEmpty {
@@ -115,6 +98,19 @@ extension CheckerService {
                 print("Could not add user to database!")
             } else {
                 print("User \(name) added to database!")
+            }
+        }
+    }
+    
+    static func registerNewUser(email: String, password: String) {
+        Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
+            if let error = error {
+                print("Error creating user: \(error.localizedDescription)")
+            } else {
+                print("User created")
+                Auth.auth().currentUser?.sendEmailVerification() { error in
+                    print("Email sent")
+                }
             }
         }
     }

@@ -129,6 +129,17 @@ class SignUpViewController: UIViewController {
         return textField
     }()
     
+    func verifyEmail() {
+        self.loginInput.isUserInteractionEnabled = false
+        self.firstPasswordInput.isUserInteractionEnabled = false
+        self.secondPasswordInput.isUserInteractionEnabled = false
+        self.verifyEmailButton.isUserInteractionEnabled = false
+    }
+    
+    private lazy var verifyEmailButton = CustomButton(customTitle: String(localized: "Verify Email"), action: {[self] in
+        self.verifyEmail()
+    })
+    
     private lazy var signUpButton = CustomButton(customTitle: String(localized: "Sign Up"), action: { [self] in
         self.startSignupProcess()
         guard let email = self.loginInput.text else {
@@ -137,12 +148,6 @@ class SignUpViewController: UIViewController {
             return
         }
         
-        if !email.contains("@media.com") {
-            self.showErrorAlert(description: CheckerError.invalidEmail.localizedDescription)
-            finishSignupProcess()
-            return
-        }
-                
         guard let password = self.firstPasswordInput.text else {
             self.showErrorAlert(description: CheckerError.emptyPassword.localizedDescription)
             self.finishSignupProcess()
@@ -162,28 +167,8 @@ class SignUpViewController: UIViewController {
                 self.showErrorAlert(description: CheckerError.userExists.localizedDescription)
                 return
             } else {
-                Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-                    if let error = error {
-                        self.showErrorAlert(description: error.localizedDescription)
-                        self.finishSignupProcess()
-                    } else {
-                        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-                            if let error = error {
-                                self.showErrorAlert(description: error.localizedDescription)
-                                self.finishSignupProcess()
-                            } else {
-                                checkerService.addUserToDatabase(login: login, name: login)
-                                if let navigationController = self.navigationController {
-                                    let coordinator = ProfileCoordinator(navigationController: navigationController)
-                                    let newUser = User(login: login, name: login)
-                                    coordinator.authenticate(user: newUser)
-                                    coordinator.start()
-                                    self.finishSignupProcess()
-                                }
-                            }
-                        }
-                    }
-                }
+                print("User registered")
+                CheckerService.registerNewUser(email: "severus99@icloud.com", password: "3weddwed2e-!")
             }
         }
     })
@@ -255,9 +240,9 @@ class SignUpViewController: UIViewController {
         logInInputContainer.addSubview(loginInput)
         logInInputContainer.addSubview(firstPasswordInput)
         logInInputContainer.addSubview(secondPasswordInput)
+        contentView.addSubview(verifyEmailButton)
         contentView.addSubview(signUpButton)
         contentView.addSubview(signupIndicator)
-
     }
     
     private func setupConstraints() {
@@ -270,70 +255,57 @@ class SignUpViewController: UIViewController {
             scrollView.widthAnchor.constraint(equalTo: safeAreaGuide.widthAnchor),
             scrollView.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor),
             scrollView.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor)
-        ])
+            scrollView.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor),
         
-        NSLayoutConstraint.activate([
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             contentView.bottomAnchor.constraint(equalTo: scrollView.topAnchor, constant: bottom),
-        ])
         
-        NSLayoutConstraint.activate([
             wavingHandLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50),
             wavingHandLabel.heightAnchor.constraint(equalToConstant: 100),
             wavingHandLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-        ])
         
-        NSLayoutConstraint.activate([
             welcomeLabel.topAnchor.constraint(equalTo: wavingHandLabel.bottomAnchor, constant: 25),
             welcomeLabel.heightAnchor.constraint(equalToConstant: 30),
             welcomeLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-        ])
         
-        NSLayoutConstraint.activate([
             logInInputContainer.centerYAnchor.constraint(equalTo: contentView.topAnchor, constant: centerY),
             logInInputContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25),
             logInInputContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25),
-            logInInputContainer.heightAnchor.constraint(equalToConstant: 150)
-        ])
+            logInInputContainer.heightAnchor.constraint(equalToConstant: 150),
         
-        NSLayoutConstraint.activate([
             loginInput.topAnchor.constraint(equalTo: logInInputContainer.topAnchor),
             loginInput.heightAnchor.constraint(equalToConstant: 50),
             loginInput.leadingAnchor.constraint(equalTo: logInInputContainer.leadingAnchor),
-            loginInput.trailingAnchor.constraint(equalTo: logInInputContainer.trailingAnchor)
-        ])
+            loginInput.trailingAnchor.constraint(equalTo: logInInputContainer.trailingAnchor),
         
-        NSLayoutConstraint.activate([
             firstPasswordInput.topAnchor.constraint(equalTo: loginInput.bottomAnchor),
             firstPasswordInput.heightAnchor.constraint(equalToConstant: 50),
             firstPasswordInput.leadingAnchor.constraint(equalTo: logInInputContainer.leadingAnchor),
-            firstPasswordInput.trailingAnchor.constraint(equalTo: logInInputContainer.trailingAnchor)
-        ])
-        
-        NSLayoutConstraint.activate([
+            firstPasswordInput.trailingAnchor.constraint(equalTo: logInInputContainer.trailingAnchor),
+
             secondPasswordInput.topAnchor.constraint(equalTo: firstPasswordInput.bottomAnchor),
             secondPasswordInput.heightAnchor.constraint(equalToConstant: 50),
             secondPasswordInput.leadingAnchor.constraint(equalTo: logInInputContainer.leadingAnchor),
-            secondPasswordInput.trailingAnchor.constraint(equalTo: logInInputContainer.trailingAnchor)
-        ])
+            secondPasswordInput.trailingAnchor.constraint(equalTo: logInInputContainer.trailingAnchor),
         
-        NSLayoutConstraint.activate([
             signUpButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -150),
             signUpButton.heightAnchor.constraint(equalToConstant: 50),
             signUpButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25),
             signUpButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25),
-        ])
         
-        NSLayoutConstraint.activate([
             signupIndicator.centerYAnchor.constraint(equalTo: signUpButton.centerYAnchor),
             signupIndicator.trailingAnchor.constraint(equalTo: signUpButton.trailingAnchor, constant: -25),
             signupIndicator.widthAnchor.constraint(equalToConstant: 50),
-            signupIndicator.heightAnchor.constraint(equalToConstant: 50)
-        ])
+            signupIndicator.heightAnchor.constraint(equalToConstant: 50),
+            
+            verifyEmailButton.bottomAnchor.constraint(equalTo: signUpButton.topAnchor, constant: -25),
+            verifyEmailButton.heightAnchor.constraint(equalToConstant: 50),
+            verifyEmailButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25),
+            verifyEmailButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25)
+            ])
     }
     
     private func setupKeyboardObservers() {

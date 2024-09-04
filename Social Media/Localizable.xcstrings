@@ -134,6 +134,7 @@
       }
     },
     "Bruteforce password" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -802,6 +803,9 @@
           }
         }
       }
+    },
+    "Verify Email" : {
+
     },
     "Waiting for something..." : {
       "localizations" : {
