@@ -12,7 +12,8 @@ import FirebaseAuth
 import FirebaseCore
 
 
-class SignUpViewController: UIViewController {
+
+final class SignUpViewController: UIViewController {
     
     
     
@@ -130,48 +131,8 @@ class SignUpViewController: UIViewController {
         return textField
     }()
     
-    func verifyEmail() {
-        self.loginInput.isUserInteractionEnabled = false
-        self.firstPasswordInput.isUserInteractionEnabled = false
-        self.secondPasswordInput.isUserInteractionEnabled = false
-        self.verifyEmailButton.isUserInteractionEnabled = false
-    }
-    
-    private lazy var verifyEmailButton = CustomButton(customTitle: String(localized: "Verify Email"), action: {[self] in
-        self.verifyEmail()
-    })
-    
     private lazy var signUpButton = CustomButton(customTitle: String(localized: "Sign Up"), action: { [self] in
-        self.startSignupProcess()
-        guard let email = self.loginInput.text else {
-            self.showErrorAlert(description: CheckerError.emptyEmail.localizedDescription)
-            finishSignupProcess()
-            return
-        }
-        
-        guard let password = self.firstPasswordInput.text else {
-            self.showErrorAlert(description: CheckerError.emptyPassword.localizedDescription)
-            self.finishSignupProcess()
-            return
-        }
-        
-        if !self.checkMatchingPasswords() {
-            self.showErrorAlert(description: CheckerError.passwordsNotMatching.localizedDescription)
-            finishSignupProcess()
-            return
-        }
-        
-        let login = email.replacingOccurrences(of: "@media.com", with: "")
-        let checkerService = CheckerService()
-        checkerService.getUser(username: login) {user in
-            if let result = user {
-                self.showErrorAlert(description: CheckerError.userExists.localizedDescription)
-                return
-            } else {
-                print("User registered")
-                CheckerService.registerNewUser(email: "severus99@icloud.com", password: "3weddwed2e-!")
-            }
-        }
+        showVerificationViewController()
     })
     
     private lazy var signupIndicator: UIActivityIndicatorView = {
@@ -180,6 +141,9 @@ class SignUpViewController: UIViewController {
         activityIndicator.isHidden = true
         return activityIndicator
     }()
+    
+    
+    
     
     // MARK: - Lifecycle
     
@@ -226,6 +190,7 @@ class SignUpViewController: UIViewController {
     }
     
     
+    
     // MARK: - Private
     
     private func setupUI() {
@@ -241,7 +206,6 @@ class SignUpViewController: UIViewController {
         logInInputContainer.addSubview(loginInput)
         logInInputContainer.addSubview(firstPasswordInput)
         logInInputContainer.addSubview(secondPasswordInput)
-        contentView.addSubview(verifyEmailButton)
         contentView.addSubview(signUpButton)
         contentView.addSubview(signupIndicator)
     }
@@ -300,13 +264,15 @@ class SignUpViewController: UIViewController {
             signupIndicator.centerYAnchor.constraint(equalTo: signUpButton.centerYAnchor),
             signupIndicator.trailingAnchor.constraint(equalTo: signUpButton.trailingAnchor, constant: -25),
             signupIndicator.widthAnchor.constraint(equalToConstant: 50),
-            signupIndicator.heightAnchor.constraint(equalToConstant: 50),
-            
-            verifyEmailButton.bottomAnchor.constraint(equalTo: signUpButton.topAnchor, constant: -25),
-            verifyEmailButton.heightAnchor.constraint(equalToConstant: 50),
-            verifyEmailButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25),
-            verifyEmailButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25)
+            signupIndicator.heightAnchor.constraint(equalToConstant: 50)
             ])
+    }
+    
+    func showVerificationViewController() {
+        if let navigationController = self.navigationController {
+            let coordinator = MainCoordinator(navigationController: navigationController)
+            coordinator.showVerificationViewController()
+        }
     }
     
     private func setupKeyboardObservers() {
@@ -330,30 +296,6 @@ class SignUpViewController: UIViewController {
     private func removeKeyboardObservers() {
         let notificationCenter = NotificationCenter.default
         notificationCenter.removeObserver(self)
-    }
-    
-    private func checkMatchingPasswords() -> Bool {
-        if let firstPassword = firstPasswordInput.text {
-            if firstPassword == "" {
-                showErrorAlert(description: CheckerError.emptyPassword.localizedDescription)
-                return false
-            }
-            
-            if let secondPassword = secondPasswordInput.text {
-                if secondPassword == "" {
-                    showErrorAlert(description: CheckerError.emptyRepeatPassword.localizedDescription)
-                    return false
-                }
-                
-                if firstPassword == secondPassword {
-                    return true
-                } else {
-                    showErrorAlert(description: CheckerError.passwordsNotMatching.localizedDescription)
-                    return false
-                }
-            }
-        }
-        return false
     }
     
     func textFieldShouldReturn(userText: UITextField!) -> Bool {

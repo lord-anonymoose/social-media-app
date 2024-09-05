@@ -13,9 +13,9 @@ import FirebaseDatabase
 
 
 
-class LogInViewController: UIViewController {
+final class LogInViewController: UIViewController {
     
-
+    private var tryCount = 0
 
     // MARK: - Subviews
     
@@ -47,7 +47,7 @@ class LogInViewController: UIViewController {
         return imageView
     }()
     
-    private lazy var logInInputContainer = LoginInputContainer()
+    private lazy var loginInputContainer = LoginInputContainer()
     
     private lazy var loginTextField: UITextFieldWithPadding = {
         let textField = UITextFieldWithPadding()
@@ -95,11 +95,15 @@ class LogInViewController: UIViewController {
                 stopLoginOperation()
                 if let navigationController = self.navigationController {
                     let coordinator = MainCoordinator(navigationController: navigationController)
-                    coordinator.start()
+                    coordinator.showMainScreen()
                 }
             } catch {
                 stopLoginOperation()
                 showErrorAlert(description: error.localizedDescription)
+                self.tryCount += 1
+                if self.tryCount > 2 {
+                    self.resetPasswordButton.isHidden = false
+                }
             }
         }
         
@@ -115,12 +119,23 @@ class LogInViewController: UIViewController {
         }*/
     }
     
+    private lazy var resetPasswordButton: UIButton = {
+        let button = UIButton()
+        
+        button.setTitle("Forgot your password? Reset it here.", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(resetPasswordButtonTapped), for: .touchUpInside)
+        button.isHidden = true
+        
+        return button
+    }()
+    
     private lazy var showPasswordButton: UIButton = {
         let button = UIButton()
         
         button.setImage(UIImage(systemName: "eye"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(toggleShowPassword), for: .touchUpInside)
+        button.addTarget(self, action: #selector(showPasswordButtonTapped), for: .touchUpInside)
         button.tintColor = .systemGray
         
         return button
@@ -163,6 +178,8 @@ class LogInViewController: UIViewController {
         setupKeyboardObservers()
         self.loginTextField.delegate = self
         self.passwordTextField.delegate = self
+        self.tryCount = 0
+        self.resetPasswordButton.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -189,13 +206,20 @@ class LogInViewController: UIViewController {
         view.endEditing(true)
     }
     
-    @objc func toggleShowPassword() {
+    @objc func showPasswordButtonTapped() {
         if showPasswordButton.image(for: .normal) == UIImage(systemName: "eye") {
             showPasswordButton.setImage(UIImage(systemName: "eye.slash"), for: .normal)
             passwordTextField.isSecureTextEntry = false
         } else {
             showPasswordButton.setImage(UIImage(systemName: "eye"), for: .normal)
             passwordTextField.isSecureTextEntry = true
+        }
+    }
+    
+    @objc func resetPasswordButtonTapped() {
+        if let navigationController = self.navigationController {
+            let coordinator = MainCoordinator(navigationController: navigationController)
+            coordinator.showResetPasswordViewController()
         }
     }
     
@@ -213,11 +237,12 @@ class LogInViewController: UIViewController {
         
         contentView.addSubview(appLogo)
         
-        contentView.addSubview(logInInputContainer)
-        logInInputContainer.addSubview(loginTextField)
-        logInInputContainer.addSubview(passwordTextField)
-        logInInputContainer.addSubview(showPasswordButton)
+        contentView.addSubview(loginInputContainer)
+        loginInputContainer.addSubview(loginTextField)
+        loginInputContainer.addSubview(passwordTextField)
+        loginInputContainer.addSubview(showPasswordButton)
         
+        contentView.addSubview(resetPasswordButton)
         contentView.addSubview(logInButton)
         contentView.addSubview(loginIndicator)
         contentView.addSubview(signUpButton)
@@ -247,20 +272,20 @@ class LogInViewController: UIViewController {
         let centerY = view.safeAreaLayoutGuide.layoutFrame.height / 2
         
         NSLayoutConstraint.activate([
-            logInInputContainer.centerYAnchor.constraint(equalTo: contentView.topAnchor, constant: centerY),
-            logInInputContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25),
-            logInInputContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25),
-            logInInputContainer.heightAnchor.constraint(equalToConstant: 100),
+            loginInputContainer.centerYAnchor.constraint(equalTo: contentView.topAnchor, constant: centerY),
+            loginInputContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25),
+            loginInputContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25),
+            loginInputContainer.heightAnchor.constraint(equalToConstant: 100),
         
-            loginTextField.topAnchor.constraint(equalTo: logInInputContainer.topAnchor, constant: 0),
-            loginTextField.bottomAnchor.constraint(equalTo: logInInputContainer.bottomAnchor, constant: -50),
-            loginTextField.leadingAnchor.constraint(equalTo: logInInputContainer.leadingAnchor, constant: 0),
-            loginTextField.trailingAnchor.constraint(equalTo: logInInputContainer.trailingAnchor, constant: 0),
+            loginTextField.topAnchor.constraint(equalTo: loginInputContainer.topAnchor, constant: 0),
+            loginTextField.bottomAnchor.constraint(equalTo: loginInputContainer.bottomAnchor, constant: -50),
+            loginTextField.leadingAnchor.constraint(equalTo: loginInputContainer.leadingAnchor, constant: 0),
+            loginTextField.trailingAnchor.constraint(equalTo: loginInputContainer.trailingAnchor, constant: 0),
             
             passwordTextField.topAnchor.constraint(equalTo: loginTextField.bottomAnchor, constant: 0),
-            passwordTextField.bottomAnchor.constraint(equalTo: logInInputContainer.bottomAnchor, constant: 0),
-            passwordTextField.leadingAnchor.constraint(equalTo: logInInputContainer.leadingAnchor, constant: 0),
-            passwordTextField.trailingAnchor.constraint(equalTo: logInInputContainer.trailingAnchor, constant: 0),
+            passwordTextField.bottomAnchor.constraint(equalTo: loginInputContainer.bottomAnchor, constant: 0),
+            passwordTextField.leadingAnchor.constraint(equalTo: loginInputContainer.leadingAnchor, constant: 0),
+            passwordTextField.trailingAnchor.constraint(equalTo: loginInputContainer.trailingAnchor, constant: 0),
             
             showPasswordButton.topAnchor.constraint(equalTo: passwordTextField.topAnchor),
             showPasswordButton.bottomAnchor.constraint(equalTo: passwordTextField.bottomAnchor),
@@ -284,7 +309,12 @@ class LogInViewController: UIViewController {
             loginIndicator.centerYAnchor.constraint(equalTo: logInButton.centerYAnchor),
             loginIndicator.trailingAnchor.constraint(equalTo: logInButton.trailingAnchor, constant: -16),
             loginIndicator.widthAnchor.constraint(equalToConstant: 50),
-            loginIndicator.heightAnchor.constraint(equalToConstant: 50)
+            loginIndicator.heightAnchor.constraint(equalToConstant: 50),
+            
+            resetPasswordButton.bottomAnchor.constraint(equalTo: logInButton.topAnchor, constant: -10),
+            //resetPasswordButton.heightAnchor.constraint(equalToConstant: 50),
+            resetPasswordButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            resetPasswordButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
         ])
     }
     

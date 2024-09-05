@@ -10,8 +10,9 @@ import FirebaseAuth
 
 
 
+// Following Coordinator is used to control main app flow
 protocol Coordinator {
-    func start()
+    func showMainScreen()
 }
 
 
@@ -35,7 +36,17 @@ class MainCoordinator: Coordinator {
         navigationController.pushViewController(signUpViewController, animated: true)
     }
     
-    func start() {
+    func showVerificationViewController() {
+        let verificationViewController = VerificationViewController()
+        navigationController.pushViewController(verificationViewController, animated: true)
+    }
+    
+    func showResetPasswordViewController() {
+        let resetPasswordViewController = ResetPasswordViewController()
+        navigationController.pushViewController(resetPasswordViewController, animated: true)
+    }
+    
+    func showMainScreen() {
         addFeedViewController()
         addProfileviewController()
         addMapViewController()

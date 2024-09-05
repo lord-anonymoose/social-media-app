@@ -125,7 +125,7 @@ class SecondaryLoginViewController: UIViewController {
                 if let navigationController = self.navigationController {
                     let coordinator = MainCoordinator(navigationController: navigationController)
                     coordinator.authenticate(user: self.user)
-                    coordinator.start()
+                    coordinator.showMainScreen()
                 }
             },
             failure: { error in
