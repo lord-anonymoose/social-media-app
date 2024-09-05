@@ -35,7 +35,8 @@ final class LogInViewController: UIViewController {
         
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.isUserInteractionEnabled = true
-        
+        contentView.accessibilityIdentifier = "contentView"
+
         return contentView
     }()
     
@@ -47,7 +48,7 @@ final class LogInViewController: UIViewController {
         return imageView
     }()
     
-    private lazy var loginInputContainer = LoginInputContainer()
+    private lazy var loginInputContainer = UILoginInputContainer()
     
     private lazy var loginTextField: UITextFieldWithPadding = {
         let placeholder = String(localized: "Email")
@@ -61,7 +62,7 @@ final class LogInViewController: UIViewController {
         return textField
     }()
     
-    private lazy var logInButton = CustomButton(customTitle: String(localized: "Log In")) { [unowned self] in
+    private lazy var logInButton = UICustomButton(customTitle: String(localized: "Log In")) { [unowned self] in
         
         startLoginOperation()
 
@@ -126,7 +127,7 @@ final class LogInViewController: UIViewController {
         return activityIndicator
     }()
     
-    private lazy var signUpButton = CustomButton(customTitle: String(localized: "Not a member yet? Sign up!"), customBackgroundColor: .secondaryColor ,action: {
+    private lazy var signUpButton = UICustomButton(customTitle: String(localized: "Not a member yet? Sign up!"), customBackgroundColor: .secondaryColor ,action: {
         
         print("Started action")
         if let navigationController = self.navigationController {
@@ -145,7 +146,6 @@ final class LogInViewController: UIViewController {
         setupUI()
         addSubviews()
         setupConstraints()
-        setupScrollViewConstraints()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -225,27 +225,10 @@ final class LogInViewController: UIViewController {
     }
     
     private func setupConstraints() {
-        let safeAreaGuide = view.safeAreaLayoutGuide
-        let bottom = view.safeAreaLayoutGuide.layoutFrame.height
-        
-        NSLayoutConstraint.activate([
-            scrollView.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor),
-            scrollView.widthAnchor.constraint(equalTo: safeAreaGuide.widthAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor),
-            scrollView.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor),
-        
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.heightAnchor.constraint(equalToConstant: bottom),
-        ])
-    }
-    
-    private func setupScrollViewConstraints() {
         
         let centerY = view.safeAreaLayoutGuide.layoutFrame.height / 2
+        
+        self.makeScrollable()
         
         NSLayoutConstraint.activate([
             loginInputContainer.centerYAnchor.constraint(equalTo: contentView.topAnchor, constant: centerY),

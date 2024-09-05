@@ -9,7 +9,8 @@ import UIKit
 
 
 
-final class LoginInputContainer: UIView {
+final class UILoginInputContainer: UIView {
+    
     required init() {
         super.init(frame: .zero)
         

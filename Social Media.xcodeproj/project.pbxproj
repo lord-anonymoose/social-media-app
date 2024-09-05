@@ -13,8 +13,8 @@
 		8E1CC6842C2394C6007F9108 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1CC6832C2394C6007F9108 /* NetworkService.swift */; };
 		8E1F68042A51739C008AE130 /* PostViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F68032A51739C008AE130 /* PostViewCell.swift */; };
 		8E29336B2C4548D400F2CC69 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E29336A2C4548D400F2CC69 /* UIColor.swift */; };
-		8E29336D2C45490D00F2CC69 /* LoginInputContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E29336C2C45490D00F2CC69 /* LoginInputContainer.swift */; };
-		8E29336F2C45493200F2CC69 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E29336E2C45493200F2CC69 /* CustomButton.swift */; };
+		8E29336D2C45490D00F2CC69 /* UILoginInputContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E29336C2C45490D00F2CC69 /* UILoginInputContainer.swift */; };
+		8E29336F2C45493200F2CC69 /* UICustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E29336E2C45493200F2CC69 /* UICustomButton.swift */; };
 		8E2933712C45495500F2CC69 /* UITextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2933702C45495500F2CC69 /* UITextFieldWithPadding.swift */; };
 		8E2933732C4549EA00F2CC69 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2933722C4549EA00F2CC69 /* UIImage.swift */; };
 		8E2933752C454AB800F2CC69 /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2933742C454AB800F2CC69 /* UITableView.swift */; };
@@ -84,8 +84,8 @@
 		8E1CC6832C2394C6007F9108 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		8E1F68032A51739C008AE130 /* PostViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewCell.swift; sourceTree = "<group>"; };
 		8E29336A2C4548D400F2CC69 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
-		8E29336C2C45490D00F2CC69 /* LoginInputContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInputContainer.swift; sourceTree = "<group>"; };
-		8E29336E2C45493200F2CC69 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		8E29336C2C45490D00F2CC69 /* UILoginInputContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILoginInputContainer.swift; sourceTree = "<group>"; };
+		8E29336E2C45493200F2CC69 /* UICustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICustomButton.swift; sourceTree = "<group>"; };
 		8E2933702C45495500F2CC69 /* UITextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldWithPadding.swift; sourceTree = "<group>"; };
 		8E2933722C4549EA00F2CC69 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		8E2933742C454AB800F2CC69 /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
@@ -194,8 +194,9 @@
 			children = (
 				8EC311392A4C3017006C8FA2 /* Delegates */,
 				8E59F57D2ADF286A00BE16F9 /* AppServices */,
-				8E586B502AA8976D00D89AF6 /* Extensions */,
 				8E4C155F2A269BD900AA511B /* Modules */,
+				8EB8D3292C8A4F0600571CFA /* Custom Views */,
+				8E586B502AA8976D00D89AF6 /* Extensions */,
 				8E4C15522A2699D900AA511B /* Assets.xcassets */,
 				8E5439282C6E032900D257EC /* LaunchScreen.storyboard */,
 				8ECCBF562C3207BD00D5C4C4 /* GoogleService-Info.plist */,
@@ -274,11 +275,8 @@
 				8EC3113B2A4C3540006C8FA2 /* Foundation.swift */,
 				8E29336A2C4548D400F2CC69 /* UIColor.swift */,
 				8E2933722C4549EA00F2CC69 /* UIImage.swift */,
-				8E2933702C45495500F2CC69 /* UITextFieldWithPadding.swift */,
 				8E2933762C454ADB00F2CC69 /* UIViewController.swift */,
 				8E2933742C454AB800F2CC69 /* UITableView.swift */,
-				8E29336C2C45490D00F2CC69 /* LoginInputContainer.swift */,
-				8E29336E2C45493200F2CC69 /* CustomButton.swift */,
 				8E17FDF92C6BF06E00559CA6 /* MapKit.swift */,
 				8EF427B62C6DF7A500B22C46 /* TimerLocalization.swift */,
 			);
@@ -349,6 +347,16 @@
 				8EB8D3272C8A39DB00571CFA /* ResetPasswordViewController.swift */,
 			);
 			path = ResetPassword;
+			sourceTree = "<group>";
+		};
+		8EB8D3292C8A4F0600571CFA /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				8E2933702C45495500F2CC69 /* UITextFieldWithPadding.swift */,
+				8E29336C2C45490D00F2CC69 /* UILoginInputContainer.swift */,
+				8E29336E2C45493200F2CC69 /* UICustomButton.swift */,
+			);
+			path = "Custom Views";
 			sourceTree = "<group>";
 		};
 		8EC311392A4C3017006C8FA2 /* Delegates */ = {
@@ -468,7 +476,7 @@
 				8E4C154A2A2699D800AA511B /* AppDelegate.swift in Sources */,
 				8EAE53272C2AE40C00BD640E /* PlanetModel.swift in Sources */,
 				8E17FDFA2C6BF06E00559CA6 /* MapKit.swift in Sources */,
-				8E29336F2C45493200F2CC69 /* CustomButton.swift in Sources */,
+				8E29336F2C45493200F2CC69 /* UICustomButton.swift in Sources */,
 				8EAD99682A599704004D3BEF /* PhotosTableViewCell.swift in Sources */,
 				8E2933752C454AB800F2CC69 /* UITableView.swift in Sources */,
 				8EC3113E2A4CB631006C8FA2 /* LogInViewController.swift in Sources */,
@@ -488,7 +496,7 @@
 				8E47DA922C88CA4D00FEB205 /* FirebaseService.swift in Sources */,
 				8E4C15632A269C1E00AA511B /* FeedViewController.swift in Sources */,
 				8E2933712C45495500F2CC69 /* UITextFieldWithPadding.swift in Sources */,
-				8E29336D2C45490D00F2CC69 /* LoginInputContainer.swift in Sources */,
+				8E29336D2C45490D00F2CC69 /* UILoginInputContainer.swift in Sources */,
 				8E586B522AA898B500D89AF6 /* PhotosCollectionViewCell.swift in Sources */,
 				8E32E8222BF8B6AE00F2A49C /* SecretWordViewController.swift in Sources */,
 				8E98614A2BF8CAE800066827 /* SecretWordModel.swift in Sources */,

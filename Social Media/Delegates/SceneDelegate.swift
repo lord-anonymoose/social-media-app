@@ -5,11 +5,12 @@
 //  Created by Philipp Lazarev on 18.05.2023.
 //
 
-// Working on Task 7
 import UIKit
 import FirebaseAuth
 import LocalAuthentication
 import UserNotifications
+
+
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 

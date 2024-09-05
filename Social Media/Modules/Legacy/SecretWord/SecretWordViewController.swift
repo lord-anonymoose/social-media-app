@@ -64,7 +64,7 @@ class SecretWordViewController: UIViewController {
         return textField
     }()
     
-    private lazy var checkButton = CustomButton(customTitle: String(localized: "Check")) { [unowned self] in
+    private lazy var checkButton = UICustomButton(customTitle: String(localized: "Check")) { [unowned self] in
         guard let word = textField.text else { return }
         if word.lowercased() == self.secretWord.lowercased() {
             self.currentState = SecretWordModel(guessed: true)

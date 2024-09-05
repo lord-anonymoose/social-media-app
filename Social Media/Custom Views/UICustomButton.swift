@@ -19,7 +19,7 @@ extension UIButton {
   }
 }
 
-final class CustomButton: UIButton {
+final class UICustomButton: UIButton {
     
     typealias Action = () -> Void
     

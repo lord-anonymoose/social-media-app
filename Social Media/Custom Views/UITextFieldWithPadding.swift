@@ -9,7 +9,7 @@ import UIKit
 
 
 
-class UITextFieldWithPadding: UITextField {
+final class UITextFieldWithPadding: UITextField {
     
     // MARK: - Subviews
     

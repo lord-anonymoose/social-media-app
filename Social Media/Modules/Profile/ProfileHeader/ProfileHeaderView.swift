@@ -67,7 +67,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         return userStatus
     }()
     
-    private lazy var setStatusButton = CustomButton(customTitle: String(localized: "Set Status")) {[unowned self] in
+    private lazy var setStatusButton = UICustomButton(customTitle: String(localized: "Set Status")) {[unowned self] in
         userStatus.text = self.statusText
         if self.user != nil {
             /*

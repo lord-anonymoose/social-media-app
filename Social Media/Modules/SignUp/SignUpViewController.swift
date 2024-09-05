@@ -24,9 +24,7 @@ final class SignUpViewController: UIViewController {
         
         scrollView.showsVerticalScrollIndicator = true
         scrollView.showsHorizontalScrollIndicator = false
-        
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        
         scrollView.isUserInteractionEnabled = true
         
         return scrollView
@@ -36,9 +34,9 @@ final class SignUpViewController: UIViewController {
         let contentView = UIView()
         
         contentView.translatesAutoresizingMaskIntoConstraints = false
-        
         contentView.isUserInteractionEnabled = true
-                
+        contentView.accessibilityIdentifier = "contentView"
+
         return contentView
     }()
     
@@ -64,7 +62,7 @@ final class SignUpViewController: UIViewController {
         return label
     }()
     
-    private lazy var logInInputContainer = LoginInputContainer()
+    private lazy var logInInputContainer = UILoginInputContainer()
     
     private lazy var loginInput: UITextFieldWithPadding = {
         let placeholder = String(localized: "Email")
@@ -84,7 +82,7 @@ final class SignUpViewController: UIViewController {
         return textField
     }()
     
-    private lazy var signUpButton = CustomButton(customTitle: String(localized: "Sign Up"), action: { [self] in
+    private lazy var signUpButton = UICustomButton(customTitle: String(localized: "Sign Up"), action: { [self] in
         showVerificationViewController()
     })
     
@@ -168,19 +166,9 @@ final class SignUpViewController: UIViewController {
         let bottom = view.safeAreaLayoutGuide.layoutFrame.height
         let centerY = view.safeAreaLayoutGuide.layoutFrame.height / 2
 
+        self.makeScrollable()
+
         NSLayoutConstraint.activate([
-            scrollView.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor),
-            scrollView.widthAnchor.constraint(equalTo: safeAreaGuide.widthAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor),
-            scrollView.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor),
-        
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.topAnchor, constant: bottom),
-        
             wavingHandLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50),
             wavingHandLabel.heightAnchor.constraint(equalToConstant: 100),
             wavingHandLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
