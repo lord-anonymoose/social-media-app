@@ -199,6 +199,9 @@
         }
       }
     },
+    "Email" : {
+
+    },
     "Error calculating directions: %@" : {
       "localizations" : {
         "en" : {
@@ -298,6 +301,7 @@
       }
     },
     "Hello, world" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -312,6 +316,9 @@
           }
         }
       }
+    },
+    "Hello, world!" : {
+
     },
     "Hi, %@ 👋" : {
       "localizations" : {
@@ -623,7 +630,11 @@
         }
       }
     },
+    "Repeat password" : {
+
+    },
     "Repeat Password" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -789,6 +800,7 @@
       }
     },
     "Username" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

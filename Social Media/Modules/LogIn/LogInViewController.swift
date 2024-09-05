@@ -50,38 +50,14 @@ final class LogInViewController: UIViewController {
     private lazy var loginInputContainer = LoginInputContainer()
     
     private lazy var loginTextField: UITextFieldWithPadding = {
-        let textField = UITextFieldWithPadding()
-        
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = String(localized: "Username")
-        textField.textColor = .textColor
-        textField.font = .systemFont(ofSize: 16)
-        textField.tintColor = .accentColor
-        textField.layer.borderWidth = 0.5
-        textField.layer.borderColor = UIColor.lightGray.cgColor
-        textField.layer.masksToBounds = true
-        textField.keyboardType = .emailAddress
-        textField.autocorrectionType = .no
-        textField.autocapitalizationType = .none
-        textField.text = "strawberry_moose@media.com"
-        
+        let placeholder = String(localized: "Email")
+        let textField = UITextFieldWithPadding(placeholder: placeholder, isSecureTextEntry: false)
         return textField
     }()
     
     private lazy var passwordTextField: UITextFieldWithPadding = {
-        let textField = UITextFieldWithPadding()
-        
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = String(localized: "Password")
-        textField.isSecureTextEntry = true
-        textField.textColor = .textColor
-        textField.font = .systemFont(ofSize: 16)
-        textField.tintColor = .accentColor
-        textField.layer.masksToBounds = true
-        textField.autocorrectionType = .no
-        textField.autocapitalizationType = .none
-        textField.text = "123456"
-        
+        let placeholder = String(localized: "Password")
+        let textField = UITextFieldWithPadding(placeholder: placeholder, isSecureTextEntry: true)
         return textField
     }()
     

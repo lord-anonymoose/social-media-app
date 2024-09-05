@@ -67,67 +67,20 @@ final class SignUpViewController: UIViewController {
     private lazy var logInInputContainer = LoginInputContainer()
     
     private lazy var loginInput: UITextFieldWithPadding = {
-        let textField = UITextFieldWithPadding()
-        
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = String(localized: "Username")
-        textField.textColor = .textColor
-        textField.font = .systemFont(ofSize: 16)
-        textField.tintColor = .accentColor
-        textField.layer.borderWidth = 0.5
-        textField.layer.borderColor = UIColor.lightGray.cgColor
-        textField.layer.masksToBounds = true
-        textField.keyboardType = .emailAddress
-
-        textField.autocorrectionType = .no
-        textField.autocapitalizationType = .none
-        
+        let placeholder = String(localized: "Email")
+        let textField = UITextFieldWithPadding(placeholder: placeholder, isSecureTextEntry: false)
         return textField
     }()
     
     private lazy var firstPasswordInput: UITextFieldWithPadding = {
-        let textField = UITextFieldWithPadding()
-        
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = String(localized: "Password")
-        textField.isSecureTextEntry = true
-        textField.textColor = .textColor
-        textField.font = .systemFont(ofSize: 16)
-        textField.tintColor = .accentColor
-        textField.layer.masksToBounds = true
-        textField.textContentType = UITextContentType(rawValue: "")
-        
-        // Disabling Automatic Password Suggestion
-        textField.textContentType = .none
-        textField.isSecureTextEntry = false
-        textField.keyboardType = .default
-        
-        textField.autocorrectionType = .no
-        textField.autocapitalizationType = .none
-        
+        let placeholder = String(localized: "Password")
+        let textField = UITextFieldWithPadding(placeholder: placeholder, isSecureTextEntry: true)
         return textField
     }()
     
     private lazy var secondPasswordInput: UITextFieldWithPadding = {
-        let textField = UITextFieldWithPadding()
-        
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = String(localized: "Repeat Password")
-        textField.isSecureTextEntry = true
-        textField.textColor = .textColor
-        textField.font = .systemFont(ofSize: 16)
-        textField.tintColor = .accentColor
-        textField.layer.masksToBounds = true
-        textField.textContentType = UITextContentType(rawValue: "")
-
-        // Disabling Automatic Password Suggestion
-        textField.textContentType = .none
-        textField.isSecureTextEntry = false
-        textField.keyboardType = .default
-        
-        textField.autocorrectionType = .no
-        textField.autocapitalizationType = .none
-        
+        let placeholder = String(localized: "Repeat password")
+        let textField = UITextFieldWithPadding(placeholder: placeholder, isSecureTextEntry: true)
         return textField
     }()
     

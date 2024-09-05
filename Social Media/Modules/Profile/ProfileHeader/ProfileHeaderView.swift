@@ -93,22 +93,9 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     }()
     
     private lazy var textField: UITextFieldWithPadding = {
-        let textField = UITextFieldWithPadding()
-                
-        textField.placeholder = String(localized: "Hello, world")
-        textField.backgroundColor = .white
-        
-        textField.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        textField.textColor = .black
-        
-        textField.layer.cornerRadius = 12
-        
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor.black.cgColor
-                
-        textField.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)
-        
-        textField.translatesAutoresizingMaskIntoConstraints = false
+        let placeholder = String(localized: "Hello, world!")
+        let textField = UITextFieldWithPadding(placeholder: placeholder, isSecureTextEntry: false)
+        textField.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)        
         textField.delegate = self
 
         return textField

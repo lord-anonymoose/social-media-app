@@ -15,7 +15,19 @@ final class ResetPasswordViewController: UIViewController {
     
     
     // MARK: - Subviews
+    private lazy var textLabel: UILabel = {
+        let label = UILabel()
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
     
+    private lazy var emailTextField: UITextField = {
+        let placeholder = String(localized: "Email")
+        let textField = UITextFieldWithPadding(placeholder: placeholder, isSecureTextEntry: false)
+        return textField
+    }()
     
     
     // MARK: - Lifecycle

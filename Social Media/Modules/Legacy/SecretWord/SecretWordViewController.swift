@@ -59,17 +59,8 @@ class SecretWordViewController: UIViewController {
     }()
     
     private lazy var textField: UITextFieldWithPadding = {
-        let textField = UITextFieldWithPadding()
-        
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = String(localized: "Guess the word...")
-        textField.tintColor = .accentColor
-        textField.layer.borderWidth = 0.5
-        textField.layer.borderColor = UIColor.lightGray.cgColor
-        textField.autocorrectionType = .no
-        textField.autocapitalizationType = .none
-        textField.delegate = self
-        
+        let placeholder = String(localized: "Guess the word...")
+        let textField = UITextFieldWithPadding(placeholder: placeholder, isSecureTextEntry: false)        
         return textField
     }()
     
