@@ -28,6 +28,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.makeKeyAndVisible()
         self.window = window
         
+        print(Auth.auth().currentUser?.email)
+        
         if let username = Auth.auth().currentUser?.email?.replacingOccurrences(of: "@media.com", with: "") {
             CheckerService().getUser(username: username) { user in
                 if let user = user {

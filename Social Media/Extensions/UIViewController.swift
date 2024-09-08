@@ -17,8 +17,8 @@ extension UIViewController: UITextFieldDelegate {
 }
 
 extension UIViewController {
-    public func showErrorAlert(description: String) {
-        let alert = UIAlertController(title: String(localized: "Error!"), message: description, preferredStyle: .alert)
+    public func showAlert(title: String, description: String) {
+        let alert = UIAlertController(title: title, message: description, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: String(localized: "OK"), style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
@@ -50,13 +50,8 @@ extension UIViewController {
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
         ])
 
-        // Create height constraint with lower priority
         let contentViewHeightConstraint = contentView.heightAnchor.constraint(greaterThanOrEqualTo: scrollView.heightAnchor)
-        contentViewHeightConstraint.priority = .defaultLow  // Set priority
-        contentViewHeightConstraint.isActive = true  // Activate the constraint
-        /*
-        if let scrollView = view.subviews.compactMap({ $0 as? UIScrollView }).first {
-            scrollView.contentInset.bottom = keyboardFrame.height
-        }*/
+        contentViewHeightConstraint.priority = .defaultLow
+        contentViewHeightConstraint.isActive = true
     }
 }

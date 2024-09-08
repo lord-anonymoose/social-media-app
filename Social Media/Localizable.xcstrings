@@ -202,6 +202,9 @@
     "Email" : {
 
     },
+    "Email not verified" : {
+
+    },
     "Error calculating directions: %@" : {
       "localizations" : {
         "en" : {
@@ -630,6 +633,9 @@
         }
       }
     },
+    "Please verify your email before logging in." : {
+
+    },
     "Repeat password" : {
 
     },
@@ -834,6 +840,9 @@
           }
         }
       }
+    },
+    "We have sent a verification message to your email. Please, log in again or tap the button below." : {
+
     },
     "Welcome on board!" : {
       "localizations" : {

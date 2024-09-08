@@ -46,6 +46,12 @@ class MainCoordinator: Coordinator {
         navigationController.pushViewController(resetPasswordViewController, animated: true)
     }
     
+    func showLogInViewController() {
+        let loginViewController = LogInViewController()
+        navigationController.viewControllers = [loginViewController]
+        navigationController.popToRootViewController(animated: true)
+    }
+    
     func showMainScreen() {
         addFeedViewController()
         addProfileviewController()

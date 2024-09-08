@@ -64,42 +64,43 @@ final class LogInViewController: UIViewController {
     
     private lazy var logInButton = UICustomButton(customTitle: String(localized: "Log In")) { [unowned self] in
         
-        startLoginOperation()
+        startLoginAnimation()
 
         Task {
             do {
                 try await FirebaseService.login(email: loginTextField.text ?? "", password: passwordTextField.text ?? "")
-                stopLoginOperation()
+                
+                // Check if the user's email is verified
+                guard let user = Auth.auth().currentUser, user.isEmailVerified else {
+                    stopLoginAnimation()
+                    let title = String(localized: "Email not verified")
+                    let message = String(localized: "Please verify your email before logging in.")
+                    showAlert(title: title, description: message)
+                    return
+                }
+                
+                stopLoginAnimation()
                 if let navigationController = self.navigationController {
                     let coordinator = MainCoordinator(navigationController: navigationController)
                     coordinator.showMainScreen()
                 }
             } catch {
-                stopLoginOperation()
-                showErrorAlert(description: error.localizedDescription)
+                stopLoginAnimation()
+                let title = String(localized: "Error!")
+                showAlert(title: title, description: error.localizedDescription)
                 self.tryCount += 1
                 if self.tryCount > 2 {
                     self.resetPasswordButton.isHidden = false
                 }
             }
         }
-        
-        
-        /*
-        Task {
-            do {
-                try await FirebaseService.resetPassword(email: loginTextField.text ?? "")
-                stopLoginOperation()
-            } catch {
-                showErrorAlert(description: error.localizedDescription)
-            }
-        }*/
     }
     
     private lazy var resetPasswordButton: UIButton = {
         let button = UIButton()
         
         button.setTitle("Forgot your password? Reset it here.", for: .normal)
+        button.setTitleColor(.textColor, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(resetPasswordButtonTapped), for: .touchUpInside)
         button.isHidden = true
@@ -270,14 +271,14 @@ final class LogInViewController: UIViewController {
             loginIndicator.widthAnchor.constraint(equalToConstant: 50),
             loginIndicator.heightAnchor.constraint(equalToConstant: 50),
             
+            resetPasswordButton.topAnchor.constraint(equalTo: loginInputContainer.bottomAnchor, constant: 50),
             resetPasswordButton.bottomAnchor.constraint(equalTo: logInButton.topAnchor, constant: -10),
-            //resetPasswordButton.heightAnchor.constraint(equalToConstant: 50),
             resetPasswordButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             resetPasswordButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
         ])
     }
     
-    private func startLoginOperation() {
+    private func startLoginAnimation() {
         self.logInButton.setBackgroundColor(.systemGray, forState: .normal)
         
         self.loginIndicator.startAnimating()
@@ -287,7 +288,7 @@ final class LogInViewController: UIViewController {
         self.passwordTextField.isUserInteractionEnabled = false
     }
     
-    private func stopLoginOperation() {
+    private func stopLoginAnimation() {
         self.logInButton.setBackgroundColor(.accentColor, forState: .normal)
         
         self.loginIndicator.stopAnimating()

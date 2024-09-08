@@ -123,7 +123,8 @@ final class ResetPasswordViewController: UIViewController {
             do {
                 try await FirebaseService.resetPassword(email: self.emailTextField.text ?? "")
             } catch {
-                showErrorAlert(description: error.localizedDescription)
+                let title = String(localized: "Error!")
+                showAlert(title: title, description: error.localizedDescription)
             }
         }
     }

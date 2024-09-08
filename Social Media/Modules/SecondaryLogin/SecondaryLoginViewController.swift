@@ -129,7 +129,8 @@ class SecondaryLoginViewController: UIViewController {
                 }
             },
             failure: { error in
-                self.showErrorAlert(description: CheckerError.biometricsAuthFail.localizedDescription)
+                let title = String(localized: "Error!")
+                self.showAlert(title: title, description: CheckerError.biometricsAuthFail.localizedDescription)
             }
         )
     }
@@ -140,7 +141,8 @@ class SecondaryLoginViewController: UIViewController {
             let loginViewController = LogInViewController()
             self.navigationController?.setViewControllers([loginViewController], animated: true)
         } catch {
-            showErrorAlert(description: String(localized: "Couldn't get to Log In screen."))
+            let title = String(localized: "Error!")
+            showAlert(title: title, description: String(localized: "Couldn't get to Log In screen."))
         }
     }
     

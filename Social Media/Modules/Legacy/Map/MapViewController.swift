@@ -106,7 +106,8 @@ class MapViewController: UIViewController {
     @objc func makeRouteButtonTapped(_ sender: UIButton) {
 
         guard let userLocation = locationManager.location?.coordinate else {
-            self.showErrorAlert(description: String(localized: "No access to user location!"))
+            let title = String(localized: "Error!")
+            self.showAlert(title: title, description: String(localized: "No access to user location!"))
             return
         }
         
@@ -130,7 +131,8 @@ class MapViewController: UIViewController {
             directions.calculate { (response, error) in
                 guard let response = response else {
                     if let error = error {
-                        self.showErrorAlert(description: String(localized: "Error calculating directions: \(error.localizedDescription)"))
+                        let title = String(localized: "Error!")
+                        self.showAlert(title: title, description: String(localized: "Error calculating directions: \(error.localizedDescription)"))
                     }
                     return
                 }

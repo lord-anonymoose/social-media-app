@@ -83,7 +83,18 @@ final class SignUpViewController: UIViewController {
     }()
     
     private lazy var signUpButton = UICustomButton(customTitle: String(localized: "Sign Up"), action: { [self] in
-        showVerificationViewController()
+        self.startSignupProcess()
+        Task {
+            do {
+                try await FirebaseService.signUp(email: self.loginInput.text ?? "",
+                                                 password1: self.firstPasswordInput.text ?? "",
+                                                 password2: self.secondPasswordInput.text ?? "")
+                self.finishSignupProcess()
+                self.showVerificationViewController()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
     })
     
     private lazy var signupIndicator: UIActivityIndicatorView = {
@@ -162,8 +173,6 @@ final class SignUpViewController: UIViewController {
     }
     
     private func setupConstraints() {
-        let safeAreaGuide = view.safeAreaLayoutGuide
-        let bottom = view.safeAreaLayoutGuide.layoutFrame.height
         let centerY = view.safeAreaLayoutGuide.layoutFrame.height / 2
 
         self.makeScrollable()
@@ -197,6 +206,7 @@ final class SignUpViewController: UIViewController {
             secondPasswordInput.leadingAnchor.constraint(equalTo: logInInputContainer.leadingAnchor),
             secondPasswordInput.trailingAnchor.constraint(equalTo: logInInputContainer.trailingAnchor),
         
+            signUpButton.topAnchor.constraint(equalTo: secondPasswordInput.bottomAnchor, constant: 50),
             signUpButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -150),
             signUpButton.heightAnchor.constraint(equalToConstant: 50),
             signUpButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25),
@@ -245,8 +255,6 @@ final class SignUpViewController: UIViewController {
     }
     
     private func startSignupProcess() {
-        //self.signUpButton.setBackgroundColor(.systemGray, forState: .normal)
-        
         self.signUpButton.isUserInteractionEnabled = false
         self.loginInput.isUserInteractionEnabled = false
         self.firstPasswordInput.isUserInteractionEnabled = false
@@ -258,8 +266,6 @@ final class SignUpViewController: UIViewController {
     }
     
     private func finishSignupProcess() {
-        //self.signUpButton.setBackgroundColor(.accentColor, forState: .normal)
-        
         self.signUpButton.isUserInteractionEnabled = true
         self.loginInput.isUserInteractionEnabled = true
         self.firstPasswordInput.isUserInteractionEnabled = true

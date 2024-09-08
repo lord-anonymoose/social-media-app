@@ -69,8 +69,14 @@ final class FirebaseService {
         
         do {
             let authResult = try await Auth.auth().createUser(withEmail: email, password: password1)
+            print(Auth.auth().currentUser ?? "Not logged in")
             try await authResult.user.sendEmailVerification()
             print("User created and verification email sent")
+            do {
+                try self.signOut()
+            } catch {
+                throw FirebaseServiceError.firebaseError(error.localizedDescription)
+            }
         } catch {
             throw FirebaseServiceError.firebaseError(error.localizedDescription)
         }
