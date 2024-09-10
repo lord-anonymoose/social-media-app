@@ -54,17 +54,18 @@ class MainCoordinator: Coordinator {
     
     func showMainScreen() {
         addFeedViewController()
-        addProfileviewController()
-        addMapViewController()
-        
-        let tabBarViewController = UITabBarController()
-        
-        tabBarViewController.viewControllers = controllers.map {
-            UINavigationController(rootViewController: $0)
-        }
-        tabBarViewController.selectedIndex = 0
-        navigationController.pushViewController(tabBarViewController, animated: false)
-        self.navigationController.setNavigationBarHidden(true, animated: true)
+        addProfileViewController { [weak self] in
+            guard let self = self else { return }
+            
+
+            let tabBarViewController = UITabBarController()
+            tabBarViewController.viewControllers = self.controllers.map {
+                UINavigationController(rootViewController: $0)
+            }
+            tabBarViewController.selectedIndex = 0
+            self.navigationController.pushViewController(tabBarViewController, animated: false)
+            self.navigationController.setNavigationBarHidden(true, animated: true)
+        }                
     }
     
     func logout() {
@@ -97,11 +98,22 @@ class MainCoordinator: Coordinator {
     }
     
     // Profile
-    func addProfileviewController() {
-        let profileViewController = ProfileViewController(user: user)
-        let profileViewImage = UIImage(systemName: "person.fill")
-        profileViewController.tabBarItem = UITabBarItem(title: nil, image: profileViewImage, tag: 1)
-        controllers.append(profileViewController)
+    func addProfileViewController(completion: @escaping () -> Void) {
+        let id = Auth.auth().currentUser?.uid
+        print(id ?? "Not found")
+        
+        FirebaseService.fetchUser(by: id ?? "0") { user in
+            if let user = user {
+                let profileViewController = ProfileViewController(user: user)
+                let profileViewImage = UIImage(systemName: "person.fill")
+                profileViewController.tabBarItem = UITabBarItem(title: nil, image: profileViewImage, tag: 1)
+                self.controllers.append(profileViewController)
+
+            } else {
+                print("User not found")
+            }
+            completion() // Call the completion handler after fetching the user
+        }
     }
     
     // Map

@@ -10,7 +10,7 @@ import UIKit
 class ProfileViewController: UIViewController {
     
     // MARK: - Subviews
-    private var user: StorageService.User
+    private var user: FirebaseService.User
     
     private var userPosts: [StorageService.Post]
     
@@ -49,20 +49,19 @@ class ProfileViewController: UIViewController {
     }()
     
     private lazy var userImage: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: user.login))
+        let imageView = UIImageView(image: UIImage(named: "katyperry"))
         
         imageView.layer.cornerRadius = 45
         imageView.clipsToBounds = true
-                
         imageView.alpha = 0.0
         
         return imageView
     }()
     
     // MARK: - Lifecycle
-    init(user: StorageService.User) {
+    init(user: FirebaseService.User) {
             self.user = user
-            self.userPosts = posts.filter { $0.author == user.login }
+            self.userPosts = posts.filter { $0.author == "katyperry" }
             
             var photos = [UIImage]()
             
@@ -199,6 +198,7 @@ class ProfileViewController: UIViewController {
         let notificationCenter = NotificationCenter.default
         notificationCenter.removeObserver(self)
     }
+
     
     private func setupUserImage() {
         self.userImage.frame = CGRect.init(x: self.view.bounds.inset(by: self.view.safeAreaInsets).minX + 16, y: self.view.bounds.inset(by: self.view.safeAreaInsets).minY + 16, width: 90, height: 90)

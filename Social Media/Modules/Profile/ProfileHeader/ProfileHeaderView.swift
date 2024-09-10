@@ -16,10 +16,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
     // MARK: - Subviews
     
-    public var user: StorageService.User? {
+    public var user: FirebaseService.User? {
         didSet {
-            userImage.image = UIImage(named: user?.login ?? "default")
-            userName.text = user?.login ?? "default"
+            userImage.image = UIImage(named: "katyperry")
+            userName.text = user?.name ?? "Katy Perry"
             userStatus.text = user?.status ?? String(localized: "Type new status")
             setupConstraints()
         }
@@ -28,7 +28,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     private var statusText: String = ""
     
     lazy var userImage: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "default"))
+        let imageView = UIImageView(image: UIImage(named: "katyperry"))
         imageView.layer.cornerRadius = 45
         imageView.clipsToBounds = true
                         

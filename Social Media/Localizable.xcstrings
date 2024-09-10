@@ -133,6 +133,9 @@
         }
       }
     },
+    "Back to Log In" : {
+
+    },
     "Bruteforce password" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -841,7 +844,7 @@
         }
       }
     },
-    "We have sent a verification message to your email. Please, log in again or tap the button below." : {
+    "We have sent a verification message to your email. Please, log in to your account again using email and password." : {
 
     },
     "Welcome on board!" : {

@@ -69,9 +69,11 @@ final class LogInViewController: UIViewController {
         Task {
             do {
                 try await FirebaseService.login(email: loginTextField.text ?? "", password: passwordTextField.text ?? "")
+                // Refresh user data to ensure email verification status is up-to-date
+                try await Auth.auth().currentUser?.reload()
+                let user = Auth.auth().currentUser
                 
-                // Check if the user's email is verified
-                guard let user = Auth.auth().currentUser, user.isEmailVerified else {
+                guard let user = user, user.isEmailVerified else {
                     stopLoginAnimation()
                     let title = String(localized: "Email not verified")
                     let message = String(localized: "Please verify your email before logging in.")
@@ -82,6 +84,7 @@ final class LogInViewController: UIViewController {
                 stopLoginAnimation()
                 if let navigationController = self.navigationController {
                     let coordinator = MainCoordinator(navigationController: navigationController)
+                    print("Showing main screen")
                     coordinator.showMainScreen()
                 }
             } catch {

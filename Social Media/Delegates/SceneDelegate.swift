@@ -27,8 +27,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         self.window = window
-        
-        print(Auth.auth().currentUser?.email)
+                
+        print("Window is visible")
         
         if let username = Auth.auth().currentUser?.email?.replacingOccurrences(of: "@media.com", with: "") {
             CheckerService().getUser(username: username) { user in
