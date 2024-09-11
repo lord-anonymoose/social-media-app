@@ -45,9 +45,10 @@ final class ResetPasswordViewController: UIViewController {
         return label
     }()
     
-    private lazy var emailTextField: UITextField = {
+    private lazy var emailTextField: UITextFieldWithPadding = {
         let placeholder = String(localized: "Email")
         let textField = UITextFieldWithPadding(placeholder: placeholder, isSecureTextEntry: false)
+        textField.layer.cornerRadius = 10.0
         return textField
     }()
     
@@ -62,7 +63,6 @@ final class ResetPasswordViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .green
         setupUI()
         addSubviews()
         setupConstraints()
@@ -98,7 +98,7 @@ final class ResetPasswordViewController: UIViewController {
     
     // MARK: - Private
     private func setupUI() {
-        
+        view.backgroundColor = .systemBackground
     }
     
     private func addSubviews() {
@@ -112,9 +112,23 @@ final class ResetPasswordViewController: UIViewController {
     private func setupConstraints() {
         
         self.makeScrollable()
+        
+        let centerY = view.safeAreaLayoutGuide.layoutFrame.height / 2
+
+        let safeAreaGuide = view.safeAreaLayoutGuide
 
         NSLayoutConstraint.activate([
-        
+            emailTextField.centerYAnchor.constraint(equalTo: contentView.topAnchor, constant: centerY - 50),
+            emailTextField.heightAnchor.constraint(equalToConstant: 50),
+            emailTextField.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 25),
+            emailTextField.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -25),
+            
+            sendResetLinkButton.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 200),
+            sendResetLinkButton.heightAnchor.constraint(equalToConstant: 50),
+            sendResetLinkButton.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 25),
+            sendResetLinkButton.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -25)
+            
+            
         ])
     }
     
@@ -122,6 +136,17 @@ final class ResetPasswordViewController: UIViewController {
         Task {
             do {
                 try await FirebaseService.shared.resetPassword(email: self.emailTextField.text ?? "")
+                let title = String(localized: "Check your mailbox!")
+                let message = String(localized: "We have sent you an email with instructions for resetting your password")
+                
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (button) in
+                    if let navigationController = self.navigationController {
+                        navigationController.popViewController(animated: true)
+                    }
+                }))
+                present(alert, animated: true, completion: nil)
             } catch {
                 let title = String(localized: "Error!")
                 showAlert(title: title, description: error.localizedDescription)

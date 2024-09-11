@@ -169,6 +169,9 @@
         }
       }
     },
+    "Check your mailbox!" : {
+
+    },
     "Choose Image" : {
 
     },
@@ -851,6 +854,12 @@
       }
     },
     "We have sent a verification message to your email. Please, log in to your account again using email and password." : {
+
+    },
+    "We have sent you an email to confirm your address." : {
+
+    },
+    "We have sent you an email with instructions for resetting your password" : {
 
     },
     "Welcome on board!" : {

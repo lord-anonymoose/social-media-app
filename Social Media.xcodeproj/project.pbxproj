@@ -44,7 +44,6 @@
 		8EAD99682A599704004D3BEF /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAD99672A599704004D3BEF /* PhotosTableViewCell.swift */; };
 		8EAE53252C2AE40200BD640E /* PlanetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAE53242C2AE40200BD640E /* PlanetViewController.swift */; };
 		8EAE53272C2AE40C00BD640E /* PlanetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EAE53262C2AE40C00BD640E /* PlanetModel.swift */; };
-		8EB8D3242C8A32CA00571CFA /* VerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB8D3232C8A32CA00571CFA /* VerificationViewController.swift */; };
 		8EB8D3282C8A39DB00571CFA /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EB8D3272C8A39DB00571CFA /* ResetPasswordViewController.swift */; };
 		8EBCFFD72C6F90FA009E31CE /* LocalNotificationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EBCFFD62C6F90FA009E31CE /* LocalNotificationsService.swift */; };
 		8EC3113C2A4C3540006C8FA2 /* Foundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EC3113B2A4C3540006C8FA2 /* Foundation.swift */; };
@@ -118,7 +117,6 @@
 		8EAD99672A599704004D3BEF /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 		8EAE53242C2AE40200BD640E /* PlanetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetViewController.swift; sourceTree = "<group>"; };
 		8EAE53262C2AE40C00BD640E /* PlanetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetModel.swift; sourceTree = "<group>"; };
-		8EB8D3232C8A32CA00571CFA /* VerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationViewController.swift; sourceTree = "<group>"; };
 		8EB8D3272C8A39DB00571CFA /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		8EBCFFD62C6F90FA009E31CE /* LocalNotificationsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationsService.swift; sourceTree = "<group>"; };
 		8EC3113B2A4C3540006C8FA2 /* Foundation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foundation.swift; sourceTree = "<group>"; };
@@ -222,7 +220,6 @@
 				8E5439392C6EA64E00D257EC /* Loading */,
 				8E3FC4B52A4D8D040064F250 /* LogIn */,
 				8E672EC52C2F60A80063DFC2 /* SignUp */,
-				8EB8D3252C8A392A00571CFA /* VerificationViewController */,
 				8EB8D3262C8A39C700571CFA /* ResetPassword */,
 				8E5439332C6E925900D257EC /* SecondaryLogin */,
 				8EC8A3E42A2778D2008CC17C /* Profile */,
@@ -330,14 +327,6 @@
 				8EAE53262C2AE40C00BD640E /* PlanetModel.swift */,
 			);
 			path = Planet;
-			sourceTree = "<group>";
-		};
-		8EB8D3252C8A392A00571CFA /* VerificationViewController */ = {
-			isa = PBXGroup;
-			children = (
-				8EB8D3232C8A32CA00571CFA /* VerificationViewController.swift */,
-			);
-			path = VerificationViewController;
 			sourceTree = "<group>";
 		};
 		8EB8D3262C8A39C700571CFA /* ResetPassword */ = {
@@ -518,7 +507,6 @@
 				8E4C154C2A2699D800AA511B /* SceneDelegate.swift in Sources */,
 				8E29336B2C4548D400F2CC69 /* UIColor.swift in Sources */,
 				8E0D227A2C18EDF800A9BBA8 /* MainCoordinator.swift in Sources */,
-				8EB8D3242C8A32CA00571CFA /* VerificationViewController.swift in Sources */,
 				8EF48DA52A27797F0099166A /* ProfileHeaderView.swift in Sources */,
 				8E6B57EF2ADF272800AC47C4 /* StorageService.swift in Sources */,
 				8E586B4C2AA877BD00D89AF6 /* PhotosViewController.swift in Sources */,

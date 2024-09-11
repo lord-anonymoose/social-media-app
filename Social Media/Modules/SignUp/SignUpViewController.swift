@@ -90,7 +90,18 @@ final class SignUpViewController: UIViewController {
                                                  password1: self.firstPasswordInput.text ?? "",
                                                  password2: self.secondPasswordInput.text ?? "")
                 self.finishSignupProcess()
-                self.showVerificationViewController()
+                
+                let title = String(localized: "Check your mailbox!")
+                let message = String(localized: "We have sent you an email to confirm your address.")
+                
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (button) in
+                    if let navigationController = self.navigationController {
+                        navigationController.popViewController(animated: true)
+                    }
+                }))
+                present(alert, animated: true, completion: nil)
             } catch {
                 print(error.localizedDescription)
             }
