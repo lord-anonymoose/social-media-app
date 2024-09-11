@@ -5,8 +5,13 @@
 //  Created by Philipp Lazarev on 18.05.2024.
 //
 
-//Task 6
+/*
+ 
+ FOLLOWING CODE IS DEPRECATED AND IS NOT USED IN LATEST APP VERSIONS
+ 
+ */
 
+/*
 import UIKit
 import Foundation
 
@@ -199,3 +204,4 @@ class SecretWordViewController: UIViewController {
             notificationCenter.removeObserver(self)
     }
 }
+*/

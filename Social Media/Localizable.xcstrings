@@ -169,6 +169,9 @@
         }
       }
     },
+    "Choose Image" : {
+
+    },
     "Couldn't get to Log In screen." : {
       "localizations" : {
         "en" : {
@@ -675,6 +678,9 @@
           }
         }
       }
+    },
+    "Save" : {
+
     },
     "See what's happening in GoSocial!" : {
       "localizations" : {

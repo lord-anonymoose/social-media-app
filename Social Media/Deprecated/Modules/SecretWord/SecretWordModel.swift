@@ -5,6 +5,13 @@
 //  Created by Philipp Lazarev on 18.05.2024.
 //
 
+/*
+ 
+ FOLLOWING CODE IS DEPRECATED AND IS NOT USED IN LATEST APP VERSIONS
+ 
+ */
+
+/*
 import Foundation
 
 struct SecretWordModel {
@@ -53,3 +60,4 @@ struct SecretWordModel {
         self.currentPhrase = "Time to guess a secret word"
     }
 }
+*/

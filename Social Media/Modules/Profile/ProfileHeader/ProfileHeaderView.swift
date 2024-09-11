@@ -5,7 +5,7 @@
 //  Created by Philipp Lazarev on 25.05.2023.
 //
 
-// Adding comment just to check
+
 
 import UIKit
 
@@ -16,19 +16,22 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
     // MARK: - Subviews
     
-    public var user: FirebaseService.User? {
+    public var user: User? {
         didSet {
-            userImage.image = UIImage(named: "katyperry")
-            userName.text = user?.name ?? "Katy Perry"
-            userStatus.text = user?.status ?? String(localized: "Type new status")
+            nameLabel.text = user?.name ?? "Unknown"
+            statusLabel.text = user?.status ?? String(localized: "Type new status")
             setupConstraints()
         }
     }
     
-    private var statusText: String = ""
-    
-    lazy var userImage: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "katyperry"))
+    public var userImage: UIImage? {
+        didSet {
+            userImageView.image = userImage
+        }
+    }
+        
+    lazy var userImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "default"))
         imageView.layer.cornerRadius = 45
         imageView.clipsToBounds = true
                         
@@ -39,7 +42,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         return imageView
     }()
     
-    private lazy var userName: UILabel = {
+    private lazy var nameLabel: UILabel = {
         let userName = UILabel()
         
         userName.text = "default"
@@ -52,7 +55,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         return userName
     }()
     
-    private lazy var userStatus: UILabel = {
+    private lazy var statusLabel: UILabel = {
         let userStatus = UILabel()
                 
         userStatus.text = String(localized: "Waiting for something...")
@@ -68,17 +71,22 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     }()
     
     private lazy var setStatusButton = UICustomButton(customTitle: String(localized: "Set Status")) {[unowned self] in
-        userStatus.text = self.statusText
+        let newStatus = statusTextField.text ?? ""
+        statusLabel.text = newStatus
         if self.user != nil {
-            /*
-            for i in 0...users.count - 1 {
-                if users[i].login == self.user?.login {
-                    users[i].status = self.statusText
+        }
+        
+        if let id = FirebaseService.shared.currentUserID() {
+            Task {
+                do {
+                    try await FirebaseService.shared.setUserStatus(newStatus: newStatus, for: id)
+                    statusTextField.text = ""
+                    startTimer()
+                } catch {
+                    print(error.localizedDescription)
                 }
             }
-            */
         }
-        startTimer()
     }
     
     lazy var logoutButton: UIButton = {
@@ -86,16 +94,14 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         let image = UIImage(systemName: "rectangle.portrait.and.arrow.forward")
         button.setImage(image, for: .normal)
         button.tintColor = .systemRed
-        //button.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
         button.isUserInteractionEnabled = true
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    private lazy var textField: UITextFieldWithPadding = {
+    private lazy var statusTextField: UITextFieldWithPadding = {
         let placeholder = String(localized: "Hello, world!")
         let textField = UITextFieldWithPadding(placeholder: placeholder, isSecureTextEntry: false)
-        textField.addTarget(self, action: #selector(statusTextChanged(_:)), for: .editingChanged)        
         textField.delegate = self
 
         return textField
@@ -106,6 +112,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         addSuviews()
+        setupConstraints()
         changeBackgroundColor()
     }
     
@@ -121,15 +128,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     }
      
     
-    
-    // MARK: - Actions
-    
-    @objc func statusTextChanged(_ textField: UITextField) {
-        if let text = textField.text {
-            statusText = text
-        }
-    }
-    
     // MARK: - Private
     
     func changeBackgroundColor() {
@@ -141,10 +139,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     }
         
     private func addSuviews() {
-        contentView.addSubview(userImage)
-        contentView.addSubview(userName)
-        contentView.addSubview(userStatus)
-        contentView.addSubview(textField)
+        contentView.addSubview(userImageView)
+        contentView.addSubview(nameLabel)
+        contentView.addSubview(statusLabel)
+        contentView.addSubview(statusTextField)
         contentView.addSubview(setStatusButton)
         contentView.addSubview(logoutButton)
     }
@@ -157,33 +155,33 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         bottomAnchor.priority = .required - 1
              
         NSLayoutConstraint.activate([
-            userImage.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
-            userImage.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            userImage.widthAnchor.constraint(equalToConstant: 90),
-            userImage.heightAnchor.constraint(equalToConstant: 90),
+            userImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
+            userImageView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            userImageView.widthAnchor.constraint(equalToConstant: 90),
+            userImageView.heightAnchor.constraint(equalToConstant: 90),
         ])
         
         NSLayoutConstraint.activate([
-            userName.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
-            userName.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),
-            userName.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            nameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
+            nameLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 16),
+            nameLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
         ])
         
         NSLayoutConstraint.activate([
-            userStatus.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: 16),
-            userStatus.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),
-            userStatus.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            statusLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 16),
+            statusLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 16),
+            statusLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
         ])
         
         NSLayoutConstraint.activate([
-            textField.topAnchor.constraint(equalTo: userName.bottomAnchor, constant: 48),
-            textField.leadingAnchor.constraint(equalTo: userImage.trailingAnchor, constant: 16),
-            textField.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            textField.heightAnchor.constraint(equalToConstant: 32),
+            statusTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 48),
+            statusTextField.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 16),
+            statusTextField.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            statusTextField.heightAnchor.constraint(equalToConstant: 32),
         ])
         
         NSLayoutConstraint.activate([
-            setStatusButton.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 16),
+            setStatusButton.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 16),
             setStatusButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
             setStatusButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             setStatusButton.heightAnchor.constraint(equalToConstant: 30),

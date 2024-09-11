@@ -9,16 +9,14 @@ import UIKit
 import FirebaseAuth
 
 
-
-// Following Coordinator is used to control main app flow
 protocol Coordinator {
-    func showMainScreen()
+    func login()
+    func logout()
 }
 
 
 class MainCoordinator: Coordinator {
     
-    var user = StorageService.User(login: "default", name: "default")
     var navigationController: UINavigationController
     var controllers = [UIViewController]()
 
@@ -26,10 +24,40 @@ class MainCoordinator: Coordinator {
         self.navigationController = navigationController
     }
     
-    func authenticate(user: StorageService.User) {
-        self.user = user
-    }
+    func login() {
+        //addFeedViewController()
+        addProfileViewController { [weak self] in
+            guard let self = self else { return }
+            
 
+            let tabBarViewController = UITabBarController()
+            tabBarViewController.viewControllers = self.controllers.map {
+                UINavigationController(rootViewController: $0)
+            }
+            tabBarViewController.selectedIndex = 0
+            self.navigationController.pushViewController(tabBarViewController, animated: false)
+            self.navigationController.setNavigationBarHidden(true, animated: true)
+        }
+    }
+    
+    func logout() {
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            return
+        }
+        
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first else {
+            return
+        }
+        
+        let loginViewController = LogInViewController()
+        let navigationController = UINavigationController(rootViewController: loginViewController)
+        
+        window.rootViewController = navigationController
+        UIView.transition(with: window, duration: 0.5, options: .transitionFlipFromRight, animations: nil, completion: nil)
+    }
     
     func showSignUpViewController() {
         let signUpViewController = SignUpViewController()
@@ -52,42 +80,13 @@ class MainCoordinator: Coordinator {
         navigationController.popToRootViewController(animated: true)
     }
     
-    func showMainScreen() {
-        addFeedViewController()
-        addProfileViewController { [weak self] in
-            guard let self = self else { return }
-            
-
-            let tabBarViewController = UITabBarController()
-            tabBarViewController.viewControllers = self.controllers.map {
-                UINavigationController(rootViewController: $0)
-            }
-            tabBarViewController.selectedIndex = 0
-            self.navigationController.pushViewController(tabBarViewController, animated: false)
-            self.navigationController.setNavigationBarHidden(true, animated: true)
-        }                
-    }
-    
-    func logout() {
-        do {
-            try Auth.auth().signOut()
-        } catch {
-            return
-        }
-        
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let window = windowScene.windows.first else {
-            return
-        }
-        
-        let loginViewController = LogInViewController()
-        let navigationController = UINavigationController(rootViewController: loginViewController)
-        
-        window.rootViewController = navigationController
-        UIView.transition(with: window, duration: 0.5, options: .transitionFlipFromRight, animations: nil, completion: nil)
+    func showProfilePicViewController() {
+        let picturePickerViewController = PicturePickerViewController()
+        navigationController.pushViewController(picturePickerViewController, animated: true)
     }
     
     // Feed
+    /*
     func addFeedViewController() {
         let feedService = FeedService()
         let feedViewModel = FeedVMOutput(service: feedService)
@@ -96,13 +95,14 @@ class MainCoordinator: Coordinator {
         feedViewController.tabBarItem = UITabBarItem(title: nil, image: feedImage, tag: 0)
         controllers.append(feedViewController)
     }
+    */
     
     // Profile
     func addProfileViewController(completion: @escaping () -> Void) {
         let id = Auth.auth().currentUser?.uid
         print(id ?? "Not found")
         
-        FirebaseService.fetchUser(by: id ?? "0") { user in
+        FirebaseService.shared.fetchUser(by: id ?? "0") { user in
             if let user = user {
                 let profileViewController = ProfileViewController(user: user)
                 let profileViewImage = UIImage(systemName: "person.fill")
@@ -114,37 +114,5 @@ class MainCoordinator: Coordinator {
             }
             completion() // Call the completion handler after fetching the user
         }
-    }
-    
-    // Map
-    func addMapViewController() {
-        let mapViewController = MapViewController()
-        let mapImage = UIImage(systemName: "map.fill")
-        mapViewController.tabBarItem = UITabBarItem(title: nil, image: mapImage, tag: 2)
-        controllers.append(mapViewController)
-    }
-    
-    // Liked Posts
-    func addLikesViewController() {
-        let likesViewController = LikesViewController()
-        let likesImage = UIImage(systemName: "heart.fill")
-        likesViewController.tabBarItem = UITabBarItem(title: nil, image: likesImage, tag: 3)
-        controllers.append(likesViewController)
-    }
-    
-    // Secret Word
-    func addSecretWordViewController() {
-        let secretWordViewController = SecretWordViewController(secretWord: "secret")
-        let secretWordImage = UIImage(systemName: "dice.fill")
-        secretWordViewController.tabBarItem = UITabBarItem(title: nil, image: secretWordImage, tag: 2)
-        controllers.append(secretWordViewController)
-    }
-    
-    // Planet
-    func addPlanetViewController() {
-        let planetViewController = PlanetViewController()
-        let planetImage = UIImage(systemName: "globe.americas.fill")
-        planetViewController.tabBarItem = UITabBarItem(title: nil, image: planetImage, tag: 2)
-        controllers.append(planetViewController)
     }
 }

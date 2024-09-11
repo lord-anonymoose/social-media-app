@@ -5,6 +5,13 @@
 //  Created by Philipp Lazarev on 01.07.2024.
 //
 
+/*
+ 
+ FOLLOWING CODE IS DEPRECATED AND IS NOT USED IN LATEST APP VERSIONS
+ 
+ */
+
+/*
 import Foundation
 import Firebase
 import FirebaseAuth
@@ -115,3 +122,4 @@ extension CheckerService {
         }
     }
 }
+*/

@@ -5,6 +5,13 @@
 //  Created by Philipp Lazarev on 25.07.2024.
 //
 
+/*
+ 
+ FOLLOWING CODE IS DEPRECATED AND IS NOT USED IN LATEST APP VERSIONS
+ 
+ */
+
+/*
 import Foundation
 import UIKit
 import MapKit
@@ -254,3 +261,4 @@ extension MapViewController: MKMapViewDelegate, CLLocationManagerDelegate {
         return MKOverlayRenderer()
     }
 }
+*/

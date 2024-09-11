@@ -5,6 +5,13 @@
 //  Created by Philipp Lazarev on 18.05.2023.
 //
 
+/*
+ 
+ FOLLOWING CODE IS DEPRECATED AND IS NOT USED IN LATEST APP VERSIONS
+ 
+ */
+
+/*
 import UIKit
 
 class FeedViewController: UIViewController {
@@ -150,3 +157,4 @@ extension FeedViewController: UITableViewDataSource {
 extension FeedViewController: UITableViewDelegate {
     
 }
+*/

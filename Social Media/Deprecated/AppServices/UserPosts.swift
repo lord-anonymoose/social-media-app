@@ -4,6 +4,14 @@
 //
 //  Created by Philipp Lazarev on 05.07.2023.
 //
+
+/*
+ 
+ FOLLOWING CODE IS DEPRECATED AND IS NOT USED IN LATEST APP VERSIONS
+ 
+ */
+
+/*
 import UIKit
 
 public var posts = [
@@ -55,4 +63,4 @@ public var myPhotos: [UIImage] = {
     }
     return array
 }()
-
+*/

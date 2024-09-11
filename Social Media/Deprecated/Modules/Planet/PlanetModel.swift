@@ -5,6 +5,13 @@
 //  Created by Philipp Lazarev on 25.06.2024.
 //
 
+/*
+ 
+ FOLLOWING CODE IS DEPRECATED AND IS NOT USED IN LATEST APP VERSIONS
+ 
+ */
+
+/*
 import Foundation
 
 struct Planet: Decodable {
@@ -78,3 +85,4 @@ struct Person: Decodable {
         case url
     }
 }
+*/

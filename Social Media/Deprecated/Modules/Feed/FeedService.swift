@@ -5,6 +5,13 @@
 //  Created by Philipp Lazarev on 21.05.2024.
 //
 
+/*
+ 
+ FOLLOWING CODE IS DEPRECATED AND IS NOT USED IN LATEST APP VERSIONS
+ 
+ */
+
+/*
 import Foundation
 
 class FeedService {
@@ -29,3 +36,4 @@ class FeedService {
         }
     }
 }
+*/

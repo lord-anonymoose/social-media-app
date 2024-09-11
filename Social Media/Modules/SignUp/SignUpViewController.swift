@@ -86,7 +86,7 @@ final class SignUpViewController: UIViewController {
         self.startSignupProcess()
         Task {
             do {
-                try await FirebaseService.signUp(email: self.loginInput.text ?? "",
+                try await FirebaseService.shared.signUp(email: self.loginInput.text ?? "",
                                                  password1: self.firstPasswordInput.text ?? "",
                                                  password2: self.secondPasswordInput.text ?? "")
                 self.finishSignupProcess()

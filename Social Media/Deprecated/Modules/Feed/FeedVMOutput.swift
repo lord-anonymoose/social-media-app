@@ -5,6 +5,13 @@
 //  Created by Philipp Lazarev on 21.05.2024.
 //
 
+/*
+ 
+ FOLLOWING CODE IS DEPRECATED AND IS NOT USED IN LATEST APP VERSIONS
+ 
+ */
+
+/*
 import UIKit
 
 final class FeedVMOutput {
@@ -43,3 +50,4 @@ enum State {
     case loaded([StorageService.Post])
     case error
 }
+*/

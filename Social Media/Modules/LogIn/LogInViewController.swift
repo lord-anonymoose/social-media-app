@@ -68,7 +68,7 @@ final class LogInViewController: UIViewController {
 
         Task {
             do {
-                try await FirebaseService.login(email: loginTextField.text ?? "", password: passwordTextField.text ?? "")
+                try await FirebaseService.shared.signIn(email: loginTextField.text ?? "", password: passwordTextField.text ?? "")
                 // Refresh user data to ensure email verification status is up-to-date
                 try await Auth.auth().currentUser?.reload()
                 let user = Auth.auth().currentUser
@@ -81,11 +81,9 @@ final class LogInViewController: UIViewController {
                     return
                 }
                 
-                stopLoginAnimation()
                 if let navigationController = self.navigationController {
                     let coordinator = MainCoordinator(navigationController: navigationController)
-                    print("Showing main screen")
-                    coordinator.showMainScreen()
+                    coordinator.login()
                 }
             } catch {
                 stopLoginAnimation()

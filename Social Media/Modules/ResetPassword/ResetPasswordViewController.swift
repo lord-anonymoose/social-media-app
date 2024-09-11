@@ -121,7 +121,7 @@ final class ResetPasswordViewController: UIViewController {
     private func sendResetLink() {
         Task {
             do {
-                try await FirebaseService.resetPassword(email: self.emailTextField.text ?? "")
+                try await FirebaseService.shared.resetPassword(email: self.emailTextField.text ?? "")
             } catch {
                 let title = String(localized: "Error!")
                 showAlert(title: title, description: error.localizedDescription)
