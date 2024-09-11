@@ -10,15 +10,16 @@ import UIKit
 class ProfileViewController: UIViewController {
     
     // MARK: - Subviews
-    private var user: StorageService.User
+    private var user: User
     
-    private var userPosts: [StorageService.Post]
+    
+    private var userPosts: [Post]
     
     private var userPhotos: [UIImage]
-        
+    
     private lazy var profileView: ProfileHeaderView = {
         let profileView = ProfileHeaderView()
-
+        
         return profileView
     }()
     
@@ -48,26 +49,36 @@ class ProfileViewController: UIViewController {
         return button
     }()
     
-    private lazy var userImage: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: user.login))
+    private lazy var userImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(named: "default"))
         
         imageView.layer.cornerRadius = 45
         imageView.clipsToBounds = true
-                
         imageView.alpha = 0.0
         
         return imageView
     }()
     
+    private lazy var changeImageButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Change image", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.alpha = 0.0
+        button.isUserInteractionEnabled = false
+        button.addTarget(self, action: #selector(changeImageButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
     // MARK: - Lifecycle
-    init(user: StorageService.User) {
+    init(user: User) {
             self.user = user
-            self.userPosts = posts.filter { $0.author == user.login }
+            self.userPosts = []//posts.filter { $0.author == "katyperry" }
             
             var photos = [UIImage]()
             
             for p in userPosts {
-                photos.append(UIImage(named: p.image)!)
+                //photos.append(UIImage(named: p.image)!)
             }
             
             self.userPhotos = photos
@@ -84,22 +95,25 @@ class ProfileViewController: UIViewController {
         setupUI()
         addSubviews()
         setupConstraints()
+        downloadUserImage()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         setupKeyboardObservers()
+        //feedView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
+        blurDissapears()
         removeKeyboardObservers()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         setupUserImage()
+        feedView.reloadData()
     }
     
     // MARK: - Actions
@@ -128,11 +142,17 @@ class ProfileViewController: UIViewController {
     
     @objc func logoutButtonTapped(_ button: UIButton) {
         if let navigationController = self.navigationController {
-            let coordinator = ProfileCoordinator(navigationController: navigationController)
+            let coordinator = MainCoordinator(navigationController: navigationController)
             coordinator.logout()
         }
-        //self.navigationController?.pushViewController(LogInViewController(), animated: true)
-        //self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    @objc func changeImageButtonTapped(_ button: UIButton) {
+        print("changeImageButtonTapped")
+        if let navigationController = self.navigationController {
+            let coordinator = MainCoordinator(navigationController: navigationController)
+            coordinator.showProfilePicViewController()
+        }
     }
     
     // MARK: - Private
@@ -145,25 +165,33 @@ class ProfileViewController: UIViewController {
         view.addSubview(feedView)
         view.addSubview(backgroundBlur)
         view.addSubview(blurCloseButton)
-        view.addSubview(userImage)
+        view.addSubview(userImageView)
+        view.addSubview(changeImageButton)
     }
     
     private func setupConstraints() {
+        let safeAreaGuide = view.safeAreaLayoutGuide
+        
         NSLayoutConstraint.activate([
-            feedView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            feedView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            feedView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            feedView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            feedView.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor, constant: 0),
+            feedView.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor),
+            feedView.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor),
+            feedView.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor),
             
             backgroundBlur.topAnchor.constraint(equalTo: view.topAnchor),
             backgroundBlur.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             backgroundBlur.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             backgroundBlur.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            blurCloseButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            blurCloseButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            blurCloseButton.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor, constant: 20),
+            blurCloseButton.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -20),
             blurCloseButton.heightAnchor.constraint(equalToConstant: 30),
-            blurCloseButton.widthAnchor.constraint(equalToConstant: 30)
+            blurCloseButton.widthAnchor.constraint(equalToConstant: 30),
+            
+            changeImageButton.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor, constant: -20),
+            changeImageButton.heightAnchor.constraint(equalToConstant: 50),
+            changeImageButton.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 20),
+            changeImageButton.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -20)
         ])
         
         
@@ -199,9 +227,26 @@ class ProfileViewController: UIViewController {
         let notificationCenter = NotificationCenter.default
         notificationCenter.removeObserver(self)
     }
+
     
     private func setupUserImage() {
-        self.userImage.frame = CGRect.init(x: self.view.bounds.inset(by: self.view.safeAreaInsets).minX + 16, y: self.view.bounds.inset(by: self.view.safeAreaInsets).minY + 16, width: 90, height: 90)
+        self.userImageView.frame = CGRect.init(x: self.view.bounds.inset(by: self.view.safeAreaInsets).minX + 16, y: self.view.bounds.inset(by: self.view.safeAreaInsets).minY + 16, width: 90, height: 90)
+    }
+    
+    private func downloadUserImage() {
+        if let id = FirebaseService.shared.currentUserID() {
+            FirebaseService.shared.downloadProfileImage(for: id) { image in
+                if let downloadedImage = image {
+                    DispatchQueue.main.async {
+                        self.userImageView.image = downloadedImage
+                        self.profileView.userImageView.image = downloadedImage
+                        self.feedView.reloadData()
+                    }
+                } else {
+                    print("Failed to download image.")
+                }
+            }
+        }
     }
     
     private func blurAppears() {
@@ -215,12 +260,12 @@ class ProfileViewController: UIViewController {
             delay: 0.0,
             options: .curveLinear
         ) {
-            self.backgroundBlur.alpha = 0.7
-            self.userImage.alpha = 1.0
-            self.userImage.layer.cornerRadius = 0
-            self.userImage.center = CGPoint(x: self.view.center.x, y: self.view.center.y)
+            self.backgroundBlur.alpha = 0.9
+            self.userImageView.alpha = 1.0
+            self.userImageView.layer.cornerRadius = 0
+            self.userImageView.center = CGPoint(x: self.view.center.x, y: self.view.center.y)
             
-            self.userImage.frame = CGRect(
+            self.userImageView.frame = CGRect(
                 x: (screenWidth - finalWidth) / 2,
                 y: (self.view.frame.size.height - finalHeight) / 2,
                 width: finalWidth,
@@ -233,6 +278,8 @@ class ProfileViewController: UIViewController {
                 options: .curveLinear
             ) {
                 self.blurCloseButton.alpha = 1.0
+                self.changeImageButton.alpha = 1.0
+                self.changeImageButton.isUserInteractionEnabled = true
             }
         }
     }
@@ -252,8 +299,10 @@ class ProfileViewController: UIViewController {
             ) {
                 self.backgroundBlur.alpha = 0.0
                 self.setupUserImage()
-                self.userImage.layer.cornerRadius = 45
-                self.userImage.alpha = 0.0
+                self.userImageView.layer.cornerRadius = 45
+                self.userImageView.alpha = 0.0
+                self.changeImageButton.alpha = 0.0
+                self.changeImageButton.isUserInteractionEnabled = false
             }
         }
     }
@@ -271,12 +320,13 @@ extension ProfileViewController: UITableViewDataSource {
             if let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView") as? ProfileHeaderView {
                 view.isUserInteractionEnabled = true
                 view.user = user
+                view.userImage = self.userImageView.image
                 let tapRed = UITapGestureRecognizer(
                     target: self,
                     action: #selector(didTapPicture)
                 )
                 tapRed.numberOfTapsRequired = 1
-                view.userImage.addGestureRecognizer(tapRed)
+                view.userImageView.addGestureRecognizer(tapRed)
                 view.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
                 return view
             }
@@ -295,7 +345,8 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
         } else {
             let post = userPosts[indexPath.row - 1]
-            let cell = PostViewCell(style: .default, reuseIdentifier: "cell", author: post.author, image: post.image, description: post.description, likes: post.likes)
+            
+            let cell = PostViewCell(style: .default, reuseIdentifier: "cell", author: "Author", image: "image", description: "description", likes: 0)
             return cell
         }
     }

@@ -5,6 +5,13 @@
 //  Created by Philipp Lazarev on 12.06.2024.
 //
 
+/*
+ 
+ FOLLOWING CODE IS DEPRECATED AND IS NOT USED IN LATEST APP VERSIONS
+ 
+ */
+
+/*
 import Foundation
 
 // Basic App Functionality Errors
@@ -101,3 +108,4 @@ extension CheckerError {
         }
     }
 }
+*/

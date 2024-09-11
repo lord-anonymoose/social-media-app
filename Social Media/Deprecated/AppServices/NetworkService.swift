@@ -5,6 +5,13 @@
 //  Created by Philipp Lazarev on 20.06.2024.
 //
 
+/*
+ 
+ FOLLOWING CODE IS DEPRECATED AND IS NOT USED IN LATEST APP VERSIONS
+ 
+ */
+
+/*
 import Foundation
 import UIKit
 
@@ -60,5 +67,5 @@ func getBaseURL(urlString: String) -> Result<URL, Error> {
         return .failure(NetworkError.urlError)
     }
 }
-
+*/
 

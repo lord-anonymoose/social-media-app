@@ -5,10 +5,12 @@
 //  Created by Philipp Lazarev on 18.05.2023.
 //
 
-// Working on Task 7
 import UIKit
 import FirebaseAuth
 import LocalAuthentication
+import UserNotifications
+
+
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -25,8 +27,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         self.window = window
+                
+        print("Window is visible")
         
-        if let username = Auth.auth().currentUser?.email?.replacingOccurrences(of: "@media.com", with: "") {
+        if let id = FirebaseService.shared.currentUserID() {
+            FirebaseService.shared.fetchUser(by: id) { user in
+                if let user = user {
+                    let secondaryLoginViewController = SecondaryLoginViewController(user: user)
+                    let newNavigationController = UINavigationController(rootViewController: secondaryLoginViewController)
+                    window.rootViewController = newNavigationController
+                } else {
+                    print("User not equal user")
+                }
+            }
+        }
+        /*
+        if let id = Auth.auth().currentUser?.uid {
+            FirebaseService.fetchUser(by: id, completion: <#T##(FirebaseService.User?) -> Void#>)
             CheckerService().getUser(username: username) { user in
                 if let user = user {
                     let secondaryLoginViewController = SecondaryLoginViewController(user: user)
@@ -35,7 +52,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
             }
         }
-        
+        */
         else {
             let loginViewController = LogInViewController()
             let newNavigationController = UINavigationController(rootViewController: loginViewController)

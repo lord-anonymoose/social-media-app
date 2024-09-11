@@ -13,7 +13,7 @@ import FirebaseAuth
 
 class SecondaryLoginViewController: UIViewController {
     
-    private var user: StorageService.User
+    private var user: User
     
     
     // MARK: - Subviews
@@ -31,7 +31,7 @@ class SecondaryLoginViewController: UIViewController {
         return label
     }()
     
-    
+    /*
     private lazy var profilePicture: UIImageView = {
         let imageView = UIImageView(image: user.image)
         
@@ -44,6 +44,7 @@ class SecondaryLoginViewController: UIViewController {
         
         return imageView
     }()
+    */
     
     private lazy var changeUserButton: UIButton = {
         let button = UIButton()
@@ -107,7 +108,7 @@ class SecondaryLoginViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    init(user: StorageService.User) {
+    init(user: User) {
         self.user = user
         super.init(nibName: nil, bundle: nil)
     }
@@ -123,13 +124,14 @@ class SecondaryLoginViewController: UIViewController {
         LocalAuthorizationService.authenticate(
             success: {
                 if let navigationController = self.navigationController {
-                    let coordinator = ProfileCoordinator(navigationController: navigationController)
-                    coordinator.authenticate(user: self.user)
-                    coordinator.start()
+                    let coordinator = MainCoordinator(navigationController: navigationController)
+                    coordinator.login()
                 }
             },
             failure: { error in
-                self.showErrorAlert(description: CheckerError.biometricsAuthFail.localizedDescription)
+                let title = String(localized: "Error!")
+                /*self.showAlert(title: title, description: CheckerError.biometricsAuthFail.localizedDescription)
+                 */
             }
         )
     }
@@ -140,7 +142,8 @@ class SecondaryLoginViewController: UIViewController {
             let loginViewController = LogInViewController()
             self.navigationController?.setViewControllers([loginViewController], animated: true)
         } catch {
-            showErrorAlert(description: String(localized: "Couldn't get to Log In screen."))
+            let title = String(localized: "Error!")
+            showAlert(title: title, description: String(localized: "Couldn't get to Log In screen."))
         }
     }
     
@@ -151,7 +154,7 @@ class SecondaryLoginViewController: UIViewController {
     
     private func addSubviews() {
         view.addSubview(greetingLabel)
-        view.addSubview(profilePicture)
+        //view.addSubview(profilePicture)
         view.addSubview(changeUserButton)
         view.addSubview(authenticateButton)
     }
@@ -163,24 +166,20 @@ class SecondaryLoginViewController: UIViewController {
             greetingLabel.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor, constant: 20),
             greetingLabel.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 10),
             greetingLabel.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -10),
-            greetingLabel.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor)
-        ])
+            greetingLabel.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor),
         
-        NSLayoutConstraint.activate([
+        /*
             profilePicture.centerYAnchor.constraint(equalTo: safeAreaGuide.centerYAnchor),
             profilePicture.heightAnchor.constraint(equalToConstant: 90),
             profilePicture.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor),
             profilePicture.widthAnchor.constraint(equalToConstant: 90)
-        ])
+        */
         
-        NSLayoutConstraint.activate([
             authenticateButton.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor, constant: -20),
             authenticateButton.heightAnchor.constraint(equalToConstant: 100),
             authenticateButton.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor),
-            authenticateButton.widthAnchor.constraint(equalToConstant: 100)
-        ])
+            authenticateButton.widthAnchor.constraint(equalToConstant: 100),
         
-        NSLayoutConstraint.activate([
             changeUserButton.centerYAnchor.constraint(equalTo: authenticateButton.centerYAnchor),
             changeUserButton.heightAnchor.constraint(equalToConstant: 50),
             changeUserButton.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 20),

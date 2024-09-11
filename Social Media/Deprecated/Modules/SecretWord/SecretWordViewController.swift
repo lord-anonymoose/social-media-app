@@ -5,8 +5,13 @@
 //  Created by Philipp Lazarev on 18.05.2024.
 //
 
-//Task 6
+/*
+ 
+ FOLLOWING CODE IS DEPRECATED AND IS NOT USED IN LATEST APP VERSIONS
+ 
+ */
 
+/*
 import UIKit
 import Foundation
 
@@ -59,21 +64,12 @@ class SecretWordViewController: UIViewController {
     }()
     
     private lazy var textField: UITextFieldWithPadding = {
-        let textField = UITextFieldWithPadding()
-        
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = String(localized: "Guess the word...")
-        textField.tintColor = .accentColor
-        textField.layer.borderWidth = 0.5
-        textField.layer.borderColor = UIColor.lightGray.cgColor
-        textField.autocorrectionType = .no
-        textField.autocapitalizationType = .none
-        textField.delegate = self
-        
+        let placeholder = String(localized: "Guess the word...")
+        let textField = UITextFieldWithPadding(placeholder: placeholder, isSecureTextEntry: false)        
         return textField
     }()
     
-    private lazy var checkButton = CustomButton(customTitle: String(localized: "Check")) { [unowned self] in
+    private lazy var checkButton = UICustomButton(customTitle: String(localized: "Check")) { [unowned self] in
         guard let word = textField.text else { return }
         if word.lowercased() == self.secretWord.lowercased() {
             self.currentState = SecretWordModel(guessed: true)
@@ -208,3 +204,4 @@ class SecretWordViewController: UIViewController {
             notificationCenter.removeObserver(self)
     }
 }
+*/

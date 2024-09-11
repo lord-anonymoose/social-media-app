@@ -5,6 +5,13 @@
 //  Created by Philipp Lazarev on 08.09.2023.
 //
 
+/*
+ 
+ FOLLOWING CODE IS DEPRECATED AND IS NOT USED IN LATEST APP VERSIONS
+ 
+ */
+
+/*
 import Foundation
 import UIKit
 
@@ -44,3 +51,4 @@ public class StorageService {
 
 typealias User = StorageService.User
 typealias Post = StorageService.Post
+*/
