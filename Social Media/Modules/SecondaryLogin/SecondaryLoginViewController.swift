@@ -130,8 +130,8 @@ class SecondaryLoginViewController: UIViewController {
             },
             failure: { error in
                 let title = String(localized: "Error!")
-                /*self.showAlert(title: title, description: CheckerError.biometricsAuthFail.localizedDescription)
-                 */
+                // Refactor later
+                self.showAlert(title: title, description: error?.localizedDescription ?? "Unknown error")
             }
         )
     }

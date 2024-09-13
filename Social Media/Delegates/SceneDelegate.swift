@@ -41,18 +41,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
             }
         }
-        /*
-        if let id = Auth.auth().currentUser?.uid {
-            FirebaseService.fetchUser(by: id, completion: <#T##(FirebaseService.User?) -> Void#>)
-            CheckerService().getUser(username: username) { user in
-                if let user = user {
-                    let secondaryLoginViewController = SecondaryLoginViewController(user: user)
-                    let newNavigationController = UINavigationController(rootViewController: secondaryLoginViewController)
-                    window.rootViewController = newNavigationController
-                }
-            }
-        }
-        */
         else {
             let loginViewController = LogInViewController()
             let newNavigationController = UINavigationController(rootViewController: loginViewController)

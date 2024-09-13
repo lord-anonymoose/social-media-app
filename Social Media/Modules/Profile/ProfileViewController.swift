@@ -12,6 +12,7 @@ class ProfileViewController: UIViewController {
     // MARK: - Subviews
     private var user: User
     
+    private var imagePath: String?
     
     private var userPosts: [Post]
     
@@ -50,11 +51,21 @@ class ProfileViewController: UIViewController {
     }()
     
     private lazy var userImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "default"))
+        let imageView = UIImageView()
+        
+        if let path = self.imagePath {
+            imageView.image = ImageCacheService.shared.getCachedImage(from: path)
+        } else {
+            imageView.image = UIImage(named: "default")
+        }
         
         imageView.layer.cornerRadius = 45
         imageView.clipsToBounds = true
-        imageView.alpha = 0.0
+        imageView.alpha = 1.0
+        imageView.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapPicture))
+        imageView.addGestureRecognizer(tap)
         
         return imageView
     }()
@@ -91,7 +102,8 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setupImagePath()
+        setupUserImage()
         setupUI()
         addSubviews()
         setupConstraints()
@@ -102,7 +114,6 @@ class ProfileViewController: UIViewController {
         super.viewWillAppear(animated)
         
         setupKeyboardObservers()
-        //feedView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -119,6 +130,7 @@ class ProfileViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func didTapPicture() {
+        print(didTapPicture)
         blurAppears()
     }
     
@@ -151,11 +163,17 @@ class ProfileViewController: UIViewController {
         print("changeImageButtonTapped")
         if let navigationController = self.navigationController {
             let coordinator = MainCoordinator(navigationController: navigationController)
-            coordinator.showProfilePicViewController()
+            coordinator.showProfilePicViewController(image: self.userImageView.image ?? UIImage(named: "default")!)
         }
     }
     
     // MARK: - Private
+    private func setupImagePath() {
+        if let id = FirebaseService.shared.currentUserID() {
+            self.imagePath = "ProfilePictures/\(id).jpg"
+        }
+    }
+    
     
     private func setupUI() {
         view.backgroundColor = .systemBackground
@@ -166,6 +184,7 @@ class ProfileViewController: UIViewController {
         view.addSubview(backgroundBlur)
         view.addSubview(blurCloseButton)
         view.addSubview(userImageView)
+        view.bringSubviewToFront(userImageView)
         view.addSubview(changeImageButton)
     }
     
@@ -235,15 +254,13 @@ class ProfileViewController: UIViewController {
     
     private func downloadUserImage() {
         if let id = FirebaseService.shared.currentUserID() {
-            FirebaseService.shared.downloadProfileImage(for: id) { image in
-                if let downloadedImage = image {
-                    DispatchQueue.main.async {
-                        self.userImageView.image = downloadedImage
-                        self.profileView.userImageView.image = downloadedImage
-                        self.feedView.reloadData()
-                    }
-                } else {
-                    print("Failed to download image.")
+            let path = "ProfilePictures/\(id).jpg"
+            print(path)
+            ImageCacheService.shared.loadImage(from: path) { [weak self] image in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    self.userImageView.image = image
+                    self.feedView.reloadData()
                 }
             }
         }
@@ -300,7 +317,7 @@ class ProfileViewController: UIViewController {
                 self.backgroundBlur.alpha = 0.0
                 self.setupUserImage()
                 self.userImageView.layer.cornerRadius = 45
-                self.userImageView.alpha = 0.0
+                //self.userImageView.alpha = 0.0
                 self.changeImageButton.alpha = 0.0
                 self.changeImageButton.isUserInteractionEnabled = false
             }
@@ -320,13 +337,7 @@ extension ProfileViewController: UITableViewDataSource {
             if let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView") as? ProfileHeaderView {
                 view.isUserInteractionEnabled = true
                 view.user = user
-                view.userImage = self.userImageView.image
-                let tapRed = UITapGestureRecognizer(
-                    target: self,
-                    action: #selector(didTapPicture)
-                )
-                tapRed.numberOfTapsRequired = 1
-                view.userImageView.addGestureRecognizer(tapRed)
+                //view.userImageView.addGestureRecognizer(tapRed)
                 view.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
                 return view
             }

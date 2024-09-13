@@ -12,12 +12,14 @@ import FirebaseAuth
 
 final class PicturePickerViewController: UIViewController, UINavigationControllerDelegate {
     
+    var image: UIImage
     
     let imagePicker = UIImagePickerController()
     
     // MARK: - Subviews
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.image = self.image
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .systemGray
         return imageView
@@ -33,6 +35,15 @@ final class PicturePickerViewController: UIViewController, UINavigationControlle
     
     
     // MARK: - Lifecycle
+    init(image: UIImage) {
+        self.image = image
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,8 +53,7 @@ final class PicturePickerViewController: UIViewController, UINavigationControlle
         setupDelegates()
     }
     
-    // MARK: - Actions
-    @objc
+    
     
     // MARK: - Private
     private func sayHello() {

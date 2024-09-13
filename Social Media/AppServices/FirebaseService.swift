@@ -68,7 +68,6 @@ final class FirebaseService {
         
         do {
             let authResult = try await Auth.auth().signIn(withEmail: email, password: password)
-            let user = authResult.user
         } catch {
             if error.localizedDescription.contains("The supplied auth credential is malformed or has expired.") {
                 print(FirebaseServiceError.wrongPassword.localizedDescription)
@@ -183,27 +182,6 @@ final class FirebaseService {
         }) { error in
             print("Error fetching user: \(error.localizedDescription)")
             completion(nil)
-        }
-    }
-    
-    func downloadProfileImage(for userID: String, completion: @escaping (UIImage?) -> Void) {
-        
-        let storageRef = Storage.storage().reference()
-        
-        let profilePictureRef = storageRef.child("ProfilePictures/\(userID).jpg")
-        
-        profilePictureRef.getData(maxSize: 2 * 1024 * 1024) { data, error in
-            if let error = error {
-                print("Error downloading image: \(error)")
-                completion(nil)
-                return
-            }
-            
-            if let imageData = data, let image = UIImage(data: imageData) {
-                completion(image)
-            } else {
-                completion(nil)
-            }
         }
     }
     

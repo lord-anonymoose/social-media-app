@@ -56,6 +56,7 @@
 		8ECCBF622C32E38700D5C4C4 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 8ECCBF612C32E38700D5C4C4 /* FirebaseDatabase */; };
 		8ED862A22C9219AF00C95654 /* PicturePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED862A12C9219AF00C95654 /* PicturePickerViewController.swift */; };
 		8EDAC7E02C94E2E700E4C789 /* VerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDAC7DF2C94E2E700E4C789 /* VerificationViewController.swift */; };
+		8EDAC7E22C94E76200E4C789 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDAC7E12C94E76200E4C789 /* ImageCacheService.swift */; };
 		8EDCB6392C92449800DD9961 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDCB6382C92449800DD9961 /* User.swift */; };
 		8EDCB63B2C92454400DD9961 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDCB63A2C92454400DD9961 /* Post.swift */; };
 		8EDF8EE12B6041A300154433 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 8EDF8EE02B6041A300154433 /* iOSIntPackage */; };
@@ -126,6 +127,7 @@
 		8ECCBF5F2C32A7DE00D5C4C4 /* CheckerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckerService.swift; sourceTree = "<group>"; };
 		8ED862A12C9219AF00C95654 /* PicturePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicturePickerViewController.swift; sourceTree = "<group>"; };
 		8EDAC7DF2C94E2E700E4C789 /* VerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationViewController.swift; sourceTree = "<group>"; };
+		8EDAC7E12C94E76200E4C789 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
 		8EDCB6382C92449800DD9961 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8EDCB63A2C92454400DD9961 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		8EF427B62C6DF7A500B22C46 /* TimerLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLocalization.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				8E5439392C6EA64E00D257EC /* Loading */,
 				8E3FC4B52A4D8D040064F250 /* LogIn */,
 				8E672EC52C2F60A80063DFC2 /* SignUp */,
+				8EDAC7DE2C94E2D100E4C789 /* Verification */,
 				8EB8D3262C8A39C700571CFA /* ResetPassword */,
 				8E5439332C6E925900D257EC /* SecondaryLogin */,
 				8EC8A3E42A2778D2008CC17C /* Profile */,
@@ -299,6 +302,7 @@
 			children = (
 				8E0D22792C18EDF800A9BBA8 /* MainCoordinator.swift */,
 				8E47DA912C88CA4D00FEB205 /* FirebaseService.swift */,
+				8EDAC7E12C94E76200E4C789 /* ImageCacheService.swift */,
 				8E5439352C6E966D00D257EC /* LocalAuthorizationService.swift */,
 				8EBCFFD62C6F90FA009E31CE /* LocalNotificationsService.swift */,
 			);
@@ -392,7 +396,6 @@
 		8EDCB6362C92408D00DD9961 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				8EDAC7DE2C94E2D100E4C789 /* Verification */,
 				8E3FC4B72A4D8D760064F250 /* Feed */,
 				8EAE53232C2AE3EC00BD640E /* Planet */,
 				8EFB63542C51C21A0058572C /* Map */,
@@ -514,6 +517,7 @@
 				8E2933752C454AB800F2CC69 /* UITableView.swift in Sources */,
 				8EC3113E2A4CB631006C8FA2 /* LogInViewController.swift in Sources */,
 				8E5439362C6E966D00D257EC /* LocalAuthorizationService.swift in Sources */,
+				8EDAC7E22C94E76200E4C789 /* ImageCacheService.swift in Sources */,
 				8EFB63562C51C2290058572C /* MapViewController.swift in Sources */,
 				8E4C154C2A2699D800AA511B /* SceneDelegate.swift in Sources */,
 				8E29336B2C4548D400F2CC69 /* UIColor.swift in Sources */,

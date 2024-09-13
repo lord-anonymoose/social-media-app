@@ -24,24 +24,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         }
     }
     
-    public var userImage: UIImage? {
-        didSet {
-            userImageView.image = userImage
-        }
-    }
-        
-    lazy var userImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "default"))
-        imageView.layer.cornerRadius = 45
-        imageView.clipsToBounds = true
-                        
-        imageView.isUserInteractionEnabled = true
-        
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return imageView
-    }()
-    
     private lazy var nameLabel: UILabel = {
         let userName = UILabel()
         
@@ -139,7 +121,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     }
         
     private func addSuviews() {
-        contentView.addSubview(userImageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(statusLabel)
         contentView.addSubview(statusTextField)
@@ -153,41 +134,27 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
 
         let bottomAnchor = setStatusButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
         bottomAnchor.priority = .required - 1
-             
-        NSLayoutConstraint.activate([
-            userImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
-            userImageView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            userImageView.widthAnchor.constraint(equalToConstant: 90),
-            userImageView.heightAnchor.constraint(equalToConstant: 90),
-        ])
+
         
         NSLayoutConstraint.activate([
             nameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
-            nameLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 16),
+            nameLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 122),
             nameLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-        ])
         
-        NSLayoutConstraint.activate([
             statusLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 16),
-            statusLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 16),
+            statusLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 122),
             statusLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-        ])
         
-        NSLayoutConstraint.activate([
             statusTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 48),
-            statusTextField.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 16),
+            statusTextField.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 122),
             statusTextField.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             statusTextField.heightAnchor.constraint(equalToConstant: 32),
-        ])
         
-        NSLayoutConstraint.activate([
             setStatusButton.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 16),
-            setStatusButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            setStatusButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 122),
             setStatusButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             setStatusButton.heightAnchor.constraint(equalToConstant: 30),
-        ])
         
-        NSLayoutConstraint.activate([
             logoutButton.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             logoutButton.heightAnchor.constraint(equalToConstant: 25),
             logoutButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),

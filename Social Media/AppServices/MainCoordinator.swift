@@ -80,8 +80,8 @@ class MainCoordinator: Coordinator {
         navigationController.popToRootViewController(animated: true)
     }
     
-    func showProfilePicViewController() {
-        let picturePickerViewController = PicturePickerViewController()
+    func showProfilePicViewController(image: UIImage) {
+        let picturePickerViewController = PicturePickerViewController(image: image)
         navigationController.pushViewController(picturePickerViewController, animated: true)
     }
     

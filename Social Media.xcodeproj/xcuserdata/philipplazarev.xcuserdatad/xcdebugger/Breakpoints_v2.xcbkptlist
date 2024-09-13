@@ -14,9 +14,9 @@
             filePath = "Social Media/Modules/Profile/ProfileHeader/ProfileHeaderView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "208"
-            endingLineNumber = "208"
-            landmarkName = "startTimer()"
+            startingLineNumber = "175"
+            endingLineNumber = "175"
+            landmarkName = "setupConstraints()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
