@@ -127,6 +127,27 @@ final class FirebaseService {
         }
     }
     
+    func checkIfEmailIsRegistered(email: String, completion: @escaping (Bool) -> Void) {
+        let fakePassword = "SomeRandomPassword123!"
+
+        Auth.auth().createUser(withEmail: email, password: fakePassword) { (authResult, error) in
+            if let error = error as NSError? {
+                if error.code == AuthErrorCode.emailAlreadyInUse.rawValue {
+                    completion(true)
+                } else {
+                    completion(false)
+                }
+            } else {
+                authResult?.user.delete(completion: { error in
+                    if let error = error {
+                        print("Ошибка при удалении пользователя: \(error.localizedDescription)")
+                    }
+                    completion(false)
+                })
+            }
+        }
+    }
+    
     func resetPassword(email: String) async throws {
         guard email.isValidEmail() else {
             print(FirebaseServiceError.invalidEmail.localizedDescription)

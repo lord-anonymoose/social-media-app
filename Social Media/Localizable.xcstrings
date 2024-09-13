@@ -820,6 +820,9 @@
         }
       }
     },
+    "User with this email already exists!" : {
+
+    },
     "Username" : {
       "extractionState" : "stale",
       "localizations" : {

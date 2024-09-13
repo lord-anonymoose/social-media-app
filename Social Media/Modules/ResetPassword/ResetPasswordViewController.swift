@@ -127,8 +127,6 @@ final class ResetPasswordViewController: UIViewController {
             sendResetLinkButton.heightAnchor.constraint(equalToConstant: 50),
             sendResetLinkButton.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 25),
             sendResetLinkButton.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -25)
-            
-            
         ])
     }
     
