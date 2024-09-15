@@ -21,6 +21,9 @@
 		8E2933772C454ADB00F2CC69 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2933762C454ADB00F2CC69 /* UIViewController.swift */; };
 		8E2D1B342A54C32300003EFF /* UserPosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D1B332A54C32300003EFF /* UserPosts.swift */; };
 		8E32E8222BF8B6AE00F2A49C /* SecretWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E32E8212BF8B6AE00F2A49C /* SecretWordViewController.swift */; };
+		8E3AE6702C970AD600CFB33D /* UISymbolButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3AE66F2C970AD600CFB33D /* UISymbolButton.swift */; };
+		8E3AE6732C970ECB00CFB33D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3AE6722C970ECB00CFB33D /* SettingsViewController.swift */; };
+		8E3AE6752C970ED300CFB33D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3AE6742C970ED300CFB33D /* SettingsView.swift */; };
 		8E47DA922C88CA4D00FEB205 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E47DA912C88CA4D00FEB205 /* FirebaseService.swift */; };
 		8E4C154A2A2699D800AA511B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15492A2699D800AA511B /* AppDelegate.swift */; };
 		8E4C154C2A2699D800AA511B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C154B2A2699D800AA511B /* SceneDelegate.swift */; };
@@ -55,7 +58,6 @@
 		8ECCBF602C32A7DE00D5C4C4 /* CheckerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECCBF5F2C32A7DE00D5C4C4 /* CheckerService.swift */; };
 		8ECCBF622C32E38700D5C4C4 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 8ECCBF612C32E38700D5C4C4 /* FirebaseDatabase */; };
 		8ED862A22C9219AF00C95654 /* PicturePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED862A12C9219AF00C95654 /* PicturePickerViewController.swift */; };
-		8EDAC7E02C94E2E700E4C789 /* VerificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDAC7DF2C94E2E700E4C789 /* VerificationViewController.swift */; };
 		8EDAC7E22C94E76200E4C789 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDAC7E12C94E76200E4C789 /* ImageCacheService.swift */; };
 		8EDCB6392C92449800DD9961 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDCB6382C92449800DD9961 /* User.swift */; };
 		8EDCB63B2C92454400DD9961 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDCB63A2C92454400DD9961 /* Post.swift */; };
@@ -96,6 +98,9 @@
 		8E2933762C454ADB00F2CC69 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		8E2D1B332A54C32300003EFF /* UserPosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPosts.swift; sourceTree = "<group>"; };
 		8E32E8212BF8B6AE00F2A49C /* SecretWordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretWordViewController.swift; sourceTree = "<group>"; };
+		8E3AE66F2C970AD600CFB33D /* UISymbolButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISymbolButton.swift; sourceTree = "<group>"; };
+		8E3AE6722C970ECB00CFB33D /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		8E3AE6742C970ED300CFB33D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		8E47DA912C88CA4D00FEB205 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		8E4C15462A2699D800AA511B /* Social Media.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Social Media.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4C15492A2699D800AA511B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -126,7 +131,6 @@
 		8ECCBF562C3207BD00D5C4C4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8ECCBF5F2C32A7DE00D5C4C4 /* CheckerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckerService.swift; sourceTree = "<group>"; };
 		8ED862A12C9219AF00C95654 /* PicturePickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PicturePickerViewController.swift; sourceTree = "<group>"; };
-		8EDAC7DF2C94E2E700E4C789 /* VerificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationViewController.swift; sourceTree = "<group>"; };
 		8EDAC7E12C94E76200E4C789 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
 		8EDCB6382C92449800DD9961 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8EDCB63A2C92454400DD9961 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -154,6 +158,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8E3AE6712C970EBE00CFB33D /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				8E3AE6722C970ECB00CFB33D /* SettingsViewController.swift */,
+				8E3AE6742C970ED300CFB33D /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		8E3FC4B52A4D8D040064F250 /* LogIn */ = {
 			isa = PBXGroup;
 			children = (
@@ -221,10 +234,10 @@
 		8E4C155F2A269BD900AA511B /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				8E3AE6712C970EBE00CFB33D /* Settings */,
 				8E5439392C6EA64E00D257EC /* Loading */,
 				8E3FC4B52A4D8D040064F250 /* LogIn */,
 				8E672EC52C2F60A80063DFC2 /* SignUp */,
-				8EDAC7DE2C94E2D100E4C789 /* Verification */,
 				8EB8D3262C8A39C700571CFA /* ResetPassword */,
 				8E5439332C6E925900D257EC /* SecondaryLogin */,
 				8EC8A3E42A2778D2008CC17C /* Profile */,
@@ -349,6 +362,7 @@
 				8E2933702C45495500F2CC69 /* UITextFieldWithPadding.swift */,
 				8E29336C2C45490D00F2CC69 /* UILoginInputContainer.swift */,
 				8E29336E2C45493200F2CC69 /* UICustomButton.swift */,
+				8E3AE66F2C970AD600CFB33D /* UISymbolButton.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -371,14 +385,6 @@
 				8ED862A12C9219AF00C95654 /* PicturePickerViewController.swift */,
 			);
 			path = Profile;
-			sourceTree = "<group>";
-		};
-		8EDAC7DE2C94E2D100E4C789 /* Verification */ = {
-			isa = PBXGroup;
-			children = (
-				8EDAC7DF2C94E2E700E4C789 /* VerificationViewController.swift */,
-			);
-			path = Verification;
 			sourceTree = "<group>";
 		};
 		8EDCB6352C92401900DD9961 /* AppServices */ = {
@@ -523,6 +529,7 @@
 				8E29336B2C4548D400F2CC69 /* UIColor.swift in Sources */,
 				8E0D227A2C18EDF800A9BBA8 /* MainCoordinator.swift in Sources */,
 				8EF48DA52A27797F0099166A /* ProfileHeaderView.swift in Sources */,
+				8E3AE6752C970ED300CFB33D /* SettingsView.swift in Sources */,
 				8E6B57EF2ADF272800AC47C4 /* StorageService.swift in Sources */,
 				8E586B4C2AA877BD00D89AF6 /* PhotosViewController.swift in Sources */,
 				8EB8D3282C8A39DB00571CFA /* ResetPasswordViewController.swift in Sources */,
@@ -532,6 +539,7 @@
 				8E4C15632A269C1E00AA511B /* FeedViewController.swift in Sources */,
 				8E2933712C45495500F2CC69 /* UITextFieldWithPadding.swift in Sources */,
 				8E29336D2C45490D00F2CC69 /* UILoginInputContainer.swift in Sources */,
+				8E3AE6732C970ECB00CFB33D /* SettingsViewController.swift in Sources */,
 				8E586B522AA898B500D89AF6 /* PhotosCollectionViewCell.swift in Sources */,
 				8EDCB63B2C92454400DD9961 /* Post.swift in Sources */,
 				8E32E8222BF8B6AE00F2A49C /* SecretWordViewController.swift in Sources */,
@@ -543,6 +551,7 @@
 				8EF427B72C6DF7A500B22C46 /* TimerLocalization.swift in Sources */,
 				8E672EC72C2F60E90063DFC2 /* SignUpViewController.swift in Sources */,
 				8EDCB6392C92449800DD9961 /* User.swift in Sources */,
+				8E3AE6702C970AD600CFB33D /* UISymbolButton.swift in Sources */,
 				8ECCBF602C32A7DE00D5C4C4 /* CheckerService.swift in Sources */,
 				8E0D227C2C19FDB200A9BBA8 /* ErrorService.swift in Sources */,
 				8E2D1B342A54C32300003EFF /* UserPosts.swift in Sources */,
@@ -552,7 +561,6 @@
 				8EC3113C2A4C3540006C8FA2 /* Foundation.swift in Sources */,
 				8E2933732C4549EA00F2CC69 /* UIImage.swift in Sources */,
 				8E1F68042A51739C008AE130 /* PostViewCell.swift in Sources */,
-				8EDAC7E02C94E2E700E4C789 /* VerificationViewController.swift in Sources */,
 				8E5439382C6EA64700D257EC /* LoadingViewController.swift in Sources */,
 				8E1CC6842C2394C6007F9108 /* NetworkService.swift in Sources */,
 			);

@@ -51,18 +51,18 @@ final class LogInViewController: UIViewController {
     private lazy var loginInputContainer = UILoginInputContainer()
     
     private lazy var loginTextField: UITextFieldWithPadding = {
-        let placeholder = String(localized: "Email")
+        let placeholder = "Email".localized
         let textField = UITextFieldWithPadding(placeholder: placeholder, isSecureTextEntry: false)
         return textField
     }()
     
     private lazy var passwordTextField: UITextFieldWithPadding = {
-        let placeholder = String(localized: "Password")
+        let placeholder = "Password".localized
         let textField = UITextFieldWithPadding(placeholder: placeholder, isSecureTextEntry: true)
         return textField
     }()
     
-    private lazy var logInButton = UICustomButton(customTitle: String(localized: "Log In")) { [unowned self] in
+    private lazy var logInButton = UICustomButton(customTitle: "Log In".localized) { [unowned self] in
         
         startLoginAnimation()
 
@@ -87,7 +87,7 @@ final class LogInViewController: UIViewController {
                 }
             } catch {
                 stopLoginAnimation()
-                let title = String(localized: "Error!")
+                let title = "Error!".localized
                 showAlert(title: title, description: error.localizedDescription)
                 self.tryCount += 1
                 if self.tryCount > 2 {
@@ -100,7 +100,7 @@ final class LogInViewController: UIViewController {
     private lazy var resetPasswordButton: UIButton = {
         let button = UIButton()
         
-        button.setTitle("Forgot your password? Reset it here.", for: .normal)
+        button.setTitle("Forgot your password? Reset it here.".localized, for: .normal)
         button.setTitleColor(.textColor, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(resetPasswordButtonTapped), for: .touchUpInside)
@@ -129,9 +129,7 @@ final class LogInViewController: UIViewController {
         return activityIndicator
     }()
     
-    private lazy var signUpButton = UICustomButton(customTitle: String(localized: "Not a member yet? Sign up!"), customBackgroundColor: .secondaryColor ,action: {
-        
-        print("Started action")
+    private lazy var signUpButton = UICustomButton(customTitle: "Not a member yet? Sign up!".localized, customBackgroundColor: .secondaryColor ,action: {        
         if let navigationController = self.navigationController {
             let coordinator = MainCoordinator(navigationController: navigationController)
             coordinator.showSignUpViewController()

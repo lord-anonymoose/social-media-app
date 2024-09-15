@@ -133,9 +133,6 @@
         }
       }
     },
-    "Back to Log In" : {
-
-    },
     "Bruteforce password" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -207,6 +204,9 @@
           }
         }
       }
+    },
+    "Dark" : {
+
     },
     "Email" : {
 
@@ -397,6 +397,9 @@
         }
       }
     },
+    "Light" : {
+
+    },
     "Location %lld" : {
       "localizations" : {
         "en" : {
@@ -414,6 +417,7 @@
       }
     },
     "Log In" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -428,6 +432,9 @@
           }
         }
       }
+    },
+    "My information" : {
+
     },
     "Network is not available!" : {
       "comment" : "Error message",
@@ -480,6 +487,7 @@
       }
     },
     "Not a member yet? Sign up!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -544,6 +552,7 @@
       }
     },
     "Password" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -645,9 +654,6 @@
     "Please verify your email before logging in." : {
 
     },
-    "Repeat password" : {
-
-    },
     "Repeat Password" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -664,6 +670,9 @@
           }
         }
       }
+    },
+    "Reset Password" : {
+
     },
     "Residents" : {
       "comment" : "mySectionName",
@@ -721,6 +730,7 @@
       }
     },
     "Sign Up" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -752,6 +762,9 @@
           }
         }
       }
+    },
+    "System" : {
+
     },
     "The URL is not valid!" : {
       "comment" : "Error message",
@@ -820,9 +833,6 @@
         }
       }
     },
-    "User with this email already exists!" : {
-
-    },
     "Username" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -856,16 +866,11 @@
         }
       }
     },
-    "We have sent a verification message to your email. Please, log in to your account again using email and password." : {
-
-    },
-    "We have sent you an email to confirm your address." : {
-
-    },
     "We have sent you an email with instructions for resetting your password" : {
 
     },
     "Welcome on board!" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

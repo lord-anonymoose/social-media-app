@@ -64,11 +64,6 @@ class MainCoordinator: Coordinator {
         navigationController.pushViewController(signUpViewController, animated: true)
     }
     
-    func showVerificationViewController() {
-        let verificationViewController = VerificationViewController()
-        navigationController.pushViewController(verificationViewController, animated: true)
-    }
-    
     func showResetPasswordViewController() {
         let resetPasswordViewController = ResetPasswordViewController()
         navigationController.pushViewController(resetPasswordViewController, animated: true)
@@ -83,6 +78,11 @@ class MainCoordinator: Coordinator {
     func showProfilePicViewController(image: UIImage) {
         let picturePickerViewController = PicturePickerViewController(image: image)
         navigationController.pushViewController(picturePickerViewController, animated: true)
+    }
+    
+    func showSettingsViewController() {
+        let settingsViewController = SettingsViewController()
+        navigationController.pushViewController(settingsViewController, animated: true)
     }
     
     // Feed

@@ -167,6 +167,14 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    @objc func settingsButtonTapped(_ button: UIButton) {
+        print("settingsButtonTapped")
+        if let navigationController = self.navigationController {
+            let coordinator = MainCoordinator(navigationController: navigationController)
+            coordinator.showSettingsViewController()
+        }
+    }
+    
     // MARK: - Private
     private func setupImagePath() {
         if let id = FirebaseService.shared.currentUserID() {
@@ -247,9 +255,26 @@ class ProfileViewController: UIViewController {
         notificationCenter.removeObserver(self)
     }
 
-    
+    /*
     private func setupUserImage() {
         self.userImageView.frame = CGRect.init(x: self.view.bounds.inset(by: self.view.safeAreaInsets).minX + 16, y: self.view.bounds.inset(by: self.view.safeAreaInsets).minY + 16, width: 90, height: 90)
+        
+        //self.userImageView.frame = CGRect.init(x: self.feedView.bounds.inset(by: self.feedView.safeAreaInsets).minX + 16, y: self.feedView.bounds.inset(by: self.view.safeAreaInsets).minY + 16, width: 90, height: 90)
+    }
+    */
+    
+    private func setupUserImage() {
+        let imageSize: CGFloat = 90
+        let xPosition = self.view.safeAreaInsets.left + 16
+        let yPosition = self.view.safeAreaInsets.top + 16 // Исправлено на safeAreaInsets.top
+        
+        self.userImageView.frame = CGRect(
+            x: xPosition,
+            y: yPosition,
+            width: imageSize,
+            height: imageSize
+        )
+        self.userImageView.layer.cornerRadius = imageSize / 2
     }
     
     private func downloadUserImage() {
@@ -339,6 +364,7 @@ extension ProfileViewController: UITableViewDataSource {
                 view.user = user
                 //view.userImageView.addGestureRecognizer(tapRed)
                 view.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+                view.settingsButton.addTarget(self, action: #selector(settingsButtonTapped), for: .touchUpInside)
                 return view
             }
         }
@@ -361,6 +387,12 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
         }
     }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let headerView = view as? UITableViewHeaderFooterView else { return }
+        headerView.contentView.superview?.bringSubviewToFront(headerView.contentView)
+        // Здесь можно кастомизировать заголовок, если нужно
+    }
 }
 
 extension ProfileViewController: UITableViewDelegate {
@@ -371,5 +403,9 @@ extension ProfileViewController: UITableViewDelegate {
             self.navigationController?.pushViewController(photosViewController, animated: true)
         }
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        setupUserImage() // Обновляем положение userImageView при каждом изменении прокрутки
     }
 }

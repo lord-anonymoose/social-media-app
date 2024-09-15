@@ -64,6 +64,9 @@ extension String {
     var punctuation: String { return "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~" }
     var letters:     String { return lowercase + uppercase }
     var printable:   String { return digits + letters + punctuation }
+    var localized: String {
+            String(localized: String.LocalizationValue(self))
+    }
     
     mutating func replace(at index: Int, with character: Character) {
         var stringArray = Array(self)
