@@ -25,7 +25,6 @@ class MainCoordinator: Coordinator {
     }
     
     func login() {
-        //addFeedViewController()
         addProfileViewController { [weak self] in
             guard let self = self else { return }
             

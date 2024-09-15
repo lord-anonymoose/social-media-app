@@ -85,7 +85,7 @@ final class SignUpViewController: UIViewController {
     private lazy var signUpButton = UICustomButton(customTitle: "Sign Up".localized, action: { [self] in
         self.startSignupProcess()
         
-        FirebaseService.shared.checkIfEmailIsRegistered(email: self.loginInput.text ?? "") { isRegistered in
+        FirebaseService.shared.checkIfEmailIsRegistered(email: loginInput.text!) { isRegistered in
             if isRegistered {
                 let title = "Error!".localized
                 let description = "User with this email already exists!".localized

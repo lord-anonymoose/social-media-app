@@ -21,6 +21,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
                                
         let window = UIWindow(windowScene: scene)
+        do {
+            try Auth.auth().signOut()
+            print("Signed out")
+        } catch {
+            
+        }
                 
         let loadingViewController = LoadingViewController()
         let navigationController = UINavigationController(rootViewController: loadingViewController)

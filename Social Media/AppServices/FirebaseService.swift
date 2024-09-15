@@ -67,7 +67,21 @@ final class FirebaseService {
         }
         
         do {
+            //try await Auth.auth().signIn(withEmail: email, password: password)
             let authResult = try await Auth.auth().signIn(withEmail: email, password: password)
+            let uid = authResult.user.uid
+
+            // Проверка наличия записи о пользователе в базе данных
+            let userExists = try await checkIfUserExistsInDatabase(uid: uid)
+
+            if !userExists {
+                let newUser = User(email: email)
+                try await addUserToDatabase(uid: uid, user: newUser)
+                print("New user added to database.")
+            } else {
+                print("User already exists in the database.")
+            }
+            
         } catch {
             if error.localizedDescription.contains("The supplied auth credential is malformed or has expired.") {
                 print(FirebaseServiceError.wrongPassword.localizedDescription)
@@ -105,16 +119,6 @@ final class FirebaseService {
         do {
             let authResult = try await Auth.auth().createUser(withEmail: email, password: password1)
             try await authResult.user.sendEmailVerification()
-            
-            let databaseRef = Database.database().reference()
-            let user = User(email: email)
-            
-            do {
-                try await databaseRef.child("users").child(authResult.user.uid).setValue(user.toDictionary())
-            } catch {
-                throw FirebaseServiceError.firebaseError(error.localizedDescription)
-            }
-            
             do {
                 try signOut()
             } catch {
@@ -145,6 +149,18 @@ final class FirebaseService {
                 })
             }
         }
+    }
+    
+    func checkIfUserExistsInDatabase(uid: String) async throws -> Bool {
+        let databaseRef = Database.database().reference()
+        let snapshot = try await databaseRef.child("users").child(uid).getData()
+        
+        return snapshot.exists()
+    }
+
+    func addUserToDatabase(uid: String, user: User) async throws {
+        let databaseRef = Database.database().reference()
+        try await databaseRef.child("users").child(uid).setValue(user.toDictionary())
     }
     
     func resetPassword(email: String) async throws {
