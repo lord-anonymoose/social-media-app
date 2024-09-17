@@ -177,9 +177,19 @@ class ProfileViewController: UIViewController {
     
     // MARK: - Private
     private func setupImagePath() {
+        do {
+            guard let id = try FirebaseService.shared.currentUserID() else {
+                return
+            }
+            self.imagePath = "ProfilePictures/\(id).jpg"
+        } catch {
+            self.showAlert(title: "Error!".localized, description: error.localizedDescription)
+        }
+        /*
         if let id = FirebaseService.shared.currentUserID() {
             self.imagePath = "ProfilePictures/\(id).jpg"
         }
+         */
     }
     
     
@@ -278,6 +288,22 @@ class ProfileViewController: UIViewController {
     }
     
     private func downloadUserImage() {
+        do {
+            guard let id = try FirebaseService.shared.currentUserID() else {
+                return
+            }
+            let path = "ProfilePictures/\(id).jpg"
+            ImageCacheService.shared.loadImage(from: path) { [weak self] image in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    self.userImageView.image = image
+                    self.feedView.reloadData()
+                }
+            }
+        } catch {
+            self.showAlert(title: "Error!".localized, description: error.localizedDescription)
+        }
+        /*
         if let id = FirebaseService.shared.currentUserID() {
             let path = "ProfilePictures/\(id).jpg"
             print(path)
@@ -289,6 +315,7 @@ class ProfileViewController: UIViewController {
                 }
             }
         }
+         */
     }
     
     private func blurAppears() {

@@ -21,19 +21,22 @@ enum FirebaseServiceError: Error, LocalizedError {
     case passwordsNotMatch
     case firebaseError(String)
     case wrongPassword
+    case userNotExist
     
     var errorDescription: String? {
         switch self {
         case .invalidEmail:
-            return "The email address is not valid."
+            return "The email address is not valid.".localized
         case .emptyPassword:
-            return "The password field cannot be empty."
+            return "The password field cannot be empty.".localized
         case .passwordsNotMatch:
-            return "Passwords do not match."
+            return "Passwords do not match.".localized
         case .firebaseError(let message):
             return message
         case .wrongPassword:
-            return "Wrong credentials!"
+            return "Wrong credentials!".localized
+        case .userNotExist:
+            return "User doesn't exist!".localized
         }
     }
 }
@@ -46,9 +49,10 @@ final class FirebaseService {
         
     }
     
-    func currentUserID() -> String? {
+    func currentUserID() throws -> String? {
         guard let id = Auth.auth().currentUser?.uid else {
-            print("User not found")
+            throw FirebaseServiceError.userNotExist
+            //print("User not found")
             return nil
         }
         return id
@@ -67,11 +71,10 @@ final class FirebaseService {
         }
         
         do {
-            //try await Auth.auth().signIn(withEmail: email, password: password)
             let authResult = try await Auth.auth().signIn(withEmail: email, password: password)
             let uid = authResult.user.uid
 
-            // Проверка наличия записи о пользователе в базе данных
+            // Check if user exists in Realtime Database
             let userExists = try await checkIfUserExistsInDatabase(uid: uid)
 
             if !userExists {
@@ -130,6 +133,20 @@ final class FirebaseService {
         }
     }
     
+    func deleteCurrentUser() async throws {
+        guard let user = Auth.auth().currentUser else {
+            throw FirebaseServiceError.userNotExist
+        }
+        
+        do {
+            try await user.delete()
+            print("User successfully deleted from Firebase Authentication.")
+        } catch {
+            print("Error deleting user: \(error.localizedDescription)")
+            throw FirebaseServiceError.firebaseError(error.localizedDescription)
+        }
+    }
+    
     func checkIfEmailIsRegistered(email: String, completion: @escaping (Bool) -> Void) {
         let fakePassword = "SomeRandomPassword123!"
 
@@ -171,7 +188,6 @@ final class FirebaseService {
         
         do {
             try await Auth.auth().sendPasswordReset(withEmail: email)
-            print("Email sent")
         } catch {
             print(error.localizedDescription)
             throw FirebaseServiceError.firebaseError(error.localizedDescription)

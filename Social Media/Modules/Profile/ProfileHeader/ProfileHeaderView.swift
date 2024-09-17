@@ -61,6 +61,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         if self.user != nil {
         }
         
+        /*
         if let id = FirebaseService.shared.currentUserID() {
             Task {
                 do {
@@ -72,6 +73,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
                 }
             }
         }
+         */
     }
     
     

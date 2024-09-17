@@ -13,7 +13,8 @@ struct SettingsView: View {
     @State private var status = "Hello, world"
     @State private var isDisabled = true
     
-    @State var showsAlert = false
+    @State var showLogoutAlert = false
+    @State var showDeleteAccountAlert = false
 
     @AppStorage("preferredTheme") private var preferredTheme = 0
     
@@ -44,29 +45,22 @@ struct SettingsView: View {
                             Spacer()
                         }
                     }
-                    .alert(isPresented: self.$showsAlert) {
+                    .alert(isPresented: self.$showLogoutAlert) {
                         Alert(
                             title: Text("Warning!".localized),
                             message: Text("Resetting your password would lead to logging out from the app. Do you want to continue?".localized),
-                            primaryButton: .destructive(Text("Reset Password")) {
-                                Task {
-                                    do {
-                                        try await FirebaseService.shared.resetPassword(email: "severus99@icloud.com")
-                                        let navigationController = UINavigationController()
-                                        let coordinator = MainCoordinator(navigationController: navigationController)
-                                        coordinator.logout()
-                                    } catch {
-                                    }
-                                }
+                            primaryButton: .destructive(Text("Reset Password".localized)) {
+                                logout()
                             },
                             secondaryButton: .cancel()
                         )
                     }
+
                 }
                 
                 Section("Privacy & Security".localized) {
                     Button("Send reset password link".localized) {
-                        showsAlert.toggle()
+                        showLogoutAlert.toggle()
                     }
                 }
                 
@@ -76,11 +70,41 @@ struct SettingsView: View {
                         Text("Light").tag(1)
                         Text("Dark").tag(2)
                     }
-                    
                 }
                 
+                Button("Log out".localized, role: .cancel) {
+                    logout()
+                }
+                
+                Button("Delete account".localized, role: .destructive) {
+                    showDeleteAccountAlert.toggle()
+                }
+                
+                .alert(isPresented: self.$showDeleteAccountAlert) {
+                    Alert(
+                        title: Text("Warning!".localized),
+                        message: Text("Deleting account is permanent. You can not undo or restore your account after that".localized),
+                        primaryButton: .destructive(Text("Delete account".localized)) {
+                            logout()
+                        },
+                          secondaryButton: .cancel()
+                    )
+                }
             }
             .navigationTitle("Settings".localized)
+        }
+    }
+    
+    private func logout() {
+        Task {
+            do {
+                try await FirebaseService.shared.resetPassword(email: "severus99@icloud.com")
+                let navigationController = UINavigationController()
+                let coordinator = MainCoordinator(navigationController: navigationController)
+                coordinator.logout()
+            } catch {
+                print("Error")
+            }
         }
     }
 }

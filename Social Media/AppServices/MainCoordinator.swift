@@ -63,6 +63,7 @@ class MainCoordinator: Coordinator {
         navigationController.pushViewController(signUpViewController, animated: true)
     }
     
+
     func showResetPasswordViewController() {
         let resetPasswordViewController = ResetPasswordViewController()
         navigationController.pushViewController(resetPasswordViewController, animated: true)

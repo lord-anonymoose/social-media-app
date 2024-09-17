@@ -41,7 +41,7 @@ final class LogInViewController: UIViewController {
     }()
     
     private lazy var appLogo: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "appLogo"))
+        let imageView = UIImageView(image: UIImage(named: "logo"))
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
         

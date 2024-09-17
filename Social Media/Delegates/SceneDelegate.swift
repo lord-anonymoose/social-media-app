@@ -21,36 +21,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
                                
         let window = UIWindow(windowScene: scene)
-        do {
-            try Auth.auth().signOut()
-            print("Signed out")
-        } catch {
-            
-        }
                 
         let loadingViewController = LoadingViewController()
         let navigationController = UINavigationController(rootViewController: loadingViewController)
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         self.window = window
-                
-        print("Window is visible")
-        
-        if let id = FirebaseService.shared.currentUserID() {
+                        
+        do {
+            guard let id = try FirebaseService.shared.currentUserID() else {
+                return
+            }
             FirebaseService.shared.fetchUser(by: id) { user in
                 if let user = user {
                     let secondaryLoginViewController = SecondaryLoginViewController(user: user)
                     let newNavigationController = UINavigationController(rootViewController: secondaryLoginViewController)
                     window.rootViewController = newNavigationController
-                } else {
-                    print("User not equal user")
                 }
             }
-        }
-        else {
+        } catch {
             let loginViewController = LogInViewController()
             let newNavigationController = UINavigationController(rootViewController: loginViewController)
             window.rootViewController = newNavigationController
+            return
+            
         }
     }
 
