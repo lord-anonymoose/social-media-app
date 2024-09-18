@@ -29,35 +29,6 @@ class ImageCacheService {
         }
     }
     
-    /*
-    func loadImage(from path: String, completion: @escaping (UIImage?) -> Void) {
-        let pathKey = path as NSString
-        
-        // Check if image is cached
-        if let cachedImage = imageCache.object(forKey: pathKey) {
-            // Check if image is up to date
-            let storageRef = Storage.storage().reference().child(path)
-            storageRef.getMetadata { [weak self] metadata, error in
-                if let metadata = metadata {
-                    if let cachedMetadata = self?.imageMetadataCache.object(forKey: pathKey) {
-                        if metadata.updated == cachedMetadata.updated {
-                            print("No need to download image")
-                            completion(cachedImage)
-                            return
-                        }
-                    }
-                    // Update cached metadata
-                    self?.imageMetadataCache.setObject(metadata, forKey: pathKey)
-                }
-                print("Needed to download image")
-                self?.downloadImage(from: path, completion: completion)
-            }
-            return
-        } else {
-            downloadImage(from: path, completion: completion)
-        }
-    }*/
-    
     func loadImage(from path: String, completion: @escaping (UIImage?) -> Void) {
         let pathKey = path as NSString
         

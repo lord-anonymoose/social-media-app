@@ -59,6 +59,7 @@ class ProfileViewController: UIViewController {
             imageView.image = UIImage(named: "default")
         }
         
+        
         imageView.layer.cornerRadius = 45
         imageView.clipsToBounds = true
         imageView.alpha = 1.0
@@ -130,7 +131,6 @@ class ProfileViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func didTapPicture() {
-        print(didTapPicture)
         blurAppears()
     }
     
@@ -160,7 +160,6 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func changeImageButtonTapped(_ button: UIButton) {
-        print("changeImageButtonTapped")
         if let navigationController = self.navigationController {
             let coordinator = MainCoordinator(navigationController: navigationController)
             coordinator.showProfilePicViewController(image: self.userImageView.image ?? UIImage(named: "default")!)
@@ -168,7 +167,6 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func settingsButtonTapped(_ button: UIButton) {
-        print("settingsButtonTapped")
         if let navigationController = self.navigationController {
             let coordinator = MainCoordinator(navigationController: navigationController)
             coordinator.showSettingsViewController()
@@ -185,11 +183,6 @@ class ProfileViewController: UIViewController {
         } catch {
             self.showAlert(title: "Error!".localized, description: error.localizedDescription)
         }
-        /*
-        if let id = FirebaseService.shared.currentUserID() {
-            self.imagePath = "ProfilePictures/\(id).jpg"
-        }
-         */
     }
     
     
@@ -274,6 +267,7 @@ class ProfileViewController: UIViewController {
     */
     
     private func setupUserImage() {
+        self.userImageView.alpha = 0.0
         let imageSize: CGFloat = 90
         let xPosition = self.view.safeAreaInsets.left + 16
         let yPosition = self.view.safeAreaInsets.top + 16 // Исправлено на safeAreaInsets.top
@@ -303,19 +297,6 @@ class ProfileViewController: UIViewController {
         } catch {
             self.showAlert(title: "Error!".localized, description: error.localizedDescription)
         }
-        /*
-        if let id = FirebaseService.shared.currentUserID() {
-            let path = "ProfilePictures/\(id).jpg"
-            print(path)
-            ImageCacheService.shared.loadImage(from: path) { [weak self] image in
-                guard let self = self else { return }
-                DispatchQueue.main.async {
-                    self.userImageView.image = image
-                    self.feedView.reloadData()
-                }
-            }
-        }
-         */
     }
     
     private func blurAppears() {
@@ -369,7 +350,7 @@ class ProfileViewController: UIViewController {
                 self.backgroundBlur.alpha = 0.0
                 self.setupUserImage()
                 self.userImageView.layer.cornerRadius = 45
-                //self.userImageView.alpha = 0.0
+                self.userImageView.alpha = 0.0
                 self.changeImageButton.alpha = 0.0
                 self.changeImageButton.isUserInteractionEnabled = false
             }
@@ -389,7 +370,13 @@ extension ProfileViewController: UITableViewDataSource {
             if let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView") as? ProfileHeaderView {
                 view.isUserInteractionEnabled = true
                 view.user = user
-                //view.userImageView.addGestureRecognizer(tapRed)
+                if let path = self.imagePath {
+                    view.userImageView.image = ImageCacheService.shared.getCachedImage(from: path)
+                } else {
+                    view.userImageView.image = UIImage(named: "default")
+                }
+                let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapPicture))
+                view.userImageView.addGestureRecognizer(tapGestureRecognizer)
                 view.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
                 view.settingsButton.addTarget(self, action: #selector(settingsButtonTapped), for: .touchUpInside)
                 return view
@@ -415,11 +402,13 @@ extension ProfileViewController: UITableViewDataSource {
         }
     }
     
+    /*
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         guard let headerView = view as? UITableViewHeaderFooterView else { return }
         headerView.contentView.superview?.bringSubviewToFront(headerView.contentView)
         // Здесь можно кастомизировать заголовок, если нужно
     }
+     */
 }
 
 extension ProfileViewController: UITableViewDelegate {
@@ -430,9 +419,5 @@ extension ProfileViewController: UITableViewDelegate {
             self.navigationController?.pushViewController(photosViewController, animated: true)
         }
         tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        setupUserImage() // Обновляем положение userImageView при каждом изменении прокрутки
     }
 }

@@ -76,8 +76,11 @@ struct SettingsView: View {
                     logout()
                 }
                 
-                Button("Delete account".localized, role: .destructive) {
-                    showDeleteAccountAlert.toggle()
+                Section() {
+                    Button("Delete account".localized, role: .destructive) {
+                        
+                        showDeleteAccountAlert.toggle()
+                    }
                 }
                 
                 .alert(isPresented: self.$showDeleteAccountAlert) {
@@ -85,7 +88,16 @@ struct SettingsView: View {
                         title: Text("Warning!".localized),
                         message: Text("Deleting account is permanent. You can not undo or restore your account after that".localized),
                         primaryButton: .destructive(Text("Delete account".localized)) {
-                            logout()
+                            Task {
+                                do {
+                                    try await FirebaseService.shared.deleteCurrentUser()
+                                    let navigationController = UINavigationController()
+                                    let coordinator = MainCoordinator(navigationController: navigationController)
+                                    coordinator.logout()
+                                } catch {
+                                    print("Couldn't delete user")
+                                }
+                            }
                         },
                           secondaryButton: .cancel()
                     )

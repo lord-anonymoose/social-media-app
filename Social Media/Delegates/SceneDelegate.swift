@@ -27,16 +27,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         self.window = window
-                        
+        
+        let loginViewController = LogInViewController()
+        let newNavigationController = UINavigationController(rootViewController: loginViewController)
+        
         do {
             guard let id = try FirebaseService.shared.currentUserID() else {
+                window.rootViewController = newNavigationController
                 return
             }
             FirebaseService.shared.fetchUser(by: id) { user in
-                if let user = user {
+                if user != nil {
+                    let newNavigationController = UINavigationController()
+                    let coordinator = MainCoordinator(navigationController: newNavigationController)
+                    coordinator.login()
+                    window.rootViewController = newNavigationController
+                    /*
                     let secondaryLoginViewController = SecondaryLoginViewController(user: user)
                     let newNavigationController = UINavigationController(rootViewController: secondaryLoginViewController)
                     window.rootViewController = newNavigationController
+                    */
+                } else {
+                    window.rootViewController = newNavigationController
+                    return
                 }
             }
         } catch {
@@ -44,7 +57,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let newNavigationController = UINavigationController(rootViewController: loginViewController)
             window.rootViewController = newNavigationController
             return
-            
         }
     }
 
@@ -55,13 +67,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
 
         let authType = LocalAuthorizationService.biometricType()
+        /*
         if authType == .none {
             do {
                 try Auth.auth().signOut()
                 print("Signed out!")
             } catch {}
         }
-
+        */
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {

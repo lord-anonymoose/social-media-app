@@ -53,7 +53,6 @@ final class FirebaseService {
         guard let id = Auth.auth().currentUser?.uid else {
             throw FirebaseServiceError.userNotExist
             //print("User not found")
-            return nil
         }
         return id
     }
@@ -139,6 +138,13 @@ final class FirebaseService {
         }
         
         do {
+            try await self.deleteUserFromDatabase(uid: user.uid)
+        } catch {
+            print("Couldn't delete folder from database: \(error.localizedDescription)")
+            throw FirebaseServiceError.firebaseError(error.localizedDescription)
+        }
+        
+        do {
             try await user.delete()
             print("User successfully deleted from Firebase Authentication.")
         } catch {
@@ -180,6 +186,11 @@ final class FirebaseService {
         try await databaseRef.child("users").child(uid).setValue(user.toDictionary())
     }
     
+    func deleteUserFromDatabase(uid: String) async throws {
+        let databaseRef = Database.database().reference()
+        try await databaseRef.child("users").child(uid).removeValue()
+    }
+    
     func resetPassword(email: String) async throws {
         guard email.isValidEmail() else {
             print(FirebaseServiceError.invalidEmail.localizedDescription)
@@ -200,6 +211,11 @@ final class FirebaseService {
         databaseRef.child("users").child(uid).observeSingleEvent(of: .value, with: { snapshot in
             guard let value = snapshot.value as? [String: Any] else {
                 print("User with UID \(uid) not found")
+                Task {
+                    do {
+                        try FirebaseService.shared.signOut()
+                    }
+                }
                 completion(nil)
                 return
             }
@@ -208,8 +224,11 @@ final class FirebaseService {
             let name = value["name"] as? String ?? "Unknown"
             let image = value["image"] as? String ?? "default"
             let status = value["status"] as? String ?? ""
+            let likes = value["likes"] as? [String] ?? []
+            let images = value["images"] as? [String] ?? []
             
-            let user = User(email: email, name: name, image: image, status: status)
+            let user = User(email: email, name: name, image: image, status: status, likes: likes, images: images)
+            
             completion(user)
         }) { error in
             print("Error fetching user: \(error.localizedDescription)")

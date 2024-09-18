@@ -27,6 +27,18 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         }
     }
     
+    lazy var userImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "default")
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 45
+        imageView.isUserInteractionEnabled = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return imageView
+    }()
+    
     private lazy var nameLabel: UILabel = {
         let userName = UILabel()
         
@@ -89,17 +101,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     lazy var logoutButton = UISymbolButton(image: UIImage(systemName: "rectangle.portrait.and.arrow.forward")!, tintColor: .systemRed)
     
     lazy var settingsButton = UISymbolButton(image: UIImage(systemName: "gear")!, tintColor: .systemGray)
-    
-    /*lazy var logoutButton: UISy = {
-        let button = UIButton()
-        let image = UIImage(systemName: "rectangle.portrait.and.arrow.forward")
-        button.setImage(image, for: .normal)
-        button.tintColor = .systemRed
-        button.isUserInteractionEnabled = true
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-     */
+
     
     private lazy var statusTextField: UITextFieldWithPadding = {
         let placeholder = String(localized: "Hello, world!")
@@ -113,14 +115,15 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        addSuviews()
+        
+        addSubviews()
         setupConstraints()
         changeBackgroundColor()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        addSuviews()
+        addSubviews()
         setupConstraints()
         changeBackgroundColor()
     }
@@ -140,11 +143,10 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
        #endif
     }
         
-    private func addSuviews() {
+    private func addSubviews() {
+        contentView.addSubview(userImageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(statusLabel)
-        contentView.addSubview(statusTextField)
-        contentView.addSubview(setStatusButton)
         contentView.addSubview(logoutButton)
         contentView.addSubview(settingsButton)
     }
@@ -153,19 +155,27 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         
         let safeAreaLayoutGuide = contentView.safeAreaLayoutGuide
 
-        let bottomAnchor = setStatusButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
+        let bottomAnchor = userImageView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
         bottomAnchor.priority = .required - 1
 
         
         NSLayoutConstraint.activate([
+            
+            userImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
+            userImageView.heightAnchor.constraint(equalToConstant: 90),
+            userImageView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            userImageView.widthAnchor.constraint(equalToConstant: 90),
+            
             nameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
             nameLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 122),
             nameLabel.trailingAnchor.constraint(equalTo: settingsButton.leadingAnchor, constant: -16),
         
             statusLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 16),
+            statusLabel.heightAnchor.constraint(equalToConstant: 32),
             statusLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 122),
             statusLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
         
+            /*
             statusTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 48),
             statusTextField.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 122),
             statusTextField.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
@@ -175,7 +185,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
             setStatusButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 122),
             setStatusButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             setStatusButton.heightAnchor.constraint(equalToConstant: 30),
-        
+            */
+            
             logoutButton.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             logoutButton.heightAnchor.constraint(equalToConstant: 25),
             logoutButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
