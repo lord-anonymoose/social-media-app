@@ -9,12 +9,14 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @State private var name = "Philipp Lazarev"
-    @State private var status = "Hello, world"
-    @State private var isDisabled = true
+    @State var name: String
+    @State var status: String
     
     @State var showLogoutAlert = false
     @State var showDeleteAccountAlert = false
+    
+    @State var showAlertMessage = false
+    @State var alertMessage: String?
 
     @AppStorage("preferredTheme") private var preferredTheme = 0
     
@@ -29,7 +31,6 @@ struct SettingsView: View {
                             Text("Name".localized)
                                 .padding(.trailing, 25)
                             TextField("Name".localized, text: $name)
-                                .disabled(isDisabled)
                         }
                         Divider()
                         HStack {
@@ -39,8 +40,16 @@ struct SettingsView: View {
                         }
                         Divider()
                         HStack {
-                            Button("Save information".localized) {
-                                print("Information saved")
+                            Button("Save".localized) {
+                                Task {
+                                    do {
+                                        try await FirebaseService.shared.updateUserInformation(newName: name, newStatus: status)
+                                        alertMessage = "Your information is saved!".localized
+                                        showAlertMessage.toggle()
+                                    } catch {
+                                        
+                                    }
+                                }
                             }
                             Spacer()
                         }
@@ -102,6 +111,18 @@ struct SettingsView: View {
                           secondaryButton: .cancel()
                     )
                 }
+                
+                .alert(isPresented: self.$showAlertMessage) {
+                    Alert(
+                        title: Text("Alert!".localized),
+                        message: Text(alertMessage ?? ""),
+                        dismissButton: .default(Text("OK".localized)) {
+                            let navigationController = UINavigationController()
+                            let coordinator = MainCoordinator(navigationController: navigationController)
+                            coordinator.login()
+                        }
+                    )
+                }
             }
             .navigationTitle("Settings".localized)
         }
@@ -122,5 +143,5 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView()
+    SettingsView(name: "Name", status: "Status")
 }

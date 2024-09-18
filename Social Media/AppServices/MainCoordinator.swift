@@ -27,7 +27,6 @@ class MainCoordinator: Coordinator {
     func login() {
         addProfileViewController { [weak self] in
             guard let self = self else { return }
-            
 
             let tabBarViewController = UITabBarController()
             tabBarViewController.viewControllers = self.controllers.map {
@@ -81,8 +80,19 @@ class MainCoordinator: Coordinator {
     }
     
     func showSettingsViewController() {
-        let settingsViewController = SettingsViewController()
-        navigationController.pushViewController(settingsViewController, animated: true)
+        if let id = Auth.auth().currentUser?.uid {
+            FirebaseService.shared.fetchUser(by: id) { user in
+                if let user = user {
+                    let settingsViewController = SettingsViewController(name: user.name, status: user.status)
+                    self.navigationController.pushViewController(settingsViewController, animated: true)
+                    
+                } else {
+                    print("User not found")
+                }
+            }
+        } else {
+            print("Not logged in")
+        }
     }
     
     // Feed

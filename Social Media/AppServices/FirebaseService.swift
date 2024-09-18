@@ -235,14 +235,16 @@ final class FirebaseService {
             completion(nil)
         }
     }
-    
-    func setUserStatus(newStatus: String, for userID: String) async throws {
-        let databaseRef = Database.database().reference()
 
-        do {
-            try await databaseRef.child("users").child(userID).child("status").setValue(newStatus)
-        } catch {
-            throw FirebaseServiceError.firebaseError(error.localizedDescription)
+    func updateUserInformation(newName: String, newStatus: String) async throws {
+        if let id = Auth.auth().currentUser?.uid {
+            let databaseRef = Database.database().reference()
+            do {
+                try await databaseRef.child("users").child(id).child("name").setValue(newName)
+                try await databaseRef.child("users").child(id).child("status").setValue(newStatus)
+            } catch {
+                throw FirebaseServiceError.firebaseError(error.localizedDescription)
+            }
         }
     }
 }
