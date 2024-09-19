@@ -38,33 +38,18 @@ struct SettingsView: View {
                                 .padding(.trailing, 25)
                             TextField("Status".localized, text: $status)
                         }
-                        Divider()
-                        HStack {
-                            Button("Save".localized) {
-                                Task {
-                                    do {
-                                        try await FirebaseService.shared.updateUserInformation(newName: name, newStatus: status)
-                                        alertMessage = "Your information is saved!".localized
-                                        showAlertMessage.toggle()
-                                    } catch {
-                                        
-                                    }
-                                }
-                            }
-                            Spacer()
+                    }
+                }
+                
+                Button("Save".localized) {
+                    Task {
+                        do {
+                            try await FirebaseService.shared.updateUserInformation(newName: name, newStatus: status)
+                            alertMessage = "Your information is saved!".localized
+                            showAlertMessage.toggle()
+                        } catch {
                         }
                     }
-                    .alert(isPresented: self.$showLogoutAlert) {
-                        Alert(
-                            title: Text("Warning!".localized),
-                            message: Text("Resetting your password would lead to logging out from the app. Do you want to continue?".localized),
-                            primaryButton: .destructive(Text("Reset Password".localized)) {
-                                logout()
-                            },
-                            secondaryButton: .cancel()
-                        )
-                    }
-
                 }
                 
                 Section("Privacy & Security".localized) {
@@ -90,6 +75,17 @@ struct SettingsView: View {
                         
                         showDeleteAccountAlert.toggle()
                     }
+                }
+                
+                .alert(isPresented: self.$showLogoutAlert) {
+                    Alert(
+                        title: Text("Warning!".localized),
+                        message: Text("Resetting your password would lead to logging out from the app. Do you want to continue?".localized),
+                        primaryButton: .destructive(Text("Reset Password".localized)) {
+                            logout()
+                        },
+                        secondaryButton: .cancel()
+                    )
                 }
                 
                 .alert(isPresented: self.$showDeleteAccountAlert) {

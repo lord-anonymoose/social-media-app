@@ -25,6 +25,7 @@ class MainCoordinator: Coordinator {
     }
     
     func login() {
+        addMakePostViewController()
         addProfileViewController { [weak self] in
             guard let self = self else { return }
 
@@ -114,7 +115,7 @@ class MainCoordinator: Coordinator {
         
         FirebaseService.shared.fetchUser(by: id ?? "0") { user in
             if let user = user {
-                let profileViewController = ProfileViewController(user: user)
+                let profileViewController = ProfileViewController(user: user, isMyUser: true)
                 let profileViewImage = UIImage(systemName: "person.fill")
                 profileViewController.tabBarItem = UITabBarItem(title: nil, image: profileViewImage, tag: 1)
                 self.controllers.append(profileViewController)
@@ -124,5 +125,12 @@ class MainCoordinator: Coordinator {
             }
             completion() // Call the completion handler after fetching the user
         }
+    }
+    
+    func addMakePostViewController() {
+        let makePostViewController = MakePostViewController()
+        let makePostImage = UIImage(systemName: "plus.circle")
+        makePostViewController.tabBarItem = UITabBarItem(title: nil, image: makePostImage, tag: 2)
+        controllers.append(makePostViewController)
     }
 }

@@ -60,39 +60,56 @@ final class FirebaseService {
         return id
     }
     
-    func signIn(email: String, password: String) async throws {
+    private func checkIfEmailIsVerified() async -> Bool {
+        guard let user = Auth.auth().currentUser else {
+            print("No user is logged in")
+            return false
+        }
         
+        do {
+            try await user.reload()
+            return user.isEmailVerified
+        } catch {
+            print("Failed to reload user: \(error.localizedDescription)")
+            return false
+        }
+    }
+    
+    func signIn(email: String, password: String) async throws {
         guard email.isValidEmail() else {
-            print(FirebaseServiceError.invalidEmail.localizedDescription)
             throw FirebaseServiceError.invalidEmail
         }
         
         guard !password.isEmpty else {
-            print(FirebaseServiceError.emptyPassword.localizedDescription)
             throw FirebaseServiceError.emptyPassword
         }
         
         do {
             let authResult = try await Auth.auth().signIn(withEmail: email, password: password)
             let uid = authResult.user.uid
-
-            // Check if user exists in Realtime Database
-            let userExists = try await checkIfUserExistsInDatabase(uid: uid)
-
-            if !userExists {
-                let newUser = User(email: email)
-                try await addCurrentUserToDatabase(user: newUser)
-                print("New user added to database.")
-            } else {
-                print("User already exists in the database.")
-            }
             
+            let isVerified = await checkIfEmailIsVerified()
+            
+            if isVerified {
+                print("Email is verified")
+                let userExists = try await checkIfUserExistsInDatabase(uid: uid)
+                
+                if !userExists {
+                    let newUser = User(email: email)
+                    try await addCurrentUserToDatabase(user: newUser)
+                    print("New user added to database.")
+                } else {
+                    print("User already exists in the database.")
+                }
+            } else {
+                print("User is not verified")
+                try await authResult.user.sendEmailVerification()
+                try signOut()
+            }
         } catch {
             if error.localizedDescription.contains("The supplied auth credential is malformed or has expired.") {
-                print(FirebaseServiceError.wrongPassword.localizedDescription)
                 throw FirebaseServiceError.wrongPassword
             } else {
-                print(error.localizedDescription)
                 throw FirebaseServiceError.firebaseError(error.localizedDescription)
             }
         }
@@ -177,14 +194,14 @@ final class FirebaseService {
         }
     }
     
-    func checkIfUserExistsInDatabase(uid: String) async throws -> Bool {
+    private func checkIfUserExistsInDatabase(uid: String) async throws -> Bool {
         let databaseRef = Database.database().reference()
         let snapshot = try await databaseRef.child("users").child(uid).getData()
         
         return snapshot.exists()
     }
 
-    func addCurrentUserToDatabase(user: User) async throws {
+    private func addCurrentUserToDatabase(user: User) async throws {
         guard let uid = try self.currentUserID() else {
             throw FirebaseServiceError.userNotExist
         }
@@ -192,7 +209,7 @@ final class FirebaseService {
         try await databaseRef.child("users").child(uid).setValue(user.toDictionary())
     }
     
-    func deleteCurrentUserFromDatabase() async throws {
+    private func deleteCurrentUserFromDatabase() async throws {
         guard let uid = try self.currentUserID() else {
             throw FirebaseServiceError.userNotExist
         }
@@ -200,55 +217,54 @@ final class FirebaseService {
         try await databaseRef.child("users").child(uid).removeValue()
     }
     
-    func updateUserImage(newImage: UIImage?) throws {
-        guard let uid = try self.currentUserID() else {
-            throw FirebaseServiceError.userNotExist
-        }
+    
+    func updateUserImage(newImage: UIImage?, completion: @escaping (Result<URL, Error>) -> Void) {
         
         guard let image = newImage else {
-            throw FirebaseServiceError.noImageToUpload
-         }
-         
-         // 2. Convert the image to JPEG data with a compression quality (adjust quality as needed)
-         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
-             print("Could not convert image to data")
-             return
-         }
-         
-         // 3. Create a unique filename for the image (for example, using a timestamp)
-        guard let id = Auth.auth().currentUser?.uid else {
-            throw FirebaseServiceError.userNotExist
+            completion(.failure(FirebaseServiceError.noImageToUpload))
+            return
         }
+        
+        // 2. Convert the image to JPEG data with a compression quality (adjust quality as needed)
+        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+            print("Could not convert image to data")
+            return
+        }
+        
+        // 3. Create a unique filename for the image (for example, using a timestamp)
+        guard let id = Auth.auth().currentUser?.uid else {
+            completion(.failure(FirebaseServiceError.userNotExist))
+            return
+        }
+        
         let filename = "ProfilePictures/\(id).jpg"
-         
-         // 4. Create a reference to Firebase Storage
-         let storageRef = Storage.storage().reference().child(filename)
-         
-         // 5. Upload the image data to Firebase Storage
-         storageRef.putData(imageData, metadata: nil) { metadata, error in
-             if let error = error {
-                 print("Failed to upload image: \(error.localizedDescription)")
-                 return
-             }
-             
-             // 6. Optionally, get the download URL
-             storageRef.downloadURL { url, error in
-                 if let error = error {
-                     print("Failed to get download URL: \(error.localizedDescription)")
-                     return
-                 }
-                 
-                 if let downloadURL = url {
-                     print("Image uploaded successfully, download URL: \(downloadURL)")
-                     // You can now use this URL to save in your database or display to the user
-                 }
-             }
-         }
+        
+        // 4. Create a reference to Firebase Storage
+        let storageRef = Storage.storage().reference().child(filename)
+        
+        // 5. Upload the image data to Firebase Storage
+        storageRef.putData(imageData, metadata: nil) { metadata, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            // 6. Optionally, get the download URL
+            storageRef.downloadURL { url, error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                
+                if let downloadURL = url {
+                    print("Image uploaded successfully, download URL: \(downloadURL)")
+                    completion(.success(downloadURL))
+                }
+            }
+        }
     }
     
-    func deleteUserImage(uid: String) throws {
-        
-    }
+    
     
     func resetPassword(email: String) async throws {
         guard email.isValidEmail() else {

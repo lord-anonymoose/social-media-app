@@ -9,7 +9,8 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    // MARK: - Subviews
+    let refreshControl = UIRefreshControl()
+    
     private var user: User
     
     private var imagePath: String?
@@ -17,7 +18,10 @@ class ProfileViewController: UIViewController {
     private var userPosts: [Post]
     
     private var userPhotos: [UIImage]
-    
+
+    private var isMyUser: Bool
+    // MARK: - Subviews
+
     private lazy var profileView: ProfileHeaderView = {
         let profileView = ProfileHeaderView()
         
@@ -83,18 +87,19 @@ class ProfileViewController: UIViewController {
     }()
     
     // MARK: - Lifecycle
-    init(user: User) {
-            self.user = user
-            self.userPosts = []//posts.filter { $0.author == "katyperry" }
+    init(user: User, isMyUser: Bool) {
+        self.user = user
+        self.isMyUser = isMyUser
+        self.userPosts = []//posts.filter { $0.author == "katyperry" }
             
-            var photos = [UIImage]()
+        var photos = [UIImage]()
             
-            for p in userPosts {
-                //photos.append(UIImage(named: p.image)!)
-            }
+        for p in userPosts {
+            //photos.append(UIImage(named: p.image)!)
+        }
             
-            self.userPhotos = photos
-            super.init(nibName: nil, bundle: nil)
+        self.userPhotos = photos
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -115,6 +120,7 @@ class ProfileViewController: UIViewController {
         super.viewWillAppear(animated)
         
         setupKeyboardObservers()
+        refresh()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -129,6 +135,31 @@ class ProfileViewController: UIViewController {
     }
     
     // MARK: - Actions
+    
+    @objc private func refresh() {
+        print("Refreshed")
+        do {
+            let uid = try FirebaseService.shared.currentUserID()
+            if let id = uid {
+                FirebaseService.shared.fetchUser(by: id) { user in
+                    if let user = user {
+                        self.user = user
+                        self.downloadUserImage()
+                        self.feedView.reloadData()
+                    } else {
+                        print("User not found")
+                    }
+                }
+            }
+        }
+        catch {
+            showAlert(title: "Error!".localized, description: error.localizedDescription)
+            refreshControl.endRefreshing()
+            return
+        }
+
+        refreshControl.endRefreshing()
+    }
     
     @objc private func didTapPicture() {
         blurAppears()
@@ -192,6 +223,10 @@ class ProfileViewController: UIViewController {
     
     private func addSubviews() {
         view.addSubview(feedView)
+        feedView.addSubview(refreshControl)
+        refreshControl.attributedTitle = NSAttributedString(string: "Refreshing".localized)
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        
         view.addSubview(backgroundBlur)
         view.addSubview(blurCloseButton)
         view.addSubview(userImageView)
@@ -229,8 +264,8 @@ class ProfileViewController: UIViewController {
         feedView.dataSource = self
         
         feedView.register(PostViewCell.self, forCellReuseIdentifier: "cell")
-        feedView.register(ProfileHeaderView
-            .self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
+        feedView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
+        feedView.register(AnyProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "AnyProfileHeaderView")
         feedView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotosTableViewCell")
         
     }
@@ -258,13 +293,7 @@ class ProfileViewController: UIViewController {
         notificationCenter.removeObserver(self)
     }
 
-    /*
-    private func setupUserImage() {
-        self.userImageView.frame = CGRect.init(x: self.view.bounds.inset(by: self.view.safeAreaInsets).minX + 16, y: self.view.bounds.inset(by: self.view.safeAreaInsets).minY + 16, width: 90, height: 90)
-        
-        //self.userImageView.frame = CGRect.init(x: self.feedView.bounds.inset(by: self.feedView.safeAreaInsets).minX + 16, y: self.feedView.bounds.inset(by: self.view.safeAreaInsets).minY + 16, width: 90, height: 90)
-    }
-    */
+
     
     private func setupUserImage() {
         self.userImageView.alpha = 0.0
@@ -328,8 +357,10 @@ class ProfileViewController: UIViewController {
                 options: .curveLinear
             ) {
                 self.blurCloseButton.alpha = 1.0
-                self.changeImageButton.alpha = 1.0
-                self.changeImageButton.isUserInteractionEnabled = true
+                if self.isMyUser {
+                    self.changeImageButton.alpha = 1.0
+                    self.changeImageButton.isUserInteractionEnabled = true
+                }
             }
         }
     }
@@ -367,7 +398,9 @@ extension ProfileViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
-            if let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView") as? ProfileHeaderView {
+            let identifier = isMyUser ? "ProfileHeaderView" : "AnyProfileHeaderView"
+
+            if let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: identifier) as? ProfileHeaderView {
                 view.isUserInteractionEnabled = true
                 view.user = user
                 if let path = self.imagePath {
@@ -401,21 +434,13 @@ extension ProfileViewController: UITableViewDataSource {
             return cell
         }
     }
-    
-    /*
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        guard let headerView = view as? UITableViewHeaderFooterView else { return }
-        headerView.contentView.superview?.bringSubviewToFront(headerView.contentView)
-        // Здесь можно кастомизировать заголовок, если нужно
-    }
-     */
 }
 
 extension ProfileViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            let photosViewController = PhotosViewController(userPhotos: userPhotos)
+            let photosViewController = PhotosViewController(userPhotos: userPhotos, isMyUser: self.isMyUser)
             self.navigationController?.pushViewController(photosViewController, animated: true)
         }
         tableView.deselectRow(at: indexPath, animated: true)

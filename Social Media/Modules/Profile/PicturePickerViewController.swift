@@ -115,6 +115,7 @@ final class PicturePickerViewController: UIViewController, UINavigationControlle
         present(alert, animated: true, completion: nil)
     }
     
+    /*
     private func saveImage() {
         do {
             try FirebaseService.shared.updateUserImage(newImage: self.imageView.image)
@@ -122,7 +123,23 @@ final class PicturePickerViewController: UIViewController, UINavigationControlle
                 navigationController.popViewController(animated: true)
             }
         } catch {
+            print("Couldn't upload image!")
             showAlert(title: "Error!".localized, description: error.localizedDescription)
+        }
+    }*/
+    
+    private func saveImage() {
+        FirebaseService.shared.updateUserImage(newImage: self.imageView.image) { result in
+            switch result {
+            case .success(let downloadURL):
+                print("Image URL: \(downloadURL)")
+                if let navigationController = self.navigationController {
+                    navigationController.popViewController(animated: true)
+                }
+            case .failure(let error):
+                print("Couldn't upload image!")
+                self.showAlert(title: "Error!".localized, description: error.localizedDescription)
+            }
         }
     }
 }

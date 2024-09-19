@@ -24,11 +24,14 @@
 		8E3AE6702C970AD600CFB33D /* UISymbolButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3AE66F2C970AD600CFB33D /* UISymbolButton.swift */; };
 		8E3AE6732C970ECB00CFB33D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3AE6722C970ECB00CFB33D /* SettingsViewController.swift */; };
 		8E3AE6752C970ED300CFB33D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3AE6742C970ED300CFB33D /* SettingsView.swift */; };
+		8E3BF8592C9CAB6200A60886 /* AnyProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3BF8582C9CAB6100A60886 /* AnyProfileHeaderView.swift */; };
+		8E3BF85E2C9CD77700A60886 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3BF85D2C9CD77700A60886 /* FeedViewController.swift */; };
+		8E3BF8632C9CD7F800A60886 /* MakePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3BF8622C9CD7F800A60886 /* MakePostViewController.swift */; };
 		8E47DA922C88CA4D00FEB205 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E47DA912C88CA4D00FEB205 /* FirebaseService.swift */; };
 		8E4C154A2A2699D800AA511B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15492A2699D800AA511B /* AppDelegate.swift */; };
 		8E4C154C2A2699D800AA511B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C154B2A2699D800AA511B /* SceneDelegate.swift */; };
 		8E4C15532A2699D900AA511B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E4C15522A2699D900AA511B /* Assets.xcassets */; };
-		8E4C15632A269C1E00AA511B /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15622A269C1E00AA511B /* FeedViewController.swift */; };
+		8E4C15632A269C1E00AA511B /* OldFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15622A269C1E00AA511B /* OldFeedViewController.swift */; };
 		8E4C15692A269C7A00AA511B /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15682A269C7A00AA511B /* ProfileViewController.swift */; };
 		8E5146FC2C92266D0032DB99 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 8E5146FB2C92266D0032DB99 /* FirebaseStorage */; };
 		8E5439292C6E032900D257EC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E5439282C6E032900D257EC /* LaunchScreen.storyboard */; };
@@ -101,12 +104,15 @@
 		8E3AE66F2C970AD600CFB33D /* UISymbolButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISymbolButton.swift; sourceTree = "<group>"; };
 		8E3AE6722C970ECB00CFB33D /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		8E3AE6742C970ED300CFB33D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		8E3BF8582C9CAB6100A60886 /* AnyProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyProfileHeaderView.swift; sourceTree = "<group>"; };
+		8E3BF85D2C9CD77700A60886 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		8E3BF8622C9CD7F800A60886 /* MakePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakePostViewController.swift; sourceTree = "<group>"; };
 		8E47DA912C88CA4D00FEB205 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		8E4C15462A2699D800AA511B /* Social Media.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Social Media.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4C15492A2699D800AA511B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8E4C154B2A2699D800AA511B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8E4C15522A2699D900AA511B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		8E4C15622A269C1E00AA511B /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		8E4C15622A269C1E00AA511B /* OldFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldFeedViewController.swift; sourceTree = "<group>"; };
 		8E4C15682A269C7A00AA511B /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		8E5439282C6E032900D257EC /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8E54392D2C6E06B500D257EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -167,6 +173,22 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		8E3BF85A2C9CD4E700A60886 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				8E3BF85D2C9CD77700A60886 /* FeedViewController.swift */,
+			);
+			path = Feed;
+			sourceTree = "<group>";
+		};
+		8E3BF8612C9CD7EC00A60886 /* MakePost */ = {
+			isa = PBXGroup;
+			children = (
+				8E3BF8622C9CD7F800A60886 /* MakePostViewController.swift */,
+			);
+			path = MakePost;
+			sourceTree = "<group>";
+		};
 		8E3FC4B52A4D8D040064F250 /* LogIn */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,7 +200,7 @@
 		8E3FC4B72A4D8D760064F250 /* Feed */ = {
 			isa = PBXGroup;
 			children = (
-				8E4C15622A269C1E00AA511B /* FeedViewController.swift */,
+				8E4C15622A269C1E00AA511B /* OldFeedViewController.swift */,
 				8EAC9EAF2BFBFCD400D27B28 /* FeedVMOutput.swift */,
 				8EAC9EB32BFBFF1300D27B28 /* FeedService.swift */,
 			);
@@ -234,6 +256,8 @@
 		8E4C155F2A269BD900AA511B /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				8E3BF8612C9CD7EC00A60886 /* MakePost */,
+				8E3BF85A2C9CD4E700A60886 /* Feed */,
 				8E3AE6712C970EBE00CFB33D /* Settings */,
 				8E5439392C6EA64E00D257EC /* Loading */,
 				8E3FC4B52A4D8D040064F250 /* LogIn */,
@@ -282,6 +306,7 @@
 			isa = PBXGroup;
 			children = (
 				8EF48DA42A27797F0099166A /* ProfileHeaderView.swift */,
+				8E3BF8582C9CAB6100A60886 /* AnyProfileHeaderView.swift */,
 			);
 			path = ProfileHeader;
 			sourceTree = "<group>";
@@ -523,10 +548,12 @@
 				8E2933752C454AB800F2CC69 /* UITableView.swift in Sources */,
 				8EC3113E2A4CB631006C8FA2 /* LogInViewController.swift in Sources */,
 				8E5439362C6E966D00D257EC /* LocalAuthorizationService.swift in Sources */,
+				8E3BF8632C9CD7F800A60886 /* MakePostViewController.swift in Sources */,
 				8EDAC7E22C94E76200E4C789 /* ImageCacheService.swift in Sources */,
 				8EFB63562C51C2290058572C /* MapViewController.swift in Sources */,
 				8E4C154C2A2699D800AA511B /* SceneDelegate.swift in Sources */,
 				8E29336B2C4548D400F2CC69 /* UIColor.swift in Sources */,
+				8E3BF8592C9CAB6200A60886 /* AnyProfileHeaderView.swift in Sources */,
 				8E0D227A2C18EDF800A9BBA8 /* MainCoordinator.swift in Sources */,
 				8EF48DA52A27797F0099166A /* ProfileHeaderView.swift in Sources */,
 				8E3AE6752C970ED300CFB33D /* SettingsView.swift in Sources */,
@@ -536,7 +563,8 @@
 				8E2933772C454ADB00F2CC69 /* UIViewController.swift in Sources */,
 				8E5439312C6E924A00D257EC /* SecondaryLoginViewController.swift in Sources */,
 				8E47DA922C88CA4D00FEB205 /* FirebaseService.swift in Sources */,
-				8E4C15632A269C1E00AA511B /* FeedViewController.swift in Sources */,
+				8E3BF85E2C9CD77700A60886 /* FeedViewController.swift in Sources */,
+				8E4C15632A269C1E00AA511B /* OldFeedViewController.swift in Sources */,
 				8E2933712C45495500F2CC69 /* UITextFieldWithPadding.swift in Sources */,
 				8E29336D2C45490D00F2CC69 /* UILoginInputContainer.swift in Sources */,
 				8E3AE6732C970ECB00CFB33D /* SettingsViewController.swift in Sources */,
