@@ -11,12 +11,7 @@ import UIKit
 
 class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
-    
-    var timeLeft: Int = 60
-    var timer: Timer?
-    
-    //var image: UIImage?
-    
+
     // MARK: - Subviews
     
     public var user: User? {
@@ -66,38 +61,8 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
 
         return userStatus
     }()
+
     
-    private lazy var setStatusButton = UICustomButton(customTitle: String(localized: "Set Status")) {[unowned self] in
-        let newStatus = statusTextField.text ?? ""
-        statusLabel.text = newStatus
-        if self.user != nil {
-        }
-        
-        /*
-        if let id = FirebaseService.shared.currentUserID() {
-            Task {
-                do {
-                    try await FirebaseService.shared.setUserStatus(newStatus: newStatus, for: id)
-                    statusTextField.text = ""
-                    startTimer()
-                } catch {
-                    print(error.localizedDescription)
-                }
-            }
-        }
-         */
-    }
-    
-    
-    /*
-    lazy var settingsButton: UIButton = {
-        let button = UIButton()
-        let image = UIImage
-        return button
-    }()
-    */
-    
-    //private lazy var settingsButton = UISymbolButton
     lazy var logoutButton = UISymbolButton(image: UIImage(systemName: "rectangle.portrait.and.arrow.forward")!, tintColor: .systemRed)
     
     lazy var settingsButton = UISymbolButton(image: UIImage(systemName: "gear")!, tintColor: .systemGray)
@@ -128,9 +93,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         changeBackgroundColor()
     }
     
-    deinit {
-        stopTimer()
-    }
      
     
     // MARK: - Private
@@ -143,7 +105,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
        #endif
     }
         
-    private func addSubviews() {
+    func addSubviews() {
         contentView.addSubview(userImageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(statusLabel)
@@ -151,7 +113,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         contentView.addSubview(settingsButton)
     }
         
-    private func setupConstraints() {
+    func setupConstraints() {
         
         let safeAreaLayoutGuide = contentView.safeAreaLayoutGuide
 
@@ -174,18 +136,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
             statusLabel.heightAnchor.constraint(equalToConstant: 32),
             statusLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 122),
             statusLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-        
-            /*
-            statusTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 48),
-            statusTextField.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 122),
-            statusTextField.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            statusTextField.heightAnchor.constraint(equalToConstant: 32),
-        
-            setStatusButton.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 16),
-            setStatusButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 122),
-            setStatusButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            setStatusButton.heightAnchor.constraint(equalToConstant: 30),
-            */
             
             logoutButton.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             logoutButton.heightAnchor.constraint(equalToConstant: 25),
@@ -201,27 +151,5 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         
         NSLayoutConstraint.activate([bottomAnchor])
 
-    }
-    
-    func startTimer() {
-        setStatusButton.isUserInteractionEnabled = false
-        setStatusButton.setBackgroundColor(.systemGray, forState: .normal)
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [unowned self] timer in
-            if timeLeft > 0 {
-                timeLeft -= 1
-                setStatusButton.setTitle(localizedTimerString(seconds: timeLeft), for: .normal)
-            } else {
-                timer.invalidate()
-                setStatusButton.setTitle(String(localized: "Set Status"), for: .normal)
-                setStatusButton.isUserInteractionEnabled = true
-                setStatusButton.setBackgroundColor(.accentColor, forState: .normal)
-                timeLeft = 60
-            }
-        }
-    }
-    
-    func stopTimer() {
-        timer?.invalidate()
-        timer = nil
     }
 }

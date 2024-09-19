@@ -116,50 +116,13 @@ final class PicturePickerViewController: UIViewController, UINavigationControlle
     }
     
     private func saveImage() {
-        guard let image = imageView.image else {
-             print("No image found to upload")
-             return
-         }
-         
-         // 2. Convert the image to JPEG data with a compression quality (adjust quality as needed)
-         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
-             print("Could not convert image to data")
-             return
-         }
-         
-         // 3. Create a unique filename for the image (for example, using a timestamp)
-        guard let id = Auth.auth().currentUser?.uid else {
-            print("User not found")
-            return
-        }
-        let filename = "ProfilePictures/\(id).jpg"
-         
-         // 4. Create a reference to Firebase Storage
-         let storageRef = Storage.storage().reference().child(filename)
-         
-         // 5. Upload the image data to Firebase Storage
-         storageRef.putData(imageData, metadata: nil) { metadata, error in
-             if let error = error {
-                 print("Failed to upload image: \(error.localizedDescription)")
-                 return
-             }
-             
-             // 6. Optionally, get the download URL
-             storageRef.downloadURL { url, error in
-                 if let error = error {
-                     print("Failed to get download URL: \(error.localizedDescription)")
-                     return
-                 }
-                 
-                 if let downloadURL = url {
-                     print("Image uploaded successfully, download URL: \(downloadURL)")
-                     // You can now use this URL to save in your database or display to the user
-                 }
-             }
-         }
-        
-        if let navigationController = self.navigationController {
-            navigationController.popViewController(animated: true)
+        do {
+            try FirebaseService.shared.updateUserImage(newImage: self.imageView.image)
+            if let navigationController = self.navigationController {
+                navigationController.popViewController(animated: true)
+            }
+        } catch {
+            showAlert(title: "Error!".localized, description: error.localizedDescription)
         }
     }
 }

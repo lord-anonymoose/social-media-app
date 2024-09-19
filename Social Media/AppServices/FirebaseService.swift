@@ -22,6 +22,7 @@ enum FirebaseServiceError: Error, LocalizedError {
     case firebaseError(String)
     case wrongPassword
     case userNotExist
+    case noImageToUpload
     
     var errorDescription: String? {
         switch self {
@@ -37,6 +38,8 @@ enum FirebaseServiceError: Error, LocalizedError {
             return "Wrong credentials!".localized
         case .userNotExist:
             return "User doesn't exist!".localized
+        case .noImageToUpload:
+            return "No image found for upload".localized
         }
     }
 }
@@ -78,7 +81,7 @@ final class FirebaseService {
 
             if !userExists {
                 let newUser = User(email: email)
-                try await addUserToDatabase(uid: uid, user: newUser)
+                try await addCurrentUserToDatabase(user: newUser)
                 print("New user added to database.")
             } else {
                 print("User already exists in the database.")
@@ -138,7 +141,7 @@ final class FirebaseService {
         }
         
         do {
-            try await self.deleteUserFromDatabase(uid: user.uid)
+            try await self.deleteCurrentUserFromDatabase()
         } catch {
             print("Couldn't delete folder from database: \(error.localizedDescription)")
             throw FirebaseServiceError.firebaseError(error.localizedDescription)
@@ -181,14 +184,70 @@ final class FirebaseService {
         return snapshot.exists()
     }
 
-    func addUserToDatabase(uid: String, user: User) async throws {
+    func addCurrentUserToDatabase(user: User) async throws {
+        guard let uid = try self.currentUserID() else {
+            throw FirebaseServiceError.userNotExist
+        }
         let databaseRef = Database.database().reference()
         try await databaseRef.child("users").child(uid).setValue(user.toDictionary())
     }
     
-    func deleteUserFromDatabase(uid: String) async throws {
+    func deleteCurrentUserFromDatabase() async throws {
+        guard let uid = try self.currentUserID() else {
+            throw FirebaseServiceError.userNotExist
+        }
         let databaseRef = Database.database().reference()
         try await databaseRef.child("users").child(uid).removeValue()
+    }
+    
+    func updateUserImage(newImage: UIImage?) throws {
+        guard let uid = try self.currentUserID() else {
+            throw FirebaseServiceError.userNotExist
+        }
+        
+        guard let image = newImage else {
+            throw FirebaseServiceError.noImageToUpload
+         }
+         
+         // 2. Convert the image to JPEG data with a compression quality (adjust quality as needed)
+         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+             print("Could not convert image to data")
+             return
+         }
+         
+         // 3. Create a unique filename for the image (for example, using a timestamp)
+        guard let id = Auth.auth().currentUser?.uid else {
+            throw FirebaseServiceError.userNotExist
+        }
+        let filename = "ProfilePictures/\(id).jpg"
+         
+         // 4. Create a reference to Firebase Storage
+         let storageRef = Storage.storage().reference().child(filename)
+         
+         // 5. Upload the image data to Firebase Storage
+         storageRef.putData(imageData, metadata: nil) { metadata, error in
+             if let error = error {
+                 print("Failed to upload image: \(error.localizedDescription)")
+                 return
+             }
+             
+             // 6. Optionally, get the download URL
+             storageRef.downloadURL { url, error in
+                 if let error = error {
+                     print("Failed to get download URL: \(error.localizedDescription)")
+                     return
+                 }
+                 
+                 if let downloadURL = url {
+                     print("Image uploaded successfully, download URL: \(downloadURL)")
+                     // You can now use this URL to save in your database or display to the user
+                 }
+             }
+         }
+    }
+    
+    func deleteUserImage(uid: String) throws {
+        
     }
     
     func resetPassword(email: String) async throws {
