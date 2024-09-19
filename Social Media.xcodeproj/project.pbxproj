@@ -27,6 +27,7 @@
 		8E3BF8592C9CAB6200A60886 /* AnyProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3BF8582C9CAB6100A60886 /* AnyProfileHeaderView.swift */; };
 		8E3BF85E2C9CD77700A60886 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3BF85D2C9CD77700A60886 /* FeedViewController.swift */; };
 		8E3BF8632C9CD7F800A60886 /* MakePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3BF8622C9CD7F800A60886 /* MakePostViewController.swift */; };
+		8E3BF8652C9CE1DF00A60886 /* PostService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3BF8642C9CE1DF00A60886 /* PostService.swift */; };
 		8E47DA922C88CA4D00FEB205 /* FirebaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E47DA912C88CA4D00FEB205 /* FirebaseService.swift */; };
 		8E4C154A2A2699D800AA511B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C15492A2699D800AA511B /* AppDelegate.swift */; };
 		8E4C154C2A2699D800AA511B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C154B2A2699D800AA511B /* SceneDelegate.swift */; };
@@ -107,6 +108,7 @@
 		8E3BF8582C9CAB6100A60886 /* AnyProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyProfileHeaderView.swift; sourceTree = "<group>"; };
 		8E3BF85D2C9CD77700A60886 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		8E3BF8622C9CD7F800A60886 /* MakePostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakePostViewController.swift; sourceTree = "<group>"; };
+		8E3BF8642C9CE1DF00A60886 /* PostService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostService.swift; sourceTree = "<group>"; };
 		8E47DA912C88CA4D00FEB205 /* FirebaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseService.swift; sourceTree = "<group>"; };
 		8E4C15462A2699D800AA511B /* Social Media.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Social Media.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E4C15492A2699D800AA511B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 			children = (
 				8E0D22792C18EDF800A9BBA8 /* MainCoordinator.swift */,
 				8E47DA912C88CA4D00FEB205 /* FirebaseService.swift */,
+				8E3BF8642C9CE1DF00A60886 /* PostService.swift */,
 				8EDAC7E12C94E76200E4C789 /* ImageCacheService.swift */,
 				8E5439352C6E966D00D257EC /* LocalAuthorizationService.swift */,
 				8EBCFFD62C6F90FA009E31CE /* LocalNotificationsService.swift */,
@@ -563,6 +566,7 @@
 				8E2933772C454ADB00F2CC69 /* UIViewController.swift in Sources */,
 				8E5439312C6E924A00D257EC /* SecondaryLoginViewController.swift in Sources */,
 				8E47DA922C88CA4D00FEB205 /* FirebaseService.swift in Sources */,
+				8E3BF8652C9CE1DF00A60886 /* PostService.swift in Sources */,
 				8E3BF85E2C9CD77700A60886 /* FeedViewController.swift in Sources */,
 				8E4C15632A269C1E00AA511B /* OldFeedViewController.swift in Sources */,
 				8E2933712C45495500F2CC69 /* UITextFieldWithPadding.swift in Sources */,

@@ -15,8 +15,6 @@
 import UIKit
 
 public var posts = [
-    StorageService.Post(author: "katyperry", description: "hi it's hunger games but also #AmericanIdol (but actually it's duets) 🤺", image: "katyperry_post1", likes: 268_559, views: 300_232),
-    StorageService.Post(author: "katyperry", description: "You guys! A STAND out collection from moi and @aboutyou is coming Nov 2 🎉", image: "katyperry_post2", likes: 648_560, views: 722_212),
     StorageService.Post(author: "katyperry", description: "Happy 15th anniversary to my first musical child, One of the Boys! (I know omg the passing of time is WILD). She may be a young teen but has always had a bit of an attitude. Thank you to all the KCs who have stuck around since the Warped and Hello Katy days... tbh I still think of myself as One of the Boys & #OOTBCoveralts", image: "katyperry_post3", likes: 1_066_070, views: 1_223_543),
     
     StorageService.Post(author: "teddyphotos", description: "E I E I O, up the football league we go! @ipswichtown", image: "teddyphotos_post1", likes: 133_425, views: 331_123),

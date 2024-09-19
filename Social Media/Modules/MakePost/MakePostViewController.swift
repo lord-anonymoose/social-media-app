@@ -17,8 +17,14 @@ final class MakePostViewController: UIViewController {
     // MARK: Subviews
     private lazy var makePostButton = UICustomButton(customTitle: "Make Post".localized) { [unowned self] in
         print("Post is made")
-        let post = Post()
-        print(UUID().uuidString)
+        
+        let userID = "lWoCUXvOnfWDN2VVKcK4SppBgi93"
+        let postID = PostService.shared.generatePostID(for: userID)
+        print("postID: \(postID)")
+        let user = PostService.shared.getUserID(for: postID)
+        print("userID: \(user)")
+        let date = PostService.shared.getDate(for: postID)
+        print("Date: \(date)")
     }
     
     
