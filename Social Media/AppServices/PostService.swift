@@ -38,4 +38,20 @@ final class PostService {
         
         return dateFormatter.date(from: String(postID.suffix(14)))!
     }
+    
+    func publishPost(post: Post) {
+        
+    }
+    
+    func deletePost(post: Post) {
+        
+    }
+    
+    func getAllPosts() -> [Post] {
+        return []
+    }
+    
+    func getMyPosts() -> [Post] {
+        return []
+    }
 }
