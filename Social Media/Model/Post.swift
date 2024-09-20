@@ -7,6 +7,8 @@
 
 import Foundation
 
+
+
 public struct Post {
     public var postID: String
     public var author: String
@@ -16,7 +18,7 @@ public struct Post {
     
     public init(postID: String, description: String, likes: Int = 0) {
         self.postID = postID
-        self.author = PostService.shared.getUserID(for: postID)
+        self.author = PostService.shared.getAuthorID(for: postID)
         self.description = description
         self.date = PostService.shared.getDate(for: postID)
         self.likes = likes
@@ -24,7 +26,6 @@ public struct Post {
     
     public func toDictionary() -> [String: Any] {
         return [
-            "author": author,
             "description": description,
             "likes": likes
         ]

@@ -18,13 +18,14 @@ final class MakePostViewController: UIViewController {
     private lazy var makePostButton = UICustomButton(customTitle: "Make Post".localized) { [unowned self] in
         print("Post is made")
         
-        let userID = "lWoCUXvOnfWDN2VVKcK4SppBgi93"
-        let postID = PostService.shared.generatePostID(for: userID)
-        print("postID: \(postID)")
-        let user = PostService.shared.getUserID(for: postID)
-        print("userID: \(user)")
-        let date = PostService.shared.getDate(for: postID)
-        print("Date: \(date)")
+        PostService.shared.fetchAllPosts() { posts in
+            for post in posts {
+                print("Post ID: \(post.postID)")
+                print("Auther ID: \(post.author)")
+                print("Description: \(post.description)")
+                print("Likes: \(post.likes)")
+            }
+        }
     }
     
     
