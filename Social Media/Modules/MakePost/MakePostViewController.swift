@@ -16,9 +16,8 @@ final class MakePostViewController: UIViewController {
     
     // MARK: Subviews
     private lazy var makePostButton = UICustomButton(customTitle: "Make Post".localized) { [unowned self] in
-        print("Post is made")
         
-        PostService.shared.fetchAllPosts() { posts in
+        PostService.shared.fetchMyPosts { posts in
             for post in posts {
                 print("Post ID: \(post.postID)")
                 print("Auther ID: \(post.author)")

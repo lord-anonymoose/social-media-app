@@ -83,15 +83,16 @@ final class PostService {
             let authorID = try FirebaseService.shared.currentUserID()
             fetchAllPosts { posts in
                 for post in posts {
-                    if post.author == authorID {
+                    if post.author == authorID ?? "" {
                         result.append(post)
                     }
                 }
+                completion(result)
             }
         } catch {
             print("Couldn't get user ID")
+            completion(result)
         }
-        completion(result)
     }
     
     func publishPost(description: String, completion: @escaping (Error?) -> Void) {
