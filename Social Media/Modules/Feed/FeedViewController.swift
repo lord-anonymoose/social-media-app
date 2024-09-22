@@ -15,7 +15,11 @@ final class FeedViewController: UIViewController {
     
     
     // MARK: Subviews
-    
+    private lazy var feedView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
     
     
     // MARK: Actions

@@ -695,6 +695,7 @@
     },
     "Residents" : {
       "comment" : "mySectionName",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

@@ -15,7 +15,7 @@ protocol Coordinator {
 }
 
 
-class MainCoordinator: Coordinator {
+class MainCoordinator: Coordinator, ObservableObject {
     
     var navigationController: UINavigationController
     var controllers = [UIViewController]()
@@ -25,7 +25,7 @@ class MainCoordinator: Coordinator {
     }
     
     func login() {
-        addMakePostViewController()
+        addFeedViewController()
         addProfileViewController { [weak self] in
             guard let self = self else { return }
 
@@ -63,6 +63,13 @@ class MainCoordinator: Coordinator {
         navigationController.pushViewController(signUpViewController, animated: true)
     }
     
+    func popToPreviousViewController() {
+        navigationController.popViewController(animated: true)
+    }
+    
+    func popToRootViewController() {
+        navigationController.popToRootViewController(animated: true)
+    }
 
     func showResetPasswordViewController() {
         let resetPasswordViewController = ResetPasswordViewController()
@@ -80,7 +87,7 @@ class MainCoordinator: Coordinator {
         navigationController.pushViewController(picturePickerViewController, animated: true)
     }
     
-    func showSettingsViewController() {
+    func showSettingsViewController(image: UIImage) {
         if let id = Auth.auth().currentUser?.uid {
             FirebaseService.shared.fetchUser(by: id) { user in
                 if let user = user {
@@ -95,18 +102,6 @@ class MainCoordinator: Coordinator {
             print("Not logged in")
         }
     }
-    
-    // Feed
-    /*
-    func addFeedViewController() {
-        let feedService = FeedService()
-        let feedViewModel = FeedVMOutput(service: feedService)
-        let feedViewController = FeedViewController(viewModel: feedViewModel)
-        let feedImage = UIImage(systemName: "house.circle")
-        feedViewController.tabBarItem = UITabBarItem(title: nil, image: feedImage, tag: 0)
-        controllers.append(feedViewController)
-    }
-    */
     
     // Profile
     func addProfileViewController(completion: @escaping () -> Void) {
@@ -127,10 +122,10 @@ class MainCoordinator: Coordinator {
         }
     }
     
-    func addMakePostViewController() {
-        let makePostViewController = MakePostViewController()
-        let makePostImage = UIImage(systemName: "plus.circle")
-        makePostViewController.tabBarItem = UITabBarItem(title: nil, image: makePostImage, tag: 2)
-        controllers.append(makePostViewController)
+    func addFeedViewController() {
+        let feedViewController = FeedViewController()
+        let feedViewImage = UIImage(systemName: "house.circle")
+        feedViewController.tabBarItem = UITabBarItem(title: nil, image: feedViewImage, tag: 2)
+        controllers.append(feedViewController)
     }
 }

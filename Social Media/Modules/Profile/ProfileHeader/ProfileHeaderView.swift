@@ -65,7 +65,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
     lazy var logoutButton = UISymbolButton(image: UIImage(systemName: "rectangle.portrait.and.arrow.forward")!, tintColor: .systemRed)
     
-    lazy var settingsButton = UISymbolButton(image: UIImage(systemName: "gear")!, tintColor: .systemGray)
+    lazy var settingsButton = UISymbolButton(image: UIImage(systemName: "pencil.circle")!, tintColor: .systemGray)
 
     
     private lazy var statusTextField: UITextFieldWithPadding = {

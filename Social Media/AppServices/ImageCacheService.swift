@@ -77,22 +77,20 @@ class ImageCacheService {
             guard let self = self else { return }
             
             if let error = error {
-                print("Error downloading image: \(error)")
+                print("Ошибка при загрузке изображения: \(error)")
                 completion(nil)
                 return
             }
             
             if let data = data, let image = UIImage(data: data) {
-                // Updating image cache
                 self.imageCache.setObject(image, forKey: path as NSString)
                 
-                // Updating image metadata cache
                 storageRef.getMetadata { metadata, _ in
                     if let metadata = metadata {
                         self.imageMetadataCache.setObject(metadata, forKey: path as NSString)
                     }
+                    completion(image)
                 }
-                completion(image)
             } else {
                 completion(nil)
             }

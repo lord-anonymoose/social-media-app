@@ -24,7 +24,7 @@ final class PicturePickerViewController: UIViewController, UINavigationControlle
         imageView.backgroundColor = .systemGray
         return imageView
     }()
-
+    
     private lazy var chooseImageButton = UICustomButton(customTitle: String(localized: "Choose Image"), customBackgroundColor: .secondaryColor ,action: {
         self.pickImage()
     })
@@ -32,6 +32,13 @@ final class PicturePickerViewController: UIViewController, UINavigationControlle
     private lazy var saveImageButton = UICustomButton(customTitle: String(localized: "Save"), customBackgroundColor: .accentColor ,action: {
         self.saveImage()
     })
+    
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.isHidden = true
+        return indicator
+    }()
     
     
     // MARK: - Lifecycle
@@ -53,6 +60,13 @@ final class PicturePickerViewController: UIViewController, UINavigationControlle
         setupDelegates()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        activityIndicator.stopAnimating()
+        activityIndicator.isHidden = true
+        
+        super.viewWillDisappear(animated)
+    }
+    
     
     
     // MARK: - Private
@@ -68,6 +82,7 @@ final class PicturePickerViewController: UIViewController, UINavigationControlle
         view.addSubview(imageView)
         view.addSubview(saveImageButton)
         view.addSubview(chooseImageButton)
+        view.addSubview(activityIndicator)
         chooseImageButton.isEnabled = true
     }
     
@@ -88,7 +103,12 @@ final class PicturePickerViewController: UIViewController, UINavigationControlle
             chooseImageButton.bottomAnchor.constraint(equalTo: saveImageButton.topAnchor, constant: -10),
             chooseImageButton.heightAnchor.constraint(equalTo: saveImageButton.heightAnchor),
             chooseImageButton.leadingAnchor.constraint(equalTo: saveImageButton.leadingAnchor),
-            chooseImageButton.trailingAnchor.constraint(equalTo: saveImageButton.trailingAnchor)
+            chooseImageButton.trailingAnchor.constraint(equalTo: saveImageButton.trailingAnchor),
+            
+            activityIndicator.bottomAnchor.constraint(equalTo: chooseImageButton.topAnchor, constant: -10),
+            activityIndicator.heightAnchor.constraint(equalToConstant: 25),
+            activityIndicator.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor),
+            activityIndicator.widthAnchor.constraint(equalToConstant: 25)
         ])
     }
     
@@ -115,20 +135,12 @@ final class PicturePickerViewController: UIViewController, UINavigationControlle
         present(alert, animated: true, completion: nil)
     }
     
-    /*
     private func saveImage() {
-        do {
-            try FirebaseService.shared.updateUserImage(newImage: self.imageView.image)
-            if let navigationController = self.navigationController {
-                navigationController.popViewController(animated: true)
-            }
-        } catch {
-            print("Couldn't upload image!")
-            showAlert(title: "Error!".localized, description: error.localizedDescription)
-        }
-    }*/
-    
-    private func saveImage() {
+        self.chooseImageButton.isHidden = true
+        self.saveImageButton.isHidden = true
+        self.activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
+        
         FirebaseService.shared.updateUserImage(newImage: self.imageView.image) { result in
             switch result {
             case .success(let downloadURL):

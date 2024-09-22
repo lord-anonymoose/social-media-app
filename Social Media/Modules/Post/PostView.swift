@@ -48,21 +48,14 @@ class PostView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-    let viewsLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor.textColor
-        label.textAlignment = .right
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+
     
     // MARK: - Lifecycle
 
-    init(frame: CGRect, author: String, image: String, description: String, likes: Int, views: Int) {
+    init(frame: CGRect, author: String, image: String, description: String, likes: Int) {
         super.init(frame: frame)
         setupConstraints()
-        addSubviews(author: author, image: image, description: description, likes: likes, views: views)
+        addSubviews(author: author, image: image, description: description, likes: likes)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -72,20 +65,18 @@ class PostView: UIView {
 
     // MARK: - Private
 
-    private func addSubviews(author: String, image: String, description: String, likes: Int, views: Int) {
+    private func addSubviews(author: String, image: String, description: String, likes: Int) {
         addSubview(authorLabel)
         addSubview(authorProfilePicture)
         addSubview(imgView)
         addSubview(descriptionLabel)
         addSubview(likesLabel)
-        addSubview(viewsLabel)
         
         authorLabel.text = author
         authorProfilePicture.image = UIImage(named: author)
         imgView.image = UIImage(named: image)
         descriptionLabel.text = description
         likesLabel.attributedText = likes.formattedString().embedSymbol(symbol: "heart")
-        viewsLabel.attributedText = views.formattedString().embedSymbol(symbol: "eye")
     }
     
     private func setupConstraints() {
@@ -125,13 +116,6 @@ class PostView: UIView {
             likesLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             likesLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             likesLabel.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor, constant: -16)
-        ])
-        
-        NSLayoutConstraint.activate([
-            viewsLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
-            viewsLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            viewsLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            viewsLabel.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor, constant: -16)
         ])
     }
 }

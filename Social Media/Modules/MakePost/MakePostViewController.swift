@@ -20,9 +20,6 @@ final class MakePostViewController: UIViewController {
         PostService.shared.fetchMyPosts { posts in
             for post in posts {
                 print("Post ID: \(post.postID)")
-                print("Auther ID: \(post.author)")
-                print("Description: \(post.description)")
-                print("Likes: \(post.likes)")
             }
         }
     }

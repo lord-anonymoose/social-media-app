@@ -75,17 +75,6 @@ class ProfileViewController: UIViewController {
         return imageView
     }()
     
-    private lazy var changeImageButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Change image", for: .normal)
-        button.setTitleColor(.systemBlue, for: .normal)
-        button.alpha = 0.0
-        button.isUserInteractionEnabled = false
-        button.addTarget(self, action: #selector(changeImageButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
     // MARK: - Lifecycle
     init(user: User, isMyUser: Bool) {
         self.user = user
@@ -200,7 +189,7 @@ class ProfileViewController: UIViewController {
     @objc func settingsButtonTapped(_ button: UIButton) {
         if let navigationController = self.navigationController {
             let coordinator = MainCoordinator(navigationController: navigationController)
-            coordinator.showSettingsViewController()
+            coordinator.showSettingsViewController(image: self.userImageView.image ?? UIImage(named: "default")!)
         }
     }
     
@@ -231,7 +220,6 @@ class ProfileViewController: UIViewController {
         view.addSubview(blurCloseButton)
         view.addSubview(userImageView)
         view.bringSubviewToFront(userImageView)
-        view.addSubview(changeImageButton)
     }
     
     private func setupConstraints() {
@@ -251,12 +239,7 @@ class ProfileViewController: UIViewController {
             blurCloseButton.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor, constant: 20),
             blurCloseButton.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -20),
             blurCloseButton.heightAnchor.constraint(equalToConstant: 30),
-            blurCloseButton.widthAnchor.constraint(equalToConstant: 30),
-            
-            changeImageButton.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor, constant: -20),
-            changeImageButton.heightAnchor.constraint(equalToConstant: 50),
-            changeImageButton.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 20),
-            changeImageButton.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -20)
+            blurCloseButton.widthAnchor.constraint(equalToConstant: 30)
         ])
         
         
@@ -357,10 +340,6 @@ class ProfileViewController: UIViewController {
                 options: .curveLinear
             ) {
                 self.blurCloseButton.alpha = 1.0
-                if self.isMyUser {
-                    self.changeImageButton.alpha = 1.0
-                    self.changeImageButton.isUserInteractionEnabled = true
-                }
             }
         }
     }
@@ -382,8 +361,6 @@ class ProfileViewController: UIViewController {
                 self.setupUserImage()
                 self.userImageView.layer.cornerRadius = 45
                 self.userImageView.alpha = 0.0
-                self.changeImageButton.alpha = 0.0
-                self.changeImageButton.isUserInteractionEnabled = false
             }
         }
     }
