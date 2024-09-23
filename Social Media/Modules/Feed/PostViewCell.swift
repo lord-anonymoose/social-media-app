@@ -21,6 +21,7 @@ class PostViewCell: UITableViewCell {
         label.textColor = UIColor.textColor
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isUserInteractionEnabled = true
         label.font = UIFont.systemFont(ofSize:20, weight: .bold)
         return label
     }()
@@ -30,6 +31,7 @@ class PostViewCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isUserInteractionEnabled = true
         view.contentMode = .scaleAspectFit
+        view.layer.cornerRadius = 15
         return view
     }()
     
@@ -111,8 +113,7 @@ class PostViewCell: UITableViewCell {
         }
     }
     
-    @objc func imageTapped(_ gestureRecognizer: UITapGestureRecognizer) {
-        print("Tapped image")
+    @objc func userTapped(_ gestureRecognizer: UITapGestureRecognizer) {
         if let user = self.user {
             print(user.name)
             if let coordinator {
@@ -138,8 +139,10 @@ class PostViewCell: UITableViewCell {
     
     
     private func setupImageTapAction() {
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
-        authorProfilePicture.addGestureRecognizer(tapGestureRecognizer)
+        let imageTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(userTapped(_:)))
+        authorProfilePicture.addGestureRecognizer(imageTapGestureRecognizer)
+        let labelTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(userTapped(_:)))
+        authorLabel.addGestureRecognizer(imageTapGestureRecognizer)
     }
     
     private func updateLikeButton() {

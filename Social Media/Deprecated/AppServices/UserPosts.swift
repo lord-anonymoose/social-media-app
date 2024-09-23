@@ -15,7 +15,6 @@
 import UIKit
 
 public var posts = [
-    StorageService.Post(author: "katyperry", description: "Happy 15th anniversary to my first musical child, One of the Boys! (I know omg the passing of time is WILD). She may be a young teen but has always had a bit of an attitude. Thank you to all the KCs who have stuck around since the Warped and Hello Katy days... tbh I still think of myself as One of the Boys & #OOTBCoveralts", image: "katyperry_post3", likes: 1_066_070, views: 1_223_543),
     
     StorageService.Post(author: "teddyphotos", description: "E I E I O, up the football league we go! @ipswichtown", image: "teddyphotos_post1", likes: 133_425, views: 331_123),
     StorageService.Post(author: "teddyphotos", description: "My most in-depth interview in the last 6 years for the worldwide cover of @rollingstone, this one got deep and very emotional. Link in stories × @lizcollinsphotographer", image: "teddyphotos_post2", likes: 355_207, views: 400_143),
@@ -29,9 +28,6 @@ public var posts = [
     StorageService.Post(author: "tim_cook", description: "'The Astronaut and His Parrot' is a story of hope and connection. Today, I met one of India's best sci-fi filmmakers @AratiKadav, who created this beautiful award-winning short film using only her iPhone and MacBook Pro.", image: "tim_cook_post2", likes: 11_816, views: 645_433),
     StorageService.Post(author: "tim_cook", description: "It's great to see so many developers across India pursuing their passion and sharing their ideas with users around the world. I had the pleasure of meeting Hitwicket, India's top-rated cricket app, Prayoga, an AR-based yoga app, and LookUp, an easy to use dictionary app! 🏏🧘🏼📖", image: "tim_cook_post3", likes: 12_816, views: 899_433),
 
-    StorageService.Post(author: "ryantedder", description: "Only took 15 years of touring to figure out how to do it right. @onerepublic 🫠🏝️🤷‍♂️🤘🏽❤️", image: "ryantedder_post1", likes: 38_936, views: 128_975),
-    StorageService.Post(author: "ryantedder", description: "Breaking Bad the MUSICAL fam. Secrets out. Whew. So hard keeping this one quiet 🤦‍♂️", image: "ryantedder_post2", likes: 20_816, views: 45_433),
-    
     StorageService.Post(author: "billieeilish", description: "@_glen_luchford thank you for being the best i could ask for & bringing my rainy Eilish No. 2 world to life 🌂", image: "billieeilish_post1", likes: 4_743_788, views: 10_321_263),
     StorageService.Post(author: "billieeilish", description: "swallow me whole", image: "billieeilish_post2", likes: 6_572_923, views: 12_532_333),
     StorageService.Post(author: "billieeilish", description: "🤓", image: "billieeilish_post3", likes: 6_617_232, views: 12_532_356),
