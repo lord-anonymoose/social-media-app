@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-
+/*
 final class MakePostViewController: UIViewController {
     
     
@@ -17,7 +17,7 @@ final class MakePostViewController: UIViewController {
     // MARK: Subviews
     private lazy var makePostButton = UICustomButton(customTitle: "Make Post".localized) { [unowned self] in
         
-        PostService.shared.fetchMyPosts { posts in
+        PostService.shared.fetchPosts(for: <#T##String#>, completion: <#T##([Post]) -> Void#>) { posts in
             for post in posts {
                 print("Post ID: \(post.postID)")
             }
@@ -69,3 +69,4 @@ final class MakePostViewController: UIViewController {
     }
 }
 
+*/

@@ -77,21 +77,68 @@ final class PostService {
         }
     }
     
-    func fetchMyPosts(completion: @escaping ([Post]) -> Void) {
+    func fetchPosts(for userID: String, completion: @escaping ([Post]) -> Void) {
         var result = [Post]()
-        do {
-            let authorID = try FirebaseService.shared.currentUserID()
-            fetchAllPosts { posts in
-                for post in posts {
-                    if post.author == authorID ?? "" {
-                        result.append(post)
-                    }
+        fetchAllPosts { posts in
+            for post in posts {
+                if post.author == userID {
+                    result.append(post)
                 }
-                completion(result)
             }
-        } catch {
-            print("Couldn't get user ID")
             completion(result)
+        }
+    }
+    
+    func likePost(postID: String?, completion: @escaping (Error?) -> Void) {
+        
+        guard let postID else {
+            print("Post ID is nil")
+            completion(FirebaseServiceError.invalidEmail)
+            return
+        }
+        
+        guard let userID = Auth.auth().currentUser?.uid else {
+            print("User not logged in")
+            completion(FirebaseServiceError.userNotExist)
+            return
+        }
+        
+        let ref = Database.database().reference().child("users").child(userID).child("likes")
+        
+        ref.observeSingleEvent(of: .value) { snapshot in
+            var likes = snapshot.value as? [String] ?? []
+            
+            if likes.contains(postID) {
+                // Если пост уже лайкнут, удаляем его
+                likes.removeAll { $0 == postID }
+                print("Like removed")
+            } else {
+                // Если пост не лайкнут, добавляем его
+                likes.append(postID)
+                print("Like added")
+            }
+
+            // Обновляем массив лайков в базе данных
+            ref.setValue(likes) { error, _ in
+                completion(error)
+            }
+        }
+    }
+    
+    func isPostLikedByCurrentUser(postID: String, completion: @escaping (Bool) -> Void) {
+        guard let userID = Auth.auth().currentUser?.uid else {
+            completion(false)
+            return
+        }
+        
+        let ref = Database.database().reference().child("users").child(userID).child("likes")
+        
+        ref.observeSingleEvent(of: .value) { snapshot in
+            if let likes = snapshot.value as? [String], likes.contains(postID) {
+                completion(true)
+            } else {
+                completion(false)
+            }
         }
     }
     

@@ -132,14 +132,11 @@ struct SettingsView: View {
                             secondaryButton: .cancel()
                         )
                     }
-                    
-                    .alert(isPresented: self.$showAlertMessage) {
+                    .alert(isPresented: $showAlertMessage) {
                         Alert(
                             title: Text("Alert!".localized),
                             message: Text(alertMessage ?? ""),
-                            dismissButton: .default(Text("OK".localized)) {
-                                coordinator.popToPreviousViewController()
-                            }
+                            dismissButton: .default(Text("OK".localized))
                         )
                     }
                 }

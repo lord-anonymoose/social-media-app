@@ -82,6 +82,11 @@ class MainCoordinator: Coordinator, ObservableObject {
         navigationController.popToRootViewController(animated: true)
     }
     
+    func showOtherProfileViewControll(user: User, userID: String) {
+        let otherProfileViewController = ProfileViewController(user: user, isMyUser: false, userID: userID)
+        navigationController.pushViewController(otherProfileViewController, animated: true)
+    }
+    
     func showProfilePicViewController(image: UIImage) {
         let picturePickerViewController = PicturePickerViewController(image: image)
         navigationController.pushViewController(picturePickerViewController, animated: true)
@@ -110,11 +115,11 @@ class MainCoordinator: Coordinator, ObservableObject {
         
         FirebaseService.shared.fetchUser(by: id ?? "0") { user in
             if let user = user {
-                let profileViewController = ProfileViewController(user: user, isMyUser: true)
+                print("My user is: \(user.name)")
+                let profileViewController = ProfileViewController(user: user, isMyUser: true, userID: id ?? "Unknown")
                 let profileViewImage = UIImage(systemName: "person.fill")
                 profileViewController.tabBarItem = UITabBarItem(title: nil, image: profileViewImage, tag: 1)
                 self.controllers.append(profileViewController)
-
             } else {
                 print("User not found")
             }

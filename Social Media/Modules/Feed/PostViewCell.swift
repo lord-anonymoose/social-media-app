@@ -5,9 +5,14 @@
 //  Created by Philipp Lazarev on 02.07.2023.
 //
 
+
 import UIKit
 
 class PostViewCell: UITableViewCell {
+    
+    var post: Post?
+    var user: User?
+    var coordinator: MainCoordinator?
     
     // MARK: - Subviews
     
@@ -23,6 +28,7 @@ class PostViewCell: UITableViewCell {
     let authorProfilePicture: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.isUserInteractionEnabled = true
         view.contentMode = .scaleAspectFit
         return view
     }()
@@ -32,6 +38,7 @@ class PostViewCell: UITableViewCell {
         
         view.backgroundColor = .black
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.isUserInteractionEnabled = true
         view.contentMode = .scaleAspectFit
         return view
     }()
@@ -49,10 +56,10 @@ class PostViewCell: UITableViewCell {
     
     let likeButton: UIButton = {
         let button = UIButton()
-        let image = UIImage(systemName: "heart.fill")
+        let image = UIImage(systemName: "heart")
         button.setImage(image, for: .normal)
         button.tintColor = .accentColor
-        button.addTarget(PostViewCell.self, action: #selector(likeButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
         button.isUserInteractionEnabled = true
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -68,45 +75,123 @@ class PostViewCell: UITableViewCell {
     
     // MARK: - Lifecycle
 
-    init(style: UITableViewCell.CellStyle, reuseIdentifier: String?, author: String, image: String, description: String, likes: Int) {
+    init(style: UITableViewCell.CellStyle, reuseIdentifier: String?, post: Post) {
+        self.post = post
+        
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubviews(author: author, image: image, description: description)
-        setupConstraints()
+        
+        self.setupImageTapAction()
+        self.loadUserData()
+        self.addSubviews()
+        self.setupConstraints()
+        self.loadPostData()
+        self.updateLikeButton()
     }
+    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubviews(author: "Unknown", image: "notFound", description: "Unknown")
-        setupConstraints()
+
     }
     
+     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        addSubviews(author: "Unknown", image: "notFound", description: "Unknown")
-        setupConstraints()
+
     }
     
     // MARK: - Action
     @objc func likeButtonTapped(_ button: UIButton) {
-        print("likeButtonTapped")
+        PostService.shared.likePost(postID: self.post?.postID) { [weak self] error in
+            if let error = error {
+                print("Failed to like post: \(error.localizedDescription)")
+            } else {
+                self?.updateLikeButton()
+            }
+        }
+    }
+    
+    @objc func imageTapped(_ gestureRecognizer: UITapGestureRecognizer) {
+        print("Tapped image")
+        if let user = self.user {
+            print(user.name)
+            if let coordinator {
+                if let authorID = self.post?.author {
+                    coordinator.showOtherProfileViewControll(user: user, userID: authorID)
+                }
+            }
+        } else {
+            print("User not found")
+        }
     }
     
     
     // MARK: - Private
 
-    private func addSubviews(author: String, image: String, description: String) {
+    private func addSubviews() {
         contentView.addSubview(authorLabel)
         contentView.addSubview(authorProfilePicture)
         contentView.addSubview(imgView)
         contentView.addSubview(descriptionLabel)
         contentView.addSubview(likeButton)
+    }
+    
+    
+    private func setupImageTapAction() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
+        authorProfilePicture.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    private func updateLikeButton() {
+        guard let postID = post?.postID else { return }
+
+        PostService.shared.isPostLikedByCurrentUser(postID: postID) { [weak self] isLiked in
+            DispatchQueue.main.async {
+                let imageName = isLiked ? "heart.fill" : "heart"
+                self?.likeButton.setImage(UIImage(systemName: imageName), for: .normal)
+            }
+        }
+    }
+    
+    private func loadUserData() {
+        guard let post = self.post else {
+            print("Post not found")
+            return
+        }
         
-        authorLabel.text = author
-        authorProfilePicture.image = UIImage(named: author)
+        FirebaseService.shared.fetchUser(by: post.author) { user in
+            self.authorLabel.text = user?.name
+            self.user = user
+        }
         
-        imgView.image = UIImage(named: image)
+        let path = "ProfilePictures/\(post.author).jpg"
         
-        descriptionLabel.text = description
+        ImageCacheService.shared.loadImage(from: path) { image in
+            self.authorProfilePicture.image = image
+        }
+    }
+    
+    private func loadPostData() {
+        guard let post = self.post else {
+            print("Post not found")
+            return
+        }
+        
+        self.descriptionLabel.text = post.description
+        
+        let path = "Posts/\(post.postID).jpg"
+        
+        ImageCacheService.shared.loadImage(from: path) { image in
+            self.imgView.image = image
+        }
+        
+        do {
+            let currentUserID = try FirebaseService.shared.currentUserID()
+            FirebaseService.shared.fetchUser(by: currentUserID ?? "") { user in
+            }
+        } catch {
+            print("Current user not found")
+        }        
     }
     
     private func setupConstraints() {

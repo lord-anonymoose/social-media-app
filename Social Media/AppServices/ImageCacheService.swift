@@ -40,7 +40,6 @@ class ImageCacheService {
                 storageRef.getMetadata { [weak self] metadata, error in
                     if let metadata = metadata, metadata.updated == cachedMetadata.updated {
                         // No need to download the image, use cached one
-                        print("No need to download image")
                         completion(cachedImage)
                     } else {
                         // Metadata differs, download new image

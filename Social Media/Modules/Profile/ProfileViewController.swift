@@ -13,11 +13,13 @@ class ProfileViewController: UIViewController {
     
     private var user: User
     
+    var userID: String
+    
     private var imagePath: String?
     
     private var userPosts: [Post]
     
-    private var userPhotos: [UIImage]
+    private var userPhotos: [UIImage] = []
 
     private var isMyUser: Bool
     // MARK: - Subviews
@@ -76,18 +78,14 @@ class ProfileViewController: UIViewController {
     }()
     
     // MARK: - Lifecycle
-    init(user: User, isMyUser: Bool) {
+    init(user: User, isMyUser: Bool, userID: String) {
         self.user = user
         self.isMyUser = isMyUser
-        self.userPosts = []//posts.filter { $0.author == "katyperry" }
-            
-        var photos = [UIImage]()
-            
-        for p in userPosts {
-            //photos.append(UIImage(named: p.image)!)
-        }
-            
-        self.userPhotos = photos
+        self.userID = userID
+        self.userPosts = []
+
+        self.imagePath = "ProfilePictures/\(userID).jpg"
+
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -97,7 +95,7 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupImagePath()
+        loadPosts()
         setupUserImage()
         setupUI()
         addSubviews()
@@ -126,27 +124,15 @@ class ProfileViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func refresh() {
-        print("Refreshed")
-        do {
-            let uid = try FirebaseService.shared.currentUserID()
-            if let id = uid {
-                FirebaseService.shared.fetchUser(by: id) { user in
-                    if let user = user {
-                        self.user = user
-                        self.downloadUserImage()
-                        self.feedView.reloadData()
-                    } else {
-                        print("User not found")
-                    }
-                }
+        FirebaseService.shared.fetchUser(by: userID) { user in
+            if let user = user {
+                self.user = user
+                self.downloadUserImage()
+                self.feedView.reloadData()
+            } else {
+                print("User not found")
             }
         }
-        catch {
-            showAlert(title: "Error!".localized, description: error.localizedDescription)
-            refreshControl.endRefreshing()
-            return
-        }
-
         refreshControl.endRefreshing()
     }
     
@@ -194,16 +180,20 @@ class ProfileViewController: UIViewController {
     }
     
     // MARK: - Private
-    private func setupImagePath() {
-        do {
-            guard let id = try FirebaseService.shared.currentUserID() else {
-                return
+    
+    private func loadPosts() {
+        PostService.shared.fetchPosts(for: self.userID) { [weak self] fetchedPosts in
+            guard let self = self else { return }
+            
+            self.userPosts = fetchedPosts
+            
+            DispatchQueue.main.async {
+                self.feedView.reloadData()
             }
-            self.imagePath = "ProfilePictures/\(id).jpg"
-        } catch {
-            self.showAlert(title: "Error!".localized, description: error.localizedDescription)
+            print(userPosts.count)
         }
     }
+
     
     
     private func setupUI() {
@@ -294,20 +284,13 @@ class ProfileViewController: UIViewController {
     }
     
     private func downloadUserImage() {
-        do {
-            guard let id = try FirebaseService.shared.currentUserID() else {
-                return
+        let path = "ProfilePictures/\(userID).jpg"
+        ImageCacheService.shared.loadImage(from: path) { [weak self] image in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.userImageView.image = image
+                self.feedView.reloadData()
             }
-            let path = "ProfilePictures/\(id).jpg"
-            ImageCacheService.shared.loadImage(from: path) { [weak self] image in
-                guard let self = self else { return }
-                DispatchQueue.main.async {
-                    self.userImageView.image = image
-                    self.feedView.reloadData()
-                }
-            }
-        } catch {
-            self.showAlert(title: "Error!".localized, description: error.localizedDescription)
         }
     }
     
@@ -373,6 +356,10 @@ extension ProfileViewController: UITableViewDataSource {
         return 1
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        userPosts.count
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
             let identifier = isMyUser ? "ProfileHeaderView" : "AnyProfileHeaderView"
@@ -395,31 +382,24 @@ extension ProfileViewController: UITableViewDataSource {
         return nil
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        userPosts.count + 1
-    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            let cell = PhotosTableViewCell(style: .default, reuseIdentifier: "PhotosTableViewCell")
-            cell.userPhotos = userPhotos
-            return cell
+        let post = userPosts[indexPath.row]
+        let cell = PostViewCell(style: .default, reuseIdentifier: "cell", post: post)
+        if let navigationController = self.navigationController {
+            let coordinator = MainCoordinator(navigationController: navigationController)
+            cell.coordinator = coordinator
         } else {
-            let post = userPosts[indexPath.row - 1]
             
-            let cell = PostViewCell(style: .default, reuseIdentifier: "cell", author: "Author", image: "image", description: "description", likes: 0)
-            return cell
         }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
 extension ProfileViewController: UITableViewDelegate {
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            let photosViewController = PhotosViewController(userPhotos: userPhotos, isMyUser: self.isMyUser)
-            self.navigationController?.pushViewController(photosViewController, animated: true)
-        }
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
 }

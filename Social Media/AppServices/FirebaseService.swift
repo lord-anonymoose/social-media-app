@@ -55,7 +55,6 @@ final class FirebaseService {
     func currentUserID() throws -> String? {
         guard let id = Auth.auth().currentUser?.uid else {
             throw FirebaseServiceError.userNotExist
-            //print("User not found")
         }
         return id
     }
