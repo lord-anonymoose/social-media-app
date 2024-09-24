@@ -62,7 +62,7 @@ class ProfileViewController: UIViewController {
         if let path = self.imagePath {
             imageView.image = ImageCacheService.shared.getCachedImage(from: path)
         } else {
-            imageView.image = UIImage(named: "default")
+            imageView.image = UIImage(named: "defaultUserImage")
         }
         
         
@@ -168,14 +168,14 @@ class ProfileViewController: UIViewController {
     @objc func changeImageButtonTapped(_ button: UIButton) {
         if let navigationController = self.navigationController {
             let coordinator = MainCoordinator(navigationController: navigationController)
-            coordinator.showProfilePicViewController(image: self.userImageView.image ?? UIImage(named: "default")!)
+            coordinator.showProfilePicViewController(image: self.userImageView.image ?? UIImage(named: "defaultUserImage")!)
         }
     }
     
     @objc func settingsButtonTapped(_ button: UIButton) {
         if let navigationController = self.navigationController {
             let coordinator = MainCoordinator(navigationController: navigationController)
-            coordinator.showSettingsViewController(image: self.userImageView.image ?? UIImage(named: "default")!)
+            coordinator.showSettingsViewController(image: self.userImageView.image ?? UIImage(named: "defaultUserImage")!)
         }
     }
     
@@ -370,7 +370,7 @@ extension ProfileViewController: UITableViewDataSource {
                 if let path = self.imagePath {
                     view.userImageView.image = ImageCacheService.shared.getCachedImage(from: path)
                 } else {
-                    view.userImageView.image = UIImage(named: "default")
+                    view.userImageView.image = UIImage(named: "defaultUserImage")
                 }
                 let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapPicture))
                 view.userImageView.addGestureRecognizer(tapGestureRecognizer)

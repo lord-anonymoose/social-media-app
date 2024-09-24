@@ -24,7 +24,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
     lazy var userImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "default")
+        imageView.image = UIImage(named: "defaultUserImage")
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 45
@@ -37,7 +37,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     private lazy var nameLabel: UILabel = {
         let userName = UILabel()
         
-        userName.text = "default"
+        userName.text = "defaultUserImage"
         userName.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         userName.textColor = .textColor
         userName.sizeToFit()

@@ -16,7 +16,37 @@ class SecondaryLoginViewController: UIViewController {
     private var user: User
     
     
+    
     // MARK: - Subviews
+    
+    private lazy var userImageView: UIImageView = {
+        var imageView = UIImageView()
+
+        imageView.image = UIImage(named: "defaultUserImage")
+
+        imageView.image = UIImage(named: "defaultUserImage")
+        imageView.layer.cornerRadius = 45
+        imageView.clipsToBounds = true
+        imageView.backgroundColor = .green
+        imageView.isUserInteractionEnabled = true
+        
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        do {
+            let userID = try FirebaseService.shared.currentUserID()
+            if let userID {
+                let path = "ProfilePictures/\(userID).jpg"
+                ImageCacheService.shared.loadImage(from: path) { image in
+                    if let image {
+                        imageView.image = image
+                    }
+                }
+            }
+        } catch {
+            print("Couldn't load user image: \(error.localizedDescription)")
+        }
+        return imageView
+    }()
     
     private lazy var greetingLabel: UILabel = {
         let label = UILabel()
@@ -30,21 +60,6 @@ class SecondaryLoginViewController: UIViewController {
         
         return label
     }()
-    
-    /*
-    private lazy var profilePicture: UIImageView = {
-        let imageView = UIImageView(image: user.image)
-        
-        imageView.layer.cornerRadius = 45
-        imageView.clipsToBounds = true
-                        
-        imageView.isUserInteractionEnabled = true
-        
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return imageView
-    }()
-    */
     
     private lazy var changeUserButton: UIButton = {
         let button = UIButton()
@@ -99,6 +114,7 @@ class SecondaryLoginViewController: UIViewController {
     }()
     
     
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         setupUI()
@@ -116,6 +132,7 @@ class SecondaryLoginViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     
     
     // MARK: - Actions
@@ -153,8 +170,8 @@ class SecondaryLoginViewController: UIViewController {
     }
     
     private func addSubviews() {
+        view.addSubview(userImageView)
         view.addSubview(greetingLabel)
-        //view.addSubview(profilePicture)
         view.addSubview(changeUserButton)
         view.addSubview(authenticateButton)
     }
@@ -163,17 +180,15 @@ class SecondaryLoginViewController: UIViewController {
         let safeAreaGuide = view.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
-            greetingLabel.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor, constant: 20),
+            userImageView.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor, constant: 20),
+            userImageView.heightAnchor.constraint(equalToConstant: 90),
+            userImageView.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor),
+            userImageView.widthAnchor.constraint(equalToConstant: 90),
+            
+            greetingLabel.topAnchor.constraint(equalTo: userImageView.bottomAnchor, constant: 20),
             greetingLabel.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 10),
             greetingLabel.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -10),
             greetingLabel.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor),
-        
-        /*
-            profilePicture.centerYAnchor.constraint(equalTo: safeAreaGuide.centerYAnchor),
-            profilePicture.heightAnchor.constraint(equalToConstant: 90),
-            profilePicture.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor),
-            profilePicture.widthAnchor.constraint(equalToConstant: 90)
-        */
         
             authenticateButton.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor, constant: -20),
             authenticateButton.heightAnchor.constraint(equalToConstant: 100),
