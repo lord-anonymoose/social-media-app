@@ -56,6 +56,37 @@ final class PostService {
         }
     }
     
+    func fetchLikedPosts(completion: @escaping ([Post]) -> Void) {
+        var result = [Post]()
+        
+        guard let userID = try? FirebaseService.shared.currentUserID() else {
+            completion([])
+            return
+        }
+        
+        FirebaseService.shared.fetchUser(by: userID) { user in
+            if let user {
+                let likesIDs = user.likes
+                let dispatchGroup = DispatchGroup()
+                
+                for likeID in likesIDs {
+                    dispatchGroup.enter()
+                    PostService.shared.fetchPost(withID: likeID) { post in
+                        if let post {
+                            result.append(post)
+                        }
+                        dispatchGroup.leave()
+                    }
+                }
+                dispatchGroup.notify(queue: .main) {
+                    completion(result)
+                }
+            } else {
+                completion([])
+            }
+        }
+    }
+    
     func fetchAllPosts(completion: @escaping ([Post]) -> Void) {
         let ref = Database.database().reference().child("posts")
         

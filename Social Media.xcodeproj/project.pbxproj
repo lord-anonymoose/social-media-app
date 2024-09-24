@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8E0D227A2C18EDF800A9BBA8 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0D22792C18EDF800A9BBA8 /* MainCoordinator.swift */; };
-		8E0D227C2C19FDB200A9BBA8 /* ErrorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E0D227B2C19FDB200A9BBA8 /* ErrorService.swift */; };
 		8E17FDFA2C6BF06E00559CA6 /* MapKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E17FDF92C6BF06E00559CA6 /* MapKit.swift */; };
 		8E1F68042A51739C008AE130 /* PostViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F68032A51739C008AE130 /* PostViewCell.swift */; };
 		8E29336B2C4548D400F2CC69 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E29336A2C4548D400F2CC69 /* UIColor.swift */; };
@@ -58,7 +57,6 @@
 		8EF427B72C6DF7A500B22C46 /* TimerLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF427B62C6DF7A500B22C46 /* TimerLocalization.swift */; };
 		8EF427BE2C6E011D00B22C46 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8EF427BB2C6E008B00B22C46 /* Info.plist */; };
 		8EF48DA52A27797F0099166A /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF48DA42A27797F0099166A /* ProfileHeaderView.swift */; };
-		8EFB63562C51C2290058572C /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFB63552C51C2290058572C /* MapViewController.swift */; };
 		8EFB635D2C51D19D0058572C /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 8EFB635C2C51D19D0058572C /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
@@ -77,7 +75,6 @@
 
 /* Begin PBXFileReference section */
 		8E0D22792C18EDF800A9BBA8 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
-		8E0D227B2C19FDB200A9BBA8 /* ErrorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorService.swift; sourceTree = "<group>"; };
 		8E17FDF92C6BF06E00559CA6 /* MapKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapKit.swift; sourceTree = "<group>"; };
 		8E1F68032A51739C008AE130 /* PostViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewCell.swift; sourceTree = "<group>"; };
 		8E29336A2C4548D400F2CC69 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
@@ -123,7 +120,6 @@
 		8EF427B62C6DF7A500B22C46 /* TimerLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLocalization.swift; sourceTree = "<group>"; };
 		8EF427BA2C6E008B00B22C46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/Info.plist; sourceTree = "<group>"; };
 		8EF48DA42A27797F0099166A /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
-		8EFB63552C51C2290058572C /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		8EFB635C2C51D19D0058572C /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -218,15 +214,15 @@
 		8E4C155F2A269BD900AA511B /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				8E3BF8612C9CD7EC00A60886 /* MakePost */,
-				8E3BF85A2C9CD4E700A60886 /* Feed */,
-				8E3AE6712C970EBE00CFB33D /* Settings */,
 				8E5439392C6EA64E00D257EC /* Loading */,
-				8E3FC4B52A4D8D040064F250 /* LogIn */,
 				8E672EC52C2F60A80063DFC2 /* SignUp */,
-				8EB8D3262C8A39C700571CFA /* ResetPassword */,
+				8E3FC4B52A4D8D040064F250 /* LogIn */,
 				8E5439332C6E925900D257EC /* SecondaryLogin */,
+				8EB8D3262C8A39C700571CFA /* ResetPassword */,
+				8E3BF85A2C9CD4E700A60886 /* Feed */,
+				8E3BF8612C9CD7EC00A60886 /* MakePost */,
 				8EC8A3E42A2778D2008CC17C /* Profile */,
+				8E3AE6712C970EBE00CFB33D /* Settings */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -359,7 +355,6 @@
 		8EDCB6352C92401900DD9961 /* AppServices */ = {
 			isa = PBXGroup;
 			children = (
-				8E0D227B2C19FDB200A9BBA8 /* ErrorService.swift */,
 				8E2D1B332A54C32300003EFF /* UserPosts.swift */,
 			);
 			path = AppServices;
@@ -368,7 +363,6 @@
 		8EDCB6362C92408D00DD9961 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				8EFB63542C51C21A0058572C /* Map */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -380,14 +374,6 @@
 				8EDCB63A2C92454400DD9961 /* Post.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		8EFB63542C51C21A0058572C /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				8EFB63552C51C2290058572C /* MapViewController.swift */,
-			);
-			path = Map;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -487,7 +473,6 @@
 				8E5439362C6E966D00D257EC /* LocalAuthorizationService.swift in Sources */,
 				8E3BF8632C9CD7F800A60886 /* MakePostViewController.swift in Sources */,
 				8EDAC7E22C94E76200E4C789 /* ImageCacheService.swift in Sources */,
-				8EFB63562C51C2290058572C /* MapViewController.swift in Sources */,
 				8E4C154C2A2699D800AA511B /* SceneDelegate.swift in Sources */,
 				8E29336B2C4548D400F2CC69 /* UIColor.swift in Sources */,
 				8E3BF8592C9CAB6200A60886 /* AnyProfileHeaderView.swift in Sources */,
@@ -512,7 +497,6 @@
 				8E672EC72C2F60E90063DFC2 /* SignUpViewController.swift in Sources */,
 				8EDCB6392C92449800DD9961 /* User.swift in Sources */,
 				8E3AE6702C970AD600CFB33D /* UISymbolButton.swift in Sources */,
-				8E0D227C2C19FDB200A9BBA8 /* ErrorService.swift in Sources */,
 				8E2D1B342A54C32300003EFF /* UserPosts.swift in Sources */,
 				8E4C15692A269C7A00AA511B /* ProfileViewController.swift in Sources */,
 				8EC3113C2A4C3540006C8FA2 /* Foundation.swift in Sources */,

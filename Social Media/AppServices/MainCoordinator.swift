@@ -108,6 +108,17 @@ class MainCoordinator: Coordinator, ObservableObject {
         }
     }
     
+    func showMakePostViewController() {
+        let makePostViewController = MakePostViewController()
+        self.navigationController.pushViewController(makePostViewController, animated: true)
+    }
+    
+    func showLikesFeedViewController() {
+        let likesFeedViewController = FeedViewController()
+        likesFeedViewController.isLikesFeed = true
+        self.navigationController.pushViewController(likesFeedViewController, animated: true)
+    }
+    
     // Profile
     func addProfileViewController(completion: @escaping () -> Void) {
         let id = Auth.auth().currentUser?.uid

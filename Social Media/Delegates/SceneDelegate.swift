@@ -61,7 +61,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Release any resources associated with this scene that can be re-created the next time the scene connects.
         // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
 
-        let authType = LocalAuthorizationService.biometricType()
+        //let authType = LocalAuthorizationService.biometricType()
         /*
         if authType == .none {
             do {

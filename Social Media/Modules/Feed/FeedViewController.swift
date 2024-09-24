@@ -13,6 +13,7 @@ import UIKit
 final class FeedViewController: UIViewController, UITableViewDelegate {
     
     var posts = [Post]()
+    var isLikesFeed = false
     var userImages = [UIImage?]()
     var postImages = [UIImage]()
     
@@ -30,11 +31,21 @@ final class FeedViewController: UIViewController, UITableViewDelegate {
     
     // MARK: Actions
     @objc func addPostTapped() {
-        print("addTapped")
+        if let navigationController = self.navigationController {
+            let coordinator = MainCoordinator(navigationController: navigationController)
+            coordinator.showMakePostViewController()
+        }
     }
     
     @objc func showBookmarksTapped() {
-        print("showBookmarksTapped")
+        if let navigationController = self.navigationController {
+            let coordinator = MainCoordinator(navigationController: navigationController)
+            coordinator.showLikesFeedViewController()
+        }
+        /*
+        PostService.shared.fetchLikedPosts() { posts in
+            print(posts.count)
+        }*/
     }
     
     @objc private func refresh() {
@@ -63,13 +74,17 @@ final class FeedViewController: UIViewController, UITableViewDelegate {
     }
     
     private func setupNavigationBar() {
-        navigationItem.title = "GoSocial"
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPostTapped))
-        
-        let bookmarkImage = UIImage(systemName: "bookmark.fill")
-        let bookmarksButton = UIBarButtonItem(image: bookmarkImage, style: .plain, target: self, action: #selector(showBookmarksTapped)
-        )
-        navigationItem.rightBarButtonItem = bookmarksButton
+        if isLikesFeed {
+            navigationItem.title = "Bookmarks"
+        } else {
+            navigationItem.title = "GoSocial"
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPostTapped))
+            
+            let bookmarkImage = UIImage(systemName: "bookmark.fill")
+            let bookmarksButton = UIBarButtonItem(image: bookmarkImage, style: .plain, target: self, action: #selector(showBookmarksTapped)
+            )
+            navigationItem.rightBarButtonItem = bookmarksButton
+        }
     }
     
     private func addSubviews() {
@@ -100,15 +115,26 @@ final class FeedViewController: UIViewController, UITableViewDelegate {
     }
     
     private func loadPosts() {
-        PostService.shared.fetchAllPosts { [weak self] fetchedPosts in
-            guard let self = self else { return }
-            
-            self.posts = fetchedPosts
-            
-            DispatchQueue.main.async {
-                self.feedView.reloadData()
+        if isLikesFeed {
+            PostService.shared.fetchLikedPosts() { [weak self] fetchedPosts in
+                guard let self = self else { return }
+                
+                self.posts = fetchedPosts
+                
+                DispatchQueue.main.async {
+                    self.feedView.reloadData()
+                }
             }
-            print(posts.count)
+        } else {
+            PostService.shared.fetchAllPosts { [weak self] fetchedPosts in
+                guard let self = self else { return }
+                
+                self.posts = fetchedPosts
+                
+                DispatchQueue.main.async {
+                    self.feedView.reloadData()
+                }
+            }
         }
     }
 }
@@ -130,8 +156,6 @@ extension FeedViewController: UITableViewDataSource {
         if let navigationController = self.navigationController {
             let coordinator = MainCoordinator(navigationController: navigationController)
             cell.coordinator = coordinator
-        } else {
-            
         }
         return cell
     }
