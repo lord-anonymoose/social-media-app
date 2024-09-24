@@ -389,9 +389,10 @@ extension ProfileViewController: UITableViewDataSource {
         if let navigationController = self.navigationController {
             let coordinator = MainCoordinator(navigationController: navigationController)
             cell.coordinator = coordinator
-        } else {
-            
         }
+        cell.authorProfilePicture.isUserInteractionEnabled = false
+        cell.authorLabel.isUserInteractionEnabled = false
+        
         return cell
     }
     

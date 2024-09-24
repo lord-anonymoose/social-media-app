@@ -13,7 +13,7 @@ class PostViewCell: UITableViewCell {
     var post: Post?
     var user: User?
     var coordinator: MainCoordinator?
-    
+        
     // MARK: - Subviews
     
     let authorLabel: UILabel = {
@@ -32,6 +32,8 @@ class PostViewCell: UITableViewCell {
         view.isUserInteractionEnabled = true
         view.contentMode = .scaleAspectFit
         view.layer.cornerRadius = 15
+        view.layer.masksToBounds = true
+        
         return view
     }()
     
@@ -58,7 +60,9 @@ class PostViewCell: UITableViewCell {
     
     let likeButton: UIButton = {
         let button = UIButton()
-        let image = UIImage(systemName: "heart")
+        let imageSize = CGSize(width: 30, height: 30)
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: imageSize.width)
+        let image = UIImage(systemName: "heart")?.withConfiguration(imageConfig)
         button.setImage(image, for: .normal)
         button.tintColor = .accentColor
         button.addTarget(self, action: #selector(likeButtonTapped), for: .touchUpInside)
@@ -142,7 +146,7 @@ class PostViewCell: UITableViewCell {
         let imageTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(userTapped(_:)))
         authorProfilePicture.addGestureRecognizer(imageTapGestureRecognizer)
         let labelTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(userTapped(_:)))
-        authorLabel.addGestureRecognizer(imageTapGestureRecognizer)
+        authorLabel.addGestureRecognizer(labelTapGestureRecognizer)
     }
     
     private func updateLikeButton() {
@@ -151,7 +155,9 @@ class PostViewCell: UITableViewCell {
         PostService.shared.isPostLikedByCurrentUser(postID: postID) { [weak self] isLiked in
             DispatchQueue.main.async {
                 let imageName = isLiked ? "heart.fill" : "heart"
-                self?.likeButton.setImage(UIImage(systemName: imageName), for: .normal)
+                let imageSize = CGSize(width: 30, height: 30)
+                let imageConfig = UIImage.SymbolConfiguration(pointSize: imageSize.width)
+                self?.likeButton.setImage(UIImage(systemName: imageName)?.withConfiguration(imageConfig), for: .normal)
             }
         }
     }
@@ -162,13 +168,18 @@ class PostViewCell: UITableViewCell {
             return
         }
         
+        let path = "ProfilePictures/\(post.author).jpg"
+        if let image = ImageCacheService.shared.getCachedImage(from: path) {
+            self.authorProfilePicture.image = image
+        } else {
+            self.authorProfilePicture.image = UIImage(named: "defaultUserImage")
+        }
+        
         FirebaseService.shared.fetchUser(by: post.author) { user in
             self.authorLabel.text = user?.name
             self.user = user
         }
-        
-        let path = "ProfilePictures/\(post.author).jpg"
-        
+                
         ImageCacheService.shared.loadImage(from: path) { image in
             self.authorProfilePicture.image = image
         }
@@ -183,6 +194,12 @@ class PostViewCell: UITableViewCell {
         self.descriptionLabel.text = post.description
         
         let path = "Posts/\(post.postID).jpg"
+        
+        if let image = ImageCacheService.shared.getCachedImage(from: path) {
+            self.imgView.image = image
+        } else {
+            self.imgView.image = UIImage(named: "defaultPostImage")
+        }
         
         ImageCacheService.shared.loadImage(from: path) { image in
             self.imgView.image = image
@@ -229,8 +246,9 @@ class PostViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             likeButton.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 16),
+            likeButton.heightAnchor.constraint(equalToConstant: 50),
             likeButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            likeButton.widthAnchor.constraint(equalToConstant: 25),
+            likeButton.widthAnchor.constraint(equalToConstant: 50),
             likeButton.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -16)
         ])
     }

@@ -64,7 +64,7 @@ class SecondaryLoginViewController: UIViewController {
     private lazy var changeUserButton: UIButton = {
         let button = UIButton()
         
-        let imageSize = CGSize(width: 30, height: 30)
+        let imageSize = CGSize(width: 50, height: 50)
         let imageConfig = UIImage.SymbolConfiguration(pointSize: imageSize.width)
         let image = UIImage(systemName: "arrow.left.square")?.withConfiguration(imageConfig)
         button.setImage(image, for: .normal)
@@ -81,8 +81,9 @@ class SecondaryLoginViewController: UIViewController {
         let button = UIButton()
         let authType = LocalAuthorizationService.biometricType()
         
-        let imageSize = CGSize(width: 50, height: 50)
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: imageSize.width)
+        button.contentMode = .scaleAspectFit
+
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 75, weight: .regular, scale: .default)
         
         switch authType {
         case .face:
@@ -196,9 +197,9 @@ class SecondaryLoginViewController: UIViewController {
             authenticateButton.widthAnchor.constraint(equalToConstant: 100),
         
             changeUserButton.centerYAnchor.constraint(equalTo: authenticateButton.centerYAnchor),
-            changeUserButton.heightAnchor.constraint(equalToConstant: 50),
+            changeUserButton.heightAnchor.constraint(equalToConstant: 100),
             changeUserButton.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 20),
-            changeUserButton.widthAnchor.constraint(equalToConstant: 50)
+            changeUserButton.widthAnchor.constraint(equalToConstant: 100)
         ])
     }
 }

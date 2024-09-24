@@ -65,7 +65,7 @@ final class SettingsViewController: UIViewController {
         
         let coordinator = MainCoordinator(navigationController: self.navigationController!)
         
-        let settingsView = SettingsView(coordinator: coordinator, name: name, status: status, image: image ?? UIImage(named: "default")!)
+        let settingsView = SettingsView(coordinator: coordinator, name: name, status: status, image: image ?? UIImage(named: "defaultUserImage")!)
         
         let childView = UIHostingController(rootView: settingsView)
         hostingController = childView

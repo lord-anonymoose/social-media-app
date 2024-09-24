@@ -63,10 +63,23 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     }()
 
     
-    lazy var logoutButton = UISymbolButton(image: UIImage(systemName: "rectangle.portrait.and.arrow.forward")!, tintColor: .systemRed)
+    //lazy var logoutButton = UISymbolButton(image: UIImage(systemName: "rectangle.portrait.and.arrow.forward")!, tintColor: .systemRed)
     
-    lazy var settingsButton = UISymbolButton(image: UIImage(systemName: "pencil.circle")!, tintColor: .systemGray)
+    //lazy var settingsButton = UISymbolButton(image: UIImage(systemName: "pencil.circle")!, tintColor: .systemGray)
+    
+    lazy var logoutButton: UISymbolButton = {
+        let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .bold, scale: .large)
+        let image = UIImage(systemName: "rectangle.portrait.and.arrow.forward", withConfiguration: config)!
+        let button = UISymbolButton(image: image, tintColor: .systemRed)
+        return button
+    }()
 
+    lazy var settingsButton: UISymbolButton = {
+        let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .large)
+        let image = UIImage(systemName: "pencil.circle", withConfiguration: config)!
+        let button = UISymbolButton(image: image, tintColor: .systemGray)
+        return button
+    }()
     
     private lazy var statusTextField: UITextFieldWithPadding = {
         let placeholder = String(localized: "Hello, world!")
@@ -131,21 +144,21 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
             nameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
             nameLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 122),
             nameLabel.trailingAnchor.constraint(equalTo: settingsButton.leadingAnchor, constant: -16),
-        
-            statusLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 16),
-            statusLabel.heightAnchor.constraint(equalToConstant: 32),
-            statusLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 122),
-            statusLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
             logoutButton.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            logoutButton.heightAnchor.constraint(equalToConstant: 25),
+            logoutButton.heightAnchor.constraint(equalToConstant: 31),
             logoutButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            logoutButton.widthAnchor.constraint(equalToConstant: 25),
+            logoutButton.widthAnchor.constraint(equalToConstant: 31),
             
             settingsButton.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             settingsButton.heightAnchor.constraint(equalTo: logoutButton.heightAnchor),
             settingsButton.trailingAnchor.constraint(equalTo: logoutButton.leadingAnchor, constant: -16),
-            settingsButton.widthAnchor.constraint(equalTo: logoutButton.widthAnchor)
+            settingsButton.widthAnchor.constraint(equalTo: logoutButton.widthAnchor),
+            
+            statusLabel.topAnchor.constraint(equalTo: logoutButton.bottomAnchor, constant: 16),
+            statusLabel.heightAnchor.constraint(equalToConstant: 32),
+            statusLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 122),
+            statusLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
         ])
         
