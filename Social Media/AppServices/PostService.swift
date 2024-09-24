@@ -111,11 +111,9 @@ final class PostService {
             if likes.contains(postID) {
                 // Если пост уже лайкнут, удаляем его
                 likes.removeAll { $0 == postID }
-                print("Like removed")
             } else {
                 // Если пост не лайкнут, добавляем его
                 likes.append(postID)
-                print("Like added")
             }
 
             // Обновляем массив лайков в базе данных

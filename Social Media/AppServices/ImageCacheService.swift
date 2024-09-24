@@ -43,7 +43,6 @@ class ImageCacheService {
                         completion(cachedImage)
                     } else {
                         // Metadata differs, download new image
-                        print("Metadata differs, downloading new image")
                         self?.downloadImage(from: path, completion: completion)
                     }
                 }
@@ -54,7 +53,6 @@ class ImageCacheService {
                     if let metadata = metadata {
                         // Cache the metadata
                         self?.imageMetadataCache.setObject(metadata, forKey: pathKey)
-                        print("No cached metadata, downloading image")
                         self?.downloadImage(from: path, completion: completion)
                     } else {
                         print("Error fetching metadata, using cached image")
@@ -64,7 +62,6 @@ class ImageCacheService {
             }
         } else {
             // No cached image, download it
-            print("No cached image, downloading image")
             downloadImage(from: path, completion: completion)
         }
     }
@@ -76,7 +73,7 @@ class ImageCacheService {
             guard let self = self else { return }
             
             if let error = error {
-                print("Ошибка при загрузке изображения: \(error)")
+                print("Error loading image: \(error)")
                 completion(nil)
                 return
             }

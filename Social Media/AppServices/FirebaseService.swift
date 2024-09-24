@@ -90,7 +90,6 @@ final class FirebaseService {
             let isVerified = await checkIfEmailIsVerified()
             
             if isVerified {
-                print("Email is verified")
                 let userExists = try await checkIfUserExistsInDatabase(uid: uid)
                 
                 if !userExists {

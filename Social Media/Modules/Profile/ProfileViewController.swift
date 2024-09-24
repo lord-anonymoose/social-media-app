@@ -105,9 +105,7 @@ class ProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         setupKeyboardObservers()
-        refresh()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -118,7 +116,6 @@ class ProfileViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         setupUserImage()
-        feedView.reloadData()
     }
     
     // MARK: - Actions
@@ -190,7 +187,6 @@ class ProfileViewController: UIViewController {
             DispatchQueue.main.async {
                 self.feedView.reloadData()
             }
-            print(userPosts.count)
         }
     }
 
@@ -272,7 +268,7 @@ class ProfileViewController: UIViewController {
         self.userImageView.alpha = 0.0
         let imageSize: CGFloat = 90
         let xPosition = self.view.safeAreaInsets.left + 16
-        let yPosition = self.view.safeAreaInsets.top + 16 // Исправлено на safeAreaInsets.top
+        let yPosition = self.view.safeAreaInsets.top + 16
         
         self.userImageView.frame = CGRect(
             x: xPosition,
@@ -289,7 +285,6 @@ class ProfileViewController: UIViewController {
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.userImageView.image = image
-                self.feedView.reloadData()
             }
         }
     }

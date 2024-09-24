@@ -16,7 +16,11 @@ final class FeedViewController: UIViewController, UITableViewDelegate {
     var userImages = [UIImage?]()
     var postImages = [UIImage]()
     
+    
+    
     // MARK: Subviews
+    let refreshControl = UIRefreshControl()
+    
     private lazy var feedView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -25,14 +29,26 @@ final class FeedViewController: UIViewController, UITableViewDelegate {
     
     
     // MARK: Actions
+    @objc func addPostTapped() {
+        print("addTapped")
+    }
     
+    @objc func showBookmarksTapped() {
+        print("showBookmarksTapped")
+    }
     
+    @objc private func refresh() {
+        self.loadPosts()
+        self.feedView.reloadData()
+        refreshControl.endRefreshing()
+    }
     
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         loadPosts()
         setupUI()
+        setupNavigationBar()
         addSubviews()
         setupConstraints()
     }
@@ -42,10 +58,25 @@ final class FeedViewController: UIViewController, UITableViewDelegate {
     
     private func setupUI() {
         view.backgroundColor = .systemBackground
+        
+        self.navigationController?.title = "GoSocial"
+    }
+    
+    private func setupNavigationBar() {
+        navigationItem.title = "GoSocial"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPostTapped))
+        
+        let bookmarkImage = UIImage(systemName: "bookmark.fill")
+        let bookmarksButton = UIBarButtonItem(image: bookmarkImage, style: .plain, target: self, action: #selector(showBookmarksTapped)
+        )
+        navigationItem.rightBarButtonItem = bookmarksButton
     }
     
     private func addSubviews() {
         view.addSubview(feedView)
+        refreshControl.attributedTitle = NSAttributedString(string: "Refreshing".localized)
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        feedView.addSubview(refreshControl)
     }
     
     private func setupConstraints() {

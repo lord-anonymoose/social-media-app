@@ -111,11 +111,9 @@ class MainCoordinator: Coordinator, ObservableObject {
     // Profile
     func addProfileViewController(completion: @escaping () -> Void) {
         let id = Auth.auth().currentUser?.uid
-        print(id ?? "Not found")
         
         FirebaseService.shared.fetchUser(by: id ?? "0") { user in
             if let user = user {
-                print("My user is: \(user.name)")
                 let profileViewController = ProfileViewController(user: user, isMyUser: true, userID: id ?? "Unknown")
                 let profileViewImage = UIImage(systemName: "person.fill")
                 profileViewController.tabBarItem = UITabBarItem(title: nil, image: profileViewImage, tag: 1)
