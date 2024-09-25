@@ -26,7 +26,7 @@ final class PicturePickerViewController: UIViewController, UINavigationControlle
     }()
     
     private lazy var chooseImageButton = UICustomButton(customTitle: String(localized: "Choose Image"), customBackgroundColor: .secondaryColor ,action: {
-        self.pickImage()
+        self.showImagePicker()
     })
     
     private lazy var saveImageButton = UICustomButton(customTitle: String(localized: "Save"), customBackgroundColor: .accentColor ,action: {
@@ -117,7 +117,7 @@ final class PicturePickerViewController: UIViewController, UINavigationControlle
         imagePicker.allowsEditing = true
     }
     
-    private func pickImage() {
+    private func showImagePicker() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         alert.addAction(UIAlertAction(title: "Photo Gallery", style: .default, handler: { (button) in

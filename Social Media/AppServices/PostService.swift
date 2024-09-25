@@ -199,7 +199,6 @@ final class PostService {
     }
     
     func deletePost(postID: String, completion: @escaping (Error?) -> Void) {
-        let authorID = self.getAuthorID(for: postID)
         
         guard let authorID = Auth.auth().currentUser?.uid else {
             print("User not logged in")
