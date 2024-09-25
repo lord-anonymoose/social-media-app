@@ -17,7 +17,6 @@
 		8E2933732C4549EA00F2CC69 /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2933722C4549EA00F2CC69 /* UIImage.swift */; };
 		8E2933752C454AB800F2CC69 /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2933742C454AB800F2CC69 /* UITableView.swift */; };
 		8E2933772C454ADB00F2CC69 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2933762C454ADB00F2CC69 /* UIViewController.swift */; };
-		8E2D1B342A54C32300003EFF /* UserPosts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E2D1B332A54C32300003EFF /* UserPosts.swift */; };
 		8E3AE6702C970AD600CFB33D /* UISymbolButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3AE66F2C970AD600CFB33D /* UISymbolButton.swift */; };
 		8E3AE6732C970ECB00CFB33D /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3AE6722C970ECB00CFB33D /* SettingsViewController.swift */; };
 		8E3AE6752C970ED300CFB33D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E3AE6742C970ED300CFB33D /* SettingsView.swift */; };
@@ -84,7 +83,6 @@
 		8E2933722C4549EA00F2CC69 /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		8E2933742C454AB800F2CC69 /* UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
 		8E2933762C454ADB00F2CC69 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
-		8E2D1B332A54C32300003EFF /* UserPosts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPosts.swift; sourceTree = "<group>"; };
 		8E3AE66F2C970AD600CFB33D /* UISymbolButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISymbolButton.swift; sourceTree = "<group>"; };
 		8E3AE6722C970ECB00CFB33D /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		8E3AE6742C970ED300CFB33D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -206,7 +204,6 @@
 				8EFB635C2C51D19D0058572C /* Localizable.xcstrings */,
 				8EF427BB2C6E008B00B22C46 /* Info.plist */,
 				8E54392C2C6E06B500D257EC /* InfoPlist.strings */,
-				8E5439342C6E93A300D257EC /* Deprecated */,
 			);
 			path = "Social Media";
 			sourceTree = "<group>";
@@ -240,15 +237,6 @@
 				8E5439302C6E924A00D257EC /* SecondaryLoginViewController.swift */,
 			);
 			path = SecondaryLogin;
-			sourceTree = "<group>";
-		};
-		8E5439342C6E93A300D257EC /* Deprecated */ = {
-			isa = PBXGroup;
-			children = (
-				8EDCB6362C92408D00DD9961 /* Modules */,
-				8EDCB6352C92401900DD9961 /* AppServices */,
-			);
-			path = Deprecated;
 			sourceTree = "<group>";
 		};
 		8E5439392C6EA64E00D257EC /* Loading */ = {
@@ -350,21 +338,6 @@
 				8ED862A12C9219AF00C95654 /* PicturePickerViewController.swift */,
 			);
 			path = Profile;
-			sourceTree = "<group>";
-		};
-		8EDCB6352C92401900DD9961 /* AppServices */ = {
-			isa = PBXGroup;
-			children = (
-				8E2D1B332A54C32300003EFF /* UserPosts.swift */,
-			);
-			path = AppServices;
-			sourceTree = "<group>";
-		};
-		8EDCB6362C92408D00DD9961 /* Modules */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Modules;
 			sourceTree = "<group>";
 		};
 		8EDCB6372C92448E00DD9961 /* Model */ = {
@@ -497,7 +470,6 @@
 				8E672EC72C2F60E90063DFC2 /* SignUpViewController.swift in Sources */,
 				8EDCB6392C92449800DD9961 /* User.swift in Sources */,
 				8E3AE6702C970AD600CFB33D /* UISymbolButton.swift in Sources */,
-				8E2D1B342A54C32300003EFF /* UserPosts.swift in Sources */,
 				8E4C15692A269C7A00AA511B /* ProfileViewController.swift in Sources */,
 				8EC3113C2A4C3540006C8FA2 /* Foundation.swift in Sources */,
 				8E2933732C4549EA00F2CC69 /* UIImage.swift in Sources */,
