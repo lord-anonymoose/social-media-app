@@ -11,7 +11,7 @@ import LocalAuthentication
 import FirebaseAuth
 
 
-class SecondaryLoginViewController: UIViewController {
+final class SecondaryLoginViewController: UIViewController {
     
     private var user: User
     

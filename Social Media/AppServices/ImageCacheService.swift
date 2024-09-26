@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseStorage
 
-class ImageCacheService {
+final class ImageCacheService {
     
     static let shared = ImageCacheService()
     

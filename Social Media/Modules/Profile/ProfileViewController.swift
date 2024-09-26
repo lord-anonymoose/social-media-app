@@ -7,7 +7,9 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+
+
+final class ProfileViewController: UIViewController {
     
     let refreshControl = UIRefreshControl()
     

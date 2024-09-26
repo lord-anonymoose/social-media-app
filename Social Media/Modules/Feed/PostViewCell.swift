@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PostViewCell: UITableViewCell {
+final class PostViewCell: UITableViewCell {
     
     var post: Post?
     var user: User?

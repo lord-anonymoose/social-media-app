@@ -26,6 +26,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationController = UINavigationController(rootViewController: loadingViewController)
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
+        
+        // Added
+        let preferredTheme = UserDefaults.standard.integer(forKey: "preferredTheme")
+        applyTheme(preferredTheme)
+        
         self.window = window
         
         let loginViewController = LogInViewController()
@@ -57,6 +62,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let newNavigationController = UINavigationController(rootViewController: loginViewController)
             window.rootViewController = newNavigationController
             return
+        }
+    }
+    
+    func applyTheme(_ theme: Int) {
+        switch theme {
+        case 1:
+            window?.overrideUserInterfaceStyle = .light
+        case 2:
+            window?.overrideUserInterfaceStyle = .dark
+        default:
+            window?.overrideUserInterfaceStyle = .unspecified
         }
     }
 

@@ -11,7 +11,7 @@ import UserNotifications
 
 
 
-class LocalNotificationsService: NSObject {
+final class LocalNotificationsService: NSObject {
     
     static func checkNotificationSettings(completion: @escaping (UNAuthorizationStatus) -> Void) {
         let center = UNUserNotificationCenter.current()

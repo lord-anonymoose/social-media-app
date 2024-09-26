@@ -15,7 +15,7 @@ protocol Coordinator {
 }
 
 
-class MainCoordinator: Coordinator, ObservableObject {
+final class MainCoordinator: Coordinator, ObservableObject {
     
     var navigationController: UINavigationController
     var controllers = [UIViewController]()

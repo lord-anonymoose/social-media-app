@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+
 struct SettingsView: View {
     
     let coordinator: MainCoordinator
@@ -92,6 +94,9 @@ struct SettingsView: View {
                             Text("System").tag(0)
                             Text("Light").tag(1)
                             Text("Dark").tag(2)
+                        }
+                        .onChange(of: preferredTheme) {
+                            updateThemeInUIKit()
                         }
                     }
                     
@@ -206,6 +211,11 @@ struct SettingsView: View {
     private func showNotificationsDisabledAlert() {
         alertMessage = "Notifications are disabled for this app. Please, review policies in device settings.".localized
         showAlertMessage.toggle()
+    }
+    
+    private func updateThemeInUIKit() {
+        let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate
+        sceneDelegate?.applyTheme(preferredTheme)
     }
 }
 

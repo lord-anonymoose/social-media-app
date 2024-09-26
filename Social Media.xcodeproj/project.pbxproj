@@ -53,6 +53,7 @@
 		8EDCB6392C92449800DD9961 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDCB6382C92449800DD9961 /* User.swift */; };
 		8EDCB63B2C92454400DD9961 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EDCB63A2C92454400DD9961 /* Post.swift */; };
 		8EDF8EE12B6041A300154433 /* iOSIntPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 8EDF8EE02B6041A300154433 /* iOSIntPackage */; };
+		8EEE74C82CA6263200A483DF /* ColorSchemeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EEE74C72CA6263200A483DF /* ColorSchemeService.swift */; };
 		8EF427B72C6DF7A500B22C46 /* TimerLocalization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF427B62C6DF7A500B22C46 /* TimerLocalization.swift */; };
 		8EF427BE2C6E011D00B22C46 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8EF427BB2C6E008B00B22C46 /* Info.plist */; };
 		8EF48DA52A27797F0099166A /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EF48DA42A27797F0099166A /* ProfileHeaderView.swift */; };
@@ -115,6 +116,7 @@
 		8EDAC7E12C94E76200E4C789 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
 		8EDCB6382C92449800DD9961 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		8EDCB63A2C92454400DD9961 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		8EEE74C72CA6263200A483DF /* ColorSchemeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemeService.swift; sourceTree = "<group>"; };
 		8EF427B62C6DF7A500B22C46 /* TimerLocalization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLocalization.swift; sourceTree = "<group>"; };
 		8EF427BA2C6E008B00B22C46 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Base; path = Base.lproj/Info.plist; sourceTree = "<group>"; };
 		8EF48DA42A27797F0099166A /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 				8EDAC7E12C94E76200E4C789 /* ImageCacheService.swift */,
 				8E5439352C6E966D00D257EC /* LocalAuthorizationService.swift */,
 				8EBCFFD62C6F90FA009E31CE /* LocalNotificationsService.swift */,
+				8EEE74C72CA6263200A483DF /* ColorSchemeService.swift */,
 			);
 			path = AppServices;
 			sourceTree = "<group>";
@@ -462,6 +465,7 @@
 				8E2933712C45495500F2CC69 /* UITextFieldWithPadding.swift in Sources */,
 				8E29336D2C45490D00F2CC69 /* UILoginInputContainer.swift in Sources */,
 				8E3AE6732C970ECB00CFB33D /* SettingsViewController.swift in Sources */,
+				8EEE74C82CA6263200A483DF /* ColorSchemeService.swift in Sources */,
 				8E586B522AA898B500D89AF6 /* PhotosCollectionViewCell.swift in Sources */,
 				8EDCB63B2C92454400DD9961 /* Post.swift in Sources */,
 				8ED862A22C9219AF00C95654 /* PicturePickerViewController.swift in Sources */,
