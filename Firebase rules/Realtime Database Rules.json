@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "users": {
+      "$uid": {
+        ".read": "auth.uid != null",
+        ".write": "$uid === auth.uid"
+      }
+    },
+    "posts": {
+      ".read": "auth != null",
+      "$postId": {
+        ".write": "$postId.contains(auth.uid)"
+      }
+    }
+  }
+}
