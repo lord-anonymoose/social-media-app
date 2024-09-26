@@ -95,12 +95,9 @@ final class FirebaseService {
                 if !userExists {
                     let newUser = User(email: email)
                     try await addCurrentUserToDatabase(user: newUser)
-                    print("New user added to database.")
                 } else {
-                    print("User already exists in the database.")
                 }
             } else {
-                print("User is not verified")
                 try await authResult.user.sendEmailVerification()
                 try signOut()
             }
@@ -158,15 +155,12 @@ final class FirebaseService {
         do {
             try await self.deleteCurrentUserFromDatabase()
         } catch {
-            print("Couldn't delete folder from database: \(error.localizedDescription)")
             throw FirebaseServiceError.firebaseError(error.localizedDescription)
         }
         
         do {
             try await user.delete()
-            print("User successfully deleted from Firebase Authentication.")
         } catch {
-            print("Error deleting user: \(error.localizedDescription)")
             throw FirebaseServiceError.firebaseError(error.localizedDescription)
         }
     }
@@ -255,7 +249,6 @@ final class FirebaseService {
                 }
                 
                 if let downloadURL = url {
-                    print("Image uploaded successfully, download URL: \(downloadURL)")
                     completion(.success(downloadURL))
                 }
             }
@@ -266,14 +259,12 @@ final class FirebaseService {
     
     func resetPassword(email: String) async throws {
         guard email.isValidEmail() else {
-            print(FirebaseServiceError.invalidEmail.localizedDescription)
             throw FirebaseServiceError.invalidEmail
         }
         
         do {
             try await Auth.auth().sendPasswordReset(withEmail: email)
         } catch {
-            print(error.localizedDescription)
             throw FirebaseServiceError.firebaseError(error.localizedDescription)
         }
     }

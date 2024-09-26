@@ -42,10 +42,6 @@ final class FeedViewController: UIViewController, UITableViewDelegate {
             let coordinator = MainCoordinator(navigationController: navigationController)
             coordinator.showLikesFeedViewController()
         }
-        /*
-        PostService.shared.fetchLikedPosts() { posts in
-            print(posts.count)
-        }*/
     }
     
     @objc private func refresh() {

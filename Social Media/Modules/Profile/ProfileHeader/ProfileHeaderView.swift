@@ -63,10 +63,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     }()
 
     
-    //lazy var logoutButton = UISymbolButton(image: UIImage(systemName: "rectangle.portrait.and.arrow.forward")!, tintColor: .systemRed)
-    
-    //lazy var settingsButton = UISymbolButton(image: UIImage(systemName: "pencil.circle")!, tintColor: .systemGray)
-    
     lazy var logoutButton: UISymbolButton = {
         let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .bold, scale: .large)
         let image = UIImage(systemName: "rectangle.portrait.and.arrow.forward", withConfiguration: config)!

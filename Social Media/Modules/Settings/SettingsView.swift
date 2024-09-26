@@ -15,14 +15,16 @@ struct SettingsView: View {
     @State var status: String
     @State var image: UIImage
 
-    @State var showLogoutAlert = false
-    @State var showDeleteAccountAlert = false
+    @State private var showLogoutAlert = false
+    @State private var showDeleteAccountAlert = false
+    @State private var showAlertMessage = false
+    @State private var alertMessage: String?
     
-    @State var showAlertMessage = false
-    @State var alertMessage: String?
-
     @AppStorage("preferredTheme") private var preferredTheme = 0
-    
+    @AppStorage("notificationsAllowed") private var notificationsAllowed: Bool = false
+
+    @State private var notificationsDate: Date = UserDefaults.standard.object(forKey: "notificationsDate") as? Date ?? Date()
+
     @Environment(\.presentationMode) var presentationMode
     
     
@@ -93,6 +95,45 @@ struct SettingsView: View {
                         }
                     }
                     
+                    Section("Notifications".localized) {
+                        Toggle("Daily Notifications".localized, isOn: $notificationsAllowed)
+                            .onChange(of: notificationsAllowed) {
+                                LocalNotificationsService.checkNotificationSettings { status in 
+                                    switch status {
+                                    case .notDetermined:
+                                        LocalNotificationsService.askPermission { granted in
+                                            if granted {
+                                                setNotification()
+                                                notificationsDate = Date()
+                                                UserDefaults.standard.set(notificationsDate, forKey: "notificationsDate")
+                                            } else {
+                                                notificationsAllowed = false
+                                                showNotificationsDisabledAlert()
+                                            }
+                                        }
+                                    case .denied:
+                                        showNotificationsDisabledAlert()
+                                    case .authorized, .provisional, .ephemeral:
+                                        setNotification()
+                                        notificationsDate = Date()
+                                        UserDefaults.standard.set(notificationsDate, forKey: "notificationsDate")
+                                    @unknown default:
+                                        print("Unknown case")
+                                    }
+                                }
+                        }
+                    
+                        if notificationsAllowed {
+                            DatePicker("Time".localized, selection: $notificationsDate, displayedComponents: .hourAndMinute)
+                            Button("Save".localized) {
+                                let hour = Calendar.current.component(.hour, from: notificationsDate)
+                                let minute = Calendar.current.component(.minute, from: notificationsDate)
+                                LocalNotificationsService.scheduleDailyNotification(hour: hour, minute: minute)
+                                UserDefaults.standard.set(notificationsDate, forKey: "notificationsDate")
+                            }
+                        }
+                    }
+                    
                     Button("Log out".localized, role: .cancel) {
                         logout()
                     }
@@ -154,6 +195,17 @@ struct SettingsView: View {
                 print("Error")
             }
         }
+    }
+    
+    private func setNotification() {
+        let hour = Calendar.current.component(.hour, from: notificationsDate)
+        let minute = Calendar.current.component(.minute, from: notificationsDate)
+        LocalNotificationsService.scheduleDailyNotification(hour: hour, minute: minute)
+    }
+    
+    private func showNotificationsDisabledAlert() {
+        alertMessage = "Notifications are disabled for this app. Please, review policies in device settings.".localized
+        showAlertMessage.toggle()
     }
 }
 

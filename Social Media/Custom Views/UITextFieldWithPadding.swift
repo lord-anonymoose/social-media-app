@@ -53,16 +53,13 @@ final class UITextFieldWithPadding: UITextField {
     
     private func setupUI() {
         self.translatesAutoresizingMaskIntoConstraints = false
-        //textField.placeholder = String(localized: "Username")
         self.textColor = .textColor
         self.font = .systemFont(ofSize: 16)
         self.tintColor = .accentColor
         self.layer.borderWidth = 0.5
         self.layer.borderColor = UIColor.lightGray.cgColor
         self.layer.masksToBounds = true
-        //self.keyboardType = .emailAddress
         self.autocorrectionType = .no
         self.autocapitalizationType = .none
-        //self.text = "strawberry_moose@media.com"
     }
 }

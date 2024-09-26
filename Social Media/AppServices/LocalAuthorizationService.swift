@@ -10,7 +10,11 @@ import LocalAuthentication
 
 final class LocalAuthorizationService {
     
-    static func biometricType() -> BiometricType {
+    static let shared = LocalAuthorizationService()
+    
+    private init() {}
+    
+    func biometricType() -> BiometricType {
         let authContext = LAContext()
         var error: NSError?
         
@@ -32,7 +36,7 @@ final class LocalAuthorizationService {
         }
     }
     
-    static func authenticate(success: @escaping () -> Void, failure: @escaping (Error?) -> Void) {
+    func authenticate(success: @escaping () -> Void, failure: @escaping (Error?) -> Void) {
         let context = LAContext()
         var error: NSError?
         

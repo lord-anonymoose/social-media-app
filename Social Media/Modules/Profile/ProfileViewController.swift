@@ -58,13 +58,11 @@ class ProfileViewController: UIViewController {
     
     private lazy var userImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.image = UIImage(named: "defaultUserImage")
         
         if let path = self.imagePath {
             imageView.image = ImageCacheService.shared.getCachedImage(from: path)
-        } else {
-            imageView.image = UIImage(named: "defaultUserImage")
         }
-        
         
         imageView.layer.cornerRadius = 45
         imageView.clipsToBounds = true

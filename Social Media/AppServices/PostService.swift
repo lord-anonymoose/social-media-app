@@ -124,13 +124,11 @@ final class PostService {
     func likePost(postID: String?, completion: @escaping (Error?) -> Void) {
         
         guard let postID else {
-            print("Post ID is nil")
             completion(FirebaseServiceError.invalidEmail)
             return
         }
         
         guard let userID = Auth.auth().currentUser?.uid else {
-            print("User not logged in")
             completion(FirebaseServiceError.userNotExist)
             return
         }
@@ -171,7 +169,6 @@ final class PostService {
     
     func publishPost(image: UIImage, description: String, completion: @escaping (Error?) -> Void) {
         guard let userID = Auth.auth().currentUser?.uid else {
-            print("User not logged in")
             completion(FirebaseServiceError.userNotExist)
             return
         }
@@ -193,10 +190,8 @@ final class PostService {
 
         ref.setValue(postDict) { error, _ in
             if let error = error {
-                print("Error publishing post: \(error.localizedDescription)")
                 completion(error)
             } else {
-                print("Post published successfully")
 
                 let storageRef = Storage.storage().reference().child("Posts/\(postID).jpg")
 
@@ -205,20 +200,17 @@ final class PostService {
                 
                 storageRef.putData(imageData, metadata: metadata) { metadata, error in
                     if let error = error {
-                        print("Ошибка загрузки: \(error.localizedDescription)")
                         completion(error)
                         return
                     }
 
                     storageRef.downloadURL { url, error in
                         if let error = error {
-                            print("Ошибка получения URL: \(error.localizedDescription)")
                             completion(error)
                             return
                         }
 
-                        if let url = url {
-                            print("URL загруженного изображения: \(url)")
+                        if url != nil {
                             completion(nil)
                         }
                     }

@@ -79,7 +79,7 @@ class SecondaryLoginViewController: UIViewController {
         
     private lazy var authenticateButton: UIButton = {
         let button = UIButton()
-        let authType = LocalAuthorizationService.biometricType()
+        let authType = LocalAuthorizationService.shared.biometricType()
         
         button.contentMode = .scaleAspectFit
 
@@ -138,8 +138,7 @@ class SecondaryLoginViewController: UIViewController {
     
     // MARK: - Actions
     @objc func authenticateButtonTapped(_ button: UIButton) {
-        print("Tapped")
-        LocalAuthorizationService.authenticate(
+        LocalAuthorizationService.shared.authenticate(
             success: {
                 if let navigationController = self.navigationController {
                     let coordinator = MainCoordinator(navigationController: navigationController)
@@ -148,7 +147,6 @@ class SecondaryLoginViewController: UIViewController {
             },
             failure: { error in
                 let title = String(localized: "Error!")
-                // Refactor later
                 self.showAlert(title: title, description: error?.localizedDescription ?? "Unknown error")
             }
         )

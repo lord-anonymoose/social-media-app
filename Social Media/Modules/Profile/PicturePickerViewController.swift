@@ -10,6 +10,8 @@ import UIKit
 import FirebaseStorage
 import FirebaseAuth
 
+
+
 final class PicturePickerViewController: UIViewController, UINavigationControllerDelegate {
     
     var image: UIImage
@@ -70,9 +72,6 @@ final class PicturePickerViewController: UIViewController, UINavigationControlle
     
     
     // MARK: - Private
-    private func sayHello() {
-        print("Hello, world!")
-    }
     
     private func setupUI() {
         view.backgroundColor = .systemBackground

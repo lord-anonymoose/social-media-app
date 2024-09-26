@@ -119,14 +119,11 @@ class PostViewCell: UITableViewCell {
     
     @objc func userTapped(_ gestureRecognizer: UITapGestureRecognizer) {
         if let user = self.user {
-            print(user.name)
             if let coordinator {
                 if let authorID = self.post?.author {
                     coordinator.showOtherProfileViewControll(user: user, userID: authorID)
                 }
             }
-        } else {
-            print("User not found")
         }
     }
     

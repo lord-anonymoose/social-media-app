@@ -42,7 +42,7 @@ final class MakePostViewController: UIViewController, UINavigationControllerDele
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "Description:".localized
-        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textColor = .secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -50,8 +50,9 @@ final class MakePostViewController: UIViewController, UINavigationControllerDele
     
     private lazy var descriptionTextView: UITextView = {
         let textView = UITextView()
+        textView.font = .systemFont(ofSize: 18, weight: .medium)
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.backgroundColor = .secondaryColor
+        textView.backgroundColor = .secondarySystemBackground
         textView.accessibilityIgnoresInvertColors = true
         return textView
     }()
@@ -59,7 +60,7 @@ final class MakePostViewController: UIViewController, UINavigationControllerDele
     private lazy var imageLabel: UILabel = {
         let label = UILabel()
         label.text = "Image:".localized
-        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textColor = .secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -83,7 +84,6 @@ final class MakePostViewController: UIViewController, UINavigationControllerDele
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.color = .secondaryLabel
         activityIndicator.isHidden = true
-        //activityIndicator.startAnimating()
         return activityIndicator
     }()
     
@@ -100,7 +100,6 @@ final class MakePostViewController: UIViewController, UINavigationControllerDele
                 if let error {
                     self.showAlert(title: "Error!".localized, description: error.localizedDescription)
                 } else {
-                    print("posted!")
                     self.navigationController?.popToRootViewController(animated: true)
                 }
             }
