@@ -85,7 +85,7 @@ class PostViewCell: UITableViewCell {
         self.post = post
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+        self.selectionStyle = .none
         self.setupImageTapAction()
         self.loadUserData()
         self.addSubviews()

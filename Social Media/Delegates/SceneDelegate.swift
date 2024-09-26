@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import LocalAuthentication
 import UserNotifications
-
+import FirebaseDatabase
 
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -31,13 +31,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let loginViewController = LogInViewController()
         let newNavigationController = UINavigationController(rootViewController: loginViewController)
         
+        let ref = Database.database().reference().child("posts")
+        ref.observeSingleEvent(of: .value) { (snapshot) in
+            if let value = snapshot.value as? [String: Any] {
+                print("Данные постов: \(value)")
+            } else {
+                print("Нет данных или ошибка доступа")
+            }
+        }
+        
         do {
             guard let id = try FirebaseService.shared.currentUserID() else {
                 window.rootViewController = newNavigationController
                 return
             }
             FirebaseService.shared.fetchUser(by: id) { user in
-                if let user {
+                if user != nil {
                     let newNavigationController = UINavigationController()
                     let coordinator = MainCoordinator(navigationController: newNavigationController)
                     coordinator.login()

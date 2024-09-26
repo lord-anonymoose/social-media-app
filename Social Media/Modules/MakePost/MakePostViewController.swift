@@ -40,20 +40,29 @@ final class MakePostViewController: UIViewController, UINavigationControllerDele
     }()
     
     private lazy var descriptionLabel: UILabel = {
-        let descriptionLabel = UILabel()
-        descriptionLabel.text = "Description:".localized
-        descriptionLabel.font = .systemFont(ofSize: 14, weight: .medium)
-        descriptionLabel.textColor = .secondaryColor
-        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        return descriptionLabel
+        let label = UILabel()
+        label.text = "Description:".localized
+        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.textColor = .secondaryLabel
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     private lazy var descriptionTextView: UITextView = {
-        let textVIew = UITextView()
-        textVIew.translatesAutoresizingMaskIntoConstraints = false
-        textVIew.backgroundColor = .secondaryColor
-        textVIew.accessibilityIgnoresInvertColors = true
-        return textVIew
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.backgroundColor = .secondaryColor
+        textView.accessibilityIgnoresInvertColors = true
+        return textView
+    }()
+    
+    private lazy var imageLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Image:".localized
+        label.font = .systemFont(ofSize: 14, weight: .medium)
+        label.textColor = .secondaryLabel
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     private lazy var imageView: UIImageView = {
@@ -69,11 +78,34 @@ final class MakePostViewController: UIViewController, UINavigationControllerDele
         return imageView
     }()
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.color = .secondaryLabel
+        activityIndicator.isHidden = true
+        //activityIndicator.startAnimating()
+        return activityIndicator
+    }()
+    
     
     private lazy var makePostButton = UICustomButton(customTitle: "Post".localized) { [unowned self] in
-        print("Posted")
+            
+        if imageView.image == UIImage(named: "defaultPostImage") {
+            self.showAlert(title: "Error!".localized, description: "You didn't choose an image to upload!".localized)
+            stopLoadingUI()
+        } else {
+            startLoadingUI()
+            PostService.shared.publishPost(image: imageView.image!, description: descriptionTextView.text ?? "") { error in
+                self.stopLoadingUI()
+                if let error {
+                    self.showAlert(title: "Error!".localized, description: error.localizedDescription)
+                } else {
+                    print("posted!")
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
+            }
+        }
     }
-    
     
     
     // MARK: Lifecycle
@@ -95,6 +127,7 @@ final class MakePostViewController: UIViewController, UINavigationControllerDele
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        stopLoadingUI()
         removeKeyboardObservers()
     }
     
@@ -132,10 +165,13 @@ final class MakePostViewController: UIViewController, UINavigationControllerDele
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
+        contentView.addSubview(imageLabel)
         contentView.addSubview(imageView)
-        contentView.addSubview(makePostButton)
         contentView.addSubview(descriptionLabel)
         contentView.addSubview(descriptionTextView)
+        contentView.addSubview(makePostButton)
+        contentView.addSubview(activityIndicator)
+
         descriptionTextView.isEditable = true
     }
     
@@ -155,21 +191,55 @@ final class MakePostViewController: UIViewController, UINavigationControllerDele
             makePostButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             makePostButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
             
-            imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            activityIndicator.centerYAnchor.constraint(equalTo: makePostButton.centerYAnchor),
+            activityIndicator.heightAnchor.constraint(equalTo: makePostButton.heightAnchor),
+            activityIndicator.trailingAnchor.constraint(equalTo: makePostButton.trailingAnchor, constant: -10),
+            
+            imageLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            imageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25),
+            imageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25),
+            
+            imageView.topAnchor.constraint(equalTo: imageLabel.bottomAnchor, constant: 10),
             imageView.heightAnchor.constraint(equalToConstant: view.frame.width - 20),
             imageView.widthAnchor.constraint(equalToConstant: view.frame.width - 20),
             imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
             descriptionLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 25),
             descriptionLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25),
+            descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25),
             
             descriptionTextView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 10),
             descriptionTextView.heightAnchor.constraint(equalToConstant: 100),
             descriptionTextView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             descriptionTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
         ])
+    }
+    
+    private func startLoadingUI() {
+        self.imageView.alpha = 0.8
+        self.descriptionTextView.alpha = 0.8
+        self.makePostButton.alpha = 0.8
+        
+        self.imageView.isUserInteractionEnabled = false
+        self.descriptionLabel.isUserInteractionEnabled = false
+        self.makePostButton.isUserInteractionEnabled = false
+        
+        self.activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
+    }
+    
+    private func stopLoadingUI() {
+        self.imageView.alpha = 1.0
+        self.descriptionLabel.alpha = 1.0
+        self.makePostButton.alpha = 1.0
+        
+        self.imageView.isUserInteractionEnabled = true
+        self.descriptionLabel.isUserInteractionEnabled = true
+        self.makePostButton.isUserInteractionEnabled = true
+        
+        self.activityIndicator.isHidden = true
+        self.activityIndicator.stopAnimating()
     }
     
     private func showImagePicker() {

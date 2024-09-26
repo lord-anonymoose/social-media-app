@@ -7,6 +7,7 @@
 
 import Foundation
 import Firebase
+import FirebaseStorage
 
 
 
@@ -140,14 +141,11 @@ final class PostService {
             var likes = snapshot.value as? [String] ?? []
             
             if likes.contains(postID) {
-                // Если пост уже лайкнут, удаляем его
                 likes.removeAll { $0 == postID }
             } else {
-                // Если пост не лайкнут, добавляем его
                 likes.append(postID)
             }
 
-            // Обновляем массив лайков в базе данных
             ref.setValue(likes) { error, _ in
                 completion(error)
             }
@@ -171,15 +169,20 @@ final class PostService {
         }
     }
     
-    func publishPost(description: String, completion: @escaping (Error?) -> Void) {
+    func publishPost(image: UIImage, description: String, completion: @escaping (Error?) -> Void) {
         guard let userID = Auth.auth().currentUser?.uid else {
             print("User not logged in")
             completion(FirebaseServiceError.userNotExist)
             return
         }
         
-        let timestamp = self.generatePostID(for: userID)
-        let postID = "\(userID)_\(timestamp)"
+        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+            print("Couldn't convert image into jpeg")
+            return
+        }
+        
+
+        let postID = self.generatePostID(for: userID)
         
         let newPost = Post(postID: postID, description: description)
         
@@ -187,33 +190,40 @@ final class PostService {
         
         let ref = Database.database().reference().child("posts").child(postID)
         
+
         ref.setValue(postDict) { error, _ in
             if let error = error {
                 print("Error publishing post: \(error.localizedDescription)")
                 completion(error)
             } else {
                 print("Post published successfully")
-                completion(nil)
-            }
-        }
-    }
-    
-    func deletePost(postID: String, completion: @escaping (Error?) -> Void) {
-        
-        guard let authorID = Auth.auth().currentUser?.uid else {
-            print("User not logged in")
-            return
-        }
-        
-        let ref = Database.database().reference().child("posts").child(postID)
-        
-        ref.removeValue() { error, _ in
-            if let error = error {
-                print("Error deleting post: \(error.localizedDescription)")
-                completion(error)
-            } else {
-                print("Post deleted successfully")
-                completion(nil)
+
+                let storageRef = Storage.storage().reference().child("Posts/\(postID).jpg")
+
+                let metadata = StorageMetadata()
+                metadata.contentType = "image/jpeg"
+                
+                storageRef.putData(imageData, metadata: metadata) { metadata, error in
+                    if let error = error {
+                        print("Ошибка загрузки: \(error.localizedDescription)")
+                        completion(error)
+                        return
+                    }
+
+                    storageRef.downloadURL { url, error in
+                        if let error = error {
+                            print("Ошибка получения URL: \(error.localizedDescription)")
+                            completion(error)
+                            return
+                        }
+
+                        if let url = url {
+                            print("URL загруженного изображения: \(url)")
+                            completion(nil)
+                        }
+                    }
+                }
+                
             }
         }
     }
