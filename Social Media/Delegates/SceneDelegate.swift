@@ -42,16 +42,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 return
             }
             FirebaseService.shared.fetchUser(by: id) { user in
-                if user != nil {
-                    let newNavigationController = UINavigationController()
-                    let coordinator = MainCoordinator(navigationController: newNavigationController)
-                    coordinator.login()
-                    window.rootViewController = newNavigationController
-                    /*
+                if let user {
                     let secondaryLoginViewController = SecondaryLoginViewController(user: user)
                     let newNavigationController = UINavigationController(rootViewController: secondaryLoginViewController)
                     window.rootViewController = newNavigationController
-                    */
                 } else {
                     window.rootViewController = newNavigationController
                     return
