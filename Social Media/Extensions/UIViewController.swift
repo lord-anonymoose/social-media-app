@@ -9,7 +9,7 @@ import UIKit
 
 
 
-extension UIViewController: UITextFieldDelegate {
+extension UIViewController: @retroactive UITextFieldDelegate {
     public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

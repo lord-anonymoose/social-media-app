@@ -57,7 +57,7 @@ extension UIColor {
         if #available(iOS 13.0, *) {
             return UIColor { (traits) -> UIColor in
                 return (traits.userInterfaceStyle == .dark ?
-                    UIColor(hex: "#FFC074") : UIColor(hex: "#01937C")) ?? .white
+                        UIColor.secondaryColor : UIColor.accentColor)
             }
         } else {
             return UIColor(red: 0.3, green: 0.4, blue: 0.5, alpha: 1)

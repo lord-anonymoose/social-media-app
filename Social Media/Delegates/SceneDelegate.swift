@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import LocalAuthentication
 import UserNotifications
-
+import FirebaseDatabase
 
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -26,37 +26,47 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationController = UINavigationController(rootViewController: loadingViewController)
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
-        self.window = window
-                
-        print("Window is visible")
         
-        if let id = FirebaseService.shared.currentUserID() {
+        // Added
+        let preferredTheme = UserDefaults.standard.integer(forKey: "preferredTheme")
+        applyTheme(preferredTheme)
+        
+        self.window = window
+        
+        let loginViewController = LogInViewController()
+        let newNavigationController = UINavigationController(rootViewController: loginViewController)
+                
+        do {
+            guard let id = try FirebaseService.shared.currentUserID() else {
+                window.rootViewController = newNavigationController
+                return
+            }
             FirebaseService.shared.fetchUser(by: id) { user in
-                if let user = user {
+                if let user {
                     let secondaryLoginViewController = SecondaryLoginViewController(user: user)
                     let newNavigationController = UINavigationController(rootViewController: secondaryLoginViewController)
                     window.rootViewController = newNavigationController
                 } else {
-                    print("User not equal user")
-                }
-            }
-        }
-        /*
-        if let id = Auth.auth().currentUser?.uid {
-            FirebaseService.fetchUser(by: id, completion: <#T##(FirebaseService.User?) -> Void#>)
-            CheckerService().getUser(username: username) { user in
-                if let user = user {
-                    let secondaryLoginViewController = SecondaryLoginViewController(user: user)
-                    let newNavigationController = UINavigationController(rootViewController: secondaryLoginViewController)
                     window.rootViewController = newNavigationController
+                    return
                 }
             }
-        }
-        */
-        else {
+        } catch {
             let loginViewController = LogInViewController()
             let newNavigationController = UINavigationController(rootViewController: loginViewController)
             window.rootViewController = newNavigationController
+            return
+        }
+    }
+    
+    func applyTheme(_ theme: Int) {
+        switch theme {
+        case 1:
+            window?.overrideUserInterfaceStyle = .light
+        case 2:
+            window?.overrideUserInterfaceStyle = .dark
+        default:
+            window?.overrideUserInterfaceStyle = .unspecified
         }
     }
 
@@ -66,14 +76,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Release any resources associated with this scene that can be re-created the next time the scene connects.
         // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
 
-        let authType = LocalAuthorizationService.biometricType()
+        //let authType = LocalAuthorizationService.biometricType()
+        /*
         if authType == .none {
             do {
                 try Auth.auth().signOut()
                 print("Signed out!")
             } catch {}
         }
-
+        */
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {

@@ -11,50 +11,38 @@ import UserNotifications
 
 
 
-class LocalNotificationsService: NSObject {
-        
-    static func checkPermission() {
+final class LocalNotificationsService: NSObject {
+    
+    static func checkNotificationSettings(completion: @escaping (UNAuthorizationStatus) -> Void) {
         let center = UNUserNotificationCenter.current()
         center.getNotificationSettings { settings in
-            switch settings.authorizationStatus {
-            case .notDetermined:
-                askPermission()
-                scheduleDailyNotification()
-            case .denied:
-                print("Notification access denied")
-            case .authorized:
-                print("Notification access authorized")
-            case .provisional:
-                scheduleDailyNotification()
-            case .ephemeral:
-                print("Ephemeral notifications are not supported")
-            @unknown default:
-                print("New notification type is not supported")
-            }
+            completion(settings.authorizationStatus)
         }
     }
-        
-    static func askPermission() {
+    
+    static func askPermission(completion: @escaping (Bool) -> Void) {
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if let error = error {
                 print("Error requesting notification authorization: \(error)")
+                completion(false)
+                return
             }
+            completion(granted)
         }
     }
     
-    static func scheduleDailyNotification() {
+    static func scheduleDailyNotification(hour: Int, minute: Int) {
         let content = UNMutableNotificationContent()
         content.title = String(localized: "What's up?")
         content.body = String(localized: "See what's happening in GoSocial!")
         content.sound = .default
         
         var dateComponents = DateComponents()
-        dateComponents.hour = 19
-        dateComponents.minute = 0
+        dateComponents.hour = hour
+        dateComponents.minute = minute
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
-        //let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
 
         let request = UNNotificationRequest(identifier: "testNotification", content: content, trigger: trigger)
 

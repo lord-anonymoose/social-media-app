@@ -54,7 +54,7 @@ final class SignUpViewController: UIViewController {
     private lazy var welcomeLabel: UILabel = {
        let label = UILabel()
         
-        label.text = String(localized: "Welcome on board!")
+        label.text = "Welcome on board!".localized
         label.font = .systemFont(ofSize: 30)
         
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -65,25 +65,36 @@ final class SignUpViewController: UIViewController {
     private lazy var logInInputContainer = UILoginInputContainer()
     
     private lazy var loginInput: UITextFieldWithPadding = {
-        let placeholder = String(localized: "Email")
+        let placeholder = "Email".localized
         let textField = UITextFieldWithPadding(placeholder: placeholder, isSecureTextEntry: false)
         return textField
     }()
     
     private lazy var firstPasswordInput: UITextFieldWithPadding = {
-        let placeholder = String(localized: "Password")
+        let placeholder = "Password".localized
         let textField = UITextFieldWithPadding(placeholder: placeholder, isSecureTextEntry: true)
         return textField
     }()
     
     private lazy var secondPasswordInput: UITextFieldWithPadding = {
-        let placeholder = String(localized: "Repeat password")
+        let placeholder = "Repeat password".localized
         let textField = UITextFieldWithPadding(placeholder: placeholder, isSecureTextEntry: true)
         return textField
     }()
     
-    private lazy var signUpButton = UICustomButton(customTitle: String(localized: "Sign Up"), action: { [self] in
+    private lazy var signUpButton = UICustomButton(customTitle: "Sign Up".localized, action: { [self] in
         self.startSignupProcess()
+        
+        FirebaseService.shared.checkIfEmailIsRegistered(email: loginInput.text!) { isRegistered in
+            if isRegistered {
+                let title = "Error!".localized
+                let description = "User with this email already exists!".localized
+                self.showAlert(title: title, description: description)
+                self.finishSignupProcess()
+                return
+            }
+        }
+        
         Task {
             do {
                 try await FirebaseService.shared.signUp(email: self.loginInput.text ?? "",
@@ -91,12 +102,12 @@ final class SignUpViewController: UIViewController {
                                                  password2: self.secondPasswordInput.text ?? "")
                 self.finishSignupProcess()
                 
-                let title = String(localized: "Check your mailbox!")
-                let message = String(localized: "We have sent you an email to confirm your address.")
+                let title = "Check your mailbox!".localized
+                let message = "We have sent you an email to confirm your address.".localized
                 
                 let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
                 
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (button) in
+                alert.addAction(UIAlertAction(title: "OK".localized, style: .default, handler: { (button) in
                     if let navigationController = self.navigationController {
                         navigationController.popViewController(animated: true)
                     }
@@ -230,12 +241,14 @@ final class SignUpViewController: UIViewController {
             ])
     }
     
+    /*
     func showVerificationViewController() {
         if let navigationController = self.navigationController {
             let coordinator = MainCoordinator(navigationController: navigationController)
             coordinator.showVerificationViewController()
         }
     }
+    */
     
     private func setupKeyboardObservers() {
         let notificationCenter = NotificationCenter.default

@@ -5,15 +5,13 @@
 //  Created by Philipp Lazarev on 25.05.2023.
 //
 
-
-
 import UIKit
+
+
 
 class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
-    var timeLeft: Int = 60
-    var timer: Timer?
-    
+
     // MARK: - Subviews
     
     public var user: User? {
@@ -24,19 +22,13 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
         }
     }
     
-    public var userImage: UIImage? {
-        didSet {
-            userImageView.image = userImage
-        }
-    }
-        
     lazy var userImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "default"))
-        imageView.layer.cornerRadius = 45
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "defaultUserImage")
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-                        
+        imageView.layer.cornerRadius = 45
         imageView.isUserInteractionEnabled = true
-        
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
@@ -45,7 +37,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     private lazy var nameLabel: UILabel = {
         let userName = UILabel()
         
-        userName.text = "default"
+        userName.text = "defaultUserImage"
         userName.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         userName.textColor = .textColor
         userName.sizeToFit()
@@ -69,33 +61,19 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
 
         return userStatus
     }()
+
     
-    private lazy var setStatusButton = UICustomButton(customTitle: String(localized: "Set Status")) {[unowned self] in
-        let newStatus = statusTextField.text ?? ""
-        statusLabel.text = newStatus
-        if self.user != nil {
-        }
-        
-        if let id = FirebaseService.shared.currentUserID() {
-            Task {
-                do {
-                    try await FirebaseService.shared.setUserStatus(newStatus: newStatus, for: id)
-                    statusTextField.text = ""
-                    startTimer()
-                } catch {
-                    print(error.localizedDescription)
-                }
-            }
-        }
-    }
-    
-    lazy var logoutButton: UIButton = {
-        let button = UIButton()
-        let image = UIImage(systemName: "rectangle.portrait.and.arrow.forward")
-        button.setImage(image, for: .normal)
-        button.tintColor = .systemRed
-        button.isUserInteractionEnabled = true
-        button.translatesAutoresizingMaskIntoConstraints = false
+    lazy var logoutButton: UISymbolButton = {
+        let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .bold, scale: .large)
+        let image = UIImage(systemName: "rectangle.portrait.and.arrow.forward", withConfiguration: config)!
+        let button = UISymbolButton(image: image, tintColor: .systemRed)
+        return button
+    }()
+
+    lazy var settingsButton: UISymbolButton = {
+        let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .large)
+        let image = UIImage(systemName: "pencil.circle", withConfiguration: config)!
+        let button = UISymbolButton(image: image, tintColor: .systemGray)
         return button
     }()
     
@@ -111,21 +89,19 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
-        addSuviews()
+        
+        addSubviews()
         setupConstraints()
         changeBackgroundColor()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        addSuviews()
+        addSubviews()
         setupConstraints()
         changeBackgroundColor()
     }
     
-    deinit {
-        stopTimer()
-    }
      
     
     // MARK: - Private
@@ -138,85 +114,51 @@ class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
        #endif
     }
         
-    private func addSuviews() {
+    func addSubviews() {
         contentView.addSubview(userImageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(statusLabel)
-        contentView.addSubview(statusTextField)
-        contentView.addSubview(setStatusButton)
         contentView.addSubview(logoutButton)
+        contentView.addSubview(settingsButton)
     }
         
-    private func setupConstraints() {
+    func setupConstraints() {
         
         let safeAreaLayoutGuide = contentView.safeAreaLayoutGuide
 
-        let bottomAnchor = setStatusButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
+        let bottomAnchor = userImageView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -16.0)
         bottomAnchor.priority = .required - 1
-             
+
+        
         NSLayoutConstraint.activate([
+            
             userImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
+            userImageView.heightAnchor.constraint(equalToConstant: 90),
             userImageView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
             userImageView.widthAnchor.constraint(equalToConstant: 90),
-            userImageView.heightAnchor.constraint(equalToConstant: 90),
-        ])
-        
-        NSLayoutConstraint.activate([
+            
             nameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
-            nameLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 16),
-            nameLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-        ])
-        
-        NSLayoutConstraint.activate([
-            statusLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 16),
-            statusLabel.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 16),
-            statusLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-        ])
-        
-        NSLayoutConstraint.activate([
-            statusTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 48),
-            statusTextField.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor, constant: 16),
-            statusTextField.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            statusTextField.heightAnchor.constraint(equalToConstant: 32),
-        ])
-        
-        NSLayoutConstraint.activate([
-            setStatusButton.topAnchor.constraint(equalTo: statusTextField.bottomAnchor, constant: 16),
-            setStatusButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            setStatusButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            setStatusButton.heightAnchor.constraint(equalToConstant: 30),
-        ])
-        
-        NSLayoutConstraint.activate([
+            nameLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 122),
+            nameLabel.trailingAnchor.constraint(equalTo: settingsButton.leadingAnchor, constant: -16),
+            
             logoutButton.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            logoutButton.heightAnchor.constraint(equalToConstant: 25),
+            logoutButton.heightAnchor.constraint(equalToConstant: 31),
             logoutButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            logoutButton.heightAnchor.constraint(equalToConstant: 25)
+            logoutButton.widthAnchor.constraint(equalToConstant: 31),
+            
+            settingsButton.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            settingsButton.heightAnchor.constraint(equalTo: logoutButton.heightAnchor),
+            settingsButton.trailingAnchor.constraint(equalTo: logoutButton.leadingAnchor, constant: -16),
+            settingsButton.widthAnchor.constraint(equalTo: logoutButton.widthAnchor),
+            
+            statusLabel.topAnchor.constraint(equalTo: logoutButton.bottomAnchor, constant: 16),
+            statusLabel.heightAnchor.constraint(equalToConstant: 32),
+            statusLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 122),
+            statusLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            
         ])
         
         NSLayoutConstraint.activate([bottomAnchor])
 
-    }
-    
-    func startTimer() {
-        setStatusButton.isUserInteractionEnabled = false
-        setStatusButton.setBackgroundColor(.systemGray, forState: .normal)
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [unowned self] timer in
-            if timeLeft > 0 {
-                timeLeft -= 1
-                setStatusButton.setTitle(localizedTimerString(seconds: timeLeft), for: .normal)
-            } else {
-                timer.invalidate()
-                setStatusButton.setTitle(String(localized: "Set Status"), for: .normal)
-                setStatusButton.isUserInteractionEnabled = true
-                setStatusButton.setBackgroundColor(.accentColor, forState: .normal)
-                timeLeft = 60
-            }
-        }
-    }
-    
-    func stopTimer() {
-        timer?.invalidate()
-        timer = nil
     }
 }
