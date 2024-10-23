@@ -159,8 +159,9 @@ final class LogInViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        self.loginIndicator.stopAnimating()
         super.viewWillDisappear(animated)
+        
+        self.loginIndicator.stopAnimating()
         removeKeyboardObservers()
     }
     

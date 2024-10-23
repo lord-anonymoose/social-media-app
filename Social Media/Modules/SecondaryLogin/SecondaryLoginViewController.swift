@@ -118,11 +118,11 @@ final class SecondaryLoginViewController: UIViewController {
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
+        super.viewDidLoad()
+
         setupUI()
         addSubviews()
         setupConstraints()
-        
-        super.viewDidLoad()
     }
     
     init(user: User) {

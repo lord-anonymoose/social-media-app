@@ -37,10 +37,12 @@ final class LoadingViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         activityIndicator.startAnimating()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         activityIndicator.stopAnimating()
     }
     

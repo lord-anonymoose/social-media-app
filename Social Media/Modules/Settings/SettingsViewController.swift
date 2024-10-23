@@ -21,10 +21,9 @@ final class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .green
         
+        view.backgroundColor = .green
         setupUserImage()
-
         setupSettingsView()
         
     }
@@ -37,8 +36,8 @@ final class SettingsViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        setupUserImage()
         
+        setupUserImage()
         setupSettingsView()
     }
     
