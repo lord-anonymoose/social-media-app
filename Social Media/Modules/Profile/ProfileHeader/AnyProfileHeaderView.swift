@@ -17,6 +17,7 @@ class AnyProfileHeaderView: ProfileHeaderView {
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
+        
         self.logoutButton.isHidden = true
         self.logoutButton.isUserInteractionEnabled = false
         self.settingsButton.isHidden = true

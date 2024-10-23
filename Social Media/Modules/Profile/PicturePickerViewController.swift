@@ -63,10 +63,10 @@ final class PicturePickerViewController: UIViewController, UINavigationControlle
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
         activityIndicator.stopAnimating()
         activityIndicator.isHidden = true
-        
-        super.viewWillDisappear(animated)
     }
     
     

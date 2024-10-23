@@ -53,6 +53,7 @@ final class FeedViewController: UIViewController, UITableViewDelegate {
     // MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         loadPosts()
         setupUI()
         setupNavigationBar()
