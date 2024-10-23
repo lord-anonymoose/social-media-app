@@ -2,7 +2,7 @@
 ## Social Media App
 
 
-[![GoSocial](https://github.com/lord-anonymoose/social-media-app/blob/develop/AppIconForReadme.png)](https://github.com/lord-anonymoose/social-media-app/tree/develop)
+[![GoSocial](https://github.com/lord-anonymoose/social-media-app/blob/main/AppIconForReadme.png)](https://github.com/lord-anonymoose/social-media-app/tree/develop)
 
 Following application is my final project in Netology iOS Developer course
 
@@ -36,6 +36,6 @@ Users data is securely stored in Firebase RealtimeDatabase & Storage. Rules are 
 
 Following users and posts are not verified or somehow connected to real people. All photos are taken from open social media account for information purposes only.
 
-[![Preview1](https://github.com/lord-anonymoose/social-media-app/blob/develop/Preview1.jpg)](https://github.com/lord-anonymoose/social-media-app/)
+[![Preview1](https://github.com/lord-anonymoose/social-media-app/blob/main/Preview1.jpg)](https://github.com/lord-anonymoose/social-media-app/)
 
-[![Preview2](https://github.com/lord-anonymoose/social-media-app/blob/develop/Preview2.jpg)](https://github.com/lord-anonymoose/social-media-app/)
+[![Preview2](https://github.com/lord-anonymoose/social-media-app/blob/main/Preview2.jpg)](https://github.com/lord-anonymoose/social-media-app/)
