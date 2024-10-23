@@ -48,7 +48,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     window.rootViewController = newNavigationController
                 } else {
                     window.rootViewController = newNavigationController
-                    return
                 }
             }
         } catch {

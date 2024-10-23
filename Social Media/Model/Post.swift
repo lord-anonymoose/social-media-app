@@ -9,14 +9,14 @@ import Foundation
 
 
 
-public struct Post {
-    public var postID: String
-    public var author: String
-    public var description: String
-    public var date: Date
-    public var likes: Int = 0
+struct Post {
+    var postID: String
+    var author: String
+    var description: String
+    var date: Date
+    var likes: Int = 0
     
-    public init(postID: String, description: String, likes: Int = 0) {
+    init(postID: String, description: String, likes: Int = 0) {
         self.postID = postID
         self.author = PostService.shared.getAuthorID(for: postID)
         self.description = description
@@ -24,7 +24,7 @@ public struct Post {
         self.likes = likes
     }
     
-    public func toDictionary() -> [String: Any] {
+    func toDictionary() -> [String: Any] {
         return [
             "description": description,
             "likes": likes

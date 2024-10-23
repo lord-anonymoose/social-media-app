@@ -7,15 +7,15 @@
 
 import Foundation
 
-public struct User {
-    public var email: String
-    public var name: String
-    public var image: String
-    public var status: String
-    public var likes: [String]
-    public var images: [String]
+struct User {
+    var email: String
+    var name: String
+    var image: String
+    var status: String
+    var likes: [String]
+    var images: [String]
     
-    public init(email: String, name: String = "Unknown", image: String = "default", status: String = "", likes: [String] = [], images: [String] = []) {
+    init(email: String, name: String = "Unknown", image: String = "default", status: String = "", likes: [String] = [], images: [String] = []) {
         self.email = email
         self.name = name
         self.image = image
@@ -24,7 +24,7 @@ public struct User {
         self.images = images
     }
     
-    public func toDictionary() -> [String: Any] {
+    func toDictionary() -> [String: Any] {
         return [
             "email": email,
             "name": name,
