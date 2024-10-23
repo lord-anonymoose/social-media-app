@@ -6,7 +6,7 @@
 
 Following application is my final project in Netology iOS Developer course
 
-## Features
+## 🚀 Features
 
 - Registering via email
 - Login via Face ID / Touch ID / Optic ID
@@ -16,7 +16,7 @@ Following application is my final project in Netology iOS Developer course
 - Like posts from other users and quickly access it in bookmarks
 
 
-## Tech
+## 🛠️ Technologies
 
 I used following technologies building this app:
 - Swift Programming Language
@@ -32,10 +32,16 @@ Following technologies were used yet removed from final app version:
 
 Users data is securely stored in Firebase RealtimeDatabase & Storage. Rules are designed specifically for only allowing users making their own posts by checking UID of authenticated user. Rules Files are also included in repository.
 
-## Preview
+## 👀 Preview
 
 Following users and posts are not verified or somehow connected to real people. All photos are taken from open social media account for information purposes only.
 
 [![Preview1](https://github.com/lord-anonymoose/social-media-app/blob/main/Preview1.jpg)](https://github.com/lord-anonymoose/social-media-app/)
 
 [![Preview2](https://github.com/lord-anonymoose/social-media-app/blob/main/Preview2.jpg)](https://github.com/lord-anonymoose/social-media-app/)
+
+---
+## ✉️ **Contact Me**
+- **Email:** philipp.lazareff@gmail.com
+- **Telegram:** [@strawberry_moose](https://t.me/strawberry_moose)
+- **LinkedIn:** [Philipp Lazarev](https://www.linkedin.com/in/philipp-lazarev-782b14167/)
