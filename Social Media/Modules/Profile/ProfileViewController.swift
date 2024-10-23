@@ -7,16 +7,25 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+
+
+final class ProfileViewController: UIViewController {
     
-    // MARK: - Subviews
+    let refreshControl = UIRefreshControl()
+    
     private var user: User
     
+    var userID: String
+    
+    private var imagePath: String?
     
     private var userPosts: [Post]
     
-    private var userPhotos: [UIImage]
-    
+    private var userPhotos: [UIImage] = []
+
+    private var isMyUser: Bool
+    // MARK: - Subviews
+
     private lazy var profileView: ProfileHeaderView = {
         let profileView = ProfileHeaderView()
         
@@ -50,39 +59,34 @@ class ProfileViewController: UIViewController {
     }()
     
     private lazy var userImageView: UIImageView = {
-        let imageView = UIImageView(image: UIImage(named: "default"))
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "defaultUserImage")
+        
+        if let path = self.imagePath {
+            imageView.image = ImageCacheService.shared.getCachedImage(from: path)
+        }
         
         imageView.layer.cornerRadius = 45
         imageView.clipsToBounds = true
-        imageView.alpha = 0.0
+        imageView.alpha = 1.0
+        imageView.isUserInteractionEnabled = true
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapPicture))
+        imageView.addGestureRecognizer(tap)
         
         return imageView
     }()
     
-    private lazy var changeImageButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Change image", for: .normal)
-        button.setTitleColor(.systemBlue, for: .normal)
-        button.alpha = 0.0
-        button.isUserInteractionEnabled = false
-        button.addTarget(self, action: #selector(changeImageButtonTapped), for: .touchUpInside)
-        return button
-    }()
-    
     // MARK: - Lifecycle
-    init(user: User) {
-            self.user = user
-            self.userPosts = []//posts.filter { $0.author == "katyperry" }
-            
-            var photos = [UIImage]()
-            
-            for p in userPosts {
-                //photos.append(UIImage(named: p.image)!)
-            }
-            
-            self.userPhotos = photos
-            super.init(nibName: nil, bundle: nil)
+    init(user: User, isMyUser: Bool, userID: String) {
+        self.user = user
+        self.isMyUser = isMyUser
+        self.userID = userID
+        self.userPosts = []
+
+        self.imagePath = "ProfilePictures/\(userID).jpg"
+
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -91,7 +95,8 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        loadPosts()
+        setupUserImage()
         setupUI()
         addSubviews()
         setupConstraints()
@@ -100,9 +105,7 @@ class ProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         setupKeyboardObservers()
-        //feedView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -113,10 +116,22 @@ class ProfileViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         setupUserImage()
-        feedView.reloadData()
     }
     
     // MARK: - Actions
+    
+    @objc private func refresh() {
+        FirebaseService.shared.fetchUser(by: userID) { user in
+            if let user = user {
+                self.user = user
+                self.downloadUserImage()
+                self.feedView.reloadData()
+            } else {
+                print("User not found")
+            }
+        }
+        refreshControl.endRefreshing()
+    }
     
     @objc private func didTapPicture() {
         blurAppears()
@@ -148,14 +163,34 @@ class ProfileViewController: UIViewController {
     }
     
     @objc func changeImageButtonTapped(_ button: UIButton) {
-        print("changeImageButtonTapped")
         if let navigationController = self.navigationController {
             let coordinator = MainCoordinator(navigationController: navigationController)
-            coordinator.showProfilePicViewController()
+            coordinator.showProfilePicViewController(image: self.userImageView.image ?? UIImage(named: "defaultUserImage")!)
+        }
+    }
+    
+    @objc func settingsButtonTapped(_ button: UIButton) {
+        if let navigationController = self.navigationController {
+            let coordinator = MainCoordinator(navigationController: navigationController)
+            coordinator.showSettingsViewController(image: self.userImageView.image ?? UIImage(named: "defaultUserImage")!)
         }
     }
     
     // MARK: - Private
+    
+    private func loadPosts() {
+        PostService.shared.fetchPosts(for: self.userID) { [weak self] fetchedPosts in
+            guard let self = self else { return }
+            
+            self.userPosts = fetchedPosts
+            
+            DispatchQueue.main.async {
+                self.feedView.reloadData()
+            }
+        }
+    }
+
+    
     
     private func setupUI() {
         view.backgroundColor = .systemBackground
@@ -163,10 +198,14 @@ class ProfileViewController: UIViewController {
     
     private func addSubviews() {
         view.addSubview(feedView)
+        feedView.addSubview(refreshControl)
+        refreshControl.attributedTitle = NSAttributedString(string: "Refreshing".localized)
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        
         view.addSubview(backgroundBlur)
         view.addSubview(blurCloseButton)
         view.addSubview(userImageView)
-        view.addSubview(changeImageButton)
+        view.bringSubviewToFront(userImageView)
     }
     
     private func setupConstraints() {
@@ -186,12 +225,7 @@ class ProfileViewController: UIViewController {
             blurCloseButton.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor, constant: 20),
             blurCloseButton.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -20),
             blurCloseButton.heightAnchor.constraint(equalToConstant: 30),
-            blurCloseButton.widthAnchor.constraint(equalToConstant: 30),
-            
-            changeImageButton.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor, constant: -20),
-            changeImageButton.heightAnchor.constraint(equalToConstant: 50),
-            changeImageButton.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 20),
-            changeImageButton.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -20)
+            blurCloseButton.widthAnchor.constraint(equalToConstant: 30)
         ])
         
         
@@ -199,8 +233,8 @@ class ProfileViewController: UIViewController {
         feedView.dataSource = self
         
         feedView.register(PostViewCell.self, forCellReuseIdentifier: "cell")
-        feedView.register(ProfileHeaderView
-            .self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
+        feedView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "ProfileHeaderView")
+        feedView.register(AnyProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: "AnyProfileHeaderView")
         feedView.register(PhotosTableViewCell.self, forCellReuseIdentifier: "PhotosTableViewCell")
         
     }
@@ -228,23 +262,29 @@ class ProfileViewController: UIViewController {
         notificationCenter.removeObserver(self)
     }
 
+
     
     private func setupUserImage() {
-        self.userImageView.frame = CGRect.init(x: self.view.bounds.inset(by: self.view.safeAreaInsets).minX + 16, y: self.view.bounds.inset(by: self.view.safeAreaInsets).minY + 16, width: 90, height: 90)
+        self.userImageView.alpha = 0.0
+        let imageSize: CGFloat = 90
+        let xPosition = self.view.safeAreaInsets.left + 16
+        let yPosition = self.view.safeAreaInsets.top + 16
+        
+        self.userImageView.frame = CGRect(
+            x: xPosition,
+            y: yPosition,
+            width: imageSize,
+            height: imageSize
+        )
+        self.userImageView.layer.cornerRadius = imageSize / 2
     }
     
     private func downloadUserImage() {
-        if let id = FirebaseService.shared.currentUserID() {
-            FirebaseService.shared.downloadProfileImage(for: id) { image in
-                if let downloadedImage = image {
-                    DispatchQueue.main.async {
-                        self.userImageView.image = downloadedImage
-                        self.profileView.userImageView.image = downloadedImage
-                        self.feedView.reloadData()
-                    }
-                } else {
-                    print("Failed to download image.")
-                }
+        let path = "ProfilePictures/\(userID).jpg"
+        ImageCacheService.shared.loadImage(from: path) { [weak self] image in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.userImageView.image = image
             }
         }
     }
@@ -278,8 +318,6 @@ class ProfileViewController: UIViewController {
                 options: .curveLinear
             ) {
                 self.blurCloseButton.alpha = 1.0
-                self.changeImageButton.alpha = 1.0
-                self.changeImageButton.isUserInteractionEnabled = true
             }
         }
     }
@@ -301,8 +339,6 @@ class ProfileViewController: UIViewController {
                 self.setupUserImage()
                 self.userImageView.layer.cornerRadius = 45
                 self.userImageView.alpha = 0.0
-                self.changeImageButton.alpha = 0.0
-                self.changeImageButton.isUserInteractionEnabled = false
             }
         }
     }
@@ -315,50 +351,51 @@ extension ProfileViewController: UITableViewDataSource {
         return 1
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        userPosts.count
+    }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
-            if let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ProfileHeaderView") as? ProfileHeaderView {
+            let identifier = isMyUser ? "ProfileHeaderView" : "AnyProfileHeaderView"
+
+            if let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: identifier) as? ProfileHeaderView {
                 view.isUserInteractionEnabled = true
                 view.user = user
-                view.userImage = self.userImageView.image
-                let tapRed = UITapGestureRecognizer(
-                    target: self,
-                    action: #selector(didTapPicture)
-                )
-                tapRed.numberOfTapsRequired = 1
-                view.userImageView.addGestureRecognizer(tapRed)
+                if let path = self.imagePath {
+                    view.userImageView.image = ImageCacheService.shared.getCachedImage(from: path)
+                } else {
+                    view.userImageView.image = UIImage(named: "defaultUserImage")
+                }
+                let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(didTapPicture))
+                view.userImageView.addGestureRecognizer(tapGestureRecognizer)
                 view.logoutButton.addTarget(self, action: #selector(logoutButtonTapped), for: .touchUpInside)
+                view.settingsButton.addTarget(self, action: #selector(settingsButtonTapped), for: .touchUpInside)
                 return view
             }
         }
         return nil
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        userPosts.count + 1
-    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            let cell = PhotosTableViewCell(style: .default, reuseIdentifier: "PhotosTableViewCell")
-            cell.userPhotos = userPhotos
-            return cell
-        } else {
-            let post = userPosts[indexPath.row - 1]
-            
-            let cell = PostViewCell(style: .default, reuseIdentifier: "cell", author: "Author", image: "image", description: "description", likes: 0)
-            return cell
+        let post = userPosts[indexPath.row]
+        let cell = PostViewCell(style: .default, reuseIdentifier: "cell", post: post)
+        if let navigationController = self.navigationController {
+            let coordinator = MainCoordinator(navigationController: navigationController)
+            cell.coordinator = coordinator
         }
+        cell.authorProfilePicture.isUserInteractionEnabled = false
+        cell.authorLabel.isUserInteractionEnabled = false
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
 extension ProfileViewController: UITableViewDelegate {
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            let photosViewController = PhotosViewController(userPhotos: userPhotos)
-            self.navigationController?.pushViewController(photosViewController, animated: true)
-        }
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
 }

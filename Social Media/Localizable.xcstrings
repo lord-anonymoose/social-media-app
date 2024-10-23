@@ -65,115 +65,37 @@
         }
       }
     },
-    "A login field can not be empty!" : {
-      "comment" : "Error message",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "A login field can not be empty!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Поле ввода логина не может быть пустым!"
-          }
-        }
-      }
-    },
-    "A password field can not be empty!" : {
-      "comment" : "Error message",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "A password field can not be empty!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Не заполнен пароль!"
-          }
-        }
-      }
-    },
-    "An email field ca not be empty!" : {
-      "comment" : "Error message",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "An email field ca not be empty!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Поле ввода email не заполнено!"
-          }
-        }
-      }
-    },
-    "An email is invalid!" : {
-      "comment" : "Error message",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "An email is invalid!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Некорректный email!"
-          }
-        }
-      }
-    },
-    "Back to Log In" : {
-
-    },
-    "Bruteforce password" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bruteforce password"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Подбор пароля"
-          }
-        }
-      }
-    },
-    "Check" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Check"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Проверить"
-          }
-        }
-      }
-    },
     "Check your mailbox!" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check your mailbox!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проверьте Вашу почту!"
+          }
+        }
+      }
     },
     "Choose Image" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose Image"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать изображение"
+          }
+        }
+      }
     },
     "Couldn't get to Log In screen." : {
       "localizations" : {
@@ -191,41 +113,50 @@
         }
       }
     },
-    "Couldn't parse JSON data!" : {
-      "comment" : "Error message",
+    "Dark" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Couldn't parse JSON data!"
+            "value" : "Dark"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не удалось получить данные из JSON!"
+            "value" : "Темная"
           }
         }
       }
     },
     "Email" : {
-
-    },
-    "Email not verified" : {
-
-    },
-    "Error calculating directions: %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Error calculating directions: %@"
+            "value" : "Email"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ошибка вычисления маршрута: %@"
+            "value" : "Email"
+          }
+        }
+      }
+    },
+    "Email not verified" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email not verified"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Электронная почта не подтверждена"
           }
         }
       }
@@ -246,91 +177,21 @@
         }
       }
     },
-    "Failed to authenticate using biometrics!" : {
-      "comment" : "Error message",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Failed to authenticate using biometrics!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Не удалось авторизироваться с помощью биометрии!"
-          }
-        }
-      }
-    },
-    "Failed working with datatype" : {
-      "comment" : "Error message",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Failed working with datatype!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Не удалось обработать тип данных!"
-          }
-        }
-      }
-    },
-    "Feed" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Feed"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Лента"
-          }
-        }
-      }
-    },
-    "Guess the word..." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Guess the word..."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Угадайте слово..."
-          }
-        }
-      }
-    },
-    "Hello, world" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hello, world"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Привет, Мир"
-          }
-        }
-      }
-    },
     "Hello, world!" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hello, world!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Привет, мир!"
+          }
+        }
+      }
     },
     "Hi, %@ 👋" : {
       "localizations" : {
@@ -344,23 +205,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Привет, %@ 👋"
-          }
-        }
-      }
-    },
-    "HTTP Response Error!" : {
-      "comment" : "Error message",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "HTTP Response Error!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "HTTP ошибка!"
           }
         }
       }
@@ -381,116 +225,34 @@
         }
       }
     },
-    "Lat: %lf, Lon: %lf" : {
+    "Light" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Lat: %1$lf, Lon: %2$lf"
+            "state" : "translated",
+            "value" : "Light"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lat: %1$lf, Lon: %2$lf"
+            "value" : "Светлая"
           }
         }
       }
     },
-    "Location %lld" : {
+    "My information" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Location %lld"
+            "value" : "My information"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Локация %lld"
-          }
-        }
-      }
-    },
-    "Log In" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Log In"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Войти"
-          }
-        }
-      }
-    },
-    "Network is not available!" : {
-      "comment" : "Error message",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Network is not available!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Отсутствует соединение с интернетом!"
-          }
-        }
-      }
-    },
-    "No access to user location!" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No access to user location!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Отсутствует доступ к геопозиции!"
-          }
-        }
-      }
-    },
-    "No images to present!" : {
-      "comment" : "Error message",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No images to present!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Отсутствуют изображения"
-          }
-        }
-      }
-    },
-    "Not a member yet? Sign up!" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Not a member yet? Sign up!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Регистрация новых пользователей"
+            "value" : "Моя информация"
           }
         }
       }
@@ -507,105 +269,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ОК"
-          }
-        }
-      }
-    },
-    "Orbital period: %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Orbital period: %@"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Период вращения: не указан"
-          }
-        }
-      }
-    },
-    "Orbital period: N/A" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Orbital period: N/A"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Период вращения: не указан"
-          }
-        }
-      }
-    },
-    "Password" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Password"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Пароль"
-          }
-        }
-      }
-    },
-    "Password is incorrect!" : {
-      "comment" : "Error message",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Password is incorrect!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Неверный пароль!"
-          }
-        }
-      }
-    },
-    "Password should be repeated!" : {
-      "comment" : "Error message",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Password should be repeated!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Введите пароль повторно!"
-          }
-        }
-      }
-    },
-    "Passwords do not match!" : {
-      "comment" : "Error message",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Passwords do not match!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Введенные пароли не совпадают!"
           }
         }
       }
@@ -643,47 +306,24 @@
       }
     },
     "Please verify your email before logging in." : {
-
-    },
-    "Repeat password" : {
-
-    },
-    "Repeat Password" : {
-      "extractionState" : "stale",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Repeat Password"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Повторите пароль"
-          }
-        }
-      }
-    },
-    "Residents" : {
-      "comment" : "mySectionName",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Residents"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Резиденты"
+            "value" : "Пожалуйста, подтвердите электронную почту."
           }
         }
       }
     },
     "Save" : {
-
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сохранить"
+          }
+        }
+      }
     },
     "See what's happening in GoSocial!" : {
       "localizations" : {
@@ -702,70 +342,21 @@
       }
     },
     "Send Reset Link" : {
-
-    },
-    "Set Status" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Set Status"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Установить статус"
+            "value" : "Отправить ссылку для сброса пароля"
           }
         }
       }
     },
-    "Sign Up" : {
+    "System" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sign Up"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Зарегистрироваться"
-          }
-        }
-      }
-    },
-    "Such user does not exist!" : {
-      "comment" : "Error message",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Such user does not exist!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Пользователь не существует!"
-          }
-        }
-      }
-    },
-    "The URL is not valid!" : {
-      "comment" : "Error message",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "The URL is not valid!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Некорректная ссылка!"
+            "value" : "По-умолчанию"
           }
         }
       }
@@ -786,57 +377,6 @@
         }
       }
     },
-    "User already exists!" : {
-      "comment" : "Error message",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "User already exists!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Такой пользователь уже существует!"
-          }
-        }
-      }
-    },
-    "User doesn't exist!" : {
-      "comment" : "Error message",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "User doesn't exist!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Пользователь не существует!"
-          }
-        }
-      }
-    },
-    "Username" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Username"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Имя пользователя"
-          }
-        }
-      }
-    },
     "Waiting for something..." : {
       "localizations" : {
         "en" : {
@@ -853,27 +393,12 @@
         }
       }
     },
-    "We have sent a verification message to your email. Please, log in to your account again using email and password." : {
-
-    },
-    "We have sent you an email to confirm your address." : {
-
-    },
     "We have sent you an email with instructions for resetting your password" : {
-
-    },
-    "Welcome on board!" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Welcome on board!"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Добро пожаловать!"
+            "value" : "Мы отправили на Вашу почту письмо с инструкцией для сброса пароля"
           }
         }
       }
@@ -890,40 +415,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Как дела?"
-          }
-        }
-      }
-    },
-    "Wrong credentials!" : {
-      "comment" : "Error message",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wrong credentials!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Неверные данные!"
-          }
-        }
-      }
-    },
-    "Your connection is lost!" : {
-      "comment" : "Error message",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Your connection is lost!"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Отсутствует подключение к интернету!"
           }
         }
       }

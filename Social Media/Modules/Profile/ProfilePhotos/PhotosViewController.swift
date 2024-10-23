@@ -10,6 +10,7 @@ import iOSIntPackage
 
 class PhotosViewController: UIViewController, UICollectionViewDelegate {
     
+    public var isMyUser: Bool
     public var userPhotos: [UIImage] = []
     
     
@@ -32,8 +33,9 @@ class PhotosViewController: UIViewController, UICollectionViewDelegate {
     
     
     // MARK: - Lifecycle
-    init(userPhotos: [UIImage]) {
+    init(userPhotos: [UIImage], isMyUser: Bool) {
         self.userPhotos = userPhotos
+        self.isMyUser = isMyUser
         super.init(nibName: nil, bundle: nil)
         addSubviews()
         setupConstraints()
@@ -152,20 +154,3 @@ extension PhotosViewController: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
     }
 }
-
-/*
-extension PhotosViewController: ImageLibrarySubscriber {
-    func receive(images: [UIImage]) {
-        // Skipping duplicate images because imagePublisherFacade.addImagesWithTimer() takes a random element from array
-        self.userPhotosShown = images.unique()
-        DispatchQueue.main.async {
-            self.photoCollectionView.reloadData()
-        }
-    }
-    
-    private func setupObservers() {
-        imagePublisherFacade.addImagesWithTimer(time: 5, repeat: 13, userImages: self.userPhotos)
-        imagePublisherFacade.subscribe(self)
-    }
-}
-*/

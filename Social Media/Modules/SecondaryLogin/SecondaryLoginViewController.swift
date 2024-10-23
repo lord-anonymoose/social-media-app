@@ -11,12 +11,42 @@ import LocalAuthentication
 import FirebaseAuth
 
 
-class SecondaryLoginViewController: UIViewController {
+final class SecondaryLoginViewController: UIViewController {
     
     private var user: User
     
     
+    
     // MARK: - Subviews
+    
+    private lazy var userImageView: UIImageView = {
+        var imageView = UIImageView()
+
+        imageView.image = UIImage(named: "defaultUserImage")
+
+        imageView.image = UIImage(named: "defaultUserImage")
+        imageView.layer.cornerRadius = 45
+        imageView.clipsToBounds = true
+        imageView.backgroundColor = .green
+        imageView.isUserInteractionEnabled = true
+        
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        do {
+            let userID = try FirebaseService.shared.currentUserID()
+            if let userID {
+                let path = "ProfilePictures/\(userID).jpg"
+                ImageCacheService.shared.loadImage(from: path) { image in
+                    if let image {
+                        imageView.image = image
+                    }
+                }
+            }
+        } catch {
+            print("Couldn't load user image: \(error.localizedDescription)")
+        }
+        return imageView
+    }()
     
     private lazy var greetingLabel: UILabel = {
         let label = UILabel()
@@ -31,25 +61,10 @@ class SecondaryLoginViewController: UIViewController {
         return label
     }()
     
-    /*
-    private lazy var profilePicture: UIImageView = {
-        let imageView = UIImageView(image: user.image)
-        
-        imageView.layer.cornerRadius = 45
-        imageView.clipsToBounds = true
-                        
-        imageView.isUserInteractionEnabled = true
-        
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return imageView
-    }()
-    */
-    
     private lazy var changeUserButton: UIButton = {
         let button = UIButton()
         
-        let imageSize = CGSize(width: 30, height: 30)
+        let imageSize = CGSize(width: 50, height: 50)
         let imageConfig = UIImage.SymbolConfiguration(pointSize: imageSize.width)
         let image = UIImage(systemName: "arrow.left.square")?.withConfiguration(imageConfig)
         button.setImage(image, for: .normal)
@@ -64,10 +79,11 @@ class SecondaryLoginViewController: UIViewController {
         
     private lazy var authenticateButton: UIButton = {
         let button = UIButton()
-        let authType = LocalAuthorizationService.biometricType()
+        let authType = LocalAuthorizationService.shared.biometricType()
         
-        let imageSize = CGSize(width: 50, height: 50)
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: imageSize.width)
+        button.contentMode = .scaleAspectFit
+
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: 75, weight: .regular, scale: .default)
         
         switch authType {
         case .face:
@@ -99,6 +115,7 @@ class SecondaryLoginViewController: UIViewController {
     }()
     
     
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         setupUI()
@@ -118,10 +135,10 @@ class SecondaryLoginViewController: UIViewController {
     }
     
     
+    
     // MARK: - Actions
     @objc func authenticateButtonTapped(_ button: UIButton) {
-        print("Tapped")
-        LocalAuthorizationService.authenticate(
+        LocalAuthorizationService.shared.authenticate(
             success: {
                 if let navigationController = self.navigationController {
                     let coordinator = MainCoordinator(navigationController: navigationController)
@@ -130,8 +147,7 @@ class SecondaryLoginViewController: UIViewController {
             },
             failure: { error in
                 let title = String(localized: "Error!")
-                /*self.showAlert(title: title, description: CheckerError.biometricsAuthFail.localizedDescription)
-                 */
+                self.showAlert(title: title, description: error?.localizedDescription ?? "Unknown error")
             }
         )
     }
@@ -153,8 +169,8 @@ class SecondaryLoginViewController: UIViewController {
     }
     
     private func addSubviews() {
+        view.addSubview(userImageView)
         view.addSubview(greetingLabel)
-        //view.addSubview(profilePicture)
         view.addSubview(changeUserButton)
         view.addSubview(authenticateButton)
     }
@@ -163,17 +179,15 @@ class SecondaryLoginViewController: UIViewController {
         let safeAreaGuide = view.safeAreaLayoutGuide
         
         NSLayoutConstraint.activate([
-            greetingLabel.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor, constant: 20),
+            userImageView.topAnchor.constraint(equalTo: safeAreaGuide.topAnchor, constant: 20),
+            userImageView.heightAnchor.constraint(equalToConstant: 90),
+            userImageView.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor),
+            userImageView.widthAnchor.constraint(equalToConstant: 90),
+            
+            greetingLabel.topAnchor.constraint(equalTo: userImageView.bottomAnchor, constant: 20),
             greetingLabel.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 10),
             greetingLabel.trailingAnchor.constraint(equalTo: safeAreaGuide.trailingAnchor, constant: -10),
             greetingLabel.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor),
-        
-        /*
-            profilePicture.centerYAnchor.constraint(equalTo: safeAreaGuide.centerYAnchor),
-            profilePicture.heightAnchor.constraint(equalToConstant: 90),
-            profilePicture.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor),
-            profilePicture.widthAnchor.constraint(equalToConstant: 90)
-        */
         
             authenticateButton.bottomAnchor.constraint(equalTo: safeAreaGuide.bottomAnchor, constant: -20),
             authenticateButton.heightAnchor.constraint(equalToConstant: 100),
@@ -181,9 +195,9 @@ class SecondaryLoginViewController: UIViewController {
             authenticateButton.widthAnchor.constraint(equalToConstant: 100),
         
             changeUserButton.centerYAnchor.constraint(equalTo: authenticateButton.centerYAnchor),
-            changeUserButton.heightAnchor.constraint(equalToConstant: 50),
+            changeUserButton.heightAnchor.constraint(equalToConstant: 100),
             changeUserButton.leadingAnchor.constraint(equalTo: safeAreaGuide.leadingAnchor, constant: 20),
-            changeUserButton.widthAnchor.constraint(equalToConstant: 50)
+            changeUserButton.widthAnchor.constraint(equalToConstant: 100)
         ])
     }
 }

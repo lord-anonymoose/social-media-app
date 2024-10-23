@@ -15,7 +15,7 @@ protocol Coordinator {
 }
 
 
-class MainCoordinator: Coordinator {
+final class MainCoordinator: Coordinator, ObservableObject {
     
     var navigationController: UINavigationController
     var controllers = [UIViewController]()
@@ -25,10 +25,9 @@ class MainCoordinator: Coordinator {
     }
     
     func login() {
-        //addFeedViewController()
+        addFeedViewController()
         addProfileViewController { [weak self] in
             guard let self = self else { return }
-            
 
             let tabBarViewController = UITabBarController()
             tabBarViewController.viewControllers = self.controllers.map {
@@ -64,11 +63,14 @@ class MainCoordinator: Coordinator {
         navigationController.pushViewController(signUpViewController, animated: true)
     }
     
-    func showVerificationViewController() {
-        let verificationViewController = VerificationViewController()
-        navigationController.pushViewController(verificationViewController, animated: true)
+    func popToPreviousViewController() {
+        navigationController.popViewController(animated: true)
     }
     
+    func popToRootViewController() {
+        navigationController.popToRootViewController(animated: true)
+    }
+
     func showResetPasswordViewController() {
         let resetPasswordViewController = ResetPasswordViewController()
         navigationController.pushViewController(resetPasswordViewController, animated: true)
@@ -80,39 +82,64 @@ class MainCoordinator: Coordinator {
         navigationController.popToRootViewController(animated: true)
     }
     
-    func showProfilePicViewController() {
-        let picturePickerViewController = PicturePickerViewController()
+    func showOtherProfileViewControll(user: User, userID: String) {
+        let otherProfileViewController = ProfileViewController(user: user, isMyUser: false, userID: userID)
+        navigationController.pushViewController(otherProfileViewController, animated: true)
+    }
+    
+    func showProfilePicViewController(image: UIImage) {
+        let picturePickerViewController = PicturePickerViewController(image: image)
         navigationController.pushViewController(picturePickerViewController, animated: true)
     }
     
-    // Feed
-    /*
-    func addFeedViewController() {
-        let feedService = FeedService()
-        let feedViewModel = FeedVMOutput(service: feedService)
-        let feedViewController = FeedViewController(viewModel: feedViewModel)
-        let feedImage = UIImage(systemName: "house.circle")
-        feedViewController.tabBarItem = UITabBarItem(title: nil, image: feedImage, tag: 0)
-        controllers.append(feedViewController)
+    func showSettingsViewController(image: UIImage) {
+        if let id = Auth.auth().currentUser?.uid {
+            FirebaseService.shared.fetchUser(by: id) { user in
+                if let user = user {
+                    let settingsViewController = SettingsViewController(name: user.name, status: user.status)
+                    self.navigationController.pushViewController(settingsViewController, animated: true)
+                    
+                } else {
+                    print("User not found")
+                }
+            }
+        } else {
+            print("Not logged in")
+        }
     }
-    */
+    
+    func showMakePostViewController() {
+        let makePostViewController = MakePostViewController()
+        self.navigationController.pushViewController(makePostViewController, animated: true)
+    }
+    
+    func showLikesFeedViewController() {
+        let likesFeedViewController = FeedViewController()
+        likesFeedViewController.isLikesFeed = true
+        self.navigationController.pushViewController(likesFeedViewController, animated: true)
+    }
     
     // Profile
     func addProfileViewController(completion: @escaping () -> Void) {
         let id = Auth.auth().currentUser?.uid
-        print(id ?? "Not found")
         
         FirebaseService.shared.fetchUser(by: id ?? "0") { user in
             if let user = user {
-                let profileViewController = ProfileViewController(user: user)
+                let profileViewController = ProfileViewController(user: user, isMyUser: true, userID: id ?? "Unknown")
                 let profileViewImage = UIImage(systemName: "person.fill")
                 profileViewController.tabBarItem = UITabBarItem(title: nil, image: profileViewImage, tag: 1)
                 self.controllers.append(profileViewController)
-
             } else {
                 print("User not found")
             }
             completion() // Call the completion handler after fetching the user
         }
+    }
+    
+    func addFeedViewController() {
+        let feedViewController = FeedViewController()
+        let feedViewImage = UIImage(systemName: "house.circle")
+        feedViewController.tabBarItem = UITabBarItem(title: nil, image: feedViewImage, tag: 2)
+        controllers.append(feedViewController)
     }
 }

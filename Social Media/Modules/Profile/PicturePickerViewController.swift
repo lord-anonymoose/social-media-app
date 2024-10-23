@@ -10,29 +10,49 @@ import UIKit
 import FirebaseStorage
 import FirebaseAuth
 
+
+
 final class PicturePickerViewController: UIViewController, UINavigationControllerDelegate {
     
+    var image: UIImage
     
     let imagePicker = UIImagePickerController()
     
     // MARK: - Subviews
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.image = self.image
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .systemGray
         return imageView
     }()
-
+    
     private lazy var chooseImageButton = UICustomButton(customTitle: String(localized: "Choose Image"), customBackgroundColor: .secondaryColor ,action: {
-        self.pickImage()
+        self.showImagePicker()
     })
     
     private lazy var saveImageButton = UICustomButton(customTitle: String(localized: "Save"), customBackgroundColor: .accentColor ,action: {
         self.saveImage()
     })
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.isHidden = true
+        return indicator
+    }()
+    
     
     // MARK: - Lifecycle
+    init(image: UIImage) {
+        self.image = image
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,13 +62,16 @@ final class PicturePickerViewController: UIViewController, UINavigationControlle
         setupDelegates()
     }
     
-    // MARK: - Actions
-    @objc
+    override func viewWillDisappear(_ animated: Bool) {
+        activityIndicator.stopAnimating()
+        activityIndicator.isHidden = true
+        
+        super.viewWillDisappear(animated)
+    }
+    
+    
     
     // MARK: - Private
-    private func sayHello() {
-        print("Hello, world!")
-    }
     
     private func setupUI() {
         view.backgroundColor = .systemBackground
@@ -58,6 +81,7 @@ final class PicturePickerViewController: UIViewController, UINavigationControlle
         view.addSubview(imageView)
         view.addSubview(saveImageButton)
         view.addSubview(chooseImageButton)
+        view.addSubview(activityIndicator)
         chooseImageButton.isEnabled = true
     }
     
@@ -78,7 +102,12 @@ final class PicturePickerViewController: UIViewController, UINavigationControlle
             chooseImageButton.bottomAnchor.constraint(equalTo: saveImageButton.topAnchor, constant: -10),
             chooseImageButton.heightAnchor.constraint(equalTo: saveImageButton.heightAnchor),
             chooseImageButton.leadingAnchor.constraint(equalTo: saveImageButton.leadingAnchor),
-            chooseImageButton.trailingAnchor.constraint(equalTo: saveImageButton.trailingAnchor)
+            chooseImageButton.trailingAnchor.constraint(equalTo: saveImageButton.trailingAnchor),
+            
+            activityIndicator.bottomAnchor.constraint(equalTo: chooseImageButton.topAnchor, constant: -10),
+            activityIndicator.heightAnchor.constraint(equalToConstant: 25),
+            activityIndicator.centerXAnchor.constraint(equalTo: safeAreaGuide.centerXAnchor),
+            activityIndicator.widthAnchor.constraint(equalToConstant: 25)
         ])
     }
     
@@ -87,7 +116,7 @@ final class PicturePickerViewController: UIViewController, UINavigationControlle
         imagePicker.allowsEditing = true
     }
     
-    private func pickImage() {
+    private func showImagePicker() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         alert.addAction(UIAlertAction(title: "Photo Gallery", style: .default, handler: { (button) in
@@ -106,50 +135,22 @@ final class PicturePickerViewController: UIViewController, UINavigationControlle
     }
     
     private func saveImage() {
-        guard let image = imageView.image else {
-             print("No image found to upload")
-             return
-         }
-         
-         // 2. Convert the image to JPEG data with a compression quality (adjust quality as needed)
-         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
-             print("Could not convert image to data")
-             return
-         }
-         
-         // 3. Create a unique filename for the image (for example, using a timestamp)
-        guard let id = Auth.auth().currentUser?.uid else {
-            print("User not found")
-            return
-        }
-        let filename = "ProfilePictures/\(id).jpg"
-         
-         // 4. Create a reference to Firebase Storage
-         let storageRef = Storage.storage().reference().child(filename)
-         
-         // 5. Upload the image data to Firebase Storage
-         storageRef.putData(imageData, metadata: nil) { metadata, error in
-             if let error = error {
-                 print("Failed to upload image: \(error.localizedDescription)")
-                 return
-             }
-             
-             // 6. Optionally, get the download URL
-             storageRef.downloadURL { url, error in
-                 if let error = error {
-                     print("Failed to get download URL: \(error.localizedDescription)")
-                     return
-                 }
-                 
-                 if let downloadURL = url {
-                     print("Image uploaded successfully, download URL: \(downloadURL)")
-                     // You can now use this URL to save in your database or display to the user
-                 }
-             }
-         }
+        self.chooseImageButton.isHidden = true
+        self.saveImageButton.isHidden = true
+        self.activityIndicator.isHidden = false
+        self.activityIndicator.startAnimating()
         
-        if let navigationController = self.navigationController {
-            navigationController.popViewController(animated: true)
+        FirebaseService.shared.updateUserImage(newImage: self.imageView.image) { result in
+            switch result {
+            case .success(let downloadURL):
+                print("Image URL: \(downloadURL)")
+                if let navigationController = self.navigationController {
+                    navigationController.popViewController(animated: true)
+                }
+            case .failure(let error):
+                print("Couldn't upload image!")
+                self.showAlert(title: "Error!".localized, description: error.localizedDescription)
+            }
         }
     }
 }
